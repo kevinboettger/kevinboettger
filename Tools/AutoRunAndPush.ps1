@@ -11,6 +11,7 @@ $Repo        = 'kevinboettger'
 $Branch      = 'claude/test-immerse-audio-plugin-su44W'
 $RunDirRel   = "immerse_runs/$RunId"
 $RunDirAbs   = $null
+$ImmerseUserId = 'kevin_tencenttest1_emb'
 
 function Step($m) { Write-Host "==== $m ====" -ForegroundColor Cyan }
 function Info($m) { Write-Host "    $m" -ForegroundColor DarkGray }
@@ -139,8 +140,7 @@ function Patch-Sources {
     if (Test-Path $keyCpp)    { Push-File $keyCpp    'ImmerseStressTestActor.cpp.before' }
 
     # Patch 1: class -> struct for IConsoleCommand to match this user's UE 4.27
-    # IConsoleManager.h declaration kind. (Idempotent: if no `class IConsoleCommand`
-    # remains it just no-ops.)
+    # IConsoleManager.h declaration kind. (Idempotent.)
     $files = Get-ChildItem $sourceRoot -Recurse -Include *.h,*.cpp -ErrorAction SilentlyContinue
     foreach ($f in $files) {
         $orig = Get-Content $f.FullName -Raw
@@ -154,11 +154,7 @@ function Patch-Sources {
     if (Test-Path $keyCpp) {
         $cpp = Get-Content $keyCpp -Raw
 
-        # Patch 2: insert AK readiness gate at top of RunPlan() (idempotent).
-        # On the first crashing run, RunPlan was called synchronously from
-        # PostLoadMap before AK::SoundEngine::Init had finished its internal
-        # queue allocation, so AK::SoundEngine::SetMixer dereferenced a null
-        # CAkAudioMgr member. Gate gets a retry loop via the timer manager.
+        # Patch 2: gate RunPlan() on FAkAudioDevice::Get() with retry
         if ($cpp -notmatch 'ImmerseAKReadyRetries') {
             $insertion = @'
 
@@ -187,14 +183,9 @@ function Patch-Sources {
             if ($newCpp -ne $cpp) {
                 $cpp = $newCpp
                 $changes += 'RunPlan: gate on FAkAudioDevice::Get() with retry'
-            } else {
-                Warn 'AK readiness gate insertion did not match RunPlan signature'
             }
         }
         elseif ($cpp -match 'AK::SoundEngine::IsInitialized') {
-            # Older variant of the gate used IsInitialized(); replace with FAkAudioDevice
-            # because IsInitialized() returns false even when Wwise is fully running
-            # under -game -RenderOffscreen with this Wwise 2019.2 build.
             $newCpp = $cpp `
                 -replace 'AK::SoundEngine::IsInitialized\(\)', '(FAkAudioDevice::Get() != nullptr)' `
                 -replace 'Wwise SoundEngine still not initialized', 'FAkAudioDevice still null' `
@@ -206,10 +197,6 @@ function Patch-Sources {
         }
 
         # Patch 3: defer RunPlan from BeginPlay via 2.5s timer.
-        # Even when FAkAudioDevice exists, calling SetMixer from the
-        # PostLoadMap-spawned-actor's BeginPlay races the Wwise audio thread.
-        # Firing RunPlan from a TimerManager timer pushes it onto a normal
-        # tick after the engine has stabilized.
         if ($cpp -notmatch 'AutoRunBeginPlayTimer') {
             $patternBP = '(?s)(if\s*\(\s*bAutoRunOnBeginPlay\s*\)\s*\{)[^{}]*?RunPlan\s*\(\s*\)\s*;[^{}]*?\}'
             $replacementBP = @'
@@ -232,8 +219,25 @@ $1
             if ($newCpp -ne $cpp) {
                 $cpp = $newCpp
                 $changes += 'BeginPlay AutoRun: deferred 2.5s via TimerManager'
-            } else {
-                Warn 'BeginPlay timer insertion did not match the bAutoRunOnBeginPlay block'
+            }
+        }
+
+        # Patch 4: log Immerse user ID env vars at BeginPlay so we can see
+        # whether the editor process actually inherited them.
+        if ($cpp -notmatch 'IMMERSE_USER_ID env') {
+            $logBlock = @'
+
+	UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] IMMERSE_USER_ID env=%s | IMMERSE_USERID=%s | IMMERSE_USER=%s"),
+		*FPlatformMisc::GetEnvironmentVariable(TEXT("IMMERSE_USER_ID")),
+		*FPlatformMisc::GetEnvironmentVariable(TEXT("IMMERSE_USERID")),
+		*FPlatformMisc::GetEnvironmentVariable(TEXT("IMMERSE_USER")));
+
+'@
+            $patternReady = '(\[ImmerseStress\] Ready\. Defaults:[^;]+;\s*)'
+            $newCpp = $cpp -replace $patternReady, ('$1' + $logBlock)
+            if ($newCpp -ne $cpp) {
+                $cpp = $newCpp
+                $changes += 'BeginPlay: log IMMERSE_USER_ID env vars'
             }
         }
 
@@ -272,7 +276,7 @@ try {
     Init-ResultsRepo
     $RunDirAbs = Join-Path $ResultsRoot $RunDirRel
     New-Item -ItemType Directory -Force -Path $RunDirAbs | Out-Null
-    Push-Status -Phase 'started' -Extra @{ project_dir = $ProjectDir }
+    Push-Status -Phase 'started' -Extra @{ project_dir = $ProjectDir; immerse_user_id = $ImmerseUserId }
 
     Step 'Checking Visual Studio (Game Dev C++ workload)'
     Push-Status -Phase 'vs_check'
@@ -365,6 +369,18 @@ try {
     }
     Push-Status -Phase 'build_done'
 
+    Step 'Setting Immerse user ID env vars'
+    # Export under several common spellings; the first one that the Immerse
+    # plugin reads at init time will win. Child processes inherit current
+    # process env, so Start-Process below picks these up.
+    $env:IMMERSE_USER_ID  = $ImmerseUserId
+    $env:IMMERSE_USERID   = $ImmerseUserId
+    $env:IMMERSE_USER     = $ImmerseUserId
+    $env:IMMERSE_EMBODY_USER_ID = $ImmerseUserId
+    $env:IMMERSE_EMB_USER_ID = $ImmerseUserId
+    Info "IMMERSE_USER_ID = $ImmerseUserId"
+    Push-Status -Phase 'immerse_userid_set' -Extra @{ user_id = $ImmerseUserId }
+
     Step 'Launching headless editor for stress sweep'
     Push-Status -Phase 'testing'
     $editor    = Join-Path $engineRoot 'Engine\Binaries\Win64\UE4Editor.exe'
@@ -409,8 +425,6 @@ try {
     $resultsDir = Join-Path $ProjectDir 'Saved\ImmerseStress'
     $csv = $null
     if (Test-Path $resultsDir) {
-        # Only consider CSVs created AFTER the editor was launched, so we don't
-        # accidentally re-upload an old run's CSV when the current run failed.
         $csv = Get-ChildItem $resultsDir -Filter 'run_*.csv' -ErrorAction SilentlyContinue |
                Where-Object { $_.LastWriteTime -ge $editorStart } |
                Sort-Object LastWriteTime -Descending | Select-Object -First 1
