@@ -151,27 +151,27 @@ function Patch-Sources {
         }
     }
 
-    # Patch 2: Defer RunPlan() until Wwise SoundEngine is initialized.
-    # The auto-spawn fires on OnPostLoadMap, before AK::SoundEngine::Init has
-    # completed, so calling AK::SoundEngine::SetMixer() inside BypassImmerse()
-    # crashed with EXCEPTION_ACCESS_VIOLATION inside CAkAudioMgr::ReserveForWrite.
-    # This patch inserts a readiness check at the top of RunPlan(); if Wwise
-    # isn't up, schedule a retry in 0.5s (up to ~10s) via the timer manager.
     if (Test-Path $keyCpp) {
         $cpp = Get-Content $keyCpp -Raw
-        if ($cpp -notmatch 'AK::SoundEngine::IsInitialized') {
+
+        # Patch 2: insert AK readiness gate at top of RunPlan() (idempotent).
+        # On the first crashing run, RunPlan was called synchronously from
+        # PostLoadMap before AK::SoundEngine::Init had finished its internal
+        # queue allocation, so AK::SoundEngine::SetMixer dereferenced a null
+        # CAkAudioMgr member. Gate gets a retry loop via the timer manager.
+        if ($cpp -notmatch 'ImmerseAKReadyRetries') {
             $insertion = @'
 
 	static int ImmerseAKReadyRetries = 0;
-	if (!AK::SoundEngine::IsInitialized())
+	if (FAkAudioDevice::Get() == nullptr)
 	{
 		++ImmerseAKReadyRetries;
 		if (ImmerseAKReadyRetries > 40) {
-			UE_LOG(LogTemp, Error, TEXT("[ImmerseStress] Wwise SoundEngine still not initialized after ~20s, giving up on auto-run."));
+			UE_LOG(LogTemp, Error, TEXT("[ImmerseStress] FAkAudioDevice still null after ~20s, giving up on auto-run."));
 			ImmerseAKReadyRetries = 0;
 			return;
 		}
-		UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] Wwise not ready (retry %d), waiting 0.5s..."), ImmerseAKReadyRetries);
+		UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] AkAudioDevice not ready (retry %d), waiting 0.5s..."), ImmerseAKReadyRetries);
 		if (UWorld* W = GetWorld())
 		{
 			FTimerHandle Th;
@@ -182,16 +182,62 @@ function Patch-Sources {
 	ImmerseAKReadyRetries = 0;
 
 '@
-            $pattern = '(void\s+AImmerseStressTestActor::RunPlan\(\)\s*\{)'
-            $replacement = '$1' + $insertion
-            $patchedCpp = $cpp -replace $pattern, $replacement
-            if ($patchedCpp -ne $cpp) {
-                Set-Content -Path $keyCpp -Value $patchedCpp -NoNewline -Encoding UTF8
-                $changes += "ImmerseStressTestActor.cpp: RunPlan() now waits for AK::SoundEngine::IsInitialized()"
+            $patternRP = '(void\s+AImmerseStressTestActor::RunPlan\(\)\s*\{)'
+            $newCpp = $cpp -replace $patternRP, ('$1' + $insertion)
+            if ($newCpp -ne $cpp) {
+                $cpp = $newCpp
+                $changes += 'RunPlan: gate on FAkAudioDevice::Get() with retry'
             } else {
-                Warn 'RunPlan AK-readiness patch did not match; check ImmerseStressTestActor.cpp shape.'
+                Warn 'AK readiness gate insertion did not match RunPlan signature'
             }
         }
+        elseif ($cpp -match 'AK::SoundEngine::IsInitialized') {
+            # Older variant of the gate used IsInitialized(); replace with FAkAudioDevice
+            # because IsInitialized() returns false even when Wwise is fully running
+            # under -game -RenderOffscreen with this Wwise 2019.2 build.
+            $newCpp = $cpp `
+                -replace 'AK::SoundEngine::IsInitialized\(\)', '(FAkAudioDevice::Get() != nullptr)' `
+                -replace 'Wwise SoundEngine still not initialized', 'FAkAudioDevice still null' `
+                -replace 'Wwise not ready', 'AkAudioDevice not ready'
+            if ($newCpp -ne $cpp) {
+                $cpp = $newCpp
+                $changes += 'RunPlan gate: IsInitialized() -> FAkAudioDevice::Get()'
+            }
+        }
+
+        # Patch 3: defer RunPlan from BeginPlay via 2.5s timer.
+        # Even when FAkAudioDevice exists, calling SetMixer from the
+        # PostLoadMap-spawned-actor's BeginPlay races the Wwise audio thread.
+        # Firing RunPlan from a TimerManager timer pushes it onto a normal
+        # tick after the engine has stabilized.
+        if ($cpp -notmatch 'AutoRunBeginPlayTimer') {
+            $patternBP = '(?s)(if\s*\(\s*bAutoRunOnBeginPlay\s*\)\s*\{)[^{}]*?RunPlan\s*\(\s*\)\s*;[^{}]*?\}'
+            $replacementBP = @'
+$1
+		// AutoRunBeginPlayTimer: defer RunPlan via 2.5s timer so SetMixer is
+		// called from a normal Tick (after Wwise stabilizes), not during the
+		// PostLoadMap-driven BeginPlay where the AK audio thread is mid-init.
+		if (UWorld* WAuto = GetWorld())
+		{
+			FTimerHandle ThAuto;
+			WAuto->GetTimerManager().SetTimer(ThAuto, FTimerDelegate::CreateUObject(this, &AImmerseStressTestActor::RunPlan), 2.5f, false);
+		}
+		else
+		{
+			RunPlan();
+		}
+	}
+'@
+            $newCpp = $cpp -replace $patternBP, $replacementBP
+            if ($newCpp -ne $cpp) {
+                $cpp = $newCpp
+                $changes += 'BeginPlay AutoRun: deferred 2.5s via TimerManager'
+            } else {
+                Warn 'BeginPlay timer insertion did not match the bAutoRunOnBeginPlay block'
+            }
+        }
+
+        Set-Content -Path $keyCpp -Value $cpp -NoNewline -Encoding UTF8
     }
 
     # Dump engine excerpt for kind verification.
@@ -329,6 +375,7 @@ try {
         '-game','-RenderOffscreen','-unattended','-nopause','-NoSplash',
         "-abslog=$editorLog"
     )
+    $editorStart = Get-Date
     $proc = Start-Process -FilePath $editor -ArgumentList $editorArgs -PassThru -WindowStyle Hidden
     Info "Editor PID: $($proc.Id), log: $editorLog"
 
@@ -362,7 +409,10 @@ try {
     $resultsDir = Join-Path $ProjectDir 'Saved\ImmerseStress'
     $csv = $null
     if (Test-Path $resultsDir) {
+        # Only consider CSVs created AFTER the editor was launched, so we don't
+        # accidentally re-upload an old run's CSV when the current run failed.
         $csv = Get-ChildItem $resultsDir -Filter 'run_*.csv' -ErrorAction SilentlyContinue |
+               Where-Object { $_.LastWriteTime -ge $editorStart } |
                Sort-Object LastWriteTime -Descending | Select-Object -First 1
     }
     if ($csv) { Push-File $csv.FullName 'results.csv'; Info "CSV: $($csv.Name)" }
@@ -373,7 +423,7 @@ try {
         Step 'DONE'
         Write-Host "Results: https://github.com/$Owner/$Repo/tree/$Branch/$RunDirRel" -ForegroundColor Green
     } else {
-        Push-Status -Phase 'completed_no_csv' -Extra @{ note='editor exited but no CSV produced' }
+        Push-Status -Phase 'completed_no_csv' -Extra @{ note='editor exited but no CSV produced this run' }
     }
 } catch {
     Write-Host "ERROR: $_" -ForegroundColor Red
