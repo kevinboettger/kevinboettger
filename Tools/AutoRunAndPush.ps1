@@ -139,8 +139,6 @@ function Patch-Sources {
     $keyCpp    = Join-Path $sourceRoot 'Private\ImmerseStressTestActor.cpp'
     if (Test-Path $keyCpp)    { Push-File $keyCpp    'ImmerseStressTestActor.cpp.before' }
 
-    # Patch 1: class -> struct for IConsoleCommand to match this user's UE 4.27
-    # IConsoleManager.h declaration kind. (Idempotent.)
     $files = Get-ChildItem $sourceRoot -Recurse -Include *.h,*.cpp -ErrorAction SilentlyContinue
     foreach ($f in $files) {
         $orig = Get-Content $f.FullName -Raw
@@ -154,7 +152,6 @@ function Patch-Sources {
     if (Test-Path $keyCpp) {
         $cpp = Get-Content $keyCpp -Raw
 
-        # Patch 2: gate RunPlan() on FAkAudioDevice::Get() with retry
         if ($cpp -notmatch 'ImmerseAKReadyRetries') {
             $insertion = @'
 
@@ -196,14 +193,11 @@ function Patch-Sources {
             }
         }
 
-        # Patch 3: defer RunPlan from BeginPlay via 2.5s timer.
         if ($cpp -notmatch 'AutoRunBeginPlayTimer') {
             $patternBP = '(?s)(if\s*\(\s*bAutoRunOnBeginPlay\s*\)\s*\{)[^{}]*?RunPlan\s*\(\s*\)\s*;[^{}]*?\}'
             $replacementBP = @'
 $1
-		// AutoRunBeginPlayTimer: defer RunPlan via 2.5s timer so SetMixer is
-		// called from a normal Tick (after Wwise stabilizes), not during the
-		// PostLoadMap-driven BeginPlay where the AK audio thread is mid-init.
+		// AutoRunBeginPlayTimer
 		if (UWorld* WAuto = GetWorld())
 		{
 			FTimerHandle ThAuto;
@@ -222,8 +216,6 @@ $1
             }
         }
 
-        # Patch 4: log Immerse user ID env vars at BeginPlay so we can see
-        # whether the editor process actually inherited them.
         if ($cpp -notmatch 'IMMERSE_USER_ID env') {
             $logBlock = @'
 
@@ -244,23 +236,6 @@ $1
         Set-Content -Path $keyCpp -Value $cpp -NoNewline -Encoding UTF8
     }
 
-    # Dump engine excerpt for kind verification.
-    $candidates = @(
-        'C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\HAL\IConsoleManager.h',
-        'D:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\HAL\IConsoleManager.h',
-        'E:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\HAL\IConsoleManager.h'
-    )
-    foreach ($p in $candidates) {
-        if (Test-Path $p) {
-            $allLines = Get-Content $p
-            $startIdx = [Math]::Max(0, 470 - 1)
-            $endIdx   = [Math]::Min($allLines.Count - 1, 530 - 1)
-            $excerpt  = @("// IConsoleManager.h lines $($startIdx + 1)-$($endIdx + 1) from $p","") + $allLines[$startIdx..$endIdx]
-            $excerpt | Set-Content -Path (Join-Path $script:RunDirAbs 'IConsoleManager.h.excerpt.txt') -Encoding UTF8
-            break
-        }
-    }
-
     if (Test-Path $keyHeader) { Push-File $keyHeader 'ImmerseStressTestActor.h.after' }
     if (Test-Path $keyCpp)    { Push-File $keyCpp    'ImmerseStressTestActor.cpp.after' }
 
@@ -270,6 +245,110 @@ $1
     } else {
         Info 'no source patches needed'
     }
+}
+
+# Locate the project's active Wwise plugin bin dir (where DLLs must live for
+# AK::SoundEngine to find them at runtime). Returns $null if no Wwise plugin
+# is detected in the project.
+function Get-WwisePluginBinDir {
+    $candidates = @(
+        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc150\Profile\bin',
+        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Profile\bin',
+        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc170\Profile\bin'
+    )
+    foreach ($c in $candidates) { if (Test-Path $c) { return $c } }
+    return $null
+}
+
+function Stage-ImmersePlugin {
+    $binDir = Get-WwisePluginBinDir
+    if (-not $binDir) {
+        Warn 'No project-side Wwise plugin bin dir found; cannot stage Immerse DLL.'
+        return $null
+    }
+    Info "Wwise plugin bin dir: $binDir"
+
+    # Dump existing bin folder contents for inspection.
+    $listingBefore = Get-ChildItem $binDir -File -ErrorAction SilentlyContinue |
+        Select-Object Name, Length, @{N='LastWriteTime';E={$_.LastWriteTime.ToString('o')}} |
+        Format-Table -AutoSize | Out-String
+    $listingBefore | Set-Content (Join-Path $script:RunDirAbs 'wwise_bin_listing_before.txt') -Encoding UTF8
+
+    $immerseAlready = Get-ChildItem $binDir -Filter 'Immerse*.dll' -ErrorAction SilentlyContinue
+    if ($immerseAlready) {
+        Info "Existing Immerse DLLs already in bin:"
+        foreach ($d in $immerseAlready) { Info "  $($d.Name)" }
+        return $binDir
+    }
+
+    Warn "No Immerse*.dll in $binDir -- searching system for one to stage..."
+
+    $searchRoots = @(
+        'C:\Program Files (x86)\Audiokinetic',
+        'C:\Program Files\Audiokinetic',
+        'D:\Program Files (x86)\Audiokinetic',
+        "$env:USERPROFILE\Documents\Audiokinetic",
+        "$env:USERPROFILE\Documents",
+        (Join-Path $ProjectDir 'Plugins')
+    ) | Where-Object { Test-Path $_ }
+
+    $found = @()
+    foreach ($r in $searchRoots) {
+        $found += Get-ChildItem $r -Filter 'Immerse*.dll' -Recurse -ErrorAction SilentlyContinue -Force
+    }
+
+    if (-not $found -or $found.Count -eq 0) {
+        Warn 'No Immerse*.dll found anywhere on common Audiokinetic install paths or the project.'
+        ('Searched: ' + ($searchRoots -join "`n  ")) |
+            Set-Content (Join-Path $script:RunDirAbs 'immerse_dll_search.txt') -Encoding UTF8
+        return $binDir
+    }
+
+    # Dump search results to GitHub for inspection regardless of what we copy.
+    ($found | Select-Object FullName, Length, @{N='LastWriteTime';E={$_.LastWriteTime.ToString('o')}} |
+        Format-Table -AutoSize | Out-String) |
+        Set-Content (Join-Path $script:RunDirAbs 'immerse_dll_search.txt') -Encoding UTF8
+
+    # Pick best match for the project's toolchain (vc150 Profile preferred).
+    $best = $found | Where-Object {
+        $_.FullName -match 'x64_vc150' -and $_.FullName -match 'Profile'
+    } | Select-Object -First 1
+    if (-not $best) {
+        $best = $found | Where-Object {
+            $_.FullName -match 'x64' -and $_.FullName -notmatch 'Win32|x86'
+        } | Select-Object -First 1
+    }
+    if (-not $best) { $best = $found | Select-Object -First 1 }
+
+    if (-not $best) { return $binDir }
+
+    $srcDir = Split-Path $best.FullName -Parent
+    Info "Source dir for Immerse DLLs: $srcDir"
+
+    $copied = 0
+    Get-ChildItem $srcDir -Filter 'Immerse*.dll' -ErrorAction SilentlyContinue | ForEach-Object {
+        $dest = Join-Path $binDir $_.Name
+        try {
+            Copy-Item $_.FullName $dest -Force
+            Info "  staged $($_.Name)"
+            $copied++
+        } catch {
+            Warn "  failed to copy $($_.Name): $_"
+        }
+    }
+    if ($copied -gt 0) {
+        Info "Staged $copied Immerse DLL(s) into $binDir"
+    } else {
+        Warn 'Found Immerse DLLs but failed to copy any.'
+    }
+
+    # Re-dump bin folder after potential copy.
+    Get-ChildItem $binDir -File -ErrorAction SilentlyContinue |
+        Select-Object Name, Length, @{N='LastWriteTime';E={$_.LastWriteTime.ToString('o')}} |
+        Format-Table -AutoSize | Out-String |
+        Set-Content (Join-Path $script:RunDirAbs 'wwise_bin_listing_after.txt') -Encoding UTF8
+
+    return $binDir
 }
 
 try {
@@ -369,10 +448,11 @@ try {
     }
     Push-Status -Phase 'build_done'
 
+    Step 'Verifying Immerse plugin DLL on Wwise plugin search path'
+    $stagedBinDir = Stage-ImmersePlugin
+    Push-Status -Phase 'immerse_dll_check' -Extra @{ bin_dir = $stagedBinDir }
+
     Step 'Setting Immerse user ID env vars'
-    # Export under several common spellings; the first one that the Immerse
-    # plugin reads at init time will win. Child processes inherit current
-    # process env, so Start-Process below picks these up.
     $env:IMMERSE_USER_ID  = $ImmerseUserId
     $env:IMMERSE_USERID   = $ImmerseUserId
     $env:IMMERSE_USER     = $ImmerseUserId
