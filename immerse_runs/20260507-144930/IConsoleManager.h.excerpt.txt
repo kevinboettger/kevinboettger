@@ -1,0 +1,63 @@
+﻿// IConsoleManager.h lines 470-530 from C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\HAL\IConsoleManager.h
+
+	void Set(float InValue, EConsoleVariableFlags SetBy = ECVF_SetByCode)
+	{
+		// inefficient but no common code path
+		Set(*FString::Printf(TEXT("%g"), InValue), SetBy);
+	}
+
+	void SetWithCurrentPriority(bool InValue)
+	{
+		EConsoleVariableFlags CurFlags = (EConsoleVariableFlags)(GetFlags() & ECVF_SetByMask);
+		Set(InValue, CurFlags);
+	}
+	void SetWithCurrentPriority(int32 InValue)
+	{
+		EConsoleVariableFlags CurFlags = (EConsoleVariableFlags)(GetFlags() & ECVF_SetByMask);
+		Set(InValue, CurFlags);
+	}
+	void SetWithCurrentPriority(float InValue)
+	{
+		EConsoleVariableFlags CurFlags = (EConsoleVariableFlags)(GetFlags() & ECVF_SetByMask);
+		Set(InValue, CurFlags);
+	}
+	void SetWithCurrentPriority(const TCHAR* InValue)
+	{
+		EConsoleVariableFlags CurFlags = (EConsoleVariableFlags)(GetFlags() & ECVF_SetByMask);
+		Set(InValue, CurFlags);
+	}
+};
+
+/**
+ * Interface for console commands
+ */
+struct IConsoleCommand : public IConsoleObject
+{
+	/**
+	 * Executes this command (optionally, with arguments)
+	 *
+	 * @param	Args		Argument list for this command
+	 * @param	InWorld		World context for this command
+	 * @return	True if the delegate for this command was executed successfully
+	 */
+	virtual bool Execute( const TArray< FString >& Args, UWorld* InWorld, class FOutputDevice& OutputDevice ) = 0;
+};
+
+/**
+ * Interface to propagate changes of console variables to another thread
+ */
+struct IConsoleThreadPropagation
+{
+	virtual void OnCVarChange(int32& Dest, int32 NewValue) = 0;
+	virtual void OnCVarChange(float& Dest, float NewValue) = 0;
+	virtual void OnCVarChange(bool& Dest, bool NewValue) = 0;
+	virtual void OnCVarChange(FString& Dest, const FString& NewValue) = 0;
+};
+
+/**
+ * Declares a delegate type that's used by the console manager to call back into a user function for each
+ * known console object.
+ *
+ * First parameter is the Name string for the current console object
+ * Second parameter is the current console object
+ */
