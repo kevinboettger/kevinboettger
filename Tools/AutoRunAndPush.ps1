@@ -247,9 +247,8 @@ $1
     }
 }
 
-# Locate the project's active Wwise plugin bin dir (where DLLs must live for
-# AK::SoundEngine to find them at runtime). Returns $null if no Wwise plugin
-# is detected in the project.
+# Returns the bin dir Wwise actually loads runtime plug-ins from. Per the
+# editor.log this is x64_vc150/Profile/bin in this user's project.
 function Get-WwisePluginBinDir {
     $candidates = @(
         Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc150\Profile\bin',
@@ -266,86 +265,115 @@ function Stage-ImmersePlugin {
         Warn 'No project-side Wwise plugin bin dir found; cannot stage Immerse DLL.'
         return $null
     }
-    Info "Wwise plugin bin dir: $binDir"
+    Info "Wwise plugin bin dir (target): $binDir"
 
-    # Dump existing bin folder contents for inspection.
-    $listingBefore = Get-ChildItem $binDir -File -ErrorAction SilentlyContinue |
-        Select-Object Name, Length, @{N='LastWriteTime';E={$_.LastWriteTime.ToString('o')}} |
-        Format-Table -AutoSize | Out-String
-    $listingBefore | Set-Content (Join-Path $script:RunDirAbs 'wwise_bin_listing_before.txt') -Encoding UTF8
+    # Dump listings of every <arch>\<config>\bin folder under Plugins\Wwise\ThirdParty
+    # so I can see exactly what binaries each toolchain has.
+    $tpRoot = Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty'
+    if (Test-Path $tpRoot) {
+        $allBinDirs = Get-ChildItem $tpRoot -Recurse -Directory -ErrorAction SilentlyContinue |
+            Where-Object { $_.Name -eq 'bin' }
+        $listingDump = @()
+        foreach ($d in $allBinDirs) {
+            $listingDump += "==== $($d.FullName) ===="
+            $files = Get-ChildItem $d.FullName -File -ErrorAction SilentlyContinue |
+                Sort-Object Name |
+                Select-Object Name, Length, @{N='Modified';E={$_.LastWriteTime.ToString('o')}}
+            $listingDump += ($files | Format-Table -AutoSize | Out-String)
+            $listingDump += ''
+        }
+        ($listingDump -join "`n") | Set-Content (Join-Path $script:RunDirAbs 'wwise_thirdparty_bin_listings.txt') -Encoding UTF8
+    }
 
+    # If the target bin already has Immerse DLLs, we're good.
     $immerseAlready = Get-ChildItem $binDir -Filter 'Immerse*.dll' -ErrorAction SilentlyContinue
     if ($immerseAlready) {
-        Info "Existing Immerse DLLs already in bin:"
+        Info "Existing Immerse DLLs already in target bin:"
         foreach ($d in $immerseAlready) { Info "  $($d.Name)" }
         return $binDir
     }
 
-    Warn "No Immerse*.dll in $binDir -- searching system for one to stage..."
+    Warn "No Immerse*.dll in $binDir -- searching project ThirdParty subdirs..."
 
-    $searchRoots = @(
-        'C:\Program Files (x86)\Audiokinetic',
-        'C:\Program Files\Audiokinetic',
-        'D:\Program Files (x86)\Audiokinetic',
-        "$env:USERPROFILE\Documents\Audiokinetic",
-        "$env:USERPROFILE\Documents",
-        (Join-Path $ProjectDir 'Plugins')
-    ) | Where-Object { Test-Path $_ }
-
-    $found = @()
-    foreach ($r in $searchRoots) {
-        $found += Get-ChildItem $r -Filter 'Immerse*.dll' -Recurse -ErrorAction SilentlyContinue -Force
-    }
-
-    if (-not $found -or $found.Count -eq 0) {
-        Warn 'No Immerse*.dll found anywhere on common Audiokinetic install paths or the project.'
-        ('Searched: ' + ($searchRoots -join "`n  ")) |
-            Set-Content (Join-Path $script:RunDirAbs 'immerse_dll_search.txt') -Encoding UTF8
-        return $binDir
-    }
-
-    # Dump search results to GitHub for inspection regardless of what we copy.
-    ($found | Select-Object FullName, Length, @{N='LastWriteTime';E={$_.LastWriteTime.ToString('o')}} |
-        Format-Table -AutoSize | Out-String) |
-        Set-Content (Join-Path $script:RunDirAbs 'immerse_dll_search.txt') -Encoding UTF8
-
-    # Pick best match for the project's toolchain (vc150 Profile preferred).
-    $best = $found | Where-Object {
-        $_.FullName -match 'x64_vc150' -and $_.FullName -match 'Profile'
-    } | Select-Object -First 1
-    if (-not $best) {
-        $best = $found | Where-Object {
-            $_.FullName -match 'x64' -and $_.FullName -notmatch 'Win32|x86'
-        } | Select-Object -First 1
-    }
-    if (-not $best) { $best = $found | Select-Object -First 1 }
-
-    if (-not $best) { return $binDir }
-
-    $srcDir = Split-Path $best.FullName -Parent
-    Info "Source dir for Immerse DLLs: $srcDir"
+    # User confirmed Immerse DLLs live under x64_vc160 in this project.
+    # Try Profile first, then Release/Debug as fallbacks. If vc160 has them,
+    # copy to the active bin (vc150/Profile) regardless of toolchain mismatch
+    # -- AK plug-in DLLs typically match by SDK ABI which is more stable than
+    # the host MSVC toolchain.
+    $sourceCandidates = @(
+        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Profile\bin',
+        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Release\bin',
+        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Debug\bin',
+        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc170\Profile\bin',
+        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc170\Release\bin',
+        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc150\Release\bin',
+        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc150\Debug\bin'
+    )
 
     $copied = 0
-    Get-ChildItem $srcDir -Filter 'Immerse*.dll' -ErrorAction SilentlyContinue | ForEach-Object {
-        $dest = Join-Path $binDir $_.Name
-        try {
-            Copy-Item $_.FullName $dest -Force
-            Info "  staged $($_.Name)"
-            $copied++
-        } catch {
-            Warn "  failed to copy $($_.Name): $_"
+    foreach ($srcDir in $sourceCandidates) {
+        if (-not (Test-Path $srcDir)) { continue }
+        if ($srcDir -ieq $binDir)     { continue }
+        $dlls = Get-ChildItem $srcDir -Filter 'Immerse*.dll' -ErrorAction SilentlyContinue
+        if (-not $dlls -or $dlls.Count -eq 0) { continue }
+
+        Info "Source dir with Immerse DLLs: $srcDir"
+        foreach ($d in $dlls) {
+            $dest = Join-Path $binDir $d.Name
+            try {
+                Copy-Item $d.FullName $dest -Force
+                Info "  staged $($d.Name)"
+                $copied++
+            } catch {
+                Warn "  failed to copy $($d.Name): $_"
+            }
         }
-    }
-    if ($copied -gt 0) {
-        Info "Staged $copied Immerse DLL(s) into $binDir"
-    } else {
-        Warn 'Found Immerse DLLs but failed to copy any.'
+        if ($copied -gt 0) { break }
     }
 
-    # Re-dump bin folder after potential copy.
+    if ($copied -eq 0) {
+        Warn 'No Immerse*.dll found in any project ThirdParty subdir; falling back to Audiokinetic install search.'
+        $searchRoots = @(
+            'C:\Program Files (x86)\Audiokinetic',
+            'C:\Program Files\Audiokinetic',
+            'D:\Program Files (x86)\Audiokinetic',
+            "$env:USERPROFILE\Documents\Audiokinetic"
+        ) | Where-Object { Test-Path $_ }
+
+        $found = @()
+        foreach ($r in $searchRoots) {
+            $found += Get-ChildItem $r -Filter 'Immerse*.dll' -Recurse -ErrorAction SilentlyContinue -Force
+        }
+
+        if ($found) {
+            ($found | Select-Object FullName, Length, @{N='LastWriteTime';E={$_.LastWriteTime.ToString('o')}} |
+                Format-Table -AutoSize | Out-String) |
+                Set-Content (Join-Path $script:RunDirAbs 'immerse_dll_search.txt') -Encoding UTF8
+            $best = $found | Where-Object { $_.FullName -match 'x64_vc150' -and $_.FullName -match 'Profile' } | Select-Object -First 1
+            if (-not $best) {
+                $best = $found | Where-Object { $_.FullName -match 'x64' } | Select-Object -First 1
+            }
+            if ($best) {
+                $srcDir = Split-Path $best.FullName -Parent
+                Info "Falling back to: $srcDir"
+                Get-ChildItem $srcDir -Filter 'Immerse*.dll' -ErrorAction SilentlyContinue | ForEach-Object {
+                    Copy-Item $_.FullName (Join-Path $binDir $_.Name) -Force
+                    $copied++
+                    Info "  staged $($_.Name)"
+                }
+            }
+        } else {
+            ('Searched: ' + ($searchRoots -join "`n  ")) |
+                Set-Content (Join-Path $script:RunDirAbs 'immerse_dll_search.txt') -Encoding UTF8
+        }
+    }
+
+    Info "Total Immerse DLLs staged: $copied"
+
+    # Re-dump active bin contents post-copy.
     Get-ChildItem $binDir -File -ErrorAction SilentlyContinue |
         Select-Object Name, Length, @{N='LastWriteTime';E={$_.LastWriteTime.ToString('o')}} |
-        Format-Table -AutoSize | Out-String |
+        Sort-Object Name | Format-Table -AutoSize | Out-String |
         Set-Content (Join-Path $script:RunDirAbs 'wwise_bin_listing_after.txt') -Encoding UTF8
 
     return $binDir
