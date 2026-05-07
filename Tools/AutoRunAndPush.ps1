@@ -1,4 +1,8 @@
 $ErrorActionPreference = 'Continue'
+# PS 5.x treats native-command stderr as ErrorRecord; suppress that.
+$PSNativeCommandUseErrorActionPreference = $false
+try { $PSStyle.OutputRendering = 'PlainText' } catch { }
+
 $ScriptDir   = Split-Path -Parent $MyInvocation.MyCommand.Path
 $ProjectDir  = Split-Path -Parent $ScriptDir
 $RunId       = Get-Date -Format 'yyyyMMdd-HHmmss'
@@ -11,6 +15,26 @@ $RunDirAbs   = $null
 
 function Step($m) { Write-Host "==== $m ====" -ForegroundColor Cyan }
 function Info($m) { Write-Host "    $m" -ForegroundColor DarkGray }
+function Warn($m) { Write-Host "    $m" -ForegroundColor Yellow }
+
+# Run git capturing stdout + stderr without PowerShell flagging stderr as error.
+function Invoke-Git {
+    param([Parameter(ValueFromRemainingArguments=$true)][string[]]$GitArgs)
+    $tempErr = [System.IO.Path]::GetTempFileName()
+    try {
+        $stdout = & git @GitArgs 2>$tempErr
+        $code = $LASTEXITCODE
+        $stderr = ''
+        if (Test-Path $tempErr) { $stderr = Get-Content $tempErr -Raw -ErrorAction SilentlyContinue }
+        return [PSCustomObject]@{
+            ExitCode = $code
+            StdOut   = ($stdout -join "`n")
+            StdErr   = ($stderr -as [string])
+        }
+    } finally {
+        Remove-Item $tempErr -ErrorAction SilentlyContinue
+    }
+}
 
 $tokenFile = Join-Path $ScriptDir '.github_token'
 if (-not (Test-Path $tokenFile)) {
@@ -21,41 +45,61 @@ if (-not (Test-Path $tokenFile)) {
 $Token     = (Get-Content $tokenFile -Raw).Trim()
 $RemoteUrl = "https://x-access-token:$Token@github.com/$Owner/$Repo.git"
 
-$gitOk = $false
-try { & git --version *> $null; $gitOk = ($LASTEXITCODE -eq 0) } catch { }
-if (-not $gitOk) {
+# Verify git is callable
+$verCheck = Invoke-Git --version
+if ($verCheck.ExitCode -ne 0) {
     Write-Host "FATAL: git not on PATH. Install Git for Windows: https://git-scm.com/download/win" -ForegroundColor Red
     Read-Host 'Press Enter to close'; exit 1
 }
 
+# Block any interactive credential prompts; PAT-in-URL is the only auth path.
+$env:GIT_TERMINAL_PROMPT = '0'
+
 function Init-ResultsRepo {
+    # If the dir exists but isn't a valid repo (half-clone from a previous failed attempt), nuke it.
+    if (Test-Path $ResultsRoot) {
+        if (-not (Test-Path (Join-Path $ResultsRoot '.git'))) {
+            Warn "Removing stale (non-repo) $ResultsRoot"
+            Remove-Item -LiteralPath $ResultsRoot -Recurse -Force -ErrorAction SilentlyContinue
+        }
+    }
     if (-not (Test-Path $ResultsRoot)) {
         Step "Cloning results checkout"
-        & git clone --branch $Branch --single-branch $RemoteUrl $ResultsRoot 2>&1 | Out-Host
-        if ($LASTEXITCODE -ne 0) { throw "git clone failed" }
+        $r = Invoke-Git clone --quiet --branch $Branch --single-branch $RemoteUrl $ResultsRoot
+        if ($r.ExitCode -ne 0) {
+            Write-Host "git clone failed (exit $($r.ExitCode))" -ForegroundColor Red
+            if ($r.StdErr) { Write-Host "stderr:`n$($r.StdErr)" -ForegroundColor Red }
+            if ($r.StdOut) { Write-Host "stdout:`n$($r.StdOut)" -ForegroundColor DarkGray }
+            throw "git clone failed (exit $($r.ExitCode))"
+        }
     } else {
-        & git -C $ResultsRoot remote set-url origin $RemoteUrl *> $null
-        & git -C $ResultsRoot fetch origin $Branch *> $null
-        & git -C $ResultsRoot checkout $Branch *> $null
-        & git -C $ResultsRoot reset --hard "origin/$Branch" *> $null
+        $null = Invoke-Git -C $ResultsRoot remote set-url origin $RemoteUrl
+        $null = Invoke-Git -C $ResultsRoot fetch origin $Branch
+        $null = Invoke-Git -C $ResultsRoot checkout $Branch
+        $null = Invoke-Git -C $ResultsRoot reset --hard "origin/$Branch"
     }
-    & git -C $ResultsRoot config user.email 'immerse-bot@local' *> $null
-    & git -C $ResultsRoot config user.name 'ImmerseStressBot' *> $null
+    $null = Invoke-Git -C $ResultsRoot config user.email 'immerse-bot@local'
+    $null = Invoke-Git -C $ResultsRoot config user.name 'ImmerseStressBot'
 }
 
 function Push-To-Branch([string]$Msg) {
-    & git -C $ResultsRoot fetch origin $Branch *> $null
-    & git -C $ResultsRoot reset --soft "origin/$Branch" *> $null
-    & git -C $ResultsRoot add -A *> $null
-    & git -C $ResultsRoot diff --cached --quiet *> $null
-    if ($LASTEXITCODE -ne 0) {
-        & git -C $ResultsRoot commit -m $Msg *> $null
+    $null = Invoke-Git -C $ResultsRoot fetch origin $Branch
+    $null = Invoke-Git -C $ResultsRoot reset --soft "origin/$Branch"
+    $null = Invoke-Git -C $ResultsRoot add -A
+    $diff = Invoke-Git -C $ResultsRoot diff --cached --quiet
+    if ($diff.ExitCode -ne 0) {
+        $commit = Invoke-Git -C $ResultsRoot commit -m $Msg
+        if ($commit.ExitCode -ne 0) {
+            Warn "commit failed: $($commit.StdErr)"
+            return $false
+        }
         for ($i = 0; $i -lt 4; $i++) {
-            & git -C $ResultsRoot push origin $Branch *> $null
-            if ($LASTEXITCODE -eq 0) { return $true }
+            $push = Invoke-Git -C $ResultsRoot push origin $Branch
+            if ($push.ExitCode -eq 0) { return $true }
+            Warn "push retry $($i+1): $($push.StdErr)"
             Start-Sleep -Seconds ([math]::Pow(2, $i + 1))
         }
-        Write-Host "WARN: push retries exhausted" -ForegroundColor Yellow
+        Warn 'push retries exhausted'
         return $false
     }
     return $true
@@ -176,15 +220,15 @@ try {
 
     Step 'Launching headless editor for stress sweep'
     Push-Status -Phase 'testing'
-    $editor   = Join-Path $engineRoot 'Engine\Binaries\Win64\UE4Editor.exe'
+    $editor    = Join-Path $engineRoot 'Engine\Binaries\Win64\UE4Editor.exe'
     $editorLog = Join-Path $env:TEMP "immerse_editor_$RunId.log"
-    $args = @(
+    $editorArgs = @(
         "`"$uproject`"",
         '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap',
         '-game','-RenderOffscreen','-unattended','-nopause','-NoSplash',
         "-abslog=$editorLog"
     )
-    $proc = Start-Process -FilePath $editor -ArgumentList $args -PassThru -WindowStyle Hidden
+    $proc = Start-Process -FilePath $editor -ArgumentList $editorArgs -PassThru -WindowStyle Hidden
     Info "Editor PID: $($proc.Id), log: $editorLog"
 
     $startedAt = Get-Date
