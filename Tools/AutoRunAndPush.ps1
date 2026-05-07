@@ -125,9 +125,7 @@ function Push-File([string]$Local, [string]$Name) {
     Copy-Item $Local -Destination (Join-Path $script:RunDirAbs $Name) -Force
 }
 
-# Apply known source patches before building.
-# Patches are broad and idempotent. Originals + post-patch copies are pushed
-# to the run dir on GitHub for inspection if a future build still fails.
+# Apply known source patches before building. Idempotent.
 function Patch-Sources {
     $changes = @()
     $sourceRoot = Join-Path $ProjectDir 'Source\testTP'
@@ -136,51 +134,54 @@ function Patch-Sources {
         return
     }
 
-    # Always dump the key header for inspection (before any modification).
+    # Dump key files BEFORE patching, for inspection if the patch is wrong.
     $keyHeader = Join-Path $sourceRoot 'Public\ImmerseStressTestActor.h'
-    if (Test-Path $keyHeader) {
-        Push-File $keyHeader 'ImmerseStressTestActor.h.before'
-    }
-    $keyCpp = Join-Path $sourceRoot 'Private\ImmerseStressTestActor.cpp'
-    if (Test-Path $keyCpp) {
-        Push-File $keyCpp 'ImmerseStressTestActor.cpp.before'
-    }
-    $modCpp = Join-Path $sourceRoot 'testTP.cpp'
-    if (Test-Path $modCpp) {
-        Push-File $modCpp 'testTP.cpp.before'
-    }
-    $modHeader = Join-Path $sourceRoot 'testTP.h'
-    if (Test-Path $modHeader) {
-        Push-File $modHeader 'testTP.h.before'
-    }
+    if (Test-Path $keyHeader) { Push-File $keyHeader 'ImmerseStressTestActor.h.before' }
+    $keyCpp    = Join-Path $sourceRoot 'Private\ImmerseStressTestActor.cpp'
+    if (Test-Path $keyCpp)    { Push-File $keyCpp    'ImmerseStressTestActor.cpp.before' }
 
-    # Walk every .h and .cpp under Source/testTP/, replacing any
-    # `struct[ws]IConsoleCommand` with `class[ws]IConsoleCommand`. This catches
-    # both forward declarations and elaborated-type-specifiers in member
-    # declarations and pointer types.
-    $files = Get-ChildItem $sourceRoot -Recurse -Include *.h,*.cpp -ErrorAction SilentlyContinue
-    foreach ($f in $files) {
-        $orig = Get-Content $f.FullName -Raw
-        $patched = $orig -replace 'struct(\s+)IConsoleCommand', 'class$1IConsoleCommand'
-        if ($patched -ne $orig) {
-            Set-Content -Path $f.FullName -Value $patched -NoNewline -Encoding UTF8
-            $changes += "$($f.Name): IConsoleCommand struct -> class"
+    # Dump the engine's IConsoleManager.h around line 501 so we can verify the
+    # actual `class` vs `struct` kind in the user's UE install.
+    $candidates = @(
+        'C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\HAL\IConsoleManager.h',
+        'D:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\HAL\IConsoleManager.h',
+        'E:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\HAL\IConsoleManager.h'
+    )
+    foreach ($p in $candidates) {
+        if (Test-Path $p) {
+            $allLines = Get-Content $p
+            $startIdx = [Math]::Max(0, 470 - 1)
+            $endIdx   = [Math]::Min($allLines.Count - 1, 530 - 1)
+            $excerpt  = @("// IConsoleManager.h lines $($startIdx + 1)-$($endIdx + 1) from $p","") + $allLines[$startIdx..$endIdx]
+            $excerpt | Set-Content -Path (Join-Path $script:RunDirAbs 'IConsoleManager.h.excerpt.txt') -Encoding UTF8
+            break
         }
     }
 
-    # Dump the post-patch versions of the key files.
-    if (Test-Path $keyHeader) {
-        Push-File $keyHeader 'ImmerseStressTestActor.h.after'
-    }
-    if (Test-Path $keyCpp) {
-        Push-File $keyCpp 'ImmerseStressTestActor.cpp.after'
+    # Patch direction: the previous run's compile error showed "first seen using
+    # 'struct' now seen using 'class'", with the prior decl at IConsoleManager.h:501.
+    # That means the engine declares IConsoleCommand as `struct` in this user's
+    # UE 4.27 install, and our `class IConsoleCommand;` is the conflict. Flip
+    # `class -> struct` for IConsoleCommand on every .h/.cpp under Source/testTP/.
+    $files = Get-ChildItem $sourceRoot -Recurse -Include *.h,*.cpp -ErrorAction SilentlyContinue
+    foreach ($f in $files) {
+        $orig = Get-Content $f.FullName -Raw
+        $patched = $orig -replace 'class(\s+)IConsoleCommand', 'struct$1IConsoleCommand'
+        if ($patched -ne $orig) {
+            Set-Content -Path $f.FullName -Value $patched -NoNewline -Encoding UTF8
+            $changes += "$($f.Name): IConsoleCommand class -> struct"
+        }
     }
 
+    # Dump the post-patch versions for verification.
+    if (Test-Path $keyHeader) { Push-File $keyHeader 'ImmerseStressTestActor.h.after' }
+    if (Test-Path $keyCpp)    { Push-File $keyCpp    'ImmerseStressTestActor.cpp.after' }
+
     if ($changes.Count -gt 0) {
-        Info ("source patches applied:")
+        Info "source patches applied:"
         foreach ($c in $changes) { Info "  - $c" }
     } else {
-        Info 'no source patches needed (no struct IConsoleCommand pattern found)'
+        Info 'no source patches needed (no class IConsoleCommand pattern found)'
     }
 }
 
