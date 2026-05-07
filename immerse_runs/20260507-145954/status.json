@@ -1,9 +1,8 @@
 ﻿{
     "machine":  "IMMERSEDEMOM5",
-    "updated_at":  "2026-05-07T22:12:47.2348219Z",
-    "error":  "timeout_12min",
-    "phase":  "failed",
+    "updated_at":  "2026-05-07T22:12:50.3493383Z",
+    "csv_name":  "run_20260507_145117.csv",
+    "phase":  "completed",
     "run_id":  "20260507-145954",
-    "stage":  "editor",
     "user":  "kapil"
 }
