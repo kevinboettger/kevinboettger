@@ -125,7 +125,6 @@ function Push-File([string]$Local, [string]$Name) {
     Copy-Item $Local -Destination (Join-Path $script:RunDirAbs $Name) -Force
 }
 
-# Apply known source patches before building. Idempotent.
 function Patch-Sources {
     $changes = @()
     $sourceRoot = Join-Path $ProjectDir 'Source\testTP'
@@ -134,14 +133,68 @@ function Patch-Sources {
         return
     }
 
-    # Dump key files BEFORE patching, for inspection if the patch is wrong.
     $keyHeader = Join-Path $sourceRoot 'Public\ImmerseStressTestActor.h'
     if (Test-Path $keyHeader) { Push-File $keyHeader 'ImmerseStressTestActor.h.before' }
     $keyCpp    = Join-Path $sourceRoot 'Private\ImmerseStressTestActor.cpp'
     if (Test-Path $keyCpp)    { Push-File $keyCpp    'ImmerseStressTestActor.cpp.before' }
 
-    # Dump the engine's IConsoleManager.h around line 501 so we can verify the
-    # actual `class` vs `struct` kind in the user's UE install.
+    # Patch 1: class -> struct for IConsoleCommand to match this user's UE 4.27
+    # IConsoleManager.h declaration kind. (Idempotent: if no `class IConsoleCommand`
+    # remains it just no-ops.)
+    $files = Get-ChildItem $sourceRoot -Recurse -Include *.h,*.cpp -ErrorAction SilentlyContinue
+    foreach ($f in $files) {
+        $orig = Get-Content $f.FullName -Raw
+        $patched = $orig -replace 'class(\s+)IConsoleCommand', 'struct$1IConsoleCommand'
+        if ($patched -ne $orig) {
+            Set-Content -Path $f.FullName -Value $patched -NoNewline -Encoding UTF8
+            $changes += "$($f.Name): IConsoleCommand class -> struct"
+        }
+    }
+
+    # Patch 2: Defer RunPlan() until Wwise SoundEngine is initialized.
+    # The auto-spawn fires on OnPostLoadMap, before AK::SoundEngine::Init has
+    # completed, so calling AK::SoundEngine::SetMixer() inside BypassImmerse()
+    # crashed with EXCEPTION_ACCESS_VIOLATION inside CAkAudioMgr::ReserveForWrite.
+    # This patch inserts a readiness check at the top of RunPlan(); if Wwise
+    # isn't up, schedule a retry in 0.5s (up to ~10s) via the timer manager.
+    if (Test-Path $keyCpp) {
+        $cpp = Get-Content $keyCpp -Raw
+        if ($cpp -notmatch 'AK::SoundEngine::IsInitialized') {
+            $insertion = @'
+
+	static int ImmerseAKReadyRetries = 0;
+	if (!AK::SoundEngine::IsInitialized())
+	{
+		++ImmerseAKReadyRetries;
+		if (ImmerseAKReadyRetries > 40) {
+			UE_LOG(LogTemp, Error, TEXT("[ImmerseStress] Wwise SoundEngine still not initialized after ~20s, giving up on auto-run."));
+			ImmerseAKReadyRetries = 0;
+			return;
+		}
+		UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] Wwise not ready (retry %d), waiting 0.5s..."), ImmerseAKReadyRetries);
+		if (UWorld* W = GetWorld())
+		{
+			FTimerHandle Th;
+			W->GetTimerManager().SetTimer(Th, FTimerDelegate::CreateUObject(this, &AImmerseStressTestActor::RunPlan), 0.5f, false);
+		}
+		return;
+	}
+	ImmerseAKReadyRetries = 0;
+
+'@
+            $pattern = '(void\s+AImmerseStressTestActor::RunPlan\(\)\s*\{)'
+            $replacement = '$1' + $insertion
+            $patchedCpp = $cpp -replace $pattern, $replacement
+            if ($patchedCpp -ne $cpp) {
+                Set-Content -Path $keyCpp -Value $patchedCpp -NoNewline -Encoding UTF8
+                $changes += "ImmerseStressTestActor.cpp: RunPlan() now waits for AK::SoundEngine::IsInitialized()"
+            } else {
+                Warn 'RunPlan AK-readiness patch did not match; check ImmerseStressTestActor.cpp shape.'
+            }
+        }
+    }
+
+    # Dump engine excerpt for kind verification.
     $candidates = @(
         'C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\HAL\IConsoleManager.h',
         'D:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\HAL\IConsoleManager.h',
@@ -158,22 +211,6 @@ function Patch-Sources {
         }
     }
 
-    # Patch direction: the previous run's compile error showed "first seen using
-    # 'struct' now seen using 'class'", with the prior decl at IConsoleManager.h:501.
-    # That means the engine declares IConsoleCommand as `struct` in this user's
-    # UE 4.27 install, and our `class IConsoleCommand;` is the conflict. Flip
-    # `class -> struct` for IConsoleCommand on every .h/.cpp under Source/testTP/.
-    $files = Get-ChildItem $sourceRoot -Recurse -Include *.h,*.cpp -ErrorAction SilentlyContinue
-    foreach ($f in $files) {
-        $orig = Get-Content $f.FullName -Raw
-        $patched = $orig -replace 'class(\s+)IConsoleCommand', 'struct$1IConsoleCommand'
-        if ($patched -ne $orig) {
-            Set-Content -Path $f.FullName -Value $patched -NoNewline -Encoding UTF8
-            $changes += "$($f.Name): IConsoleCommand class -> struct"
-        }
-    }
-
-    # Dump the post-patch versions for verification.
     if (Test-Path $keyHeader) { Push-File $keyHeader 'ImmerseStressTestActor.h.after' }
     if (Test-Path $keyCpp)    { Push-File $keyCpp    'ImmerseStressTestActor.cpp.after' }
 
@@ -181,7 +218,7 @@ function Patch-Sources {
         Info "source patches applied:"
         foreach ($c in $changes) { Info "  - $c" }
     } else {
-        Info 'no source patches needed (no class IConsoleCommand pattern found)'
+        Info 'no source patches needed'
     }
 }
 
