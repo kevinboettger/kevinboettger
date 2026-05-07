@@ -56,7 +56,6 @@ if ($verCheck.ExitCode -ne 0) {
 $env:GIT_TERMINAL_PROMPT = '0'
 
 function Init-ResultsRepo {
-    # If the dir exists but isn't a valid repo (half-clone from a previous failed attempt), nuke it.
     if (Test-Path $ResultsRoot) {
         if (-not (Test-Path (Join-Path $ResultsRoot '.git'))) {
             Warn "Removing stale (non-repo) $ResultsRoot"
@@ -133,6 +132,26 @@ function Push-File([string]$Local, [string]$Name) {
     Copy-Item $Local -Destination (Join-Path $script:RunDirAbs $Name) -Force
 }
 
+# Apply known source patches before building. Idempotent.
+function Patch-Sources {
+    $changes = @()
+    $headerPath = Join-Path $ProjectDir 'Source\testTP\Public\ImmerseStressTestActor.h'
+    if (Test-Path $headerPath) {
+        $orig = Get-Content $headerPath -Raw
+        # Forward decl: UE 4.27 declares IConsoleCommand as `class`, not `struct`.
+        $patched = $orig -replace '(?m)^\s*struct\s+IConsoleCommand\s*;\s*$', 'class IConsoleCommand;'
+        if ($patched -ne $orig) {
+            Set-Content -Path $headerPath -Value $patched -NoNewline -Encoding UTF8
+            $changes += 'IConsoleCommand: struct -> class'
+        }
+    }
+    if ($changes.Count -gt 0) {
+        Info ("source patches applied: " + ($changes -join '; '))
+    } else {
+        Info 'no source patches needed'
+    }
+}
+
 try {
     Init-ResultsRepo
     $RunDirAbs = Join-Path $ResultsRoot $RunDirRel
@@ -194,15 +213,20 @@ try {
     Info "Engine: $engineRoot"
     Push-Status -Phase 'ue_located' -Extra @{ engine_root = $engineRoot }
 
+    Step 'Patching sources for known UE 4.27 issues'
+    Patch-Sources
+    Push-Status -Phase 'sources_patched'
+
     Step 'Regenerating project files'
     $uproject = (Get-ChildItem $ProjectDir -Filter '*.uproject' | Select-Object -First 1).FullName
     $ubt = Join-Path $engineRoot 'Engine\Binaries\DotNET\UnrealBuildTool.exe'
     $regenLog = Join-Path $env:TEMP "immerse_regen_$RunId.log"
     & $ubt -projectfiles -project="$uproject" -game -engine -progress *>&1 | Tee-Object -FilePath $regenLog | Out-Host
+    $regenExit = $LASTEXITCODE
     Push-File $regenLog 'regen.log'
-    if ($LASTEXITCODE -ne 0) {
-        Push-Status -Phase 'failed' -Extra @{ stage='regen'; exit_code=$LASTEXITCODE }
-        throw "Regen failed: $LASTEXITCODE"
+    if ($regenExit -ne 0) {
+        Push-Status -Phase 'failed' -Extra @{ stage='regen'; exit_code=$regenExit }
+        throw "Regen failed: $regenExit"
     }
     Push-Status -Phase 'regen_done'
 
@@ -211,10 +235,19 @@ try {
     $buildBat = Join-Path $engineRoot 'Engine\Build\BatchFiles\Build.bat'
     $buildLog = Join-Path $env:TEMP "immerse_build_$RunId.log"
     & $buildBat 'testTPEditor' 'Win64' 'Development' "-Project=$uproject" '-WaitMutex' *>&1 | Tee-Object -FilePath $buildLog | Out-Host
+    $buildExit = $LASTEXITCODE
     Push-File $buildLog 'build.log'
-    if ($LASTEXITCODE -ne 0) {
-        Push-Status -Phase 'failed' -Extra @{ stage='build'; exit_code=$LASTEXITCODE }
-        throw "Build failed: $LASTEXITCODE"
+    # UBT sometimes returns 0 even on compile failure; sniff the log too.
+    $buildHasErrors = $false
+    if (Test-Path $buildLog) {
+        $logTail = Get-Content $buildLog -Tail 200 -ErrorAction SilentlyContinue
+        if ($logTail -match 'error C\d+|: error : |Error executing|fatal error') {
+            $buildHasErrors = $true
+        }
+    }
+    if ($buildExit -ne 0 -or $buildHasErrors) {
+        Push-Status -Phase 'failed' -Extra @{ stage='build'; exit_code=$buildExit; sniffed_errors=$buildHasErrors }
+        throw "Build failed (exit $buildExit, sniffed_errors=$buildHasErrors)"
     }
     Push-Status -Phase 'build_done'
 
