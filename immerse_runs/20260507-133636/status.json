@@ -1,7 +1,10 @@
 ﻿{
-    "phase":  "building",
-    "updated_at":  "2026-05-07T20:37:35.1485534Z",
+    "machine":  "IMMERSEDEMOM5",
+    "updated_at":  "2026-05-07T20:37:41.7288045Z",
+    "stage":  "build",
+    "phase":  "failed",
     "run_id":  "20260507-133636",
-    "user":  "kapil",
-    "machine":  "IMMERSEDEMOM5"
+    "exit_code":  6,
+    "sniffed_errors":  true,
+    "user":  "kapil"
 }
