@@ -1,9 +1,8 @@
 ﻿{
     "machine":  "IMMERSEDEMOM5",
-    "updated_at":  "2026-05-07T20:32:30.9610120Z",
+    "updated_at":  "2026-05-07T20:32:34.3208721Z",
+    "error":  "Build failed: 0",
     "phase":  "failed",
     "run_id":  "20260507-130422",
-    "exit_code":  6,
-    "stage":  "build",
     "user":  "kapil"
 }
