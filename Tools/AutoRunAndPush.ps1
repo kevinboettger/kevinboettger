@@ -1,5 +1,4 @@
 $ErrorActionPreference = 'Continue'
-# PS 5.x treats native-command stderr as ErrorRecord; suppress that.
 $PSNativeCommandUseErrorActionPreference = $false
 try { $PSStyle.OutputRendering = 'PlainText' } catch { }
 
@@ -17,7 +16,6 @@ function Step($m) { Write-Host "==== $m ====" -ForegroundColor Cyan }
 function Info($m) { Write-Host "    $m" -ForegroundColor DarkGray }
 function Warn($m) { Write-Host "    $m" -ForegroundColor Yellow }
 
-# Run git capturing stdout + stderr without PowerShell flagging stderr as error.
 function Invoke-Git {
     param([Parameter(ValueFromRemainingArguments=$true)][string[]]$GitArgs)
     $tempErr = [System.IO.Path]::GetTempFileName()
@@ -39,20 +37,16 @@ function Invoke-Git {
 $tokenFile = Join-Path $ScriptDir '.github_token'
 if (-not (Test-Path $tokenFile)) {
     Write-Host "MISSING: $tokenFile" -ForegroundColor Red
-    Write-Host "Create a fine-grained PAT (Contents=Read+Write on kevinboettger/kevinboettger) and save it as the only line in that file." -ForegroundColor Yellow
     Read-Host 'Press Enter to close'; exit 1
 }
 $Token     = (Get-Content $tokenFile -Raw).Trim()
 $RemoteUrl = "https://x-access-token:$Token@github.com/$Owner/$Repo.git"
 
-# Verify git is callable
 $verCheck = Invoke-Git --version
 if ($verCheck.ExitCode -ne 0) {
-    Write-Host "FATAL: git not on PATH. Install Git for Windows: https://git-scm.com/download/win" -ForegroundColor Red
+    Write-Host "FATAL: git not on PATH." -ForegroundColor Red
     Read-Host 'Press Enter to close'; exit 1
 }
-
-# Block any interactive credential prompts; PAT-in-URL is the only auth path.
 $env:GIT_TERMINAL_PROMPT = '0'
 
 function Init-ResultsRepo {
@@ -68,7 +62,6 @@ function Init-ResultsRepo {
         if ($r.ExitCode -ne 0) {
             Write-Host "git clone failed (exit $($r.ExitCode))" -ForegroundColor Red
             if ($r.StdErr) { Write-Host "stderr:`n$($r.StdErr)" -ForegroundColor Red }
-            if ($r.StdOut) { Write-Host "stdout:`n$($r.StdOut)" -ForegroundColor DarkGray }
             throw "git clone failed (exit $($r.ExitCode))"
         }
     } else {
@@ -132,23 +125,62 @@ function Push-File([string]$Local, [string]$Name) {
     Copy-Item $Local -Destination (Join-Path $script:RunDirAbs $Name) -Force
 }
 
-# Apply known source patches before building. Idempotent.
+# Apply known source patches before building.
+# Patches are broad and idempotent. Originals + post-patch copies are pushed
+# to the run dir on GitHub for inspection if a future build still fails.
 function Patch-Sources {
     $changes = @()
-    $headerPath = Join-Path $ProjectDir 'Source\testTP\Public\ImmerseStressTestActor.h'
-    if (Test-Path $headerPath) {
-        $orig = Get-Content $headerPath -Raw
-        # Forward decl: UE 4.27 declares IConsoleCommand as `class`, not `struct`.
-        $patched = $orig -replace '(?m)^\s*struct\s+IConsoleCommand\s*;\s*$', 'class IConsoleCommand;'
+    $sourceRoot = Join-Path $ProjectDir 'Source\testTP'
+    if (-not (Test-Path $sourceRoot)) {
+        Warn "no Source/testTP dir at $sourceRoot"
+        return
+    }
+
+    # Always dump the key header for inspection (before any modification).
+    $keyHeader = Join-Path $sourceRoot 'Public\ImmerseStressTestActor.h'
+    if (Test-Path $keyHeader) {
+        Push-File $keyHeader 'ImmerseStressTestActor.h.before'
+    }
+    $keyCpp = Join-Path $sourceRoot 'Private\ImmerseStressTestActor.cpp'
+    if (Test-Path $keyCpp) {
+        Push-File $keyCpp 'ImmerseStressTestActor.cpp.before'
+    }
+    $modCpp = Join-Path $sourceRoot 'testTP.cpp'
+    if (Test-Path $modCpp) {
+        Push-File $modCpp 'testTP.cpp.before'
+    }
+    $modHeader = Join-Path $sourceRoot 'testTP.h'
+    if (Test-Path $modHeader) {
+        Push-File $modHeader 'testTP.h.before'
+    }
+
+    # Walk every .h and .cpp under Source/testTP/, replacing any
+    # `struct[ws]IConsoleCommand` with `class[ws]IConsoleCommand`. This catches
+    # both forward declarations and elaborated-type-specifiers in member
+    # declarations and pointer types.
+    $files = Get-ChildItem $sourceRoot -Recurse -Include *.h,*.cpp -ErrorAction SilentlyContinue
+    foreach ($f in $files) {
+        $orig = Get-Content $f.FullName -Raw
+        $patched = $orig -replace 'struct(\s+)IConsoleCommand', 'class$1IConsoleCommand'
         if ($patched -ne $orig) {
-            Set-Content -Path $headerPath -Value $patched -NoNewline -Encoding UTF8
-            $changes += 'IConsoleCommand: struct -> class'
+            Set-Content -Path $f.FullName -Value $patched -NoNewline -Encoding UTF8
+            $changes += "$($f.Name): IConsoleCommand struct -> class"
         }
     }
+
+    # Dump the post-patch versions of the key files.
+    if (Test-Path $keyHeader) {
+        Push-File $keyHeader 'ImmerseStressTestActor.h.after'
+    }
+    if (Test-Path $keyCpp) {
+        Push-File $keyCpp 'ImmerseStressTestActor.cpp.after'
+    }
+
     if ($changes.Count -gt 0) {
-        Info ("source patches applied: " + ($changes -join '; '))
+        Info ("source patches applied:")
+        foreach ($c in $changes) { Info "  - $c" }
     } else {
-        Info 'no source patches needed'
+        Info 'no source patches needed (no struct IConsoleCommand pattern found)'
     }
 }
 
@@ -184,7 +216,6 @@ try {
         $p = Start-Process -FilePath $bs -ArgumentList $vsArgs -Wait -PassThru
         if ($p.ExitCode -eq 3010) {
             Push-Status -Phase 'vs_reboot_needed' -Extra @{ exit_code = 3010 }
-            Write-Host 'VS install needs reboot. Reboot, then re-run AutoRunAndPush.bat.' -ForegroundColor Yellow
             Read-Host 'Press Enter'; exit 0
         }
         if ($p.ExitCode -ne 0) {
@@ -237,7 +268,6 @@ try {
     & $buildBat 'testTPEditor' 'Win64' 'Development' "-Project=$uproject" '-WaitMutex' *>&1 | Tee-Object -FilePath $buildLog | Out-Host
     $buildExit = $LASTEXITCODE
     Push-File $buildLog 'build.log'
-    # UBT sometimes returns 0 even on compile failure; sniff the log too.
     $buildHasErrors = $false
     if (Test-Path $buildLog) {
         $logTail = Get-Content $buildLog -Tail 200 -ErrorAction SilentlyContinue
