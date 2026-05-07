@@ -1,8 +1,7 @@
 ﻿{
-    "machine":  "IMMERSEDEMOM5",
-    "updated_at":  "2026-05-07T21:59:55.4729566Z",
-    "project_dir":  "C:\\Users\\kapil\\OneDrive\\Documents\\Unreal Projects\\testTP",
-    "phase":  "started",
+    "phase":  "vs_check",
+    "updated_at":  "2026-05-07T21:59:58.7929262Z",
     "run_id":  "20260507-145954",
-    "user":  "kapil"
+    "user":  "kapil",
+    "machine":  "IMMERSEDEMOM5"
 }
