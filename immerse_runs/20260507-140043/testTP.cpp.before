@@ -1,0 +1,57 @@
+// Copyright Epic Games, Inc. All Rights Reserved.
+
+#include "testTP.h"
+#include "Modules/ModuleManager.h"
+#include "Engine/World.h"
+#include "Engine/Engine.h"
+#include "UObject/UObjectGlobals.h"
+#include "ImmerseStressTestActor.h"
+
+class FtestTPModule : public FDefaultGameModuleImpl
+{
+public:
+	virtual void StartupModule() override
+	{
+		// Auto-spawn the Immerse stress actor whenever a Game/PIE map finishes loading.
+		// Means: no manual level placement required — drop into any default map and it just runs.
+		PostLoadHandle = FCoreUObjectDelegates::PostLoadMapWithWorld.AddStatic(&FtestTPModule::OnPostLoadMap);
+	}
+
+	virtual void ShutdownModule() override
+	{
+		FCoreUObjectDelegates::PostLoadMapWithWorld.Remove(PostLoadHandle);
+	}
+
+	static void OnPostLoadMap(UWorld* World)
+	{
+		if (!World) return;
+		if (World->WorldType != EWorldType::Game && World->WorldType != EWorldType::PIE) return;
+
+		// Guard against double-spawn if multiple maps load.
+		for (TActorIterator<AImmerseStressTestActor> It(World); It; ++It)
+		{
+			return;
+		}
+
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		Params.ObjectFlags |= RF_Transient;
+		AImmerseStressTestActor* Spawned = World->SpawnActor<AImmerseStressTestActor>(
+			AImmerseStressTestActor::StaticClass(), FTransform::Identity, Params);
+		if (Spawned)
+		{
+			UE_LOG(LogTemp, Display, TEXT("[testTP] Auto-spawned ImmerseStressTestActor into %s (type=%d)"),
+				*World->GetName(), (int32)World->WorldType);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("[testTP] Failed to auto-spawn ImmerseStressTestActor into %s"),
+				*World->GetName());
+		}
+	}
+
+private:
+	FDelegateHandle PostLoadHandle;
+};
+
+IMPLEMENT_PRIMARY_GAME_MODULE(FtestTPModule, testTP, "testTP");
