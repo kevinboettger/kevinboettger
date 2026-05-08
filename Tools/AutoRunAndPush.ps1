@@ -73,9 +73,6 @@ function Regex-Replace {
     return $rx.Replace($InputText, $Replacement)
 }
 
-# Ensure a Source/testTP file is present and at least MinBytes long. If it's
-# missing or truncated, restore it from the canonical copy on the branch
-# (Tools/source_canon/<CanonName>) via raw with cache-busting.
 function Ensure-CanonicalSource {
     param(
         [Parameter(Mandatory=$true)][string]$LocalPath,
@@ -102,7 +99,8 @@ function Ensure-CanonicalSource {
         Info "  restored $CanonName -> $LocalPath ($($content.Length) bytes)"
         return $true
     } catch {
-        Warn "  failed to download canonical $CanonName: $($_.Exception.Message)"
+        $msg = $_.Exception.Message
+        Warn "  failed to download canonical ${CanonName}: $msg"
         return $false
     }
 }
