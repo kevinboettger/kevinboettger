@@ -126,10 +126,6 @@ function Push-File([string]$Local, [string]$Name) {
     Copy-Item $Local -Destination (Join-Path $script:RunDirAbs $Name) -Force
 }
 
-# Drop a SetMixer wrapper into the AkAudio module so our actor can call it
-# from outside the AkAudio DLL boundary. UBT auto-discovers any .h/.cpp under
-# Source/AkAudio/Public|Private so adding two new files is enough; no .Build.cs
-# edit needed. Returns $true if both files exist after this call.
 function Ensure-AkAudioMixerWrapper {
     $wwiseSrcRoot = Join-Path $ProjectDir 'Plugins\Wwise\Source\AkAudio'
     $publicDir    = Join-Path $wwiseSrcRoot 'Public'
@@ -222,7 +218,6 @@ function Patch-Sources {
         }
     }
 
-    # Drop wrapper files into AkAudio module FIRST so the actor can rely on them.
     $wrapperReady = Ensure-AkAudioMixerWrapper
     if ($wrapperReady) {
         $changes += 'AkAudio: ImmerseStressMixerWrapper installed'
@@ -312,15 +307,13 @@ $1
             }
         }
 
-        # Replace BypassImmerse / EnableImmerse bodies.
-        # If the AkAudio wrapper was installed, route through ImmerseStress::SetMixerOnBus
-        # (lives inside UE4Editor-AkAudio.dll where AK statics are initialized).
-        # Otherwise fall back to the no-op stop-gap.
         if ($cpp -notmatch 'IMMERSE_SETMIXER_WRAPPER_v2' -and $wrapperReady) {
             if ($cpp -notmatch '#include\s+"ImmerseStressMixerWrapper\.h"') {
-                $cpp = $cpp -replace `
-                    '(#include\s+"AK/SoundEngine/Common/AkSoundEngine\.h"[^\n]*\n)', `
-                    '$1#include "ImmerseStressMixerWrapper.h"' + "`r`n"
+                # Build the replacement string in a variable so the parser doesn't
+                # fold the trailing `+ "`r`n"` into a third -replace argument.
+                $includePattern = '(#include\s+"AK/SoundEngine/Common/AkSoundEngine\.h"[^\n]*\n)'
+                $includeReplace = '$1#include "ImmerseStressMixerWrapper.h"' + "`r`n"
+                $cpp = $cpp -replace $includePattern, $includeReplace
             }
 
             $bypassPattern = '(?s)void\s+AImmerseStressTestActor::BypassImmerse\s*\(\s*\)\s*\{[^{}]*\}'
@@ -354,10 +347,9 @@ void AImmerseStressTestActor::EnableImmerse()
             $changes += 'BypassImmerse/EnableImmerse: route through ImmerseStress::SetMixerOnBus wrapper'
         }
         elseif ($cpp -notmatch 'IMMERSE_SETMIXER_WRAPPER_v2' -and $cpp -match 'AK::SoundEngine::SetMixer\(' -and $cpp -notmatch 'NOOP_SETMIXER_v1') {
-            # Fallback: wrapper not available, no-op the SetMixer calls.
-            $newCpp = $cpp -replace `
-                'const\s+AKRESULT\s+Res\s*=\s*AK::SoundEngine::SetMixer\([^;]*?\)\s*;', `
-                'const AKRESULT Res = AK_Success; /* NOOP_SETMIXER_v1: skipped (no wrapper) */'
+            $noopPattern = 'const\s+AKRESULT\s+Res\s*=\s*AK::SoundEngine::SetMixer\([^;]*?\)\s*;'
+            $noopReplace = 'const AKRESULT Res = AK_Success; /* NOOP_SETMIXER_v1: skipped (no wrapper) */'
+            $newCpp = $cpp -replace $noopPattern, $noopReplace
             if ($newCpp -ne $cpp) {
                 $cpp = $newCpp
                 $changes += 'BypassImmerse/EnableImmerse: SetMixer no-op (fallback)'
