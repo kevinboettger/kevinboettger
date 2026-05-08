@@ -1,8 +1,8 @@
 ﻿{
     "machine":  "IMMERSEDEMOM5",
-    "updated_at":  "2026-05-08T02:37:07.1881170Z",
-    "phase":  "ue_located",
+    "updated_at":  "2026-05-08T02:37:09.8555185Z",
+    "error":  "The -ireplace operator allows only two elements to follow it, not 3.",
+    "phase":  "failed",
     "run_id":  "20260507-193657",
-    "engine_root":  "C:\\Program Files\\Epic Games\\UE_4.27",
     "user":  "kapil"
 }
