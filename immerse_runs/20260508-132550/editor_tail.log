@@ -1,18 +1,4 @@
-﻿[2026.05.08-20.27.31:105][  0]LogMeshReduction: Using SimplygonMeshReduction for automatic skeletal mesh reduction
-[2026.05.08-20.27.31:105][  0]LogMeshReduction: Using ProxyLODMeshReduction for automatic mesh merging
-[2026.05.08-20.27.31:105][  0]LogMeshReduction: No distributed automatic mesh merging module available
-[2026.05.08-20.27.31:105][  0]LogMeshMerging: No distributed automatic mesh merging module available
-[2026.05.08-20.27.31:190][  0]LogNetVersion: testTP 1.0.0, NetCL: 17155196, EngineNetVer: 17, GameNetVer: 0 (Checksum: 3966549976)
-[2026.05.08-20.27.31:483][  0]LogTexture: Default maximum texture size for cubemaps generated from long-lat sources has been changed from 512 to unlimited. In order to preserve old behaiour for '/Engine/MapTemplates/Sky/DaylightAmbientCubemap.DaylightAmbientCubemap', its maximum texture size has been explicitly set to 512.
-[2026.05.08-20.27.31:539][  0]LogHMD: PokeAHoleMaterial loaded successfully
-[2026.05.08-20.27.31:684][  0]LogMoviePlayer: Initializing movie player
-[2026.05.08-20.27.31:778][  0]LogNiagaraDebuggerClient: Niagara Debugger Client Initialized | Session: 262EDA65463898A0A8FC61A497D45EA8 | Instance: DCDCAC104914F1555B5D389EC0870E89 (IMMERSEDEMOM5-14264).
-[2026.05.08-20.27.31:821][  0]LogCollectionManager: Loaded 0 collections in 0.002547 seconds
-[2026.05.08-20.27.31:824][  0]LogFileCache: Scanning file cache for directory 'C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Collections/' took 0.00s
-[2026.05.08-20.27.31:824][  0]LogFileCache: Scanning file cache for directory 'C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Content/Developers/kapil/Collections/' took 0.00s
-[2026.05.08-20.27.31:824][  0]LogFileCache: Scanning file cache for directory 'C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Content/Collections/' took 0.00s
-[2026.05.08-20.27.31:824][  0]LogCollectionManager: Fixed up redirectors for 0 collections in 0.000002 seconds (updated 0 objects)
-[2026.05.08-20.27.31:857][  0]LogPython: Using Python 3.7.7
+﻿[2026.05.08-20.27.31:857][  0]LogPython: Using Python 3.7.7
 [2026.05.08-20.27.32:356][  0]LogAkAudio: Wwise(R) SDK Version 2019.2.15 Build 7667. Copyright (c) 2006-2019 Audiokinetic Inc.
 [2026.05.08-20.27.32:359][  0]LogAkAudio: Wwise plug-in DLL path: C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Plugins/Wwise/ThirdParty/x64_vc150/Profile/bin/
 [2026.05.08-20.27.32:362][  0]LogAkAudio: Wwise remote connection application name: testTP
@@ -118,3 +104,17 @@
 [2026.05.08-20.27.55:197][891]LogTemp: Display: [ImmerseStress] >>> WARMUP step=1/8 immerse=ON conc=32 (align Wwise profiler capture here)
 [2026.05.08-20.27.55:197][891]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=32 immerse=enabled
 [2026.05.08-20.27.57:199][835]LogTemp: Display: [ImmerseStress] >>> RUNNING step=1/8 immerse=ON conc=32 (align Wwise profiler capture here)
+[2026.05.08-20.28.12:199][448]LogTemp: Display: [ImmerseStress] PHASE 1 done immerse=ON conc=32 posted=960 stopped=960 dropped=3540 frames=6613 avg=2.27ms p50=2.19 p95=2.74 max=8.23
+[2026.05.08-20.28.12:200][448]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=1/8 immerse=ON conc=32 (align Wwise profiler capture here)
+[2026.05.08-20.28.12:200][448]LogTemp: Display: [ImmerseStress] Churn STOP   posted=2176 stopped=2176 dropped=8023
+[2026.05.08-20.28.14:200][354]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.28.14:200][354]LogTemp: Display: [ImmerseStress] >>> WARMUP step=2/8 immerse=off conc=64 (align Wwise profiler capture here)
+[2026.05.08-20.28.14:200][354]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=64 immerse=BYPASSED
+[2026.05.08-20.28.16:200][305]LogTemp: Display: [ImmerseStress] >>> RUNNING step=2/8 immerse=off conc=64 (align Wwise profiler capture here)
+[2026.05.08-20.28.31:201][379]LogTemp: Display: [ImmerseStress] PHASE 2 done immerse=off conc=64 posted=1920 stopped=1920 dropped=2580 frames=7074 avg=2.12ms p50=2.06 p95=2.54 max=4.13
+[2026.05.08-20.28.31:202][379]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=2/8 immerse=off conc=64 (align Wwise profiler capture here)
+[2026.05.08-20.28.31:202][379]LogTemp: Display: [ImmerseStress] Churn STOP   posted=4352 stopped=4352 dropped=10947
+[2026.05.08-20.28.33:202][327]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.28.33:202][327]LogTemp: Display: [ImmerseStress] >>> WARMUP step=3/8 immerse=ON conc=64 (align Wwise profiler capture here)
+[2026.05.08-20.28.33:203][327]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=64 immerse=enabled
+[2026.05.08-20.28.35:203][271]LogTemp: Display: [ImmerseStress] >>> RUNNING step=3/8 immerse=ON conc=64 (align Wwise profiler capture here)
