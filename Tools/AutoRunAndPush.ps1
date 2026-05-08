@@ -51,7 +51,7 @@ function Write-AllText-Safe {
         throw "Refusing to write null/empty content to $Path"
     }
     if ((Test-Path $Path) -and $MinLengthGuard -gt 0 -and $Content.Length -lt $MinLengthGuard) {
-        throw "Refusing to write $Path: new length $($Content.Length) is below guard ($MinLengthGuard)"
+        throw "Refusing to write ${Path}: new length $($Content.Length) is below guard ($MinLengthGuard)"
     }
     [System.IO.File]::WriteAllText($Path, $Content, [System.Text.UTF8Encoding]::new($false))
 }
