@@ -35,16 +35,12 @@ function Invoke-Git {
     }
 }
 
-# Bulletproof read: returns the file's full text via .NET, never $null for an
-# existing file. Throws if the file is missing.
 function Read-AllText {
     param([Parameter(Mandatory=$true)][string]$Path)
     if (-not (Test-Path $Path)) { throw "File not found: $Path" }
     return [System.IO.File]::ReadAllText($Path)
 }
 
-# Bulletproof write: refuses to overwrite an existing non-trivial file with
-# empty content. This guards against earlier bugs that nuked the actor cpp.
 function Write-AllText-Safe {
     param(
         [Parameter(Mandatory=$true)][string]$Path,
@@ -60,7 +56,6 @@ function Write-AllText-Safe {
     [System.IO.File]::WriteAllText($Path, $Content, [System.Text.UTF8Encoding]::new($false))
 }
 
-# Direct .NET regex Replace, bypassing PowerShell's -replace operator entirely.
 function Regex-Replace {
     param(
         [Parameter(Mandatory=$true)][string]$Step,
@@ -73,6 +68,34 @@ function Regex-Replace {
     }
     $rx = [regex]::new($Pattern, [System.Text.RegularExpressions.RegexOptions]::Singleline)
     return $rx.Replace($Input, $Replacement)
+}
+
+# Recover from the poison-pill state where ImmerseStressTestActor.cpp got
+# truncated to 0 bytes by a previous launcher version that called
+# Set-Content with empty content. Looks for the latest cpp.before backup
+# in the results checkout (immerse_runs/<id>/ImmerseStressTestActor.cpp.before)
+# and copies it back into place. Returns $true on success.
+function Restore-CppFromBackup {
+    param(
+        [Parameter(Mandatory=$true)][string]$KeyCpp,
+        [Parameter(Mandatory=$true)][string]$RepoRoot
+    )
+    $runsDir = Join-Path $RepoRoot 'immerse_runs'
+    if (-not (Test-Path $runsDir)) {
+        Warn "  no immerse_runs/ in $RepoRoot"
+        return $false
+    }
+    $backups = Get-ChildItem $runsDir -Recurse -Filter 'ImmerseStressTestActor.cpp.before' -ErrorAction SilentlyContinue |
+        Where-Object { $_.Length -gt 1000 } |
+        Sort-Object LastWriteTime -Descending
+    if (-not $backups -or $backups.Count -eq 0) {
+        Warn '  no valid (>1KB) cpp.before backups in immerse_runs/'
+        return $false
+    }
+    $best = $backups | Select-Object -First 1
+    Info "  restoring cpp from $($best.FullName) ($($best.Length) bytes)"
+    Copy-Item $best.FullName $KeyCpp -Force
+    return $true
 }
 
 $tokenFile = Join-Path $ScriptDir '.github_token'
@@ -115,17 +138,15 @@ function Init-ResultsRepo {
     $null = Invoke-Git -C $ResultsRoot config user.name 'ImmerseStressBot'
 }
 
-function Push-To-Branch([string]$Msg) {
+function Push-To-Branch {
+    param([string]$Msg)
     $null = Invoke-Git -C $ResultsRoot fetch origin $Branch
     $null = Invoke-Git -C $ResultsRoot reset --soft "origin/$Branch"
     $null = Invoke-Git -C $ResultsRoot add -A
     $diff = Invoke-Git -C $ResultsRoot diff --cached --quiet
     if ($diff.ExitCode -ne 0) {
         $commit = Invoke-Git -C $ResultsRoot commit -m $Msg
-        if ($commit.ExitCode -ne 0) {
-            Warn "commit failed: $($commit.StdErr)"
-            return $false
-        }
+        if ($commit.ExitCode -ne 0) { Warn "commit failed: $($commit.StdErr)"; return $false }
         for ($i = 0; $i -lt 4; $i++) {
             $push = Invoke-Git -C $ResultsRoot push origin $Branch
             if ($push.ExitCode -eq 0) { return $true }
@@ -243,20 +264,35 @@ function Patch-Sources {
     $keyHeader = Join-Path $sourceRoot 'Public\ImmerseStressTestActor.h'
     if (Test-Path $keyHeader) { Push-File $keyHeader 'ImmerseStressTestActor.h.before' }
     $keyCpp    = Join-Path $sourceRoot 'Private\ImmerseStressTestActor.cpp'
-    if (Test-Path $keyCpp)    { Push-File $keyCpp    'ImmerseStressTestActor.cpp.before' }
+
+    # POISON-PILL CHECK: if the actor cpp got truncated to ~0 bytes by an
+    # earlier launcher version, restore from the latest backup we have in
+    # the results checkout BEFORE we run any patches.
+    if (Test-Path $keyCpp) {
+        $cppItem = Get-Item $keyCpp
+        if ($cppItem.Length -lt 1000) {
+            Warn "ImmerseStressTestActor.cpp is only $($cppItem.Length) bytes -- attempting restore from backup..."
+            if (Restore-CppFromBackup -KeyCpp $keyCpp -RepoRoot $ResultsRoot) {
+                $cppItem = Get-Item $keyCpp
+                Info "  restored to $($cppItem.Length) bytes"
+                $changes += "ImmerseStressTestActor.cpp: restored from cpp.before backup"
+            } else {
+                Warn '  RESTORE FAILED. Cannot proceed without a valid cpp.'
+                Push-Status -Phase 'failed' -Extra @{ stage='restore_cpp'; error='no valid backup found' }
+                return
+            }
+        }
+        Push-File $keyCpp 'ImmerseStressTestActor.cpp.before'
+    }
 
     Info 'Patch step: class IConsoleCommand -> struct'
     $files = Get-ChildItem $sourceRoot -Recurse -Include *.h,*.cpp -ErrorAction SilentlyContinue
     foreach ($f in $files) {
-        try {
-            $orig = Read-AllText -Path $f.FullName
-        } catch {
-            Warn "Skipping $($f.Name): $($_.Exception.Message)"
-            continue
+        try { $orig = Read-AllText -Path $f.FullName } catch {
+            Warn "Skipping $($f.Name): $($_.Exception.Message)"; continue
         }
         if ([string]::IsNullOrEmpty($orig)) {
-            Warn "Skipping empty file: $($f.Name)"
-            continue
+            Warn "Skipping empty file: $($f.Name)"; continue
         }
         $patched = Regex-Replace -Step "icc-$($f.Name)" -Input $orig -Pattern 'class(\s+)IConsoleCommand' -Replacement 'struct$1IConsoleCommand'
         if ($patched -ne $orig) {
@@ -274,20 +310,20 @@ function Patch-Sources {
     if (-not (Test-Path $keyCpp)) { return }
 
     $cpp = Read-AllText -Path $keyCpp
-    if ([string]::IsNullOrEmpty($cpp)) {
-        Warn "ImmerseStressTestActor.cpp is empty on disk -- cannot patch. Restore from a previous run's cpp.before."
+    if ([string]::IsNullOrEmpty($cpp) -or $cpp.Length -lt 1000) {
+        Warn "ImmerseStressTestActor.cpp is empty/tiny on disk after restore attempt -- aborting."
         return
     }
     $originalLength = $cpp.Length
     Info "Patch step: probe cpp markers (length=$originalLength)"
 
-    $hasGate    = ($cpp.Contains('ImmerseAKReadyRetries'))
-    $hasIsInit  = ($cpp.Contains('AK::SoundEngine::IsInitialized'))
-    $hasTimer   = ($cpp.Contains('AutoRunBeginPlayTimer'))
-    $hasUidLog  = ($cpp.Contains('IMMERSE_USER_ID env'))
-    $hasWrapper = ($cpp.Contains('IMMERSE_SETMIXER_WRAPPER_v2'))
-    $hasNoop    = ($cpp.Contains('NOOP_SETMIXER_v1'))
-    $hasInc     = ($cpp.Contains('ImmerseStressMixerWrapper.h'))
+    $hasGate    = $cpp.Contains('ImmerseAKReadyRetries')
+    $hasIsInit  = $cpp.Contains('AK::SoundEngine::IsInitialized')
+    $hasTimer   = $cpp.Contains('AutoRunBeginPlayTimer')
+    $hasUidLog  = $cpp.Contains('IMMERSE_USER_ID env')
+    $hasWrapper = $cpp.Contains('IMMERSE_SETMIXER_WRAPPER_v2')
+    $hasNoop    = $cpp.Contains('NOOP_SETMIXER_v1')
+    $hasInc     = $cpp.Contains('ImmerseStressMixerWrapper.h')
     Info "  gate=$hasGate isInit=$hasIsInit timer=$hasTimer uidLog=$hasUidLog wrapper=$hasWrapper noop=$hasNoop include=$hasInc"
 
     if (-not $hasGate) {
@@ -425,10 +461,7 @@ function Get-WwisePluginBinDir {
 
 function Stage-ImmersePlugin {
     $binDir = Get-WwisePluginBinDir
-    if (-not $binDir) {
-        Warn 'No project-side Wwise plugin bin dir found; cannot stage Immerse DLL.'
-        return $null
-    }
+    if (-not $binDir) { Warn 'No project-side Wwise plugin bin dir found.'; return $null }
     Info "Wwise plugin bin dir (target): $binDir"
 
     $immerseAlready = Get-ChildItem $binDir -Filter 'Immerse*.dll' -ErrorAction SilentlyContinue
@@ -459,18 +492,13 @@ function Stage-ImmersePlugin {
 
         Info "Source dir with Immerse DLLs: $srcDir"
         foreach ($d in $dlls) {
-            $dest = Join-Path $binDir $d.Name
             try {
-                Copy-Item $d.FullName $dest -Force
-                Info "  staged $($d.Name)"
-                $copied++
-            } catch {
-                Warn "  failed to copy $($d.Name): $_"
-            }
+                Copy-Item $d.FullName (Join-Path $binDir $d.Name) -Force
+                Info "  staged $($d.Name)"; $copied++
+            } catch { Warn "  failed to copy $($d.Name): $_" }
         }
         if ($copied -gt 0) { break }
     }
-
     Info "Total Immerse DLLs staged: $copied"
     return $binDir
 }
@@ -569,9 +597,7 @@ try {
     $buildHasErrors = $false
     if (Test-Path $buildLog) {
         $logTail = Get-Content $buildLog -Tail 200 -ErrorAction SilentlyContinue
-        if ($logTail -match 'error C\d+|: error : |Error executing|fatal error') {
-            $buildHasErrors = $true
-        }
+        if ($logTail -match 'error C\d+|: error : |Error executing|fatal error') { $buildHasErrors = $true }
     }
     if ($buildExit -ne 0 -or $buildHasErrors) {
         Push-Status -Phase 'failed' -Extra @{ stage='build'; exit_code=$buildExit; sniffed_errors=$buildHasErrors }
