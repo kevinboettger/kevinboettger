@@ -1,0 +1,120 @@
+﻿[2026.05.08-14.21.42:534][  0]LogTextLocalizationManager: Compacting localization data took   0.00ms
+[2026.05.08-14.21.42:534][  0]LogAssetRegistry: FAssetRegistry took 0.0025 seconds to start up
+[2026.05.08-14.21.42:814][  0]LogPackageLocalizationCache: Processed 28 localized package path(s) for 1 prioritized culture(s) in 0.097996 seconds
+[2026.05.08-14.21.42:873][  0]LogInit: Selected Device Profile: [Windows]
+[2026.05.08-14.21.42:873][  0]LogInit: Active device profile: [00000268FF0E7300][00000268E3808100 49] Windows
+[2026.05.08-14.21.42:873][  0]LogInit: Profiles: [00000268FF0E7300][00000268E3808100 49] Windows, [00000268FF09CF00][00000268FA24A280 49] WindowsNoEditor, [00000268FF0E4F00][00000268FA24E400 49] WindowsServer, [00000268FF09EA00][00000268FA252580 49] WindowsClient, [00000268FF0E6900][00000268FA256700 49] IOS, [00000268FF09D900][00000268FA25A880 49] iPadAir, [00000268FF0E5800][00000268FAAC4A00 49] iPadAir2, [00000268FF03F800][00000268FAACCCC0 49] IPadPro, [00000268FF03F900][00000268FAAC8D00 49] iPadAir3, [00000268FF0E6200][00000268FAAD0E80 49] iPadAir4, [00000268FF03D400][00000268FAAD5000 49] iPadMini2, [00000268FF0E7C00][00000268FAAD9180 49] iPadMini3, [00000268FF03E400][00000268FAADD300 49] iPadMini4, [00000268FF0E5100][00000268FA6E1480 49] iPadMini5, [00000268FF08F100][00000268FA6E56C0 49] iPhone6, [00000268FF08F200][00000268FA247700 49] iPodTouch6, [00000268FF03C600][00000268FA6ED940 49] iPhone7, [00000268FF03C400][00000268FA6E9980 49] iPodTouch7, [00000268FF08D300][00000268FA6F5B00 49] iPhone5S, [00000268FF03CD00][00000268FA6F8100 49] iPhone6Plus, [00000268FF08E500][00000268FA6FC280 49] iPhone6S, [00000268FF03FD00][00000268FA700400 49] iPhone6SPlus, [00000268FF08FA00][00000268FA704580 49] iPhone7Plus, [00000268FF03D900][00000268FA708700 49] iPhoneSE, [00000268FF08C900][00000268FA70C880 49] iPhone8, [00000268FF03E600][00000268FA710A00 49] iPhone8Plus, [00000268FF08E300][00000268FA714B80 49] iPhoneX, [00000268FF03ED00][00000268FA718D00 49] iPhoneXS, [00000268FF08FB00][00000268FA71CE80 49] iPhoneXSMax, [00000268FF03EA00][00000268FA721000 49] iPhoneXR, [00000268FF08F700][00000268FA725180 49] iPhone11, [00000268FF03F000][00000268FA729300 49] iPhone11Pro, [00000268FF08D500][00000268FF701480 49] iPhone11ProMax, [00000268FF03C200][00000268FF705600 49] iPhoneSE2, [00000268FF08CE00][00000268FA6F1740 49] iPhone12Mini, [00000268FF03E100][00000268FF709880 49] iPhone12, [00000268FF08F600][00000268FF70D9C0 49] iPhone12Pro, [00000268FF03EE00][00000268FF711B00 49] iPhone12ProMax, [00000268FF08CA00][00000268FF718100 49] iPadPro105, [00000268FF03D300][00000268FF71C280 49] iPadPro129, [00000268FF08D100][00000268FF720400 49] iPadPro97, [00000268FF03F500][00000268FF724580 49] iPadPro2_129, [00000268FF08EC00][00000268FF728700 49] iPad5, [00000268FF03C900][00000268FF72C880 49] iPad6, [00000268FF08D800][00000268FF730A00 49] iPad7, [00000268FF03DC00][00000268FF734B80 49] iPad8, [00000268FF08DC00][00000268FF738D00 49] iPadPro11, [00000268FF03CB00][00000268FF73CE80 49] iPadPro2_11, [00000268FF08E100][00000268FF741000 49] iPadPro3_129, [00000268FF03E000][00000268FF745180 49] iPadPro4_129, [00000268FF08E800][00000268FF749300 49] AppleTV, [00000268FF03CC00][00000268FF74D480 49] AppleTV4K, [00000268FF08EF00][00000268FF751600 49] TVOS, [00000268FF03CE00][00000268FF755780 49] Mac, [00000268FF08FC00][00000268FF7158C0 49] MacClient, [00000268FF03F100][00000268FF759A00 49] MacNoEditor, [00000268FF08FD00][00000268FF75DB40 49] MacServer, [00000268FF03C300][00000268FF760100 49] Linux, [00000268FF08D600][00000268FF768280 49] LinuxAArch64, [00000268FF03D100][00000268FF76C400 49] LinuxNoEditor, [00000268FF09E500][00000268FF770580 49] LinuxAArch64NoEditor, [00000268FF12A000][00000268FF774700 49] LinuxClient, [00000268FF09DA00][00000268FF778880 49] LinuxAArch64Client, [00000268FF129B00][00000268FF77CA00 49] LinuxServer, [00000268FF09ED00][00000268FF780B80 49] LinuxAArch64Server, [00000268FF128300][00000268FF784D00 49] Android, [00000268FF09E300][00000268FF788E80 49] Android_Low, [00000268FF129C00][00000268FF78D000 49] Android_Mid, [00000268FF09D700][00000268FF791180 49] Android_High, [00000268FF128800][00000268FF795300 49] Android_Default, [00000268FF09F200][00000268FF799480 49] Android_Adreno4xx, [00000268FF129700][00000268FF79D600 49] Android_Adreno5xx_Low, [00000268FF09E800][00000268FF7A1780 49] Android_Adreno5xx, [00000268FF12A100][00000268FF7A5900 49] Android_Adreno6xx, [00000268FF09CD00][00000268FF7A9A80 49] Android_Adreno6xx_Vulkan, [00000268FF12A600][00000268FF765BC0 49] Android_Mali_T6xx, [00000268FF09EC00][00000268FF7AC180 49] Android_Mali_T7xx, [00000268FF129D00][00000268FF7B02C0 49] Android_Mali_T8xx, [00000268FF09C500][00000268FF7B8440 49] Android_Mali_G71, [00000268FF128100][00000268FF7BC5C0 49] Android_Mali_G72, [00000268FF03D600][00000268FF7C0740 49] Android_Mali_G72_Vulkan, [00000268FF08CF00][00000268FF7C48C0 49] Android_Mali_G76, [00000268FF03D000][00000268FF7C8A40 49] Android_Mali_G76_Vulkan, [00000268FF08DB00][00000268FF7CCBC0 49] Android_Mali_G77, [00000268FF03FE00][00000268FF7D0D40 49] Android_Mali_G77_Vulkan, [00000268FF08C700][00000268FF7D4EC0 49] Android_Mali_G78, [00000268FF03C700][00000268FF7D9040 49] Android_Mali_G78_Vulkan, [00000268FF128F00][00000268FF7DD1C0 49] Android_Mali_G710, [00000268FF03E200][00000268FF7E1340 49] Android_Mali_G710_Vulkan, [00000268FF128D00][00000268FF7E54C0 49] Android_Vulkan_SM5, [00000268FF03F600][00000268FF7E9640 49] Android_PowerVR_G6xxx, [00000268FF12A500][00000268FF7ED7C0 49] Android_PowerVR_GT7xxx, [00000268FF03F400][00000268FF7F1940 49] Android_PowerVR_GE8xxx, [00000268FF129300][00000268FF7F5AC0 49] Android_PowerVR_GM9xxx, [00000268FF03E700][00000268FF7F80C0 49] Android_PowerVR_GM9xxx_Vulkan, [00000268FF129500][00000268FF7B4200 49] Android_TegraK1, [00000268FF03D700][00000268FF7FC340 49] Android_Unknown_Vulkan, [00000268FF128600][00000268FF800480 49] Lumin, [00000268FF03D800][00000268FF8045C0 49] Lumin_Desktop, [00000268FF128B00][00000268FF80C740 49] HoloLens, 
+[2026.05.08-14.21.43:105][  0]LogMeshReduction: Using QuadricMeshReduction for automatic static mesh reduction
+[2026.05.08-14.21.43:105][  0]LogMeshReduction: Using SimplygonMeshReduction for automatic skeletal mesh reduction
+[2026.05.08-14.21.43:105][  0]LogMeshReduction: Using ProxyLODMeshReduction for automatic mesh merging
+[2026.05.08-14.21.43:105][  0]LogMeshReduction: No distributed automatic mesh merging module available
+[2026.05.08-14.21.43:106][  0]LogMeshMerging: No distributed automatic mesh merging module available
+[2026.05.08-14.21.43:218][  0]LogNetVersion: testTP 1.0.0, NetCL: 17155196, EngineNetVer: 17, GameNetVer: 0 (Checksum: 3966549976)
+[2026.05.08-14.21.44:097][  0]LogTexture: Default maximum texture size for cubemaps generated from long-lat sources has been changed from 512 to unlimited. In order to preserve old behaiour for '/Engine/MapTemplates/Sky/DaylightAmbientCubemap.DaylightAmbientCubemap', its maximum texture size has been explicitly set to 512.
+[2026.05.08-14.21.44:222][  0]LogHMD: PokeAHoleMaterial loaded successfully
+[2026.05.08-14.21.44:429][  0]LogMoviePlayer: Initializing movie player
+[2026.05.08-14.21.44:532][  0]LogPython: Using Python 3.7.7
+[2026.05.08-14.21.45:168][  0]LogNiagaraDebuggerClient: Niagara Debugger Client Initialized | Session: BB1D7B4A47A0706A183E25BA1C76EE49 | Instance: CA0B1D1D4DD55BCBD8EE608B13C3979E (IMMERSEDEMOM5-23756).
+[2026.05.08-14.21.45:208][  0]LogCollectionManager: Loaded 0 collections in 0.001175 seconds
+[2026.05.08-14.21.45:214][  0]LogFileCache: Scanning file cache for directory 'C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Collections/' took 0.00s
+[2026.05.08-14.21.45:214][  0]LogFileCache: Scanning file cache for directory 'C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Content/Developers/kapil/Collections/' took 0.00s
+[2026.05.08-14.21.45:214][  0]LogFileCache: Scanning file cache for directory 'C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Content/Collections/' took 0.00s
+[2026.05.08-14.21.45:214][  0]LogCollectionManager: Fixed up redirectors for 0 collections in 0.000003 seconds (updated 0 objects)
+[2026.05.08-14.21.45:369][  0]LogAkAudio: Wwise(R) SDK Version 2019.2.15 Build 7667. Copyright (c) 2006-2019 Audiokinetic Inc.
+[2026.05.08-14.21.45:369][  0]LogAkAudio: Wwise plug-in DLL path: C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Plugins/Wwise/ThirdParty/x64_vc150/Profile/bin/
+[2026.05.08-14.21.45:370][  0]LogAkAudio: Wwise remote connection application name: testTP
+[2026.05.08-14.21.45:370][  0]LogAkAudio: Wwise successfully initialized.
+[2026.05.08-14.21.48:321][  0]LogAkAudio: Initialization complete.
+[2026.05.08-14.21.48:322][  0]LogInit: Audiokinetic Audio Device initialized.
+[2026.05.08-14.21.48:957][  0]SourceControl: Source control is disabled
+[2026.05.08-14.21.48:958][  0]SourceControl: Source control is disabled
+[2026.05.08-14.21.48:962][  0]SourceControl: Source control is disabled
+[2026.05.08-14.21.48:968][  0]LogUProjectInfo: Found projects:
+[2026.05.08-14.21.49:072][  0]LogOpenImageDenoise: OIDN starting up
+[2026.05.08-14.21.49:124][  0]LogAndroidPermission: UAndroidPermissionCallbackProxy::GetInstance
+[2026.05.08-14.21.49:149][  0]LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
+[2026.05.08-14.21.49:149][  0]LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
+[2026.05.08-14.21.49:225][  0]LogOcInput: OculusInput pre-init called
+[2026.05.08-14.21.49:235][  0]LogUObjectArray: 22811 objects as part of root set at end of initial load.
+[2026.05.08-14.21.49:235][  0]LogUObjectAllocator: 6215680 out of 0 bytes used by permanent object pool.
+[2026.05.08-14.21.49:236][  0]LogUObjectArray: CloseDisregardForGC: 0/0 objects in disregard for GC pool
+[2026.05.08-14.21.49:387][  0]LogClass: Display: EnumProperty FAkExternalSourceInfo::CodecID is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
+[2026.05.08-14.21.49:388][  0]LogClass: Warning: ObjectProperty FAkExternalSourceInfo::ExternalSourceAsset is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
+[2026.05.08-14.21.49:388][  0]LogClass: Display: IntProperty FAkChannelMask::ChannelMask is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
+[2026.05.08-14.21.49:390][  0]LogClass: Display: 3 Uninitialized script struct members found including 1 object properties
+[2026.05.08-14.21.49:393][  0]LogAutomationTest: Warning: ObjectProperty FAkExternalSourceInfo::ExternalSourceAsset is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
+[2026.05.08-14.21.49:394][  0]LogEngine: Initializing Engine...
+[2026.05.08-14.21.49:462][  0]LogHMD: Failed to enumerate extensions. Please check that you have a valid OpenXR runtime installed.
+[2026.05.08-14.21.49:462][  0]LogHMD: Failed to initialize OpenVR with code 110
+[2026.05.08-14.21.49:462][  0]LogMagicLeap: Warning: VR disabled because ZI is not enabled.  To enable, in the editor, Edit -> Project Settings -> Plugins -> Magic Leap Plugin -> Enable Zero Iteration
+[2026.05.08-14.21.49:465][  0]LogStats: UGameplayTagsManager::InitializeManager -  0.001 s
+[2026.05.08-14.21.49:827][  0]LogInit: Initializing FReadOnlyCVARCache
+[2026.05.08-14.21.49:827][  0]LogAudio: Display: Initializing Audio Device Manager...
+[2026.05.08-14.21.49:831][  0]LogAudio: Display: Loading Default Audio Settings Objects...
+[2026.05.08-14.21.49:836][  0]LogAudio: Display: No default SoundConcurrencyObject specified (or failed to load).
+[2026.05.08-14.21.49:837][  0]LogAudio: Display: Audio Device Manager Initialized
+[2026.05.08-14.21.49:837][  0]LogAudio: Display: Creating Audio Device:                 Id: 1, Scope: Shared, Realtime: True
+[2026.05.08-14.21.49:838][  0]LogAudioMixer: Display: Audio Mixer Platform Settings:
+[2026.05.08-14.21.49:838][  0]LogAudioMixer: Display: 	Sample Rate:						  48000
+[2026.05.08-14.21.49:838][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size Requested: 1024
+[2026.05.08-14.21.49:838][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size To Use:	  1024
+[2026.05.08-14.21.49:838][  0]LogAudioMixer: Display: 	Number of buffers to queue:			  2
+[2026.05.08-14.21.49:838][  0]LogAudioMixer: Display: 	Max Channels (voices):				  32
+[2026.05.08-14.21.49:838][  0]LogAudioMixer: Display: 	Number of Async Source Workers:		  0
+[2026.05.08-14.21.49:838][  0]LogAudio: Display: AudioDevice MaxSources: 32
+[2026.05.08-14.21.49:840][  0]LogAudio: Display: Audio Spatialization Plugin: None (built-in).
+[2026.05.08-14.21.49:840][  0]LogAudio: Display: Audio Reverb Plugin: None (built-in).
+[2026.05.08-14.21.49:840][  0]LogAudio: Display: Audio Occlusion Plugin: None (built-in).
+[2026.05.08-14.21.49:840][  0]LogAudioMixer: Display: Initializing audio mixer.
+[2026.05.08-14.21.49:865][  0]LogAudioMixer: Display: 0: FrontLeft
+[2026.05.08-14.21.49:865][  0]LogAudioMixer: Display: 1: FrontRight
+[2026.05.08-14.21.49:884][  0]LogAudioMixer: Display: Using Audio Device Speakers (2- Realtek(R) Audio)
+[2026.05.08-14.21.49:886][  0]LogAudioMixer: Display: Initializing Sound Submixes...
+[2026.05.08-14.21.49:912][  0]LogAudioMixer: Display: Creating Master Submix 'MasterSubmixDefault'
+[2026.05.08-14.21.49:913][  0]LogAudioMixer: Display: Creating Master Submix 'MasterReverbSubmixDefault'
+[2026.05.08-14.21.49:914][  0]LogAudioMixer: Display: Creating Master Submix 'MasterEQSubmixDefault'
+[2026.05.08-14.21.49:916][  0]LogAudioMixer: FMixerPlatformXAudio2::StartAudioStream() called
+[2026.05.08-14.21.49:916][  0]LogAudioMixer: Display: Output buffers initialized: Frames=1024, Channels=2, Samples=2048
+[2026.05.08-14.21.49:916][  0]LogAudioMixer: Display: Starting AudioMixerPlatformInterface::RunInternal()
+[2026.05.08-14.21.49:916][  0]LogAudioMixer: Display: FMixerPlatformXAudio2::SubmitBuffer() called for the first time
+[2026.05.08-14.21.49:916][  0]LogInit: FAudioDevice initialized.
+[2026.05.08-14.21.49:919][  0]LogNetVersion: Set ProjectVersion to 1.0.0.0. Version Checksum will be recalculated on next use.
+[2026.05.08-14.21.49:959][  0]LogDerivedDataCache: Saved boot cache 0.04s 78MB C:/Users/kapil/AppData/Local/UnrealEngine/4.27/DerivedDataCache/Boot.ddc.
+[2026.05.08-14.21.49:960][  0]LogInit: Texture streaming: Enabled
+[2026.05.08-14.21.50:197][  0]LogAudio: Display: Audio Device (ID: 1) registered with world 'Untitled'.
+[2026.05.08-14.21.50:200][  0]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2026.05.08-14.21.50:202][  0]LogInit: Display: Game Engine Initialized.
+[2026.05.08-14.21.50:204][  0]LogNiagaraEditor: GEditor isn't valid! Particle reset commands will not work for Niagara components!
+[2026.05.08-14.21.50:337][  0]LogInit: Display: Starting Game.
+[2026.05.08-14.21.50:337][  0]LogNet: Browse: /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap?Name=Player
+[2026.05.08-14.21.50:338][  0]LogLoad: LoadMap: /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap?Name=Player
+[2026.05.08-14.21.50:338][  0]LogWorld: BeginTearingDown for /Temp/Untitled_0
+[2026.05.08-14.21.50:342][  0]LogWorld: UWorld::CleanupWorld for Untitled, bSessionEnded=true, bCleanupResources=true
+[2026.05.08-14.21.50:344][  0]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2026.05.08-14.21.50:355][  0]LogAudio: Display: Audio Device unregistered from world 'None'.
+[2026.05.08-14.21.50:362][  0]LogUObjectHash: Compacting FUObjectHashTables data took   0.58ms
+[2026.05.08-14.21.50:966][  0]LogAudio: Display: Audio Device (ID: 1) registered with world 'ThirdPersonExampleMap'.
+[2026.05.08-14.21.50:979][  0]LogAIModule: Creating AISystem for world ThirdPersonExampleMap
+[2026.05.08-14.21.50:986][  0]LogLoad: Game class is 'ThirdPersonGameMode_C'
+[2026.05.08-14.21.51:002][  0]LogWorld: Bringing World /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap up for play (max tick rate 0) at 2026.05.08-07.21.51
+[2026.05.08-14.21.51:003][  0]LogWorld: Bringing up level for play took: 0.015800
+[2026.05.08-14.21.51:012][  0]LogTemp: Display: [ImmerseStress] Ready. Defaults: event=SwordHits bus=7p1p4 shareset=Immerse_Audio_Renderer_(Custom)
+[2026.05.08-14.21.51:012][  0]LogTemp: Display: [ImmerseStress] IMMERSE_USER_ID env=kevin_tencenttest1_emb | IMMERSE_USERID=kevin_tencenttest1_emb | IMMERSE_USER=kevin_tencenttest1_emb
+[2026.05.08-14.21.51:012][  0]LogTemp: Display: [testTP] Auto-spawned ImmerseStressTestActor into ThirdPersonExampleMap (type=1)
+[2026.05.08-14.21.51:012][  0]LogLoad: Took 0.673777 seconds to LoadMap(/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap)
+[2026.05.08-14.21.51:057][  0]LogRenderer: Reallocating scene render targets to support 1536x864 Format 10 NumSamples 1 (Frame:1).
+[2026.05.08-14.21.51:057][  0]LogSlate: Took 0.005426 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' (155K)
+[2026.05.08-14.21.51:096][  0]LogInit: Display: Engine is initialized. Leaving FEngineLoop::Init()
+[2026.05.08-14.21.51:096][  0]LogLoad: (Engine Initialization) Total time: 16.02 seconds
+[2026.05.08-14.21.51:096][  0]LogLoad: (Engine Initialization) Total Blueprint compile time: 0.00 seconds
+[2026.05.08-14.21.51:113][  0]LogContentStreaming: Texture pool size now 1000 MB
+[2026.05.08-14.21.51:119][  0]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2026.05.08-14.21.51:241][  0]LogRenderer: Reallocating scene render targets to support 128x128 Format 10 NumSamples 1 (Frame:1).
+[2026.05.08-14.21.51:316][  0]LogRenderer: Reallocating scene render targets to support 1536x864 Format 10 NumSamples 1 (Frame:2).
+[2026.05.08-14.21.51:330][  1]LogSlate: Took 0.000171 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' (155K)
+[2026.05.08-14.21.53:612][ 63]LogTemp: Display: [ImmerseStress] PLAN START  steps=8 (concurrency=4 Ã— immerse{off,on}) rate=60.0Hz life=250ms warmup=2.0s phase=15.0s cooldown=2.0s CSV=../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/run_20260508_072153.csv
+[2026.05.08-14.21.53:612][ 63]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-14.21.53:612][ 63]LogTemp: Display: [ImmerseStress] >>> WARMUP step=0/8 immerse=off conc=8 (align Wwise profiler capture here)
+[2026.05.08-14.21.53:612][ 63]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=60.0Hz life=250ms cap=8 immerse=BYPASSED
+[2026.05.08-14.21.53:676][ 91]LogStats: Display: There is no thread with id: 11484. Please add thread metadata for this thread.
+[2026.05.08-14.21.55:604][ 36]LogTemp: Display: [ImmerseStress] >>> RUNNING step=0/8 immerse=off conc=8 (align Wwise profiler capture here)
