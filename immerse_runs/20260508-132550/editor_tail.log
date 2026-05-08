@@ -1,120 +1,120 @@
-﻿[2026.05.08-20.27.32:670][  0]LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
-[2026.05.08-20.27.32:744][  0]LogOcInput: OculusInput pre-init called
-[2026.05.08-20.27.32:754][  0]LogUObjectArray: 22811 objects as part of root set at end of initial load.
-[2026.05.08-20.27.32:754][  0]LogUObjectAllocator: 6215680 out of 0 bytes used by permanent object pool.
-[2026.05.08-20.27.32:754][  0]LogUObjectArray: CloseDisregardForGC: 0/0 objects in disregard for GC pool
-[2026.05.08-20.27.32:851][  0]LogClass: Display: EnumProperty FAkExternalSourceInfo::CodecID is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
-[2026.05.08-20.27.32:851][  0]LogClass: Warning: ObjectProperty FAkExternalSourceInfo::ExternalSourceAsset is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
-[2026.05.08-20.27.32:851][  0]LogClass: Display: IntProperty FAkChannelMask::ChannelMask is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
-[2026.05.08-20.27.32:852][  0]LogClass: Display: 3 Uninitialized script struct members found including 1 object properties
-[2026.05.08-20.27.32:854][  0]LogAutomationTest: Warning: ObjectProperty FAkExternalSourceInfo::ExternalSourceAsset is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
-[2026.05.08-20.27.32:856][  0]LogEngine: Initializing Engine...
-[2026.05.08-20.27.32:864][  0]LogHMD: Failed to enumerate extensions. Please check that you have a valid OpenXR runtime installed.
-[2026.05.08-20.27.32:864][  0]LogHMD: Failed to initialize OpenVR with code 110
-[2026.05.08-20.27.32:864][  0]LogMagicLeap: Warning: VR disabled because ZI is not enabled.  To enable, in the editor, Edit -> Project Settings -> Plugins -> Magic Leap Plugin -> Enable Zero Iteration
-[2026.05.08-20.27.32:868][  0]LogStats: UGameplayTagsManager::InitializeManager -  0.001 s
-[2026.05.08-20.27.32:963][  0]LogInit: Initializing FReadOnlyCVARCache
-[2026.05.08-20.27.32:963][  0]LogAudio: Display: Initializing Audio Device Manager...
-[2026.05.08-20.27.32:967][  0]LogAudio: Display: Loading Default Audio Settings Objects...
-[2026.05.08-20.27.32:968][  0]LogAudio: Display: No default SoundConcurrencyObject specified (or failed to load).
-[2026.05.08-20.27.32:970][  0]LogAudio: Display: Audio Device Manager Initialized
-[2026.05.08-20.27.32:970][  0]LogAudio: Display: Creating Audio Device:                 Id: 1, Scope: Shared, Realtime: True
-[2026.05.08-20.27.32:970][  0]LogAudioMixer: Display: Audio Mixer Platform Settings:
-[2026.05.08-20.27.32:970][  0]LogAudioMixer: Display: 	Sample Rate:						  48000
-[2026.05.08-20.27.32:970][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size Requested: 1024
-[2026.05.08-20.27.32:970][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size To Use:	  1024
-[2026.05.08-20.27.32:970][  0]LogAudioMixer: Display: 	Number of buffers to queue:			  2
-[2026.05.08-20.27.32:970][  0]LogAudioMixer: Display: 	Max Channels (voices):				  32
-[2026.05.08-20.27.32:970][  0]LogAudioMixer: Display: 	Number of Async Source Workers:		  0
-[2026.05.08-20.27.32:970][  0]LogAudio: Display: AudioDevice MaxSources: 32
-[2026.05.08-20.27.32:972][  0]LogAudio: Display: Audio Spatialization Plugin: None (built-in).
-[2026.05.08-20.27.32:972][  0]LogAudio: Display: Audio Reverb Plugin: None (built-in).
-[2026.05.08-20.27.32:972][  0]LogAudio: Display: Audio Occlusion Plugin: None (built-in).
-[2026.05.08-20.27.32:972][  0]LogAudioMixer: Display: Initializing audio mixer.
-[2026.05.08-20.27.32:994][  0]LogAudioMixer: Display: 0: FrontLeft
-[2026.05.08-20.27.32:994][  0]LogAudioMixer: Display: 1: FrontRight
-[2026.05.08-20.27.33:014][  0]LogAudioMixer: Display: Using Audio Device Speakers (2- Realtek(R) Audio)
-[2026.05.08-20.27.33:023][  0]LogAudioMixer: Display: Initializing Sound Submixes...
-[2026.05.08-20.27.33:025][  0]LogAudioMixer: Display: Creating Master Submix 'MasterSubmixDefault'
-[2026.05.08-20.27.33:025][  0]LogAudioMixer: Display: Creating Master Submix 'MasterReverbSubmixDefault'
-[2026.05.08-20.27.33:026][  0]LogAudioMixer: Display: Creating Master Submix 'MasterEQSubmixDefault'
-[2026.05.08-20.27.33:027][  0]LogAudioMixer: FMixerPlatformXAudio2::StartAudioStream() called
-[2026.05.08-20.27.33:027][  0]LogAudioMixer: Display: Output buffers initialized: Frames=1024, Channels=2, Samples=2048
-[2026.05.08-20.27.33:028][  0]LogAudioMixer: Display: Starting AudioMixerPlatformInterface::RunInternal()
-[2026.05.08-20.27.33:028][  0]LogAudioMixer: Display: FMixerPlatformXAudio2::SubmitBuffer() called for the first time
-[2026.05.08-20.27.33:028][  0]LogInit: FAudioDevice initialized.
-[2026.05.08-20.27.33:030][  0]LogNetVersion: Set ProjectVersion to 1.0.0.0. Version Checksum will be recalculated on next use.
-[2026.05.08-20.27.33:064][  0]LogDerivedDataCache: Saved boot cache 0.03s 78MB C:/Users/kapil/AppData/Local/UnrealEngine/4.27/DerivedDataCache/Boot.ddc.
-[2026.05.08-20.27.33:068][  0]LogInit: Texture streaming: Enabled
-[2026.05.08-20.27.33:170][  0]LogAudio: Display: Audio Device (ID: 1) registered with world 'Untitled'.
-[2026.05.08-20.27.33:173][  0]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
-[2026.05.08-20.27.33:175][  0]LogInit: Display: Game Engine Initialized.
-[2026.05.08-20.27.33:177][  0]LogNiagaraEditor: GEditor isn't valid! Particle reset commands will not work for Niagara components!
-[2026.05.08-20.27.33:286][  0]LogInit: Display: Starting Game.
-[2026.05.08-20.27.33:287][  0]LogNet: Browse: /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap?Name=Player
-[2026.05.08-20.27.33:287][  0]LogLoad: LoadMap: /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap?Name=Player
-[2026.05.08-20.27.33:287][  0]LogWorld: BeginTearingDown for /Temp/Untitled_0
-[2026.05.08-20.27.33:291][  0]LogWorld: UWorld::CleanupWorld for Untitled, bSessionEnded=true, bCleanupResources=true
-[2026.05.08-20.27.33:293][  0]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
-[2026.05.08-20.27.33:306][  0]LogAudio: Display: Audio Device unregistered from world 'None'.
-[2026.05.08-20.27.33:314][  0]LogUObjectHash: Compacting FUObjectHashTables data took   0.57ms
-[2026.05.08-20.27.33:550][  0]LogAudio: Display: Audio Device (ID: 1) registered with world 'ThirdPersonExampleMap'.
-[2026.05.08-20.27.33:564][  0]LogAIModule: Creating AISystem for world ThirdPersonExampleMap
-[2026.05.08-20.27.33:566][  0]LogLoad: Game class is 'ThirdPersonGameMode_C'
-[2026.05.08-20.27.33:590][  0]LogWorld: Bringing World /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap up for play (max tick rate 0) at 2026.05.08-13.27.33
-[2026.05.08-20.27.33:591][  0]LogWorld: Bringing up level for play took: 0.024074
-[2026.05.08-20.27.33:604][  0]LogTemp: Display: [ImmerseStress] Ready. Defaults: event=SwordHits bus=7p1p4 shareset=Immerse_Audio_Renderer_(Custom)
-[2026.05.08-20.27.33:604][  0]LogTemp: Display: [ImmerseStress] IMMERSE_USER_ID env=kevin_tencenttest1_emb | IMMERSE_USERID=kevin_tencenttest1_emb | IMMERSE_USER=kevin_tencenttest1_emb
-[2026.05.08-20.27.33:604][  0]LogTemp: Display: [testTP] Auto-spawned ImmerseStressTestActor into ThirdPersonExampleMap (type=1)
-[2026.05.08-20.27.33:604][  0]LogLoad: Took 0.316740 seconds to LoadMap(/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap)
-[2026.05.08-20.27.33:634][  0]LogRenderer: Reallocating scene render targets to support 1536x864 Format 10 NumSamples 1 (Frame:1).
-[2026.05.08-20.27.33:634][  0]LogSlate: Took 0.000444 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' (155K)
-[2026.05.08-20.27.33:658][  0]LogInit: Display: Engine is initialized. Leaving FEngineLoop::Init()
-[2026.05.08-20.27.33:658][  0]LogLoad: (Engine Initialization) Total time: 6.10 seconds
-[2026.05.08-20.27.33:658][  0]LogLoad: (Engine Initialization) Total Blueprint compile time: 0.00 seconds
-[2026.05.08-20.27.33:703][  0]LogContentStreaming: Texture pool size now 1000 MB
-[2026.05.08-20.27.33:708][  0]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
-[2026.05.08-20.27.33:796][  0]LogRenderer: Reallocating scene render targets to support 128x128 Format 10 NumSamples 1 (Frame:1).
-[2026.05.08-20.27.33:820][  0]LogRenderer: Reallocating scene render targets to support 1536x864 Format 10 NumSamples 1 (Frame:2).
-[2026.05.08-20.27.33:836][  1]LogSlate: Took 0.000127 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' (155K)
-[2026.05.08-20.27.36:202][153]LogTemp: Display: [ImmerseStress] PLAN START  steps=8 (concurrency=4 Ã— immerse{off,on}) rate=300.0Hz life=500ms warmup=2.0s phase=15.0s cooldown=2.0s CSV=../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/run_20260508_132736.csv
-[2026.05.08-20.27.36:202][153]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
-[2026.05.08-20.27.36:202][153]LogTemp: Display: [ImmerseStress] >>> WARMUP step=0/8 immerse=off conc=32 (align Wwise profiler capture here)
-[2026.05.08-20.27.36:202][153]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=32 immerse=BYPASSED
-[2026.05.08-20.27.36:264][179]LogStats: Display: There is no thread with id: 6488. Please add thread metadata for this thread.
-[2026.05.08-20.27.38:196][ 81]LogTemp: Display: [ImmerseStress] >>> RUNNING step=0/8 immerse=off conc=32 (align Wwise profiler capture here)
-[2026.05.08-20.27.53:197][950]LogTemp: Display: [ImmerseStress] PHASE 0 done immerse=off conc=32 posted=960 stopped=960 dropped=3540 frames=6869 avg=2.18ms p50=2.10 p95=2.60 max=44.25
-[2026.05.08-20.27.53:198][950]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=0/8 immerse=off conc=32 (align Wwise profiler capture here)
-[2026.05.08-20.27.53:198][950]LogTemp: Display: [ImmerseStress] Churn STOP   posted=1088 stopped=1088 dropped=4011
-[2026.05.08-20.27.55:197][891]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
-[2026.05.08-20.27.55:197][891]LogTemp: Display: [ImmerseStress] >>> WARMUP step=1/8 immerse=ON conc=32 (align Wwise profiler capture here)
-[2026.05.08-20.27.55:197][891]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=32 immerse=enabled
-[2026.05.08-20.27.57:199][835]LogTemp: Display: [ImmerseStress] >>> RUNNING step=1/8 immerse=ON conc=32 (align Wwise profiler capture here)
-[2026.05.08-20.28.12:199][448]LogTemp: Display: [ImmerseStress] PHASE 1 done immerse=ON conc=32 posted=960 stopped=960 dropped=3540 frames=6613 avg=2.27ms p50=2.19 p95=2.74 max=8.23
-[2026.05.08-20.28.12:200][448]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=1/8 immerse=ON conc=32 (align Wwise profiler capture here)
-[2026.05.08-20.28.12:200][448]LogTemp: Display: [ImmerseStress] Churn STOP   posted=2176 stopped=2176 dropped=8023
-[2026.05.08-20.28.14:200][354]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
-[2026.05.08-20.28.14:200][354]LogTemp: Display: [ImmerseStress] >>> WARMUP step=2/8 immerse=off conc=64 (align Wwise profiler capture here)
-[2026.05.08-20.28.14:200][354]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=64 immerse=BYPASSED
-[2026.05.08-20.28.16:200][305]LogTemp: Display: [ImmerseStress] >>> RUNNING step=2/8 immerse=off conc=64 (align Wwise profiler capture here)
-[2026.05.08-20.28.31:201][379]LogTemp: Display: [ImmerseStress] PHASE 2 done immerse=off conc=64 posted=1920 stopped=1920 dropped=2580 frames=7074 avg=2.12ms p50=2.06 p95=2.54 max=4.13
-[2026.05.08-20.28.31:202][379]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=2/8 immerse=off conc=64 (align Wwise profiler capture here)
-[2026.05.08-20.28.31:202][379]LogTemp: Display: [ImmerseStress] Churn STOP   posted=4352 stopped=4352 dropped=10947
-[2026.05.08-20.28.33:202][327]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
-[2026.05.08-20.28.33:202][327]LogTemp: Display: [ImmerseStress] >>> WARMUP step=3/8 immerse=ON conc=64 (align Wwise profiler capture here)
-[2026.05.08-20.28.33:203][327]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=64 immerse=enabled
-[2026.05.08-20.28.35:203][271]LogTemp: Display: [ImmerseStress] >>> RUNNING step=3/8 immerse=ON conc=64 (align Wwise profiler capture here)
-[2026.05.08-20.28.50:203][949]LogTemp: Display: [ImmerseStress] PHASE 3 done immerse=ON conc=64 posted=1920 stopped=1920 dropped=2580 frames=6678 avg=2.25ms p50=2.18 p95=2.77 max=5.13
-[2026.05.08-20.28.50:204][949]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=3/8 immerse=ON conc=64 (align Wwise profiler capture here)
-[2026.05.08-20.28.50:204][949]LogTemp: Display: [ImmerseStress] Churn STOP   posted=6528 stopped=6528 dropped=13871
-[2026.05.08-20.28.52:204][775]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
-[2026.05.08-20.28.52:204][775]LogTemp: Display: [ImmerseStress] >>> WARMUP step=4/8 immerse=off conc=128 (align Wwise profiler capture here)
-[2026.05.08-20.28.52:204][775]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=128 immerse=BYPASSED
-[2026.05.08-20.28.54:204][648]LogTemp: Display: [ImmerseStress] >>> RUNNING step=4/8 immerse=off conc=128 (align Wwise profiler capture here)
-[2026.05.08-20.29.09:205][603]LogTemp: Display: [ImmerseStress] PHASE 4 done immerse=off conc=128 posted=3828 stopped=3829 dropped=672 frames=6955 avg=2.16ms p50=2.09 p95=2.59 max=4.93
-[2026.05.08-20.29.09:205][603]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=4/8 immerse=off conc=128 (align Wwise profiler capture here)
-[2026.05.08-20.29.09:205][603]LogTemp: Display: [ImmerseStress] Churn STOP   posted=10868 stopped=10868 dropped=14631
-[2026.05.08-20.29.11:206][537]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
-[2026.05.08-20.29.11:206][537]LogTemp: Display: [ImmerseStress] >>> WARMUP step=5/8 immerse=ON conc=128 (align Wwise profiler capture here)
-[2026.05.08-20.29.11:206][537]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=128 immerse=enabled
-[2026.05.08-20.29.13:208][478]LogTemp: Display: [ImmerseStress] >>> RUNNING step=5/8 immerse=ON conc=128 (align Wwise profiler capture here)
+﻿[2026.05.08-20.30.10:872][156]LogModuleManager: Shutting down and abandoning module SlateReflector (230)
+[2026.05.08-20.30.10:874][156]LogModuleManager: Shutting down and abandoning module Slate (228)
+[2026.05.08-20.30.10:874][156]LogModuleManager: Shutting down and abandoning module SlateCore (226)
+[2026.05.08-20.30.10:876][156]LogModuleManager: Shutting down and abandoning module LandscapeEditorUtilities (224)
+[2026.05.08-20.30.10:876][156]LogModuleManager: Shutting down and abandoning module UnrealEd (222)
+[2026.05.08-20.30.10:877][156]LogModuleManager: Shutting down and abandoning module MRMesh (220)
+[2026.05.08-20.30.10:877][156]LogModuleManager: Shutting down and abandoning module Messaging (218)
+[2026.05.08-20.30.10:877][156]LogModuleManager: Shutting down and abandoning module SourceCodeAccess (216)
+[2026.05.08-20.30.10:877][156]LogModuleManager: Shutting down and abandoning module HeadMountedDisplay (214)
+[2026.05.08-20.30.10:877][156]LogModuleManager: Shutting down and abandoning module XAudio2 (212)
+[2026.05.08-20.30.10:877][156]LogModuleManager: Shutting down and abandoning module Networking (210)
+[2026.05.08-20.30.10:877][156]LogModuleManager: Shutting down and abandoning module Core (208)
+[2026.05.08-20.30.10:877][156]LogModuleManager: Shutting down and abandoning module MaterialEditor (206)
+[2026.05.08-20.30.10:877][156]LogModuleManager: Shutting down and abandoning module MovieSceneTools (204)
+[2026.05.08-20.30.10:878][156]LogModuleManager: Shutting down and abandoning module EditorStyle (203)
+[2026.05.08-20.30.10:879][156]LogModuleManager: Shutting down and abandoning module KismetCompiler (200)
+[2026.05.08-20.30.10:879][156]LogModuleManager: Shutting down and abandoning module MeshBuilder (198)
+[2026.05.08-20.30.10:879][156]LogModuleManager: Shutting down and abandoning module MeshUtilities (196)
+[2026.05.08-20.30.10:880][156]LogModuleManager: Shutting down and abandoning module MeshMergeUtilities (195)
+[2026.05.08-20.30.10:880][156]LogModuleManager: Shutting down and abandoning module MeshReductionInterface (194)
+[2026.05.08-20.30.10:880][156]LogModuleManager: Shutting down and abandoning module MeshBoneReduction (193)
+[2026.05.08-20.30.10:880][156]LogModuleManager: Shutting down and abandoning module SkeletalMeshReduction (191)
+[2026.05.08-20.30.10:880][156]LogModuleManager: Shutting down and abandoning module ProxyLODMeshReduction (189)
+[2026.05.08-20.30.10:881][156]LogModuleManager: Shutting down and abandoning module QuadricMeshReduction (187)
+[2026.05.08-20.30.10:881][156]LogModuleManager: Shutting down and abandoning module MaterialBaking (183)
+[2026.05.08-20.30.10:881][156]LogModuleManager: Shutting down and abandoning module NullInstallBundleManager (178)
+[2026.05.08-20.30.10:881][156]LogModuleManager: Shutting down and abandoning module PIEPreviewDeviceProfileSelector (176)
+[2026.05.08-20.30.10:882][156]LogModuleManager: Shutting down and abandoning module DerivedDataCache (174)
+[2026.05.08-20.30.10:882][156]LogModuleManager: Shutting down and abandoning module TargetPlatform (172)
+[2026.05.08-20.30.10:882][156]LogModuleManager: Shutting down and abandoning module VulkanShaderFormat (171)
+[2026.05.08-20.30.10:883][156]LogModuleManager: Shutting down and abandoning module ShaderFormatVectorVM (169)
+[2026.05.08-20.30.10:883][156]LogModuleManager: Shutting down and abandoning module ShaderFormatOpenGL (167)
+[2026.05.08-20.30.10:883][156]LogModuleManager: Shutting down and abandoning module ShaderFormatD3D (165)
+[2026.05.08-20.30.10:883][156]LogModuleManager: Shutting down and abandoning module MetalShaderFormat (163)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module TextureFormatOodle (161)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module TextureFormatUncompressed (159)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module TextureFormatPVR (157)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module TextureFormatETC2 (155)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module TextureFormatDXT (153)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module TextureFormatIntelISPCTexComp (151)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module TextureFormatASTC (149)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module ImageWrapper (148)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module AudioFormatOpus (145)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module AudioFormatOgg (143)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module AudioFormatADPCM (141)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module WindowsServerTargetPlatform (139)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module WindowsClientTargetPlatform (137)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module WindowsTargetPlatform (135)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module WindowsNoEditorTargetPlatform (133)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module D3D11RHI (130)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module InputCore (128)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module Settings (126)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module PhysXCooking (124)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module Chaos (122)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module WindowsPlatformFeatures (120)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module GameplayMediaEncoder (119)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module AVEncoder (118)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module SteamVRInputDevice (114)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module SteamVRInput (112)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module SteamVR (110)
+[2026.05.08-20.30.10:885][156]LogHMD: Freeing OpenVRDLLHandle.
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module OculusHMD (108)
+[2026.05.08-20.30.10:887][156]LogModuleManager: Shutting down and abandoning module AISupportModule (106)
+[2026.05.08-20.30.10:887][156]LogModuleManager: Shutting down and abandoning module OpenXRHandTracking (104)
+[2026.05.08-20.30.10:887][156]LogSlate: Slate User Destroyed.  User Index 0, Is Virtual User: 0
+[2026.05.08-20.30.10:887][156]LogModuleManager: Shutting down and abandoning module OpenXREyeTracker (102)
+[2026.05.08-20.30.10:887][156]LogModuleManager: Shutting down and abandoning module OpenXRAR (100)
+[2026.05.08-20.30.10:887][156]LogModuleManager: Shutting down and abandoning module AugmentedReality (99)
+[2026.05.08-20.30.10:888][156]LogModuleManager: Shutting down and abandoning module OpenXRHMD (96)
+[2026.05.08-20.30.10:888][156]LogModuleManager: Shutting down and abandoning module ChunkDownloader (94)
+[2026.05.08-20.30.10:889][156]LogModuleManager: Shutting down and abandoning module ExampleDeviceProfileSelector (92)
+[2026.05.08-20.30.10:889][156]LogModuleManager: Shutting down and abandoning module LauncherChunkInstaller (90)
+[2026.05.08-20.30.10:889][156]LogModuleManager: Shutting down and abandoning module OnlineBlueprintSupport (88)
+[2026.05.08-20.30.10:889][156]LogModuleManager: Shutting down and abandoning module OnlineSubsystem (84)
+[2026.05.08-20.30.10:893][156]LogModuleManager: Shutting down and abandoning module XMPP (79)
+[2026.05.08-20.30.10:893][156]LogModuleManager: Shutting down and abandoning module WebSockets (78)
+[2026.05.08-20.30.10:928][156]LogModuleManager: Shutting down and abandoning module HTTP (75)
+[2026.05.08-20.30.10:928][156]LogHttp: Display: cleaning up 0 outstanding Http requests.
+[2026.05.08-20.30.10:940][156]LogModuleManager: Shutting down and abandoning module SSL (74)
+[2026.05.08-20.30.10:941][156]LogModuleManager: Shutting down and abandoning module WmfMedia (70)
+[2026.05.08-20.30.10:944][156]LogModuleManager: Shutting down and abandoning module Media (69)
+[2026.05.08-20.30.10:946][156]LogModuleManager: Shutting down and abandoning module MediaInfo (68)
+[2026.05.08-20.30.10:946][156]LogModuleManager: Shutting down and abandoning module ExrReaderGpu (64)
+[2026.05.08-20.30.10:946][156]LogModuleManager: Shutting down and abandoning module MLSDK (62)
+[2026.05.08-20.30.10:946][156]LogModuleManager: Shutting down and abandoning module MagicLeap (60)
+[2026.05.08-20.30.10:946][156]LogModuleManager: Shutting down and abandoning module VariantManagerContent (58)
+[2026.05.08-20.30.10:946][156]LogModuleManager: Shutting down and abandoning module DatasmithContent (56)
+[2026.05.08-20.30.10:947][156]LogModuleManager: Shutting down and abandoning module NiagaraVertexFactories (54)
+[2026.05.08-20.30.10:947][156]LogModuleManager: Shutting down and abandoning module NiagaraShader (52)
+[2026.05.08-20.30.10:947][156]LogModuleManager: Shutting down and abandoning module ChaosCloth (50)
+[2026.05.08-20.30.10:948][156]LogModuleManager: Shutting down and abandoning module PixWinPlugin (48)
+[2026.05.08-20.30.10:948][156]LogModuleManager: Shutting down and abandoning module PlatformCryptoOpenSSL (46)
+[2026.05.08-20.30.10:948][156]LogModuleManager: Shutting down and abandoning module PlatformCryptoTypes (44)
+[2026.05.08-20.30.10:948][156]LogModuleManager: Shutting down and abandoning module PlatformCrypto (42)
+[2026.05.08-20.30.10:948][156]LogModuleManager: Shutting down and abandoning module OodleDataCompressionFormat (40)
+[2026.05.08-20.30.10:948][156]LogModuleManager: Shutting down and abandoning module PythonScriptPluginPreload (38)
+[2026.05.08-20.30.10:948][156]LogModuleManager: Shutting down and abandoning module XGEController (36)
+[2026.05.08-20.30.10:949][156]LogXGEController: Cleaning working directory: C:/Users/kapil/AppData/Local/Temp/UnrealXGEWorkingDir/
+[2026.05.08-20.30.10:949][156]LogModuleManager: Shutting down and abandoning module AnimationModifiers (34)
+[2026.05.08-20.30.10:950][156]LogModuleManager: Shutting down and abandoning module AudioEditor (32)
+[2026.05.08-20.30.10:950][156]LogModuleManager: Shutting down and abandoning module PropertyEditor (31)
+[2026.05.08-20.30.10:952][156]LogModuleManager: Shutting down and abandoning module TextureCompressor (28)
+[2026.05.08-20.30.10:952][156]LogModuleManager: Shutting down and abandoning module RenderCore (26)
+[2026.05.08-20.30.10:952][156]LogModuleManager: Shutting down and abandoning module Landscape (24)
+[2026.05.08-20.30.10:952][156]LogModuleManager: Shutting down and abandoning module SlateRHIRenderer (22)
+[2026.05.08-20.30.10:953][156]LogModuleManager: Shutting down and abandoning module AnimGraphRuntime (20)
+[2026.05.08-20.30.10:953][156]LogModuleManager: Shutting down and abandoning module Renderer (18)
+[2026.05.08-20.30.10:954][156]LogModuleManager: Shutting down and abandoning module Engine (16)
+[2026.05.08-20.30.10:954][156]LogModuleManager: Shutting down and abandoning module CoreUObject (14)
+[2026.05.08-20.30.10:954][156]LogModuleManager: Shutting down and abandoning module NetworkFile (12)
+[2026.05.08-20.30.10:954][156]LogModuleManager: Shutting down and abandoning module CookedIterativeFile (10)
+[2026.05.08-20.30.10:954][156]LogModuleManager: Shutting down and abandoning module StreamingFile (8)
+[2026.05.08-20.30.10:954][156]LogModuleManager: Shutting down and abandoning module SandboxFile (6)
+[2026.05.08-20.30.10:954][156]LogModuleManager: Shutting down and abandoning module PakFile (4)
+[2026.05.08-20.30.10:955][156]LogModuleManager: Shutting down and abandoning module RSA (3)
+[2026.05.08-20.30.10:955][156]LogContentStreaming: Display: There are 1 unreleased StreamingManagers
+[2026.05.08-20.30.10:979][156]LogD3D11RHI: Shutdown
+[2026.05.08-20.30.10:979][156]LogD3D11RHI: CleanupD3DDevice
+[2026.05.08-20.30.11:060][156]LogExit: Exiting.
+[2026.05.08-20.30.11:072][156]Log file closed, 05/08/26 13:30:11
