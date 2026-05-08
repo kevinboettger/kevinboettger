@@ -235,6 +235,10 @@ namespace ImmerseStress
 {
 	AKAUDIO_API AKRESULT SetMixerOnBus(const FString& BusName, AkUniqueID MixerSharesetID);
 	AKAUDIO_API AKRESULT SetMixerOnBusByName(const FString& BusName, const FString& MixerSharesetName);
+
+	// CAPTURE_WAV_v2: per-phase WAV capture wrappers (route through AkAudio DLL)
+	AKAUDIO_API int StartCapture_v1(const TCHAR* AbsPath);
+	AKAUDIO_API int StopCapture_v1();
 }
 '@
 
@@ -263,16 +267,34 @@ namespace ImmerseStress
 		FTCHARToUTF8 BusUtf8(*BusName);
 		return AK::SoundEngine::SetMixer(BusUtf8.Get(), id);
 	}
+
+	// CAPTURE_WAV_v2: AkOSChar == wchar_t on Windows == TCHAR. Direct cast is safe.
+	int StartCapture_v1(const TCHAR* AbsPath)
+	{
+		if (!AbsPath) return -1;
+		return (int)AK::SoundEngine::StartOutputCapture(reinterpret_cast<const AkOSChar*>(AbsPath));
+	}
+
+	int StopCapture_v1()
+	{
+		return (int)AK::SoundEngine::StopOutputCapture();
+	}
 }
 '@
 
     if (-not (Test-Path $hdr)) {
         [System.IO.File]::WriteAllText($hdr, $hdrContent, [System.Text.UTF8Encoding]::new($false))
         Info "Wrote $hdr"
+    } elseif (-not ((Get-Content $hdr -Raw).Contains('StartCapture_v1'))) {
+        [System.IO.File]::WriteAllText($hdr, $hdrContent, [System.Text.UTF8Encoding]::new($false))
+        Info "Updated $hdr (added CAPTURE_WAV_v2 declarations)"
     }
     if (-not (Test-Path $src)) {
         [System.IO.File]::WriteAllText($src, $srcContent, [System.Text.UTF8Encoding]::new($false))
         Info "Wrote $src"
+    } elseif (-not ((Get-Content $src -Raw).Contains('StartCapture_v1'))) {
+        [System.IO.File]::WriteAllText($src, $srcContent, [System.Text.UTF8Encoding]::new($false))
+        Info "Updated $src (added CAPTURE_WAV_v2 implementations)"
     }
     return ((Test-Path $hdr) -and (Test-Path $src))
 }
@@ -336,7 +358,7 @@ function Patch-Sources {
 
     Info 'Patch step: install AkAudio wrapper files'
     $wrapperReady = Ensure-AkAudioMixerWrapper
-    if ($wrapperReady) { $changes += 'AkAudio: ImmerseStressMixerWrapper installed' }
+    if ($wrapperReady) { $changes += 'AkAudio: ImmerseStressMixerWrapper installed/updated' }
 
     if (Test-Path $keyHeader) {
         $h = Read-AllText -Path $keyHeader
@@ -512,6 +534,38 @@ void AImmerseStressTestActor::EnableImmerse()
             $changes += 'FinishPlan: TOGGLE_STORM_v1 (500 toggles after sweep)'
         } else {
             Warn 'TOGGLE_STORM_v1 insertion did not match FinishPlan signature'
+        }
+    }
+
+    if (-not $cpp.Contains('CAPTURE_WAV_v2')) {
+        Info 'Patch step: CAPTURE_WAV_v2 (per-phase WAV capture, anchored on LogPhaseMarker RUNNING/COOLDOWN)'
+        $startInject = @'
+
+
+		// CAPTURE_WAV_v2: bracket the RUNNING phase with WAV capture
+		{
+			FString CapDir = FPaths::ProjectSavedDir() / TEXT("ImmerseStress");
+			IFileManager::Get().MakeDirectory(*CapDir, true);
+			FString WavPath = CapDir / FString::Printf(TEXT("phase_%d_%s.wav"), PlanStepIndex, bPhaseImmerseEnabled ? TEXT("on") : TEXT("off"));
+			ImmerseStress::StartCapture_v1(*WavPath);
+			UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] CAPTURE_WAV_v2 START %s"), *WavPath);
+		}
+'@
+        $rxRun = [regex]::new('(LogPhaseMarker\(TEXT\("RUNNING"\)\);)')
+        $newCpp = $rxRun.Replace($cpp, '$1' + $startInject, 1)
+        if ($newCpp -ne $cpp) {
+            $cpp = $newCpp
+            $stopInject = @'
+// CAPTURE_WAV_v2: stop WAV capture at end of RUNNING phase
+		ImmerseStress::StopCapture_v1();
+		UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] CAPTURE_WAV_v2 STOP"));
+
+'@
+            $rxCool = [regex]::new('(LogPhaseMarker\(TEXT\("COOLDOWN"\)\);)')
+            $cpp = $rxCool.Replace($cpp, $stopInject + "`t`t" + '$1', 1)
+            $changes += 'Actor: CAPTURE_WAV_v2 (StartCapture/StopCapture around RUNNING)'
+        } else {
+            Warn 'CAPTURE_WAV_v2: RUNNING marker not found -- skipped'
         }
     }
 
@@ -747,6 +801,18 @@ try {
     if ($csv) { Push-File $csv.FullName 'results.csv'; Info "CSV: $($csv.Name)" }
     if (Test-Path $editorLog) { Push-File $editorLog 'editor.log' }
 
+    # CAPTURE_WAV_v2: collect any per-phase WAV captures
+    if (Test-Path $resultsDir) {
+        $wavs = Get-ChildItem $resultsDir -Filter 'phase_*.wav' -ErrorAction SilentlyContinue |
+                Where-Object { $_.LastWriteTime -ge $editorStart }
+        $wavCount = 0
+        foreach ($w in $wavs) {
+            Push-File $w.FullName $w.Name
+            $wavCount++
+        }
+        if ($wavCount -gt 0) { Info "Captured WAVs: $wavCount files" }
+    }
+
     if ($csv) {
         Push-Status -Phase 'completed' -Extra @{ csv_name = $csv.Name }
         Step 'DONE'
@@ -760,37 +826,3 @@ try {
 }
 
 Read-Host 'Press Enter to close'
-
-
-# CAPTURE_WAV_v1 BEGIN
-function Patch-CaptureWav {
-    param([string]$ProjectRoot)
-    $wrapHdr  = Join-Path $ProjectRoot 'Plugins\Wwise\Source\AkAudio\Public\ImmerseStressMixerWrapper.h'
-    $wrapCpp  = Join-Path $ProjectRoot 'Plugins\Wwise\Source\AkAudio\Private\ImmerseStressMixerWrapper.cpp'
-    $actorCpp = Join-Path $ProjectRoot 'Source\testTP\Private\ImmerseStressTestActor.cpp'
-    if (-not (Test-Path $wrapHdr))  { Write-Host '[patch] CAPTURE_WAV_v1: wrapper header missing, skip' -ForegroundColor Yellow; return }
-    if (-not (Test-Path $actorCpp)) { Write-Host '[patch] CAPTURE_WAV_v1: actor cpp missing, skip' -ForegroundColor Yellow; return }
-    $h = Get-Content $wrapHdr -Raw
-    if (-not $h.Contains('StartCapture_v1')) {
-        $add = "`r`n// CAPTURE_WAV_v1`r`nnamespace ImmerseStress { AKAUDIO_API int StartCapture_v1(const TCHAR* AbsPath); AKAUDIO_API int StopCapture_v1(); }`r`n"
-        Set-Content -Path $wrapHdr -Value ($h.TrimEnd() + $add) -Encoding UTF8
-        Write-Host '[patch] CAPTURE_WAV_v1: wrapper header extended' -ForegroundColor Cyan
-    }
-    if (-not (Test-Path $wrapCpp)) {
-        $cppBody = "// CAPTURE_WAV_v1`r`n#include `"ImmerseStressMixerWrapper.h`"`r`n#include `"AkInclude.h`"`r`n#include `"AK/SoundEngine/Common/AkSoundEngine.h`"`r`nnamespace ImmerseStress { AKAUDIO_API int StartCapture_v1(const TCHAR* AbsPath){ if(!AbsPath) return -1; return (int)AK::SoundEngine::StartOutputCapture(TCHAR_TO_AK(AbsPath)); } AKAUDIO_API int StopCapture_v1(){ return (int)AK::SoundEngine::StopOutputCapture(); } }`r`n"
-        Set-Content -Path $wrapCpp -Value $cppBody -Encoding UTF8
-        Write-Host '[patch] CAPTURE_WAV_v1: wrapper cpp written' -ForegroundColor Cyan
-    }
-    $a = Get-Content $actorCpp -Raw
-    if (-not $a.Contains('CAPTURE_WAV_v1')) {
-        if (-not $a.Contains('#include "ImmerseStressMixerWrapper.h"')) {
-            $a = $a -replace '(#include\s+"ImmerseStressTestActor\.h"\s*\r?\n)', "`$1#include `"ImmerseStressMixerWrapper.h`"`r`n"
-        }
-        $a = [regex]::Replace($a, '(UE_LOG\([^;]*Phase begin[^;]*\);)', "`$1`r`n        { /* CAPTURE_WAV_v1 */ FString _wav = FPaths::Combine(RunFolder, FString::Printf(TEXT(`"phase_%d_%s.wav`"), PhaseIndex, bImmerseOn?TEXT(`"on`"):TEXT(`"off`"))); ImmerseStress::StartCapture_v1(*_wav); }", 1)
-        $a = [regex]::Replace($a, '(UE_LOG\([^;]*Phase end[^;]*\);)', "{ /* CAPTURE_WAV_v1 */ ImmerseStress::StopCapture_v1(); }`r`n        `$1", 1)
-        Set-Content -Path $actorCpp -Value $a -Encoding UTF8
-        Write-Host '[patch] CAPTURE_WAV_v1: actor cpp wrapped with capture calls' -ForegroundColor Cyan
-    }
-}
-try { Patch-CaptureWav -ProjectRoot $ProjectRoot } catch { Write-Host "[patch] CAPTURE_WAV_v1 failed: $_" -ForegroundColor Yellow }
-# CAPTURE_WAV_v1 END
