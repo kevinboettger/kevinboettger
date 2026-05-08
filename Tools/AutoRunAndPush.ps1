@@ -460,6 +460,48 @@ void AImmerseStressTestActor::EnableImmerse()
         $changes += 'BypassImmerse/EnableImmerse: wrapper-based'
     }
 
+    if (-not $cpp.Contains('TOGGLE_STORM_v1')) {
+        Info 'Patch step: insert toggle storm (500 rapid Immerse on/off cycles) at start of FinishPlan'
+        $stormInsert = @'
+
+	// TOGGLE_STORM_v1: stress AK::SoundEngine::SetMixer with rapid back-to-back toggles.
+	// Runs after the 8-phase A/B sweep finishes, before the engine exits.
+	{
+		const int32 ToggleStormCount = 500;
+		UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] >>> Toggle storm: %d iterations"), ToggleStormCount);
+		const double StormStart = FPlatformTime::Seconds();
+		int32 OkFlips = 0;
+		double WorstSetMixerMs = 0.0;
+		for (int32 i = 0; i < ToggleStormCount; ++i)
+		{
+			const bool bPrev = bImmerseBypassed;
+			const double T0 = FPlatformTime::Seconds();
+			if (i % 2 == 0) { BypassImmerse(); } else { EnableImmerse(); }
+			const double T1 = FPlatformTime::Seconds();
+			const double DtMs = (T1 - T0) * 1000.0;
+			if (DtMs > WorstSetMixerMs) { WorstSetMixerMs = DtMs; }
+			if (bImmerseBypassed != bPrev) { ++OkFlips; }
+		}
+		const double StormElapsed = FPlatformTime::Seconds() - StormStart;
+		UE_LOG(LogTemp, Display,
+			TEXT("[ImmerseStress] Toggle storm DONE: %d/%d state-flips in %.3fs (avg %.4fms/op, worst %.3fms, throughput %.0f ops/s)"),
+			OkFlips, ToggleStormCount, StormElapsed,
+			(StormElapsed * 1000.0) / ToggleStormCount,
+			WorstSetMixerMs,
+			(double)ToggleStormCount / FMath::Max(0.0001, StormElapsed));
+	}
+
+'@
+        $rxFP = [regex]::new('(void\s+AImmerseStressTestActor::FinishPlan\(bool\s+bAborted\)\s*\{)')
+        $newCpp = $rxFP.Replace($cpp, '$1' + $stormInsert, 1)
+        if ($newCpp -ne $cpp) {
+            $cpp = $newCpp
+            $changes += 'FinishPlan: TOGGLE_STORM_v1 (500 toggles after sweep)'
+        } else {
+            Warn 'TOGGLE_STORM_v1 insertion did not match FinishPlan signature'
+        }
+    }
+
     Write-AllText-Safe -Path $keyCpp -Content $cpp -MinLengthGuard ([int]($originalLength / 2))
 
     if (Test-Path $keyHeader) { Push-File $keyHeader 'ImmerseStressTestActor.h.after' }
