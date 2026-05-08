@@ -12,6 +12,7 @@ $Branch      = 'claude/test-immerse-audio-plugin-su44W'
 $RunDirRel   = "immerse_runs/$RunId"
 $RunDirAbs   = $null
 $ImmerseUserId = 'kevin_tencenttest1_emb'
+$CanonRawBase = "https://raw.githubusercontent.com/$Owner/$Repo/$Branch/Tools/source_canon"
 
 function Step($m) { Write-Host "==== $m ====" -ForegroundColor Cyan }
 function Info($m) { Write-Host "    $m" -ForegroundColor DarkGray }
@@ -53,13 +54,11 @@ function Write-AllText-Safe {
     if ((Test-Path $Path) -and $MinLengthGuard -gt 0 -and $Content.Length -lt $MinLengthGuard) {
         throw "Refusing to write ${Path}: new length $($Content.Length) is below guard ($MinLengthGuard)"
     }
+    $dir = Split-Path $Path -Parent
+    if ($dir -and -not (Test-Path $dir)) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
     [System.IO.File]::WriteAllText($Path, $Content, [System.Text.UTF8Encoding]::new($false))
 }
 
-# NOTE: parameter renamed from $Input -> $InputText. PS5 has an automatic
-# pipeline variable named $input, and declaring a parameter with the same
-# name (case-insensitive) silently shadows it with an empty enumerator,
-# which made Regex-Replace return an empty string and trip the safety guard.
 function Regex-Replace {
     param(
         [Parameter(Mandatory=$true)][string]$Step,
@@ -74,23 +73,51 @@ function Regex-Replace {
     return $rx.Replace($InputText, $Replacement)
 }
 
+# Ensure a Source/testTP file is present and at least MinBytes long. If it's
+# missing or truncated, restore it from the canonical copy on the branch
+# (Tools/source_canon/<CanonName>) via raw with cache-busting.
+function Ensure-CanonicalSource {
+    param(
+        [Parameter(Mandatory=$true)][string]$LocalPath,
+        [Parameter(Mandatory=$true)][string]$CanonName,
+        [int]$MinBytes = 50
+    )
+    $existing = $null
+    if (Test-Path $LocalPath) { $existing = (Get-Item $LocalPath).Length }
+    if ($null -ne $existing -and $existing -ge $MinBytes) { return $false }
+
+    $reason = if ($null -eq $existing) { 'missing' } else { "$existing bytes (< $MinBytes)" }
+    Warn "  $CanonName is $reason -- restoring from canonical..."
+
+    $url = "$CanonRawBase/$CanonName" + "?_=" + [DateTime]::UtcNow.Ticks
+    $headers = @{ 'Cache-Control' = 'no-cache, no-store, max-age=0'; 'Pragma' = 'no-cache' }
+    try {
+        $response = Invoke-WebRequest -Uri $url -UseBasicParsing -Headers $headers -ErrorAction Stop
+        $content = $response.Content
+        if ($null -eq $content -or $content.Length -lt $MinBytes) {
+            Warn "  canonical $CanonName came back too small ($($content.Length) bytes)"
+            return $false
+        }
+        Write-AllText-Safe -Path $LocalPath -Content $content
+        Info "  restored $CanonName -> $LocalPath ($($content.Length) bytes)"
+        return $true
+    } catch {
+        Warn "  failed to download canonical $CanonName: $($_.Exception.Message)"
+        return $false
+    }
+}
+
 function Restore-CppFromBackup {
     param(
         [Parameter(Mandatory=$true)][string]$KeyCpp,
         [Parameter(Mandatory=$true)][string]$RepoRoot
     )
     $runsDir = Join-Path $RepoRoot 'immerse_runs'
-    if (-not (Test-Path $runsDir)) {
-        Warn "  no immerse_runs/ in $RepoRoot"
-        return $false
-    }
+    if (-not (Test-Path $runsDir)) { return $false }
     $backups = Get-ChildItem $runsDir -Recurse -Filter 'ImmerseStressTestActor.cpp.before' -ErrorAction SilentlyContinue |
         Where-Object { $_.Length -gt 1000 } |
         Sort-Object LastWriteTime -Descending
-    if (-not $backups -or $backups.Count -eq 0) {
-        Warn '  no valid (>1KB) cpp.before backups in immerse_runs/'
-        return $false
-    }
+    if (-not $backups -or $backups.Count -eq 0) { return $false }
     $best = $backups | Select-Object -First 1
     Info "  restoring cpp from $($best.FullName) ($($best.Length) bytes)"
     Copy-Item $best.FullName $KeyCpp -Force
@@ -191,7 +218,7 @@ function Ensure-AkAudioMixerWrapper {
     $publicDir    = Join-Path $wwiseSrcRoot 'Public'
     $privateDir   = Join-Path $wwiseSrcRoot 'Private'
     if (-not (Test-Path $publicDir) -or -not (Test-Path $privateDir)) {
-        Warn "AkAudio module source dirs not present at $wwiseSrcRoot; skipping wrapper install."
+        Warn "AkAudio module source dirs not present at $wwiseSrcRoot"
         return $false
     }
 
@@ -261,25 +288,37 @@ function Patch-Sources {
     }
 
     $keyHeader = Join-Path $sourceRoot 'Public\ImmerseStressTestActor.h'
-    if (Test-Path $keyHeader) { Push-File $keyHeader 'ImmerseStressTestActor.h.before' }
     $keyCpp    = Join-Path $sourceRoot 'Private\ImmerseStressTestActor.cpp'
+    $modH      = Join-Path $sourceRoot 'testTP.h'
+    $modCpp    = Join-Path $sourceRoot 'testTP.cpp'
+
+    Info 'Patch step: ensure all 4 source files are present + non-empty'
+    if (Ensure-CanonicalSource -LocalPath $modH      -CanonName 'testTP.h'                -MinBytes 30)   { $changes += 'restored testTP.h' }
+    if (Ensure-CanonicalSource -LocalPath $modCpp    -CanonName 'testTP.cpp'              -MinBytes 200)  { $changes += 'restored testTP.cpp' }
+    if (Ensure-CanonicalSource -LocalPath $keyHeader -CanonName 'ImmerseStressTestActor.h' -MinBytes 1000) { $changes += 'restored ImmerseStressTestActor.h' }
 
     if (Test-Path $keyCpp) {
         $cppItem = Get-Item $keyCpp
         if ($cppItem.Length -lt 1000) {
-            Warn "ImmerseStressTestActor.cpp is only $($cppItem.Length) bytes -- attempting restore from backup..."
+            Warn "  ImmerseStressTestActor.cpp is only $($cppItem.Length) bytes -- trying local backup..."
             if (Restore-CppFromBackup -KeyCpp $keyCpp -RepoRoot $ResultsRoot) {
-                $cppItem = Get-Item $keyCpp
-                Info "  restored to $($cppItem.Length) bytes"
-                $changes += "ImmerseStressTestActor.cpp: restored from cpp.before backup"
+                $changes += 'restored ImmerseStressTestActor.cpp from local cpp.before'
+            } elseif (Ensure-CanonicalSource -LocalPath $keyCpp -CanonName 'ImmerseStressTestActor.cpp' -MinBytes 5000) {
+                $changes += 'restored ImmerseStressTestActor.cpp from canonical'
             } else {
-                Warn '  RESTORE FAILED. Cannot proceed without a valid cpp.'
-                Push-Status -Phase 'failed' -Extra @{ stage='restore_cpp'; error='no valid backup found' }
+                Warn '  RESTORE FAILED for cpp; cannot proceed.'
+                Push-Status -Phase 'failed' -Extra @{ stage='restore_cpp'; error='no backup or canonical' }
                 return
             }
         }
-        Push-File $keyCpp 'ImmerseStressTestActor.cpp.before'
+    } else {
+        if (Ensure-CanonicalSource -LocalPath $keyCpp -CanonName 'ImmerseStressTestActor.cpp' -MinBytes 5000) {
+            $changes += 'created ImmerseStressTestActor.cpp from canonical'
+        }
     }
+
+    if (Test-Path $keyHeader) { Push-File $keyHeader 'ImmerseStressTestActor.h.before' }
+    if (Test-Path $keyCpp)    { Push-File $keyCpp    'ImmerseStressTestActor.cpp.before' }
 
     Info 'Patch step: class IConsoleCommand -> struct'
     $files = Get-ChildItem $sourceRoot -Recurse -Include *.h,*.cpp -ErrorAction SilentlyContinue
@@ -299,15 +338,13 @@ function Patch-Sources {
 
     Info 'Patch step: install AkAudio wrapper files'
     $wrapperReady = Ensure-AkAudioMixerWrapper
-    if ($wrapperReady) {
-        $changes += 'AkAudio: ImmerseStressMixerWrapper installed'
-    }
+    if ($wrapperReady) { $changes += 'AkAudio: ImmerseStressMixerWrapper installed' }
 
     if (-not (Test-Path $keyCpp)) { return }
 
     $cpp = Read-AllText -Path $keyCpp
     if ([string]::IsNullOrEmpty($cpp) -or $cpp.Length -lt 1000) {
-        Warn "ImmerseStressTestActor.cpp is empty/tiny on disk after restore attempt -- aborting."
+        Warn 'cpp content too small after restore -- aborting.'
         return
     }
     $originalLength = $cpp.Length
@@ -349,13 +386,6 @@ function Patch-Sources {
         $rxRP = [regex]::new('(void\s+AImmerseStressTestActor::RunPlan\(\)\s*\{)')
         $cpp = $rxRP.Replace($cpp, '$1' + $insertion, 1)
         $changes += 'RunPlan: FAkAudioDevice gate'
-    }
-    elseif ($hasIsInit) {
-        Info 'Patch step: convert legacy IsInitialized() gate -> FAkAudioDevice::Get()'
-        $cpp = Regex-Replace -Step 'IsInit-1' -InputText $cpp -Pattern 'AK::SoundEngine::IsInitialized\(\)' -Replacement '(FAkAudioDevice::Get() != nullptr)'
-        $cpp = Regex-Replace -Step 'IsInit-2' -InputText $cpp -Pattern 'Wwise SoundEngine still not initialized' -Replacement 'FAkAudioDevice still null'
-        $cpp = Regex-Replace -Step 'IsInit-3' -InputText $cpp -Pattern 'Wwise not ready' -Replacement 'AkAudioDevice not ready'
-        $changes += 'RunPlan gate: IsInitialized() -> FAkAudioDevice::Get()'
     }
 
     if (-not $hasTimer) {
@@ -564,7 +594,6 @@ try {
         Patch-Sources
     } catch {
         Warn "Patch-Sources error: $($_.Exception.Message)"
-        Warn "Stack trace:"
         Warn ($_.ScriptStackTrace -as [string])
         throw
     }
