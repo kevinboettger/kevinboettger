@@ -1,18 +1,4 @@
-﻿[2026.05.08-20.27.31:857][  0]LogPython: Using Python 3.7.7
-[2026.05.08-20.27.32:356][  0]LogAkAudio: Wwise(R) SDK Version 2019.2.15 Build 7667. Copyright (c) 2006-2019 Audiokinetic Inc.
-[2026.05.08-20.27.32:359][  0]LogAkAudio: Wwise plug-in DLL path: C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Plugins/Wwise/ThirdParty/x64_vc150/Profile/bin/
-[2026.05.08-20.27.32:362][  0]LogAkAudio: Wwise remote connection application name: testTP
-[2026.05.08-20.27.32:362][  0]LogAkAudio: Wwise successfully initialized.
-[2026.05.08-20.27.32:369][  0]LogAkAudio: Initialization complete.
-[2026.05.08-20.27.32:369][  0]LogInit: Audiokinetic Audio Device initialized.
-[2026.05.08-20.27.32:500][  0]SourceControl: Source control is disabled
-[2026.05.08-20.27.32:500][  0]SourceControl: Source control is disabled
-[2026.05.08-20.27.32:509][  0]SourceControl: Source control is disabled
-[2026.05.08-20.27.32:521][  0]LogUProjectInfo: Found projects:
-[2026.05.08-20.27.32:619][  0]LogOpenImageDenoise: OIDN starting up
-[2026.05.08-20.27.32:660][  0]LogAndroidPermission: UAndroidPermissionCallbackProxy::GetInstance
-[2026.05.08-20.27.32:670][  0]LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
-[2026.05.08-20.27.32:670][  0]LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
+﻿[2026.05.08-20.27.32:670][  0]LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
 [2026.05.08-20.27.32:744][  0]LogOcInput: OculusInput pre-init called
 [2026.05.08-20.27.32:754][  0]LogUObjectArray: 22811 objects as part of root set at end of initial load.
 [2026.05.08-20.27.32:754][  0]LogUObjectAllocator: 6215680 out of 0 bytes used by permanent object pool.
@@ -118,3 +104,17 @@
 [2026.05.08-20.28.33:202][327]LogTemp: Display: [ImmerseStress] >>> WARMUP step=3/8 immerse=ON conc=64 (align Wwise profiler capture here)
 [2026.05.08-20.28.33:203][327]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=64 immerse=enabled
 [2026.05.08-20.28.35:203][271]LogTemp: Display: [ImmerseStress] >>> RUNNING step=3/8 immerse=ON conc=64 (align Wwise profiler capture here)
+[2026.05.08-20.28.50:203][949]LogTemp: Display: [ImmerseStress] PHASE 3 done immerse=ON conc=64 posted=1920 stopped=1920 dropped=2580 frames=6678 avg=2.25ms p50=2.18 p95=2.77 max=5.13
+[2026.05.08-20.28.50:204][949]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=3/8 immerse=ON conc=64 (align Wwise profiler capture here)
+[2026.05.08-20.28.50:204][949]LogTemp: Display: [ImmerseStress] Churn STOP   posted=6528 stopped=6528 dropped=13871
+[2026.05.08-20.28.52:204][775]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.28.52:204][775]LogTemp: Display: [ImmerseStress] >>> WARMUP step=4/8 immerse=off conc=128 (align Wwise profiler capture here)
+[2026.05.08-20.28.52:204][775]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=128 immerse=BYPASSED
+[2026.05.08-20.28.54:204][648]LogTemp: Display: [ImmerseStress] >>> RUNNING step=4/8 immerse=off conc=128 (align Wwise profiler capture here)
+[2026.05.08-20.29.09:205][603]LogTemp: Display: [ImmerseStress] PHASE 4 done immerse=off conc=128 posted=3828 stopped=3829 dropped=672 frames=6955 avg=2.16ms p50=2.09 p95=2.59 max=4.93
+[2026.05.08-20.29.09:205][603]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=4/8 immerse=off conc=128 (align Wwise profiler capture here)
+[2026.05.08-20.29.09:205][603]LogTemp: Display: [ImmerseStress] Churn STOP   posted=10868 stopped=10868 dropped=14631
+[2026.05.08-20.29.11:206][537]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.29.11:206][537]LogTemp: Display: [ImmerseStress] >>> WARMUP step=5/8 immerse=ON conc=128 (align Wwise profiler capture here)
+[2026.05.08-20.29.11:206][537]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=128 immerse=enabled
+[2026.05.08-20.29.13:208][478]LogTemp: Display: [ImmerseStress] >>> RUNNING step=5/8 immerse=ON conc=128 (align Wwise profiler capture here)
