@@ -1,0 +1,1574 @@
+﻿Log file open, 05/08/26 13:27:28
+LogWindows: Failed to load 'aqProf.dll' (GetLastError=126)
+LogWindows: File 'aqProf.dll' does not exist
+LogWindows: Failed to load 'VtuneApi.dll' (GetLastError=126)
+LogWindows: File 'VtuneApi.dll' does not exist
+LogWindows: Failed to load 'VtuneApi32e.dll' (GetLastError=126)
+LogWindows: File 'VtuneApi32e.dll' does not exist
+LogConsoleResponse: Display: Failed to find resolution value strings in scalability ini. Falling back to default.
+LogConsoleResponse: Display: Failed to find resolution value strings in scalability ini. Falling back to default.
+LogInit: Display: Running engine for game: testTP
+LogPlatformFile: Not using cached read wrapper
+LogTaskGraph: Started task graph with 5 named threads and 59 total threads with 3 sets of task threads.
+LogStats: Stats thread started at 0.517553
+LogICUInternationalization: ICU TimeZone Detection - Raw Offset: -8:00, Platform Override: ''
+LogInit: Display: Loading text-based GConfig....
+LogPluginManager: Mounting plugin MeshPainting
+LogPluginManager: Mounting plugin XGEController
+LogPluginManager: Mounting plugin Paper2D
+LogPluginManager: Mounting plugin LightPropagationVolume
+LogPluginManager: Mounting plugin LiveLink
+LogPluginManager: Mounting plugin AssetManagerEditor
+LogPluginManager: Mounting plugin CryptoKeys
+LogPluginManager: Mounting plugin CurveEditorTools
+LogPluginManager: Mounting plugin DataValidation
+LogPluginManager: Mounting plugin FacialAnimation
+LogPluginManager: Mounting plugin GameplayTagsEditor
+LogPluginManager: Mounting plugin GeometryMode
+LogPluginManager: Mounting plugin MacGraphicsSwitching
+LogPluginManager: Mounting plugin MaterialAnalyzer
+LogPluginManager: Mounting plugin MobileLauncherProfileWizard
+LogPluginManager: Mounting plugin GameplayCameras
+LogPluginManager: Mounting plugin CameraShakePreviewer
+LogPluginManager: Mounting plugin PluginBrowser
+LogPluginManager: Mounting plugin SpeedTreeImporter
+LogPluginManager: Mounting plugin CodeLiteSourceCodeAccess
+LogPluginManager: Mounting plugin KDevelopSourceCodeAccess
+LogPluginManager: Mounting plugin NullSourceCodeAccess
+LogPluginManager: Mounting plugin AnimationSharing
+LogPluginManager: Mounting plugin PerforceSourceControl
+LogPluginManager: Mounting plugin PixWinPlugin
+LogPluginManager: Mounting plugin PlasticSourceControl
+LogPluginManager: Mounting plugin GitSourceControl
+LogPluginManager: Mounting plugin PluginUtils
+LogPluginManager: Mounting plugin CLionSourceCodeAccess
+LogPluginManager: Mounting plugin PropertyAccessNode
+LogPluginManager: Mounting plugin SubversionSourceControl
+LogPluginManager: Mounting plugin TextureFormatOodle
+LogPluginManager: Mounting plugin AlembicImporter
+LogPluginManager: Mounting plugin RiderSourceCodeAccess
+LogPluginManager: Mounting plugin AutomationUtils
+LogPluginManager: Mounting plugin VisualStudioSourceCodeAccess
+LogPluginManager: Mounting plugin VisualStudioCodeSourceCodeAccess
+LogPluginManager: Mounting plugin UObjectPlugin
+LogPluginManager: Mounting plugin BackChannel
+LogPluginManager: Mounting plugin ChaosCloth
+LogPluginManager: Mounting plugin XCodeSourceCodeAccess
+LogPluginManager: Mounting plugin ChaosClothEditor
+LogPluginManager: Mounting plugin ChaosEditor
+LogPluginManager: Mounting plugin CharacterAI
+LogPluginManager: Mounting plugin ChaosSolverPlugin
+LogPluginManager: Mounting plugin Niagara
+LogPluginManager: Mounting plugin GeometryCollectionPlugin
+LogPluginManager: Mounting plugin GeometryProcessing
+LogPluginManager: Mounting plugin GeometryCache
+LogPluginManager: Mounting plugin ChaosNiagara
+LogPluginManager: Mounting plugin MotoSynth
+LogPluginManager: Mounting plugin PythonScriptPlugin
+LogPluginManager: Mounting plugin PlanarCut
+LogPluginManager: Mounting plugin ProxyLODPlugin
+LogPluginManager: Mounting plugin OpenImageDenoise
+LogPluginManager: Mounting plugin SkeletalReduction
+LogPluginManager: Mounting plugin OodleData
+LogPluginManager: Mounting plugin OodleNetwork
+LogPluginManager: Mounting plugin PlatformCrypto
+LogPluginManager: Mounting plugin AvfMedia
+LogPluginManager: Mounting plugin DatasmithContent
+LogPluginManager: Mounting plugin MediaCompositing
+LogPluginManager: Mounting plugin UdpMessaging
+LogPluginManager: Mounting plugin MediaPlayerEditor
+LogPluginManager: Mounting plugin TcpMessaging
+LogPluginManager: Mounting plugin VariantManagerContent
+LogPluginManager: Mounting plugin WebMMedia
+LogPluginManager: Mounting plugin MagicLeap
+LogPluginManager: Mounting plugin LuminPlatformFeatures
+LogPluginManager: Mounting plugin MagicLeapLightEstimation
+LogPluginManager: Mounting plugin AndroidMedia
+LogPluginManager: Mounting plugin MagicLeapPassableWorld
+LogPluginManager: Mounting plugin MLSDK
+LogPluginManager: Mounting plugin ImgMedia
+LogPluginManager: Mounting plugin ActorSequence
+LogPluginManager: Mounting plugin WmfMedia
+LogPluginManager: Mounting plugin MatineeToLevelSequence
+LogPluginManager: Mounting plugin LevelSequenceEditor
+LogPluginManager: Mounting plugin MagicLeapMedia
+LogPluginManager: Mounting plugin OnlineSubsystem
+LogPluginManager: Mounting plugin TemplateSequence
+LogPluginManager: Mounting plugin OnlineSubsystemUtils
+LogPluginManager: Mounting plugin LauncherChunkInstaller
+LogPluginManager: Mounting plugin OnlineSubsystemNull
+LogPluginManager: Mounting plugin ScreenshotTools
+LogPluginManager: Mounting plugin ActorLayerUtilities
+LogPluginManager: Mounting plugin AndroidDeviceProfileSelector
+LogPluginManager: Mounting plugin AndroidPermission
+LogPluginManager: Mounting plugin AppleMoviePlayer
+LogPluginManager: Mounting plugin ArchVisCharacter
+LogPluginManager: Mounting plugin AndroidMoviePlayer
+LogPluginManager: Mounting plugin AudioCapture
+LogPluginManager: Mounting plugin CableComponent
+LogPluginManager: Mounting plugin CustomMeshComponent
+LogPluginManager: Mounting plugin ExampleDeviceProfileSelector
+LogPluginManager: Mounting plugin AssetTags
+LogPluginManager: Mounting plugin EditableMesh
+LogPluginManager: Mounting plugin ChunkDownloader
+LogPluginManager: Mounting plugin Takes
+LogPluginManager: Mounting plugin GooglePAD
+LogPluginManager: Mounting plugin GoogleCloudMessaging
+LogPluginManager: Mounting plugin AudioSynesthesia
+LogPluginManager: Mounting plugin LocationServicesBPLibrary
+LogPluginManager: Mounting plugin LinuxDeviceProfileSelector
+LogPluginManager: Mounting plugin AppleImageUtils
+LogPluginManager: Mounting plugin OpenXR
+LogPluginManager: Mounting plugin OpenXREyeTracker
+LogPluginManager: Mounting plugin PhysXVehicles
+LogPluginManager: Mounting plugin PostSplashScreen
+LogPluginManager: Mounting plugin ProceduralMeshComponent
+LogPluginManager: Mounting plugin OpenXRHandTracking
+LogPluginManager: Mounting plugin SignificanceManager
+LogPluginManager: Mounting plugin SoundFields
+LogPluginManager: Mounting plugin RuntimePhysXCooking
+LogPluginManager: Mounting plugin Synthesis
+LogPluginManager: Mounting plugin WindowsMoviePlayer
+LogPluginManager: Mounting plugin MobilePatchingUtils
+LogPluginManager: Mounting plugin EnvironmentQueryEditor
+LogPluginManager: Mounting plugin IOSDeviceProfileSelector
+LogPluginManager: Mounting plugin PropertyAccessEditor
+LogPluginManager: Mounting plugin WebMMoviePlayer
+LogPluginManager: Mounting plugin AISupport
+LogPluginManager: Mounting plugin ContentBrowserAssetDataSource
+LogPluginManager: Mounting plugin ContentBrowserClassDataSource
+LogPluginManager: Mounting plugin ContentBrowserFileDataSource
+LogPluginManager: Mounting plugin OnlineSubsystemIOS
+LogPluginManager: Mounting plugin OnlineSubsystemGooglePlay
+LogPluginManager: Mounting plugin OculusVR
+LogPluginManager: Mounting plugin SteamVR
+LogPluginManager: Mounting plugin Wwise
+PixWinPlugin: PIX capture plugin failed to initialize! Check that the process is launched from PIX.
+LogInit: Using libcurl 7.55.1-DEV
+LogInit:  - built for x86_64-pc-win32
+LogInit:  - supports SSL with OpenSSL/1.1.1
+LogInit:  - supports HTTP deflate (compression) using libz 1.2.8
+LogInit:  - other features:
+LogInit:      CURL_VERSION_SSL
+LogInit:      CURL_VERSION_LIBZ
+LogInit:      CURL_VERSION_IPV6
+LogInit:      CURL_VERSION_ASYNCHDNS
+LogInit:      CURL_VERSION_LARGEFILE
+LogInit:      CURL_VERSION_IDN
+LogInit:  CurlRequestOptions (configurable via config and command line):
+LogInit:  - bVerifyPeer = true  - Libcurl will verify peer certificate
+LogInit:  - bUseHttpProxy = false  - Libcurl will NOT use HTTP proxy
+LogInit:  - bDontReuseConnections = false  - Libcurl will reuse connections
+LogInit:  - MaxHostConnections = 16  - Libcurl will limit the number of connections to a host
+LogInit:  - LocalHostAddr = Default
+LogInit:  - BufferSize = 65536
+LogOnline: OSS: Creating online subsystem instance for: NULL
+LogInit: WinSock: version 1.1 (2.2), MaxSocks=32767, MaxUdp=65467
+LogOnline: OSS: TryLoadSubsystemAndSetDefault: Loaded subsystem for module [NULL]
+LogOculusPluginWrapper: OculusPlugin initialized successfully
+LogHMD: Failed initializing OVRPlugin 1.59.0
+LogInit: Build: ++UE4+Release-4.27-CL-18319896
+LogInit: Engine Version: 4.27.2-18319896+++UE4+Release-4.27
+LogInit: Compatible Engine Version: 4.27.0-17155196+++UE4+Release-4.27
+LogInit: Net CL: 17155196
+LogInit: OS: Windows 10 (Release 2009) (), CPU: 13th Gen Intel(R) Core(TM) i7-13650HX, GPU: Intel(R) UHD Graphics
+LogInit: Compiled (64-bit): Nov 30 2021 07:12:08
+LogInit: Compiled with Visual C++: 19.24.28315.00
+LogInit: Build Configuration: Development
+LogInit: Branch Name: ++UE4+Release-4.27
+LogInit: Command Line:  /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap -game -RenderOffscreen -unattended -nopause -NoSplash -abslog=C:\Users\kapil\AppData\Local\Temp\immerse_editor_20260508-132550.log
+LogInit: Base Directory: C:/Program Files/Epic Games/UE_4.27/Engine/Binaries/Win64/
+LogInit: Allocator: TBB
+LogInit: Installed Engine Build: 1
+LogDevObjectVersion: Number of dev versions registered: 29
+LogDevObjectVersion:   Dev-Blueprints (B0D832E4-1F89-4F0D-ACCF-7EB736FD4AA2): 10
+LogDevObjectVersion:   Dev-Build (E1C64328-A22C-4D53-A36C-8E866417BD8C): 0
+LogDevObjectVersion:   Dev-Core (375EC13C-06E4-48FB-B500-84F0262A717E): 4
+LogDevObjectVersion:   Dev-Editor (E4B068ED-F494-42E9-A231-DA0B2E46BB41): 40
+LogDevObjectVersion:   Dev-Framework (CFFC743F-43B0-4480-9391-14DF171D2073): 37
+LogDevObjectVersion:   Dev-Mobile (B02B49B5-BB20-44E9-A304-32B752E40360): 3
+LogDevObjectVersion:   Dev-Networking (A4E4105C-59A1-49B5-A7C5-40C4547EDFEE): 0
+LogDevObjectVersion:   Dev-Online (39C831C9-5AE6-47DC-9A44-9C173E1C8E7C): 0
+LogDevObjectVersion:   Dev-Physics (78F01B33-EBEA-4F98-B9B4-84EACCB95AA2): 14
+LogDevObjectVersion:   Dev-Platform (6631380F-2D4D-43E0-8009-CF276956A95A): 0
+LogDevObjectVersion:   Dev-Rendering (12F88B9F-8875-4AFC-A67C-D90C383ABD29): 45
+LogDevObjectVersion:   Dev-Sequencer (7B5AE74C-D270-4C10-A958-57980B212A5A): 13
+LogDevObjectVersion:   Dev-VR (D7296918-1DD6-4BDD-9DE2-64A83CC13884): 3
+LogDevObjectVersion:   Dev-LoadTimes (C2A15278-BFE7-4AFE-6C17-90FF531DF755): 1
+LogDevObjectVersion:   Private-Geometry (6EACA3D4-40EC-4CC1-B786-8BED09428FC5): 3
+LogDevObjectVersion:   Dev-AnimPhys (29E575DD-E0A3-4627-9D10-D276232CDCEA): 17
+LogDevObjectVersion:   Dev-Anim (AF43A65D-7FD3-4947-9873-3E8ED9C1BB05): 15
+LogDevObjectVersion:   Dev-ReflectionCapture (6B266CEC-1EC7-4B8F-A30B-E4D90942FC07): 1
+LogDevObjectVersion:   Dev-Automation (0DF73D61-A23F-47EA-B727-89E90C41499A): 1
+LogDevObjectVersion:   FortniteMain (601D1886-AC64-4F84-AA16-D3DE0DEAC7D6): 47
+LogDevObjectVersion:   FortniteRelease (E7086368-6B23-4C58-8439-1B7016265E91): 1
+LogDevObjectVersion:   Dev-Enterprise (9DFFBCD6-494F-0158-E221-12823C92A888): 10
+LogDevObjectVersion:   Dev-Niagara (F2AED0AC-9AFE-416F-8664-AA7FFA26D6FC): 1
+LogDevObjectVersion:   Dev-Destruction (174F1F0B-B4C6-45A5-B13F-2EE8D0FB917D): 10
+LogDevObjectVersion:   Dev-Physics-Ext (35F94A83-E258-406C-A318-09F59610247C): 41
+LogDevObjectVersion:   Dev-PhysicsMaterial-Chaos (B68FC16E-8B1B-42E2-B453-215C058844FE): 1
+LogDevObjectVersion:   Dev-CineCamera (B2E18506-4273-CFC2-A54E-F4BB758BBA07): 1
+LogDevObjectVersion:   Dev-VirtualProduction (64F58936-FD1B-42BA-BA96-7289D5D0FA4E): 1
+LogDevObjectVersion:   Dev-MediaFramework (6F0ED827-A609-4895-9C91-998D90180EA4): 2
+LogInit: Presizing for max 25165824 objects, including 0 objects not considered by GC, pre-allocating 0 bytes for permanent pool.
+LogConfig: Applying CVar settings from Section [/Script/Engine.StreamingSettings] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Engine.ini]
+LogConfig: Setting CVar [[s.MinBulkDataSizeForAsyncLoading:131072]]
+LogConfig: Setting CVar [[s.AsyncLoadingThreadEnabled:0]]
+LogConfig: Setting CVar [[s.EventDrivenLoaderEnabled:1]]
+LogConfig: Setting CVar [[s.WarnIfTimeLimitExceeded:0]]
+LogConfig: Setting CVar [[s.TimeLimitExceededMultiplier:1.5]]
+LogConfig: Setting CVar [[s.TimeLimitExceededMinTime:0.005]]
+LogConfig: Setting CVar [[s.UseBackgroundLevelStreaming:1]]
+LogConfig: Setting CVar [[s.PriorityAsyncLoadingExtraTime:15.0]]
+LogConfig: Setting CVar [[s.LevelStreamingActorsUpdateTimeLimit:5.0]]
+LogConfig: Setting CVar [[s.PriorityLevelStreamingActorsUpdateExtraTime:5.0]]
+LogConfig: Setting CVar [[s.LevelStreamingComponentsRegistrationGranularity:10]]
+LogConfig: Setting CVar [[s.UnregisterComponentsTimeLimit:1.0]]
+LogConfig: Setting CVar [[s.LevelStreamingComponentsUnregistrationGranularity:5]]
+LogConfig: Setting CVar [[s.FlushStreamingOnExit:1]]
+LogInit: Object subsystem initialized
+LogConfig: Setting CVar [[con.DebugEarlyDefault:1]]
+LogConfig: Setting CVar [[r.setres:1280x720]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[con.DebugEarlyDefault:1]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[r.setres:1280x720]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Applying CVar settings from Section [/Script/Engine.RendererSettings] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Engine.ini]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[r.GPUCrashDebugging:0]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Applying CVar settings from Section [/Script/Engine.RendererOverrideSettings] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Engine.ini]
+[2026.05.08-20.27.28:874][  0]LogConfig: Applying CVar settings from Section [/Script/Engine.StreamingSettings] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Engine.ini]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[s.MinBulkDataSizeForAsyncLoading:131072]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[s.AsyncLoadingThreadEnabled:0]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[s.EventDrivenLoaderEnabled:1]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[s.WarnIfTimeLimitExceeded:0]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[s.TimeLimitExceededMultiplier:1.5]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[s.TimeLimitExceededMinTime:0.005]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[s.UseBackgroundLevelStreaming:1]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[s.PriorityAsyncLoadingExtraTime:15.0]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[s.LevelStreamingActorsUpdateTimeLimit:5.0]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[s.PriorityLevelStreamingActorsUpdateExtraTime:5.0]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[s.LevelStreamingComponentsRegistrationGranularity:10]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[s.UnregisterComponentsTimeLimit:1.0]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[s.LevelStreamingComponentsUnregistrationGranularity:5]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[s.FlushStreamingOnExit:1]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Applying CVar settings from Section [/Script/Engine.GarbageCollectionSettings] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Engine.ini]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[gc.MaxObjectsNotConsideredByGC:1]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[gc.SizeOfPermanentObjectPool:0]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[gc.FlushStreamingOnGC:0]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[gc.NumRetriesBeforeForcingGC:10]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[gc.AllowParallelGC:1]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[gc.TimeBetweenPurgingPendingKillObjects:61.1]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[gc.MaxObjectsInEditor:25165824]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[gc.IncrementalBeginDestroyEnabled:1]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[gc.CreateGCClusters:1]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[gc.MinGCClusterSize:5]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[gc.ActorClusteringEnabled:0]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[gc.BlueprintClusteringEnabled:0]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[gc.UseDisregardForGCOnDedicatedServers:0]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Setting CVar [[gc.MultithreadedDestructionEnabled:1]]
+[2026.05.08-20.27.28:874][  0]LogConfig: Applying CVar settings from Section [/Script/Engine.NetworkSettings] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Engine.ini]
+[2026.05.08-20.27.28:874][  0]LogConfig: Applying CVar settings from Section [/Script/UnrealEd.CookerSettings] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Engine.ini]
+[2026.05.08-20.27.28:882][  0]LogConfig: Applying CVar settings from Section [ViewDistanceQuality@3] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Scalability.ini]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.SkeletalMeshLODBias:0]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.ViewDistanceScale:1.0]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Applying CVar settings from Section [AntiAliasingQuality@3] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Scalability.ini]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.PostProcessAAQuality:4]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Applying CVar settings from Section [ShadowQuality@3] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Scalability.ini]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.LightFunctionQuality:1]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.ShadowQuality:5]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.Shadow.CSM.MaxCascades:10]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.Shadow.MaxResolution:2048]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.Shadow.MaxCSMResolution:2048]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.Shadow.RadiusThreshold:0.01]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.Shadow.DistanceScale:1.0]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.Shadow.CSM.TransitionScale:1.0]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.Shadow.PreShadowResolutionFactor:1.0]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.DistanceFieldShadowing:1]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.DistanceFieldAO:1]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.AOQuality:2]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.VolumetricFog:1]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.VolumetricFog.GridPixelSize:8]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.VolumetricFog.GridSizeZ:128]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.VolumetricFog.HistoryMissSupersampleCount:4]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.LightMaxDrawDistanceScale:1]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.CapsuleShadows:1]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Applying CVar settings from Section [PostProcessQuality@3] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Scalability.ini]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.MotionBlurQuality:4]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.AmbientOcclusionMipLevelFactor:0.4]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.AmbientOcclusionMaxQuality:100]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.AmbientOcclusionLevels:-1]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.AmbientOcclusionRadiusScale:1.0]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.DepthOfFieldQuality:2]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.RenderTargetPoolMin:400]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.LensFlareQuality:2]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.SceneColorFringeQuality:1]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.EyeAdaptationQuality:2]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.BloomQuality:5]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.FastBlurThreshold:100]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.Upscale.Quality:3]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.Tonemapper.GrainQuantization:1]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.LightShaftQuality:1]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.Filter.SizeScale:1]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.Tonemapper.Quality:5]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.DOF.Gather.AccumulatorQuality:1        ; higher gathering accumulator quality]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.DOF.Gather.PostfilterMethod:1          ; Median3x3 postfilering method]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.DOF.Gather.EnableBokehSettings:0       ; no bokeh simulation when gathering]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.DOF.Gather.RingCount:4                 ; medium number of samples when gathering]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.DOF.Scatter.ForegroundCompositing:1    ; additive foreground scattering]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.DOF.Scatter.BackgroundCompositing:2    ; additive background scattering]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.DOF.Scatter.EnableBokehSettings:1      ; bokeh simulation when scattering]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.DOF.Scatter.MaxSpriteRatio:0.1         ; only a maximum of 10% of scattered bokeh]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.DOF.Recombine.Quality:1                ; cheap slight out of focus]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.DOF.Recombine.EnableBokehSettings:0    ; no bokeh simulation on slight out of focus]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.DOF.TemporalAAQuality:1                ; more stable temporal accumulation]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.DOF.Kernel.MaxForegroundRadius:0.025]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.DOF.Kernel.MaxBackgroundRadius:0.025]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Applying CVar settings from Section [TextureQuality@3] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Scalability.ini]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.Streaming.MipBias:0]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.Streaming.AmortizeCPUToGPUCopy:0]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.Streaming.MaxNumTexturesToStreamPerFrame:0]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.Streaming.Boost:1]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.MaxAnisotropy:8]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.VT.MaxAnisotropy:8]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.Streaming.LimitPoolSizeToVRAM:0]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.Streaming.PoolSize:1000]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.Streaming.MaxEffectiveScreenSize:0]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Applying CVar settings from Section [EffectsQuality@3] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Scalability.ini]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.TranslucencyLightingVolumeDim:64]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.RefractionQuality:2]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.SSR.Quality:3]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.SSR.HalfResSceneColor:0]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.SceneColorFormat:4]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.DetailMode:2]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.TranslucencyVolumeBlur:1]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.MaterialQualityLevel:1 ; High quality]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.AnisotropicMaterials:1]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.SSS.Scale:1]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.SSS.SampleSet:2]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.SSS.Quality:1]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.SSS.HalfRes:0]]
+[2026.05.08-20.27.28:882][  0]LogConfig: Setting CVar [[r.SSGI.Quality:3]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[r.EmitterSpawnRateScale:1.0]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[r.ParticleLightQuality:2]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.AerialPerspectiveLUT.FastApplyOnOpaque:1 ; Always have FastSkyLUT 1 in this case to avoid wrong sky]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.AerialPerspectiveLUT.SampleCountMaxPerSlice:4]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.AerialPerspectiveLUT.DepthResolution:16.0]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.FastSkyLUT:1]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.FastSkyLUT.SampleCountMin:4.0]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.FastSkyLUT.SampleCountMax:128.0]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.SampleCountMin:4.0]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.SampleCountMax:128.0]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.TransmittanceLUT.UseSmallFormat:0]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.TransmittanceLUT.SampleCount:10.0]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.MultiScatteringLUT.SampleCount:15.0]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[r.SkyLight.RealTimeReflectionCapture:1]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Applying CVar settings from Section [FoliageQuality@3] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Scalability.ini]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[foliage.DensityScale:1.0]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[grass.DensityScale:1.0]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Applying CVar settings from Section [ShadingQuality@3] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Scalability.ini]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[r.HairStrands.SkyLighting.IntegrationType:2]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[r.HairStrands.SkyAO.SampleCount:4]]
+[2026.05.08-20.27.28:883][  0]LogConfig: Setting CVar [[r.HairStrands.Visibility.MSAA.SamplePerPixel:4]]
+[2026.05.08-20.27.28:883][  0]LogInit: Selected Device Profile: [Windows]
+[2026.05.08-20.27.28:883][  0]LogInit: Applying CVar settings loaded from the selected device profile: [Windows]
+[2026.05.08-20.27.28:884][  0]LogHAL: Display: Platform has ~ 16 GB [16849256448 / 17179869184 / 16], which maps to Larger [LargestMinGB=32, LargerMinGB=12, DefaultMinGB=8, SmallerMinGB=6, SmallestMinGB=0)
+[2026.05.08-20.27.28:884][  0]LogInit: Going up to parent DeviceProfile []
+[2026.05.08-20.27.28:884][  0]LogConfig: Applying CVar settings from Section [ViewDistanceQuality@3] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Scalability.ini]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SkeletalMeshLODBias:0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.ViewDistanceScale:1.0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Applying CVar settings from Section [AntiAliasingQuality@3] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Scalability.ini]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.PostProcessAAQuality:4]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Applying CVar settings from Section [ShadowQuality@3] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Scalability.ini]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.LightFunctionQuality:1]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.ShadowQuality:5]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.Shadow.CSM.MaxCascades:10]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.Shadow.MaxResolution:2048]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.Shadow.MaxCSMResolution:2048]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.Shadow.RadiusThreshold:0.01]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.Shadow.DistanceScale:1.0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.Shadow.CSM.TransitionScale:1.0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.Shadow.PreShadowResolutionFactor:1.0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.DistanceFieldShadowing:1]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.DistanceFieldAO:1]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.AOQuality:2]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.VolumetricFog:1]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.VolumetricFog.GridPixelSize:8]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.VolumetricFog.GridSizeZ:128]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.VolumetricFog.HistoryMissSupersampleCount:4]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.LightMaxDrawDistanceScale:1]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.CapsuleShadows:1]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Applying CVar settings from Section [PostProcessQuality@3] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Scalability.ini]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.MotionBlurQuality:4]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.AmbientOcclusionMipLevelFactor:0.4]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.AmbientOcclusionMaxQuality:100]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.AmbientOcclusionLevels:-1]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.AmbientOcclusionRadiusScale:1.0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.DepthOfFieldQuality:2]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.RenderTargetPoolMin:400]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.LensFlareQuality:2]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SceneColorFringeQuality:1]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.EyeAdaptationQuality:2]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.BloomQuality:5]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.FastBlurThreshold:100]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.Upscale.Quality:3]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.Tonemapper.GrainQuantization:1]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.LightShaftQuality:1]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.Filter.SizeScale:1]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.Tonemapper.Quality:5]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.DOF.Gather.AccumulatorQuality:1        ; higher gathering accumulator quality]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.DOF.Gather.PostfilterMethod:1          ; Median3x3 postfilering method]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.DOF.Gather.EnableBokehSettings:0       ; no bokeh simulation when gathering]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.DOF.Gather.RingCount:4                 ; medium number of samples when gathering]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.DOF.Scatter.ForegroundCompositing:1    ; additive foreground scattering]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.DOF.Scatter.BackgroundCompositing:2    ; additive background scattering]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.DOF.Scatter.EnableBokehSettings:1      ; bokeh simulation when scattering]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.DOF.Scatter.MaxSpriteRatio:0.1         ; only a maximum of 10% of scattered bokeh]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.DOF.Recombine.Quality:1                ; cheap slight out of focus]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.DOF.Recombine.EnableBokehSettings:0    ; no bokeh simulation on slight out of focus]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.DOF.TemporalAAQuality:1                ; more stable temporal accumulation]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.DOF.Kernel.MaxForegroundRadius:0.025]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.DOF.Kernel.MaxBackgroundRadius:0.025]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Applying CVar settings from Section [TextureQuality@3] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Scalability.ini]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.Streaming.MipBias:0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.Streaming.AmortizeCPUToGPUCopy:0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.Streaming.MaxNumTexturesToStreamPerFrame:0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.Streaming.Boost:1]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.MaxAnisotropy:8]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.VT.MaxAnisotropy:8]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.Streaming.LimitPoolSizeToVRAM:0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.Streaming.PoolSize:1000]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.Streaming.MaxEffectiveScreenSize:0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Applying CVar settings from Section [EffectsQuality@3] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Scalability.ini]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.TranslucencyLightingVolumeDim:64]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.RefractionQuality:2]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SSR.Quality:3]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SSR.HalfResSceneColor:0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SceneColorFormat:4]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.DetailMode:2]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.TranslucencyVolumeBlur:1]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.MaterialQualityLevel:1 ; High quality]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.AnisotropicMaterials:1]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SSS.Scale:1]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SSS.SampleSet:2]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SSS.Quality:1]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SSS.HalfRes:0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SSGI.Quality:3]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.EmitterSpawnRateScale:1.0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.ParticleLightQuality:2]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.AerialPerspectiveLUT.FastApplyOnOpaque:1 ; Always have FastSkyLUT 1 in this case to avoid wrong sky]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.AerialPerspectiveLUT.SampleCountMaxPerSlice:4]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.AerialPerspectiveLUT.DepthResolution:16.0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.FastSkyLUT:1]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.FastSkyLUT.SampleCountMin:4.0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.FastSkyLUT.SampleCountMax:128.0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.SampleCountMin:4.0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.SampleCountMax:128.0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.TransmittanceLUT.UseSmallFormat:0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.TransmittanceLUT.SampleCount:10.0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SkyAtmosphere.MultiScatteringLUT.SampleCount:15.0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[r.SkyLight.RealTimeReflectionCapture:1]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Applying CVar settings from Section [FoliageQuality@3] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Scalability.ini]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[foliage.DensityScale:1.0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Setting CVar [[grass.DensityScale:1.0]]
+[2026.05.08-20.27.28:884][  0]LogConfig: Applying CVar settings from Section [ShadingQuality@3] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Scalability.ini]
+[2026.05.08-20.27.28:886][  0]LogConfig: Setting CVar [[r.HairStrands.SkyLighting.IntegrationType:2]]
+[2026.05.08-20.27.28:886][  0]LogConfig: Setting CVar [[r.HairStrands.SkyAO.SampleCount:4]]
+[2026.05.08-20.27.28:886][  0]LogConfig: Setting CVar [[r.HairStrands.Visibility.MSAA.SamplePerPixel:4]]
+[2026.05.08-20.27.28:886][  0]LogConfig: Applying CVar settings from Section [Startup] File [../../../Engine/Config/ConsoleVariables.ini]
+[2026.05.08-20.27.28:886][  0]LogConfig: Setting CVar [[net.UseAdaptiveNetUpdateFrequency:0]]
+[2026.05.08-20.27.28:886][  0]LogConfig: Setting CVar [[p.chaos.AllowCreatePhysxBodies:1]]
+[2026.05.08-20.27.28:886][  0]LogConfig: Setting CVar [[fx.SkipVectorVMBackendOptimizations:1]]
+[2026.05.08-20.27.28:886][  0]LogConfig: Applying CVar settings from Section [ConsoleVariables] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Engine.ini]
+[2026.05.08-20.27.28:886][  0]LogConfig: Applying CVar settings from Section [ConsoleVariables] File [C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Config/Windows/Editor.ini]
+[2026.05.08-20.27.28:887][  0]LogInit: Computer: IMMERSEDEMOM5
+[2026.05.08-20.27.28:887][  0]LogInit: User: kapil
+[2026.05.08-20.27.28:887][  0]LogInit: CPU Page size=4096, Cores=14
+[2026.05.08-20.27.28:887][  0]LogInit: High frequency timer resolution =10.000000 MHz
+[2026.05.08-20.27.28:887][  0]LogMemory: Memory total: Physical=15.7GB (16GB approx)
+[2026.05.08-20.27.28:887][  0]LogMemory: Platform Memory Stats for Windows
+[2026.05.08-20.27.28:887][  0]LogMemory: Process Physical Memory: 151.04 MB used, 151.04 MB peak
+[2026.05.08-20.27.28:887][  0]LogMemory: Process Virtual Memory: 129.17 MB used, 129.17 MB peak
+[2026.05.08-20.27.28:887][  0]LogMemory: Physical Memory: 12063.41 MB used,  4005.30 MB free, 16068.70 MB total
+[2026.05.08-20.27.28:887][  0]LogMemory: Virtual Memory: 134212504.00 MB used,  5222.31 MB free, 134217728.00 MB total
+[2026.05.08-20.27.28:893][  0]LogWindows: WindowsPlatformFeatures enabled
+[2026.05.08-20.27.29:006][  0]LogInit: Physics initialised using underlying interface: PhysX
+[2026.05.08-20.27.29:007][  0]LogInit: Using OS detected language (en-US).
+[2026.05.08-20.27.29:007][  0]LogInit: Using OS detected locale (en-US).
+[2026.05.08-20.27.29:013][  0]LogTextLocalizationManager: No specific localization for 'en-US' exists, so the 'en' localization will be used.
+[2026.05.08-20.27.29:202][  0]LogWindowsTextInputMethodSystem: Display: IME system deactivated.
+[2026.05.08-20.27.29:229][  0]LogSlate: New Slate User Created.  User Index 0, Is Virtual User: 0
+[2026.05.08-20.27.29:230][  0]LogSlate: Slate User Registered.  User Index 0, Is Virtual User: 0
+[2026.05.08-20.27.29:255][  0]LogD3D11RHI: Loaded GFSDK_Aftermath_Lib.x64.dll
+[2026.05.08-20.27.29:300][  0]LogHMD: Failed to initialize OpenVR with code 110
+[2026.05.08-20.27.29:300][  0]LogD3D11RHI: D3D11 min allowed feature level: 11_0
+[2026.05.08-20.27.29:300][  0]LogD3D11RHI: D3D11 max allowed feature level: 11_0
+[2026.05.08-20.27.29:300][  0]LogD3D11RHI: D3D11 adapters:
+[2026.05.08-20.27.29:479][  0]LogD3D11RHI:    0. 'NVIDIA GeForce RTX 4060 Laptop GPU' (Feature Level 11_0)
+[2026.05.08-20.27.29:479][  0]LogD3D11RHI:       7957/0/8034 MB DedicatedVideo/DedicatedSystem/SharedSystem, Outputs:1, VendorId:0x10de
+[2026.05.08-20.27.29:502][  0]LogD3D11RHI:    1. 'Intel(R) UHD Graphics' (Feature Level 11_0)
+[2026.05.08-20.27.29:502][  0]LogD3D11RHI:       128/0/8034 MB DedicatedVideo/DedicatedSystem/SharedSystem, Outputs:0, VendorId:0x8086
+[2026.05.08-20.27.29:505][  0]LogD3D11RHI:    2. 'Microsoft Basic Render Driver' (Feature Level 11_0)
+[2026.05.08-20.27.29:505][  0]LogD3D11RHI:       0/0/8034 MB DedicatedVideo/DedicatedSystem/SharedSystem, Outputs:0, VendorId:0x1414
+[2026.05.08-20.27.29:505][  0]LogD3D11RHI: Chosen D3D11 Adapter:
+[2026.05.08-20.27.29:505][  0]LogD3D11RHI:     Description : NVIDIA GeForce RTX 4060 Laptop GPU
+[2026.05.08-20.27.29:505][  0]LogD3D11RHI:     VendorId    : 10de
+[2026.05.08-20.27.29:505][  0]LogD3D11RHI:     DeviceId    : 28e0
+[2026.05.08-20.27.29:505][  0]LogD3D11RHI:     SubSysId    : bf81028
+[2026.05.08-20.27.29:505][  0]LogD3D11RHI:     Revision    : 00a1
+[2026.05.08-20.27.29:505][  0]LogD3D11RHI:     DedicatedVideoMemory : 8343519232 bytes
+[2026.05.08-20.27.29:505][  0]LogD3D11RHI:     DedicatedSystemMemory : 0 bytes
+[2026.05.08-20.27.29:505][  0]LogD3D11RHI:     SharedSystemMemory : 8424628224 bytes
+[2026.05.08-20.27.29:505][  0]LogD3D11RHI:     AdapterLuid : 0 75339
+[2026.05.08-20.27.29:513][  0]LogD3D11RHI: Creating new Direct3DDevice
+[2026.05.08-20.27.29:513][  0]LogD3D11RHI:     GPU DeviceId: 0x28e0 (for the marketing name, search the web for "GPU Device Id")
+[2026.05.08-20.27.29:513][  0]LogWindows: EnumDisplayDevices:
+[2026.05.08-20.27.29:513][  0]LogWindows:    0. 'Intel(R) UHD Graphics' (P:1 D:1)
+[2026.05.08-20.27.29:513][  0]LogWindows:    1. 'Intel(R) UHD Graphics' (P:0 D:0)
+[2026.05.08-20.27.29:513][  0]LogWindows:    2. 'Intel(R) UHD Graphics' (P:0 D:0)
+[2026.05.08-20.27.29:513][  0]LogWindows:    3. 'Intel(R) UHD Graphics' (P:0 D:0)
+[2026.05.08-20.27.29:514][  0]LogWindows:    4. 'NVIDIA GeForce RTX 4060 Laptop GPU' (P:0 D:0)
+[2026.05.08-20.27.29:514][  0]LogWindows: DebugString: PrimaryIsNotTheChoosenAdapter PrimaryIsNotTheChoosenAdapter PrimaryIsNotTheChoosenAdapter PrimaryIsNotTheChoosenAdapter 
+[2026.05.08-20.27.29:514][  0]LogD3D11RHI:     Adapter Name: NVIDIA GeForce RTX 4060 Laptop GPU
+[2026.05.08-20.27.29:514][  0]LogD3D11RHI:   Driver Version: 581.95 (internal:32.0.15.8195, unified:581.95)
+[2026.05.08-20.27.29:514][  0]LogD3D11RHI:      Driver Date: 11-18-2025
+[2026.05.08-20.27.29:514][  0]LogRHI: Texture pool is 5569 MB (70% of 7957 MB)
+[2026.05.08-20.27.29:514][  0]LogD3D11RHI: Creating D3DDevice using adapter:
+[2026.05.08-20.27.29:514][  0]LogD3D11RHI:     Description : NVIDIA GeForce RTX 4060 Laptop GPU
+[2026.05.08-20.27.29:514][  0]LogD3D11RHI:     VendorId    : 10de
+[2026.05.08-20.27.29:514][  0]LogD3D11RHI:     DeviceId    : 28e0
+[2026.05.08-20.27.29:514][  0]LogD3D11RHI:     SubSysId    : bf81028
+[2026.05.08-20.27.29:514][  0]LogD3D11RHI:     Revision    : 00a1
+[2026.05.08-20.27.29:514][  0]LogD3D11RHI:     DedicatedVideoMemory : 8343519232 bytes
+[2026.05.08-20.27.29:514][  0]LogD3D11RHI:     DedicatedSystemMemory : 0 bytes
+[2026.05.08-20.27.29:514][  0]LogD3D11RHI:     SharedSystemMemory : 8424628224 bytes
+[2026.05.08-20.27.29:514][  0]LogD3D11RHI:     AdapterLuid : 0 75339
+[2026.05.08-20.27.29:620][  0]LogD3D11RHI: RHI has support for 64 bit atomics
+[2026.05.08-20.27.29:621][  0]LogD3D11RHI: Async texture creation enabled
+[2026.05.08-20.27.29:621][  0]LogD3D11RHI: Array index from any shader is supported
+[2026.05.08-20.27.29:641][  0]LogD3D11RHI: GPU Timing Frequency: 1000.000000 (Debug: 2 1)
+[2026.05.08-20.27.29:667][  0]LogRHI: GeForceNow SDK initialized: 1
+[2026.05.08-20.27.29:887][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'WindowsNoEditor'
+[2026.05.08-20.27.29:891][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'Windows'
+[2026.05.08-20.27.29:895][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'WindowsClient'
+[2026.05.08-20.27.29:897][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'WindowsServer'
+[2026.05.08-20.27.29:898][  0]LogTargetPlatformManager: Display: Building Assets For Windows
+[2026.05.08-20.27.29:905][  0]LogAudioDebug: Display: Lib vorbis DLL was dynamically loaded.
+[2026.05.08-20.27.29:938][  0]LogTextureFormatOodle: Display: Oodle Texture 2.9.0 init RDO Off
+[2026.05.08-20.27.29:996][  0]LogRendererCore: Ray tracing is disabled. Reason: r.RayTracing=0.
+[2026.05.08-20.27.29:997][  0]LogShaderCompilers: Guid format shader working directory is -26 characters bigger than the processId version (../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Intermediate/Shaders/WorkingDirectory/14264/).
+[2026.05.08-20.27.29:997][  0]LogShaderCompilers: Cleaned the shader compiler working directory 'C:/Users/kapil/AppData/Local/Temp/UnrealShaderWorkingDir/BC7F0A6D4804F096B4D6DA8797F14AE6/'.
+[2026.05.08-20.27.29:998][  0]LogXGEController: Cannot use XGE Controller as Incredibuild is not installed on this machine.
+[2026.05.08-20.27.29:998][  0]LogShaderCompilers: Cannot use XGE Shader Compiler as Incredibuild is not installed on this machine.
+[2026.05.08-20.27.29:998][  0]LogShaderCompilers: Display: Using Local Shader Compiler.
+[2026.05.08-20.27.30:634][  0]LogDerivedDataCache: Display: Max Cache Size: 512 MB
+[2026.05.08-20.27.30:689][  0]LogDerivedDataCache: Loaded boot cache 0.06s 78MB C:/Users/kapil/AppData/Local/UnrealEngine/4.27/DerivedDataCache/Boot.ddc.
+[2026.05.08-20.27.30:689][  0]LogDerivedDataCache: Display: Loaded Boot cache: C:/Users/kapil/AppData/Local/UnrealEngine/4.27/DerivedDataCache/Boot.ddc
+[2026.05.08-20.27.30:690][  0]LogDerivedDataCache: FDerivedDataBackendGraph:  Pak pak cache file ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/DerivedDataCache/DDC.ddp not found, will not use a pak cache.
+[2026.05.08-20.27.30:690][  0]LogDerivedDataCache: Unable to find inner node Pak for hierarchical cache Hierarchy.
+[2026.05.08-20.27.30:690][  0]LogDerivedDataCache: FDerivedDataBackendGraph:  CompressedPak pak cache file ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/DerivedDataCache/Compressed.ddp not found, will not use a pak cache.
+[2026.05.08-20.27.30:690][  0]LogDerivedDataCache: Unable to find inner node CompressedPak for hierarchical cache Hierarchy.
+[2026.05.08-20.27.30:704][  0]LogDerivedDataCache: Display: Pak cache opened for reading ../../../Engine/DerivedDataCache/Compressed.ddp.
+[2026.05.08-20.27.30:705][  0]LogDerivedDataCache: FDerivedDataBackendGraph:  EnterprisePak pak cache file ../../../Enterprise/DerivedDataCache/Compressed.ddp not found, will not use a pak cache.
+[2026.05.08-20.27.30:705][  0]LogDerivedDataCache: Unable to find inner node EnterprisePak for hierarchical cache Hierarchy.
+[2026.05.08-20.27.30:717][  0]LogDerivedDataCache: Speed tests for C:/Users/kapil/AppData/Local/UnrealEngine/Common/DerivedDataCache took 0.01 seconds
+[2026.05.08-20.27.30:717][  0]LogDerivedDataCache: Display: Performance to C:/Users/kapil/AppData/Local/UnrealEngine/Common/DerivedDataCache: Latency=0.04ms. RandomReadSpeed=163.85MBs, RandomWriteSpeed=149.46MBs. Assigned SpeedClass 'Local'
+[2026.05.08-20.27.30:720][  0]LogDerivedDataCache: Using Local data cache path C:/Users/kapil/AppData/Local/UnrealEngine/Common/DerivedDataCache: Writable
+[2026.05.08-20.27.30:720][  0]LogDerivedDataCache: Shared data cache path not found in *engine.ini, will not use an Shared cache.
+[2026.05.08-20.27.30:720][  0]LogDerivedDataCache: Unable to find inner node Shared for hierarchical cache Hierarchy.
+[2026.05.08-20.27.30:748][  0]LogSlate: Using FreeType 2.10.0
+[2026.05.08-20.27.30:750][  0]LogSlate: SlateFontServices - WITH_FREETYPE: 1, WITH_HARFBUZZ: 1
+[2026.05.08-20.27.30:802][  0]LogInit: Using OS detected language (en-US).
+[2026.05.08-20.27.30:802][  0]LogInit: Using OS detected locale (en-US).
+[2026.05.08-20.27.30:802][  0]LogTextLocalizationManager: No localization for 'en-US' exists, so 'en' will be used for the language.
+[2026.05.08-20.27.30:802][  0]LogTextLocalizationManager: No localization for 'en-US' exists, so 'en' will be used for the locale.
+[2026.05.08-20.27.30:802][  0]LogSlate: FontCache flush requested. Reason: Culture for localization was changed
+[2026.05.08-20.27.30:802][  0]LogSlate: FontCache flush requested. Reason: Culture for localization was changed
+[2026.05.08-20.27.30:805][  0]LogTextLocalizationManager: Compacting localization data took   0.00ms
+[2026.05.08-20.27.30:805][  0]LogAssetRegistry: FAssetRegistry took 0.0024 seconds to start up
+[2026.05.08-20.27.30:992][  0]LogPackageLocalizationCache: Processed 28 localized package path(s) for 1 prioritized culture(s) in 0.030080 seconds
+[2026.05.08-20.27.31:039][  0]LogInit: Selected Device Profile: [Windows]
+[2026.05.08-20.27.31:039][  0]LogInit: Active device profile: [000002333935F300][0000023334365BC0 49] Windows
+[2026.05.08-20.27.31:039][  0]LogInit: Profiles: [000002333935F300][0000023334365BC0 49] Windows, [0000023339314F00][000002333436C1C0 49] WindowsNoEditor, [000002333935CF00][0000023334370340 49] WindowsServer, [0000023339316A00][000002331D85E4C0 49] WindowsClient, [000002333935E900][000002331D862640 49] IOS, [0000023339315900][000002331D8667C0 49] iPadAir, [000002333935D800][000002331D86A940 49] iPadAir2, [00000233392C3800][000002331D872C00 49] IPadPro, [00000233392C3900][000002331D86EC40 49] iPadAir3, [000002333935E200][000002331D876DC0 49] iPadAir4, [00000233392C1400][0000023333E88F40 49] iPadMini2, [000002333935FC00][0000023333E8D0C0 49] iPadMini3, [00000233392C2400][0000023333E91240 49] iPadMini4, [000002333935D100][0000023333E953C0 49] iPadMini5, [000002333930B100][0000023333E99600 49] iPhone6, [000002333930B200][0000023334369640 49] iPodTouch6, [00000233392C0600][0000023333EA1880 49] iPhone7, [00000233392C0400][0000023333E9D8C0 49] iPodTouch7, [0000023339309300][0000023333EA9A40 49] iPhone5S, [00000233392C0D00][0000023333EADBC0 49] iPhone6Plus, [000002333930A500][0000023333EB01C0 49] iPhone6S, [00000233392C3D00][0000023333EB4340 49] iPhone6SPlus, [000002333930BA00][0000023333EB84C0 49] iPhone7Plus, [00000233392C1900][0000023333EBC640 49] iPhoneSE, [0000023339308900][0000023333EC07C0 49] iPhone8, [00000233392C2600][0000023333EC4940 49] iPhone8Plus, [000002333930A300][0000023333EC8AC0 49] iPhoneX, [00000233392C2D00][0000023333ECCC40 49] iPhoneXS, [000002333930BB00][0000023333ED0DC0 49] iPhoneXSMax, [00000233392C2A00][0000023334C52F40 49] iPhoneXR, [000002333930B700][0000023334C570C0 49] iPhone11, [00000233392C3000][0000023334C5B240 49] iPhone11Pro, [0000023339309500][0000023334C5F3C0 49] iPhone11ProMax, [00000233392C0200][0000023334C63540 49] iPhoneSE2, [0000023339308E00][0000023334C676C0 49] iPhone12Mini, [00000233392C2100][0000023333EA5800 49] iPhone12, [000002333930B600][0000023334C6B940 49] iPhone12Pro, [00000233392C2E00][0000023334C6FA80 49] iPhone12ProMax, [0000023339308A00][0000023334C77C00 49] iPadPro105, [00000233392C1300][0000023334C7A200 49] iPadPro129, [0000023339309100][0000023334C7E380 49] iPadPro97, [00000233392C3500][0000023334C82500 49] iPadPro2_129, [000002333930AC00][0000023334C86680 49] iPad5, [00000233392C0900][0000023334C8A800 49] iPad6, [0000023339309800][0000023334C8E980 49] iPad7, [00000233392C1C00][0000023334C92B00 49] iPad8, [0000023339309C00][0000023334C96C80 49] iPadPro11, [00000233392C0B00][0000023334C9AE00 49] iPadPro2_11, [000002333930A100][0000023334190F80 49] iPadPro3_129, [00000233392C2000][0000023334195100 49] iPadPro4_129, [000002333930A800][0000023334199280 49] AppleTV, [00000233392C0C00][000002333419D400 49] AppleTV4K, [000002333930AF00][00000233341A1580 49] TVOS, [00000233392C0E00][00000233341A5700 49] Mac, [000002333930BC00][00000233341A9880 49] MacClient, [00000233392C3100][0000023334C739C0 49] MacNoEditor, [000002333930BD00][00000233341ADB00 49] MacServer, [00000233392C0300][00000233341B00C0 49] Linux, [0000023339309600][00000233341B8240 49] LinuxAArch64, [00000233392C1100][00000233341BC3C0 49] LinuxNoEditor, [0000023339316500][00000233341C0540 49] LinuxAArch64NoEditor, [000002333939E000][00000233341C46C0 49] LinuxClient, [0000023339315A00][00000233341C8840 49] LinuxAArch64Client, [000002333939DB00][00000233341CC9C0 49] LinuxServer, [0000023339316D00][00000233341D0B40 49] LinuxAArch64Server, [000002333939C300][00000233341D4CC0 49] Android, [0000023339316300][00000233341D8E40 49] Android_Low, [000002333939DC00][00000233341DCFC0 49] Android_Mid, [0000023339315700][00000233341E1140 49] Android_High, [000002333939C800][00000233341E52C0 49] Android_Default, [0000023339317200][00000233341E9440 49] Android_Adreno4xx, [000002333939D700][00000233341ED5C0 49] Android_Adreno5xx_Low, [0000023339316800][00000233341F1740 49] Android_Adreno5xx, [000002333939E100][00000233341F58C0 49] Android_Adreno6xx, [0000023339314D00][00000233341F9A40 49] Android_Adreno6xx_Vulkan, [000002333939E600][00000233341B5B80 49] Android_Mali_T6xx, [0000023339316C00][00000233341FC140 49] Android_Mali_T7xx, [000002333939DD00][0000023334200280 49] Android_Mali_T8xx, [0000023339314500][00000233342043C0 49] Android_Mali_G71, [000002333939C100][000002333420C540 49] Android_Mali_G72, [00000233392C1600][00000233342106C0 49] Android_Mali_G72_Vulkan, [0000023339308F00][0000023334214840 49] Android_Mali_G76, [00000233392C1000][00000233342189C0 49] Android_Mali_G76_Vulkan, [0000023339309B00][000002333421CB40 49] Android_Mali_G77, [00000233392C3E00][0000023334220CC0 49] Android_Mali_G77_Vulkan, [0000023339308700][0000023334224E40 49] Android_Mali_G78, [00000233392C0700][0000023334228FC0 49] Android_Mali_G78_Vulkan, [000002333939CF00][000002333422D140 49] Android_Mali_G710, [00000233392C2200][00000233342312C0 49] Android_Mali_G710_Vulkan, [000002333939CD00][0000023334235440 49] Android_Vulkan_SM5, [00000233392C3600][00000233342395C0 49] Android_PowerVR_G6xxx, [000002333939E500][000002333423D740 49] Android_PowerVR_GT7xxx, [00000233392C3400][00000233342418C0 49] Android_PowerVR_GE8xxx, [000002333939D300][0000023334245A40 49] Android_PowerVR_GM9xxx, [00000233392C2700][0000023334249BC0 49] Android_PowerVR_GM9xxx_Vulkan, [000002333939D500][0000023334208180 49] Android_TegraK1, [00000233392C1700][000002333424C2C0 49] Android_Unknown_Vulkan, [000002333939C600][0000023334250400 49] Lumin, [00000233392C1800][0000023334254540 49] Lumin_Desktop, [000002333939CB00][000002333425C6C0 49] HoloLens, 
+[2026.05.08-20.27.31:105][  0]LogMeshReduction: Using QuadricMeshReduction for automatic static mesh reduction
+[2026.05.08-20.27.31:105][  0]LogMeshReduction: Using SimplygonMeshReduction for automatic skeletal mesh reduction
+[2026.05.08-20.27.31:105][  0]LogMeshReduction: Using ProxyLODMeshReduction for automatic mesh merging
+[2026.05.08-20.27.31:105][  0]LogMeshReduction: No distributed automatic mesh merging module available
+[2026.05.08-20.27.31:105][  0]LogMeshMerging: No distributed automatic mesh merging module available
+[2026.05.08-20.27.31:190][  0]LogNetVersion: testTP 1.0.0, NetCL: 17155196, EngineNetVer: 17, GameNetVer: 0 (Checksum: 3966549976)
+[2026.05.08-20.27.31:483][  0]LogTexture: Default maximum texture size for cubemaps generated from long-lat sources has been changed from 512 to unlimited. In order to preserve old behaiour for '/Engine/MapTemplates/Sky/DaylightAmbientCubemap.DaylightAmbientCubemap', its maximum texture size has been explicitly set to 512.
+[2026.05.08-20.27.31:539][  0]LogHMD: PokeAHoleMaterial loaded successfully
+[2026.05.08-20.27.31:684][  0]LogMoviePlayer: Initializing movie player
+[2026.05.08-20.27.31:778][  0]LogNiagaraDebuggerClient: Niagara Debugger Client Initialized | Session: 262EDA65463898A0A8FC61A497D45EA8 | Instance: DCDCAC104914F1555B5D389EC0870E89 (IMMERSEDEMOM5-14264).
+[2026.05.08-20.27.31:821][  0]LogCollectionManager: Loaded 0 collections in 0.002547 seconds
+[2026.05.08-20.27.31:824][  0]LogFileCache: Scanning file cache for directory 'C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Collections/' took 0.00s
+[2026.05.08-20.27.31:824][  0]LogFileCache: Scanning file cache for directory 'C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Content/Developers/kapil/Collections/' took 0.00s
+[2026.05.08-20.27.31:824][  0]LogFileCache: Scanning file cache for directory 'C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Content/Collections/' took 0.00s
+[2026.05.08-20.27.31:824][  0]LogCollectionManager: Fixed up redirectors for 0 collections in 0.000002 seconds (updated 0 objects)
+[2026.05.08-20.27.31:857][  0]LogPython: Using Python 3.7.7
+[2026.05.08-20.27.32:356][  0]LogAkAudio: Wwise(R) SDK Version 2019.2.15 Build 7667. Copyright (c) 2006-2019 Audiokinetic Inc.
+[2026.05.08-20.27.32:359][  0]LogAkAudio: Wwise plug-in DLL path: C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Plugins/Wwise/ThirdParty/x64_vc150/Profile/bin/
+[2026.05.08-20.27.32:362][  0]LogAkAudio: Wwise remote connection application name: testTP
+[2026.05.08-20.27.32:362][  0]LogAkAudio: Wwise successfully initialized.
+[2026.05.08-20.27.32:369][  0]LogAkAudio: Initialization complete.
+[2026.05.08-20.27.32:369][  0]LogInit: Audiokinetic Audio Device initialized.
+[2026.05.08-20.27.32:500][  0]SourceControl: Source control is disabled
+[2026.05.08-20.27.32:500][  0]SourceControl: Source control is disabled
+[2026.05.08-20.27.32:509][  0]SourceControl: Source control is disabled
+[2026.05.08-20.27.32:521][  0]LogUProjectInfo: Found projects:
+[2026.05.08-20.27.32:619][  0]LogOpenImageDenoise: OIDN starting up
+[2026.05.08-20.27.32:660][  0]LogAndroidPermission: UAndroidPermissionCallbackProxy::GetInstance
+[2026.05.08-20.27.32:670][  0]LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
+[2026.05.08-20.27.32:670][  0]LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
+[2026.05.08-20.27.32:744][  0]LogOcInput: OculusInput pre-init called
+[2026.05.08-20.27.32:754][  0]LogUObjectArray: 22811 objects as part of root set at end of initial load.
+[2026.05.08-20.27.32:754][  0]LogUObjectAllocator: 6215680 out of 0 bytes used by permanent object pool.
+[2026.05.08-20.27.32:754][  0]LogUObjectArray: CloseDisregardForGC: 0/0 objects in disregard for GC pool
+[2026.05.08-20.27.32:851][  0]LogClass: Display: EnumProperty FAkExternalSourceInfo::CodecID is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
+[2026.05.08-20.27.32:851][  0]LogClass: Warning: ObjectProperty FAkExternalSourceInfo::ExternalSourceAsset is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
+[2026.05.08-20.27.32:851][  0]LogClass: Display: IntProperty FAkChannelMask::ChannelMask is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
+[2026.05.08-20.27.32:852][  0]LogClass: Display: 3 Uninitialized script struct members found including 1 object properties
+[2026.05.08-20.27.32:854][  0]LogAutomationTest: Warning: ObjectProperty FAkExternalSourceInfo::ExternalSourceAsset is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
+[2026.05.08-20.27.32:856][  0]LogEngine: Initializing Engine...
+[2026.05.08-20.27.32:864][  0]LogHMD: Failed to enumerate extensions. Please check that you have a valid OpenXR runtime installed.
+[2026.05.08-20.27.32:864][  0]LogHMD: Failed to initialize OpenVR with code 110
+[2026.05.08-20.27.32:864][  0]LogMagicLeap: Warning: VR disabled because ZI is not enabled.  To enable, in the editor, Edit -> Project Settings -> Plugins -> Magic Leap Plugin -> Enable Zero Iteration
+[2026.05.08-20.27.32:868][  0]LogStats: UGameplayTagsManager::InitializeManager -  0.001 s
+[2026.05.08-20.27.32:963][  0]LogInit: Initializing FReadOnlyCVARCache
+[2026.05.08-20.27.32:963][  0]LogAudio: Display: Initializing Audio Device Manager...
+[2026.05.08-20.27.32:967][  0]LogAudio: Display: Loading Default Audio Settings Objects...
+[2026.05.08-20.27.32:968][  0]LogAudio: Display: No default SoundConcurrencyObject specified (or failed to load).
+[2026.05.08-20.27.32:970][  0]LogAudio: Display: Audio Device Manager Initialized
+[2026.05.08-20.27.32:970][  0]LogAudio: Display: Creating Audio Device:                 Id: 1, Scope: Shared, Realtime: True
+[2026.05.08-20.27.32:970][  0]LogAudioMixer: Display: Audio Mixer Platform Settings:
+[2026.05.08-20.27.32:970][  0]LogAudioMixer: Display: 	Sample Rate:						  48000
+[2026.05.08-20.27.32:970][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size Requested: 1024
+[2026.05.08-20.27.32:970][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size To Use:	  1024
+[2026.05.08-20.27.32:970][  0]LogAudioMixer: Display: 	Number of buffers to queue:			  2
+[2026.05.08-20.27.32:970][  0]LogAudioMixer: Display: 	Max Channels (voices):				  32
+[2026.05.08-20.27.32:970][  0]LogAudioMixer: Display: 	Number of Async Source Workers:		  0
+[2026.05.08-20.27.32:970][  0]LogAudio: Display: AudioDevice MaxSources: 32
+[2026.05.08-20.27.32:972][  0]LogAudio: Display: Audio Spatialization Plugin: None (built-in).
+[2026.05.08-20.27.32:972][  0]LogAudio: Display: Audio Reverb Plugin: None (built-in).
+[2026.05.08-20.27.32:972][  0]LogAudio: Display: Audio Occlusion Plugin: None (built-in).
+[2026.05.08-20.27.32:972][  0]LogAudioMixer: Display: Initializing audio mixer.
+[2026.05.08-20.27.32:994][  0]LogAudioMixer: Display: 0: FrontLeft
+[2026.05.08-20.27.32:994][  0]LogAudioMixer: Display: 1: FrontRight
+[2026.05.08-20.27.33:014][  0]LogAudioMixer: Display: Using Audio Device Speakers (2- Realtek(R) Audio)
+[2026.05.08-20.27.33:023][  0]LogAudioMixer: Display: Initializing Sound Submixes...
+[2026.05.08-20.27.33:025][  0]LogAudioMixer: Display: Creating Master Submix 'MasterSubmixDefault'
+[2026.05.08-20.27.33:025][  0]LogAudioMixer: Display: Creating Master Submix 'MasterReverbSubmixDefault'
+[2026.05.08-20.27.33:026][  0]LogAudioMixer: Display: Creating Master Submix 'MasterEQSubmixDefault'
+[2026.05.08-20.27.33:027][  0]LogAudioMixer: FMixerPlatformXAudio2::StartAudioStream() called
+[2026.05.08-20.27.33:027][  0]LogAudioMixer: Display: Output buffers initialized: Frames=1024, Channels=2, Samples=2048
+[2026.05.08-20.27.33:028][  0]LogAudioMixer: Display: Starting AudioMixerPlatformInterface::RunInternal()
+[2026.05.08-20.27.33:028][  0]LogAudioMixer: Display: FMixerPlatformXAudio2::SubmitBuffer() called for the first time
+[2026.05.08-20.27.33:028][  0]LogInit: FAudioDevice initialized.
+[2026.05.08-20.27.33:030][  0]LogNetVersion: Set ProjectVersion to 1.0.0.0. Version Checksum will be recalculated on next use.
+[2026.05.08-20.27.33:064][  0]LogDerivedDataCache: Saved boot cache 0.03s 78MB C:/Users/kapil/AppData/Local/UnrealEngine/4.27/DerivedDataCache/Boot.ddc.
+[2026.05.08-20.27.33:068][  0]LogInit: Texture streaming: Enabled
+[2026.05.08-20.27.33:170][  0]LogAudio: Display: Audio Device (ID: 1) registered with world 'Untitled'.
+[2026.05.08-20.27.33:173][  0]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2026.05.08-20.27.33:175][  0]LogInit: Display: Game Engine Initialized.
+[2026.05.08-20.27.33:177][  0]LogNiagaraEditor: GEditor isn't valid! Particle reset commands will not work for Niagara components!
+[2026.05.08-20.27.33:286][  0]LogInit: Display: Starting Game.
+[2026.05.08-20.27.33:287][  0]LogNet: Browse: /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap?Name=Player
+[2026.05.08-20.27.33:287][  0]LogLoad: LoadMap: /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap?Name=Player
+[2026.05.08-20.27.33:287][  0]LogWorld: BeginTearingDown for /Temp/Untitled_0
+[2026.05.08-20.27.33:291][  0]LogWorld: UWorld::CleanupWorld for Untitled, bSessionEnded=true, bCleanupResources=true
+[2026.05.08-20.27.33:293][  0]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2026.05.08-20.27.33:306][  0]LogAudio: Display: Audio Device unregistered from world 'None'.
+[2026.05.08-20.27.33:314][  0]LogUObjectHash: Compacting FUObjectHashTables data took   0.57ms
+[2026.05.08-20.27.33:550][  0]LogAudio: Display: Audio Device (ID: 1) registered with world 'ThirdPersonExampleMap'.
+[2026.05.08-20.27.33:564][  0]LogAIModule: Creating AISystem for world ThirdPersonExampleMap
+[2026.05.08-20.27.33:566][  0]LogLoad: Game class is 'ThirdPersonGameMode_C'
+[2026.05.08-20.27.33:590][  0]LogWorld: Bringing World /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap up for play (max tick rate 0) at 2026.05.08-13.27.33
+[2026.05.08-20.27.33:591][  0]LogWorld: Bringing up level for play took: 0.024074
+[2026.05.08-20.27.33:604][  0]LogTemp: Display: [ImmerseStress] Ready. Defaults: event=SwordHits bus=7p1p4 shareset=Immerse_Audio_Renderer_(Custom)
+[2026.05.08-20.27.33:604][  0]LogTemp: Display: [ImmerseStress] IMMERSE_USER_ID env=kevin_tencenttest1_emb | IMMERSE_USERID=kevin_tencenttest1_emb | IMMERSE_USER=kevin_tencenttest1_emb
+[2026.05.08-20.27.33:604][  0]LogTemp: Display: [testTP] Auto-spawned ImmerseStressTestActor into ThirdPersonExampleMap (type=1)
+[2026.05.08-20.27.33:604][  0]LogLoad: Took 0.316740 seconds to LoadMap(/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap)
+[2026.05.08-20.27.33:634][  0]LogRenderer: Reallocating scene render targets to support 1536x864 Format 10 NumSamples 1 (Frame:1).
+[2026.05.08-20.27.33:634][  0]LogSlate: Took 0.000444 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' (155K)
+[2026.05.08-20.27.33:658][  0]LogInit: Display: Engine is initialized. Leaving FEngineLoop::Init()
+[2026.05.08-20.27.33:658][  0]LogLoad: (Engine Initialization) Total time: 6.10 seconds
+[2026.05.08-20.27.33:658][  0]LogLoad: (Engine Initialization) Total Blueprint compile time: 0.00 seconds
+[2026.05.08-20.27.33:703][  0]LogContentStreaming: Texture pool size now 1000 MB
+[2026.05.08-20.27.33:708][  0]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2026.05.08-20.27.33:796][  0]LogRenderer: Reallocating scene render targets to support 128x128 Format 10 NumSamples 1 (Frame:1).
+[2026.05.08-20.27.33:820][  0]LogRenderer: Reallocating scene render targets to support 1536x864 Format 10 NumSamples 1 (Frame:2).
+[2026.05.08-20.27.33:836][  1]LogSlate: Took 0.000127 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' (155K)
+[2026.05.08-20.27.36:202][153]LogTemp: Display: [ImmerseStress] PLAN START  steps=8 (concurrency=4 Ã— immerse{off,on}) rate=300.0Hz life=500ms warmup=2.0s phase=15.0s cooldown=2.0s CSV=../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/run_20260508_132736.csv
+[2026.05.08-20.27.36:202][153]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.27.36:202][153]LogTemp: Display: [ImmerseStress] >>> WARMUP step=0/8 immerse=off conc=32 (align Wwise profiler capture here)
+[2026.05.08-20.27.36:202][153]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=32 immerse=BYPASSED
+[2026.05.08-20.27.36:264][179]LogStats: Display: There is no thread with id: 6488. Please add thread metadata for this thread.
+[2026.05.08-20.27.38:196][ 81]LogTemp: Display: [ImmerseStress] >>> RUNNING step=0/8 immerse=off conc=32 (align Wwise profiler capture here)
+[2026.05.08-20.27.53:197][950]LogTemp: Display: [ImmerseStress] PHASE 0 done immerse=off conc=32 posted=960 stopped=960 dropped=3540 frames=6869 avg=2.18ms p50=2.10 p95=2.60 max=44.25
+[2026.05.08-20.27.53:198][950]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=0/8 immerse=off conc=32 (align Wwise profiler capture here)
+[2026.05.08-20.27.53:198][950]LogTemp: Display: [ImmerseStress] Churn STOP   posted=1088 stopped=1088 dropped=4011
+[2026.05.08-20.27.55:197][891]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.27.55:197][891]LogTemp: Display: [ImmerseStress] >>> WARMUP step=1/8 immerse=ON conc=32 (align Wwise profiler capture here)
+[2026.05.08-20.27.55:197][891]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=32 immerse=enabled
+[2026.05.08-20.27.57:199][835]LogTemp: Display: [ImmerseStress] >>> RUNNING step=1/8 immerse=ON conc=32 (align Wwise profiler capture here)
+[2026.05.08-20.28.12:199][448]LogTemp: Display: [ImmerseStress] PHASE 1 done immerse=ON conc=32 posted=960 stopped=960 dropped=3540 frames=6613 avg=2.27ms p50=2.19 p95=2.74 max=8.23
+[2026.05.08-20.28.12:200][448]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=1/8 immerse=ON conc=32 (align Wwise profiler capture here)
+[2026.05.08-20.28.12:200][448]LogTemp: Display: [ImmerseStress] Churn STOP   posted=2176 stopped=2176 dropped=8023
+[2026.05.08-20.28.14:200][354]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.28.14:200][354]LogTemp: Display: [ImmerseStress] >>> WARMUP step=2/8 immerse=off conc=64 (align Wwise profiler capture here)
+[2026.05.08-20.28.14:200][354]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=64 immerse=BYPASSED
+[2026.05.08-20.28.16:200][305]LogTemp: Display: [ImmerseStress] >>> RUNNING step=2/8 immerse=off conc=64 (align Wwise profiler capture here)
+[2026.05.08-20.28.31:201][379]LogTemp: Display: [ImmerseStress] PHASE 2 done immerse=off conc=64 posted=1920 stopped=1920 dropped=2580 frames=7074 avg=2.12ms p50=2.06 p95=2.54 max=4.13
+[2026.05.08-20.28.31:202][379]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=2/8 immerse=off conc=64 (align Wwise profiler capture here)
+[2026.05.08-20.28.31:202][379]LogTemp: Display: [ImmerseStress] Churn STOP   posted=4352 stopped=4352 dropped=10947
+[2026.05.08-20.28.33:202][327]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.28.33:202][327]LogTemp: Display: [ImmerseStress] >>> WARMUP step=3/8 immerse=ON conc=64 (align Wwise profiler capture here)
+[2026.05.08-20.28.33:203][327]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=64 immerse=enabled
+[2026.05.08-20.28.35:203][271]LogTemp: Display: [ImmerseStress] >>> RUNNING step=3/8 immerse=ON conc=64 (align Wwise profiler capture here)
+[2026.05.08-20.28.50:203][949]LogTemp: Display: [ImmerseStress] PHASE 3 done immerse=ON conc=64 posted=1920 stopped=1920 dropped=2580 frames=6678 avg=2.25ms p50=2.18 p95=2.77 max=5.13
+[2026.05.08-20.28.50:204][949]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=3/8 immerse=ON conc=64 (align Wwise profiler capture here)
+[2026.05.08-20.28.50:204][949]LogTemp: Display: [ImmerseStress] Churn STOP   posted=6528 stopped=6528 dropped=13871
+[2026.05.08-20.28.52:204][775]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.28.52:204][775]LogTemp: Display: [ImmerseStress] >>> WARMUP step=4/8 immerse=off conc=128 (align Wwise profiler capture here)
+[2026.05.08-20.28.52:204][775]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=128 immerse=BYPASSED
+[2026.05.08-20.28.54:204][648]LogTemp: Display: [ImmerseStress] >>> RUNNING step=4/8 immerse=off conc=128 (align Wwise profiler capture here)
+[2026.05.08-20.29.09:205][603]LogTemp: Display: [ImmerseStress] PHASE 4 done immerse=off conc=128 posted=3828 stopped=3829 dropped=672 frames=6955 avg=2.16ms p50=2.09 p95=2.59 max=4.93
+[2026.05.08-20.29.09:205][603]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=4/8 immerse=off conc=128 (align Wwise profiler capture here)
+[2026.05.08-20.29.09:205][603]LogTemp: Display: [ImmerseStress] Churn STOP   posted=10868 stopped=10868 dropped=14631
+[2026.05.08-20.29.11:206][537]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.29.11:206][537]LogTemp: Display: [ImmerseStress] >>> WARMUP step=5/8 immerse=ON conc=128 (align Wwise profiler capture here)
+[2026.05.08-20.29.11:206][537]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=128 immerse=enabled
+[2026.05.08-20.29.13:208][478]LogTemp: Display: [ImmerseStress] >>> RUNNING step=5/8 immerse=ON conc=128 (align Wwise profiler capture here)
+[2026.05.08-20.29.28:210][439]LogTemp: Display: [ImmerseStress] PHASE 5 done immerse=ON conc=128 posted=3828 stopped=3830 dropped=672 frames=6961 avg=2.16ms p50=2.09 p95=2.58 max=5.23
+[2026.05.08-20.29.28:210][439]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=5/8 immerse=ON conc=128 (align Wwise profiler capture here)
+[2026.05.08-20.29.28:210][439]LogTemp: Display: [ImmerseStress] Churn STOP   posted=15208 stopped=15208 dropped=15391
+[2026.05.08-20.29.30:209][322]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.29.30:209][322]LogTemp: Display: [ImmerseStress] >>> WARMUP step=6/8 immerse=off conc=256 (align Wwise profiler capture here)
+[2026.05.08-20.29.30:209][322]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=256 immerse=BYPASSED
+[2026.05.08-20.29.32:211][183]LogTemp: Display: [ImmerseStress] >>> RUNNING step=6/8 immerse=off conc=256 (align Wwise profiler capture here)
+[2026.05.08-20.29.47:214][861]LogTemp: Display: [ImmerseStress] PHASE 6 done immerse=off conc=256 posted=4501 stopped=4501 dropped=0 frames=6678 avg=2.25ms p50=2.18 p95=2.73 max=4.83
+[2026.05.08-20.29.47:218][861]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=6/8 immerse=off conc=256 (align Wwise profiler capture here)
+[2026.05.08-20.29.47:218][861]LogTemp: Display: [ImmerseStress] Churn STOP   posted=20309 stopped=20309 dropped=15391
+[2026.05.08-20.29.49:213][800]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.29.49:213][800]LogTemp: Display: [ImmerseStress] >>> WARMUP step=7/8 immerse=ON conc=256 (align Wwise profiler capture here)
+[2026.05.08-20.29.49:213][800]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=256 immerse=enabled
+[2026.05.08-20.29.51:213][732]LogTemp: Display: [ImmerseStress] >>> RUNNING step=7/8 immerse=ON conc=256 (align Wwise profiler capture here)
+[2026.05.08-20.30.06:215][545]LogTemp: Display: [ImmerseStress] PHASE 7 done immerse=ON conc=256 posted=4500 stopped=4500 dropped=0 frames=6813 avg=2.20ms p50=2.12 p95=2.69 max=6.01
+[2026.05.08-20.30.06:216][545]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=7/8 immerse=ON conc=256 (align Wwise profiler capture here)
+[2026.05.08-20.30.06:216][545]LogTemp: Display: [ImmerseStress] Churn STOP   posted=25409 stopped=25409 dropped=15391
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] >>> Toggle storm: 500 iterations
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:216][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:217][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:218][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] Toggle storm DONE: 500/500 state-flips in 0.003s (avg 0.0068ms/op, worst 0.078ms, throughput 147401 ops/s)
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] PLAN COMPLETE â€” 8 phases recorded. CSV: ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/run_20260508_132736.csv
+[2026.05.08-20.30.08:219][461]LogTemp: Display: [ImmerseStress] Requesting engine exit in 1.50s (reason=ImmerseStressComplete)
+[2026.05.08-20.30.09:719][155]LogWindows: FPlatformMisc::RequestExit(0)
+[2026.05.08-20.30.09:719][155]LogWindows: FPlatformMisc::RequestExitWithStatus(0, 0)
+[2026.05.08-20.30.09:719][155]LogCore: Engine exit requested (reason: Win RequestExit)
+[2026.05.08-20.30.09:720][156]LogCore: Engine exit requested (reason: EngineExit() was called; note: exit was already requested)
+[2026.05.08-20.30.09:721][156]LogInit: Display: PreExit Game.
+[2026.05.08-20.30.09:728][156]LogWorld: BeginTearingDown for /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap
+[2026.05.08-20.30.09:732][156]LogWorld: UWorld::CleanupWorld for ThirdPersonExampleMap, bSessionEnded=true, bCleanupResources=true
+[2026.05.08-20.30.09:734][156]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2026.05.08-20.30.09:953][156]LogAudio: Display: Beginning Audio Device Manager Shutdown (Module: AudioMixerXAudio2)...
+[2026.05.08-20.30.09:953][156]LogAudio: Display: Destroying 1 Remaining Audio Device(s)...
+[2026.05.08-20.30.09:953][156]LogAudio: Display: Audio Device unregistered from world 'ThirdPersonExampleMap'.
+[2026.05.08-20.30.09:957][156]LogAudioMixer: FMixerPlatformXAudio2::StopAudioStream() called
+[2026.05.08-20.30.09:959][156]LogAudioMixer: FMixerPlatformXAudio2::StopAudioStream() called
+[2026.05.08-20.30.09:964][156]LogAudio: Display: Audio Device Manager Shutdown
+[2026.05.08-20.30.09:967][156]LogSlate: Window 'testTP (64-bit Development PCD3D_SM5) ' being destroyed
+[2026.05.08-20.30.09:971][156]LogExit: Preparing to exit.
+[2026.05.08-20.30.09:986][156]LogUObjectHash: Compacting FUObjectHashTables data took   2.12ms
+[2026.05.08-20.30.10:008][156]LogMoviePlayer: Shutting down movie player
+[2026.05.08-20.30.10:035][156]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2026.05.08-20.30.10:047][156]LogDemo: Cleaned up 0 splitscreen connections with owner deletion
+[2026.05.08-20.30.10:055][156]LogExit: Game engine shut down
+[2026.05.08-20.30.10:133][156]LogExit: Object subsystem successfully closed.
+[2026.05.08-20.30.10:144][156]LogShaderCompilers: Display: === FShaderJobCache stats ===
+[2026.05.08-20.30.10:144][156]LogShaderCompilers: Display: Total job queries 0, among them cache hits 0 (0.00%)
+[2026.05.08-20.30.10:144][156]LogShaderCompilers: Display: Tracking 0 distinct input hashes that result in 0 distinct outputs (0.00%)
+[2026.05.08-20.30.10:145][156]LogShaderCompilers: Display: RAM used: 0.00 MB (0.00 GB) of 819.20 MB (0.80 GB) budget. Usage: 0.00%
+[2026.05.08-20.30.10:145][156]LogShaderCompilers: Display: ================================================
+[2026.05.08-20.30.10:167][156]LogShaderCompilers: Display: Shaders left to compile 0
+[2026.05.08-20.30.10:211][156]LogModuleManager: Shutting down and abandoning module SequenceRecorderSections (562)
+[2026.05.08-20.30.10:211][156]LogModuleManager: Shutting down and abandoning module SequenceRecorder (560)
+[2026.05.08-20.30.10:211][156]LogModuleManager: Shutting down and abandoning module AutomationController (558)
+[2026.05.08-20.30.10:212][156]LogModuleManager: Shutting down and abandoning module AutomationWorker (556)
+[2026.05.08-20.30.10:212][156]LogModuleManager: Shutting down and abandoning module Voice (554)
+[2026.05.08-20.30.10:212][156]LogModuleManager: Shutting down and abandoning module AIModule (552)
+[2026.05.08-20.30.10:212][156]LogModuleManager: Shutting down and abandoning module GameplayDebugger (551)
+[2026.05.08-20.30.10:213][156]LogModuleManager: Shutting down and abandoning module AITestSuite (549)
+[2026.05.08-20.30.10:213][156]LogModuleManager: Shutting down and abandoning module NavigationSystem (547)
+[2026.05.08-20.30.10:213][156]LogModuleManager: Shutting down and abandoning module AnimGraph (544)
+[2026.05.08-20.30.10:213][156]LogModuleManager: Shutting down and abandoning module SteamVREditor (542)
+[2026.05.08-20.30.10:213][156]LogModuleManager: Shutting down and abandoning module ToolMenus (541)
+[2026.05.08-20.30.10:213][156]LogModuleManager: Shutting down and abandoning module OculusMR (538)
+[2026.05.08-20.30.10:213][156]LogModuleManager: Shutting down and abandoning module OpenXRInput (536)
+[2026.05.08-20.30.10:213][156]LogModuleManager: Shutting down and abandoning module TakeRecorderSources (534)
+[2026.05.08-20.30.10:214][156]LogModuleManager: Shutting down and abandoning module TakeRecorder (533)
+[2026.05.08-20.30.10:215][156]LogModuleManager: Shutting down and abandoning module TakeTrackRecorders (530)
+[2026.05.08-20.30.10:215][156]LogModuleManager: Shutting down and abandoning module TakesCore (528)
+[2026.05.08-20.30.10:215][156]LogModuleManager: Shutting down and abandoning module MagicLeapMediaCodecFactory (526)
+[2026.05.08-20.30.10:215][156]LogModuleManager: Shutting down and abandoning module MagicLeapMediaFactory (524)
+[2026.05.08-20.30.10:215][156]LogModuleManager: Shutting down and abandoning module WmfMediaFactory (522)
+[2026.05.08-20.30.10:215][156]LogModuleManager: Shutting down and abandoning module OpenExrWrapper (520)
+[2026.05.08-20.30.10:215][156]LogModuleManager: Shutting down and abandoning module ImgMediaFactory (518)
+[2026.05.08-20.30.10:215][156]LogModuleManager: Shutting down and abandoning module WebMMediaFactory (516)
+[2026.05.08-20.30.10:215][156]LogModuleManager: Shutting down and abandoning module WebMMedia (514)
+[2026.05.08-20.30.10:215][156]LogModuleManager: Shutting down and abandoning module AvfMediaFactory (512)
+[2026.05.08-20.30.10:215][156]LogModuleManager: Shutting down and abandoning module PlanarCut (510)
+[2026.05.08-20.30.10:216][156]LogModuleManager: Shutting down and abandoning module CharacterAI (508)
+[2026.05.08-20.30.10:216][156]LogModuleManager: Shutting down and abandoning module SessionServices (506)
+[2026.05.08-20.30.10:216][156]LogModuleManager: Shutting down and abandoning module MovieSceneCapture (504)
+[2026.05.08-20.30.10:216][156]LogModuleManager: Shutting down and abandoning module LiveCoding (502)
+[2026.05.08-20.30.10:216][156]LogModuleManager: Shutting down and abandoning module LevelSequence (500)
+[2026.05.08-20.30.10:216][156]LogModuleManager: Shutting down and abandoning module MovieSceneTracks (498)
+[2026.05.08-20.30.10:216][156]LogModuleManager: Shutting down and abandoning module MovieScene (496)
+[2026.05.08-20.30.10:217][156]LogModuleManager: Shutting down and abandoning module StreamingPauseRendering (494)
+[2026.05.08-20.30.10:217][156]LogModuleManager: Shutting down and abandoning module PortalServices (492)
+[2026.05.08-20.30.10:217][156]LogModuleManager: Shutting down and abandoning module PortalRpc (490)
+[2026.05.08-20.30.10:217][156]LogModuleManager: Shutting down and abandoning module MessagingRpc (488)
+[2026.05.08-20.30.10:217][156]LogModuleManager: Shutting down and abandoning module AudioMixerXAudio2 (486)
+[2026.05.08-20.30.10:217][156]LogModuleManager: Shutting down and abandoning module AudioMixerCore (485)
+[2026.05.08-20.30.10:217][156]LogModuleManager: Shutting down and abandoning module ImageWriteQueue (482)
+[2026.05.08-20.30.10:223][156]LogModuleManager: Shutting down and abandoning module ProfilerService (480)
+[2026.05.08-20.30.10:370][156]LogModuleManager: Shutting down and abandoning module TaskGraph (478)
+[2026.05.08-20.30.10:371][156]LogModuleManager: Shutting down and abandoning module OculusInput (476)
+[2026.05.08-20.30.10:371][156]LogModuleManager: Shutting down and abandoning module MobilePatchingUtils (474)
+[2026.05.08-20.30.10:371][156]LogModuleManager: Shutting down and abandoning module Synthesis (472)
+[2026.05.08-20.30.10:372][156]LogModuleManager: Shutting down and abandoning module ProceduralMeshComponent (470)
+[2026.05.08-20.30.10:372][156]LogModuleManager: Shutting down and abandoning module AppleImageUtilsBlueprintSupport (468)
+[2026.05.08-20.30.10:372][156]LogModuleManager: Shutting down and abandoning module AppleImageUtils (466)
+[2026.05.08-20.30.10:372][156]LogModuleManager: Shutting down and abandoning module GooglePAD (464)
+[2026.05.08-20.30.10:372][156]LogModuleManager: Shutting down and abandoning module TakeMovieScene (462)
+[2026.05.08-20.30.10:372][156]LogModuleManager: Shutting down and abandoning module EditableMesh (460)
+[2026.05.08-20.30.10:372][156]LogModuleManager: Shutting down and abandoning module AssetTags (458)
+[2026.05.08-20.30.10:372][156]LogModuleManager: Shutting down and abandoning module CustomMeshComponent (456)
+[2026.05.08-20.30.10:372][156]LogModuleManager: Shutting down and abandoning module CableComponent (454)
+[2026.05.08-20.30.10:372][156]LogModuleManager: Shutting down and abandoning module AudioCapture (452)
+[2026.05.08-20.30.10:372][156]LogModuleManager: Shutting down and abandoning module AudioCaptureRtAudio (451)
+[2026.05.08-20.30.10:372][156]LogModuleManager: Shutting down and abandoning module ArchVisCharacter (448)
+[2026.05.08-20.30.10:372][156]LogModuleManager: Shutting down and abandoning module AndroidPermission (446)
+[2026.05.08-20.30.10:372][156]LogModuleManager: Shutting down and abandoning module ActorLayerUtilities (444)
+[2026.05.08-20.30.10:372][156]LogModuleManager: Shutting down and abandoning module TemplateSequence (442)
+[2026.05.08-20.30.10:373][156]LogModuleManager: Shutting down and abandoning module ImgMedia (440)
+[2026.05.08-20.30.10:373][156]LogModuleManager: Shutting down and abandoning module MagicLeapSharedWorld (438)
+[2026.05.08-20.30.10:373][156]LogModuleManager: Shutting down and abandoning module MagicLeapLightEstimation (436)
+[2026.05.08-20.30.10:373][156]LogModuleManager: Shutting down and abandoning module MagicLeapHelperVulkan (434)
+[2026.05.08-20.30.10:373][156]LogModuleManager: Shutting down and abandoning module MagicLeapHelperOpenGL (432)
+[2026.05.08-20.30.10:373][156]LogModuleManager: Shutting down and abandoning module MagicLeapAudio (430)
+[2026.05.08-20.30.10:373][156]LogModuleManager: Shutting down and abandoning module MediaCompositing (428)
+[2026.05.08-20.30.10:373][156]LogModuleManager: Shutting down and abandoning module OodleNetworkHandlerComponent (426)
+[2026.05.08-20.30.10:373][156]LogModuleManager: Shutting down and abandoning module OpenImageDenoise (424)
+[2026.05.08-20.30.10:373][156]LogOpenImageDenoise: OIDN shutting down
+[2026.05.08-20.30.10:373][156]LogModuleManager: Shutting down and abandoning module MotoSynth (422)
+[2026.05.08-20.30.10:373][156]LogModuleManager: Shutting down and abandoning module ChaosNiagara (420)
+[2026.05.08-20.30.10:373][156]LogModuleManager: Shutting down and abandoning module GeometryCacheTracks (418)
+[2026.05.08-20.30.10:373][156]LogModuleManager: Shutting down and abandoning module GeometryCacheSequencer (417)
+[2026.05.08-20.30.10:373][156]LogModuleManager: Shutting down and abandoning module GeometryCache (414)
+[2026.05.08-20.30.10:373][156]LogModuleManager: Shutting down and abandoning module GeometryCacheEd (413)
+[2026.05.08-20.30.10:373][156]LogModuleManager: Shutting down and abandoning module MeshConversion (410)
+[2026.05.08-20.30.10:374][156]LogModuleManager: Shutting down and abandoning module DynamicMesh (408)
+[2026.05.08-20.30.10:374][156]LogModuleManager: Shutting down and abandoning module GeometryAlgorithms (406)
+[2026.05.08-20.30.10:374][156]LogModuleManager: Shutting down and abandoning module GeometricObjects (404)
+[2026.05.08-20.30.10:375][156]LogModuleManager: Shutting down and abandoning module GeometryCollectionTracks (402)
+[2026.05.08-20.30.10:375][156]LogModuleManager: Shutting down and abandoning module GeometryCollectionSequencer (401)
+[2026.05.08-20.30.10:375][156]LogModuleManager: Shutting down and abandoning module FieldSystemEngine (399)
+[2026.05.08-20.30.10:375][156]LogModuleManager: Shutting down and abandoning module BackChannel (396)
+[2026.05.08-20.30.10:375][156]LogModuleManager: Shutting down and abandoning module UObjectPlugin (394)
+[2026.05.08-20.30.10:375][156]LogModuleManager: Shutting down and abandoning module VisualStudioCodeSourceCodeAccess (392)
+[2026.05.08-20.30.10:375][156]LogModuleManager: Shutting down and abandoning module VisualStudioSourceCodeAccess (390)
+[2026.05.08-20.30.10:375][156]LogModuleManager: Shutting down and abandoning module HotReload (389)
+[2026.05.08-20.30.10:376][156]LogModuleManager: Shutting down and abandoning module AutomationUtils (386)
+[2026.05.08-20.30.10:376][156]LogModuleManager: Shutting down and abandoning module SubversionSourceControl (384)
+[2026.05.08-20.30.10:377][156]LogModuleManager: Shutting down and abandoning module CLionSourceCodeAccess (382)
+[2026.05.08-20.30.10:377][156]LogModuleManager: Shutting down and abandoning module PerforceSourceControl (380)
+[2026.05.08-20.30.10:377][156]LogModuleManager: Shutting down and abandoning module SourceControl (379)
+[2026.05.08-20.30.10:377][156]LogModuleManager: Shutting down and abandoning module LiveLinkSequencer (376)
+[2026.05.08-20.30.10:377][156]LogModuleManager: Shutting down and abandoning module LiveLinkMovieScene (374)
+[2026.05.08-20.30.10:377][156]LogModuleManager: Shutting down and abandoning module LiveLinkGraphNode (372)
+[2026.05.08-20.30.10:377][156]LogModuleManager: Shutting down and abandoning module LiveLinkComponents (370)
+[2026.05.08-20.30.10:377][156]LogModuleManager: Shutting down and abandoning module LiveLink (368)
+[2026.05.08-20.30.10:535][156]LogModuleManager: Shutting down and abandoning module testTP (366)
+[2026.05.08-20.30.10:535][156]LogModuleManager: Shutting down and abandoning module AkAudio (364)
+[2026.05.08-20.30.10:855][156]LogInit: Audiokinetic Audio Device terminated.
+[2026.05.08-20.30.10:855][156]LogModuleManager: Shutting down and abandoning module PropertyAccessEditor (362)
+[2026.05.08-20.30.10:856][156]LogModuleManager: Shutting down and abandoning module EnvironmentQueryEditor (360)
+[2026.05.08-20.30.10:857][156]LogModuleManager: Shutting down and abandoning module RuntimePhysXCooking (358)
+[2026.05.08-20.30.10:857][156]LogModuleManager: Shutting down and abandoning module SoundFields (356)
+[2026.05.08-20.30.10:857][156]LogModuleManager: Shutting down and abandoning module SignificanceManager (354)
+[2026.05.08-20.30.10:857][156]LogModuleManager: Shutting down and abandoning module PhysXVehiclesEditor (352)
+[2026.05.08-20.30.10:857][156]LogModuleManager: Shutting down and abandoning module LocationServicesBPLibrary (348)
+[2026.05.08-20.30.10:857][156]LogModuleManager: Shutting down and abandoning module AudioSynesthesia (346)
+[2026.05.08-20.30.10:857][156]LogModuleManager: Shutting down and abandoning module AudioSynesthesiaCore (344)
+[2026.05.08-20.30.10:857][156]LogModuleManager: Shutting down and abandoning module ActorSequence (342)
+[2026.05.08-20.30.10:857][156]LogModuleManager: Shutting down and abandoning module ImgMediaEngine (340)
+[2026.05.08-20.30.10:857][156]LogModuleManager: Shutting down and abandoning module MagicLeapARPin (338)
+[2026.05.08-20.30.10:857][156]LogModuleManager: Shutting down and abandoning module MagicLeapHandMeshing (336)
+[2026.05.08-20.30.10:857][156]LogModuleManager: Shutting down and abandoning module MagicLeapSecureStorage (334)
+[2026.05.08-20.30.10:857][156]LogModuleManager: Shutting down and abandoning module MagicLeapPrivileges (332)
+[2026.05.08-20.30.10:858][156]LogModuleManager: Shutting down and abandoning module MagicLeapPlanes (330)
+[2026.05.08-20.30.10:858][156]LogMagicLeapPlanes: Planes tracker already destroyed.
+[2026.05.08-20.30.10:858][156]LogModuleManager: Shutting down and abandoning module MagicLeapImageTracker (328)
+[2026.05.08-20.30.10:858][156]LogModuleManager: Shutting down and abandoning module MagicLeapIdentity (326)
+[2026.05.08-20.30.10:858][156]LogModuleManager: Shutting down and abandoning module MagicLeapHandTracking (324)
+[2026.05.08-20.30.10:858][156]LogModuleManager: Shutting down and abandoning module MagicLeapEyeTracker (322)
+[2026.05.08-20.30.10:858][156]LogModuleManager: Shutting down and abandoning module MagicLeapController (320)
+[2026.05.08-20.30.10:858][156]LogModuleManager: Shutting down and abandoning module MagicLeapARPinImpl (318)
+[2026.05.08-20.30.10:858][156]LogModuleManager: Shutting down and abandoning module MagicLeapAR (316)
+[2026.05.08-20.30.10:858][156]LogModuleManager: Shutting down and abandoning module TcpMessaging (314)
+[2026.05.08-20.30.10:858][156]LogModuleManager: Shutting down and abandoning module UdpMessaging (312)
+[2026.05.08-20.30.10:859][156]LogModuleManager: Shutting down and abandoning module PythonScriptPlugin (310)
+[2026.05.08-20.30.10:859][156]LogModuleManager: Shutting down and abandoning module NiagaraAnimNotifies (308)
+[2026.05.08-20.30.10:859][156]LogModuleManager: Shutting down and abandoning module Niagara (306)
+[2026.05.08-20.30.10:860][156]LogModuleManager: Shutting down and abandoning module SignalProcessing (305)
+[2026.05.08-20.30.10:860][156]LogModuleManager: Shutting down and abandoning module NiagaraEditor (303)
+[2026.05.08-20.30.10:861][156]LogModuleManager: Shutting down and abandoning module ContentBrowser (302)
+[2026.05.08-20.30.10:862][156]LogModuleManager: Shutting down and abandoning module CollectionManager (301)
+[2026.05.08-20.30.10:863][156]LogModuleManager: Shutting down and abandoning module DirectoryWatcher (300)
+[2026.05.08-20.30.10:863][156]LogModuleManager: Shutting down and abandoning module ContentBrowserData (297)
+[2026.05.08-20.30.10:863][156]LogModuleManager: Shutting down and abandoning module NiagaraCore (292)
+[2026.05.08-20.30.10:863][156]LogModuleManager: Shutting down and abandoning module PropertyAccessNode (290)
+[2026.05.08-20.30.10:863][156]LogModuleManager: Shutting down and abandoning module AnimationSharing (288)
+[2026.05.08-20.30.10:863][156]LogModuleManager: Shutting down and abandoning module GameplayCameras (286)
+[2026.05.08-20.30.10:863][156]LogModuleManager: Shutting down and abandoning module GameplayTagsEditor (284)
+[2026.05.08-20.30.10:864][156]LogModuleManager: Shutting down and abandoning module FacialAnimation (282)
+[2026.05.08-20.30.10:864][156]LogModuleManager: Shutting down and abandoning module AssetManagerEditor (280)
+[2026.05.08-20.30.10:864][156]LogModuleManager: Shutting down and abandoning module TreeMap (279)
+[2026.05.08-20.30.10:864][156]LogModuleManager: Shutting down and abandoning module LightPropagationVolumeRuntime (276)
+[2026.05.08-20.30.10:864][156]LogModuleManager: Shutting down and abandoning module Paper2D (274)
+[2026.05.08-20.30.10:864][156]LogModuleManager: Shutting down and abandoning module WebMMoviePlayer (272)
+[2026.05.08-20.30.10:864][156]LogModuleManager: Shutting down and abandoning module WindowsMoviePlayer (270)
+[2026.05.08-20.30.10:865][156]LogModuleManager: Shutting down and abandoning module NetworkReplayStreaming (268)
+[2026.05.08-20.30.10:865][156]LogModuleManager: Shutting down and abandoning module PacketHandler (266)
+[2026.05.08-20.30.10:865][156]LogModuleManager: Shutting down and abandoning module ClothingSystemEditor (264)
+[2026.05.08-20.30.10:865][156]LogModuleManager: Shutting down and abandoning module ClothingSystemRuntimeNv (262)
+[2026.05.08-20.30.10:865][156]LogModuleManager: Shutting down and abandoning module MediaAssets (260)
+[2026.05.08-20.30.10:865][156]LogModuleManager: Shutting down and abandoning module Overlay (258)
+[2026.05.08-20.30.10:865][156]LogModuleManager: Shutting down and abandoning module OverlayEditor (257)
+[2026.05.08-20.30.10:865][156]LogModuleManager: Shutting down and abandoning module VREditor (254)
+[2026.05.08-20.30.10:867][156]LogModuleManager: Shutting down and abandoning module StringTableEditor (252)
+[2026.05.08-20.30.10:867][156]LogModuleManager: Shutting down and abandoning module GameplayTasksEditor (250)
+[2026.05.08-20.30.10:867][156]LogModuleManager: Shutting down and abandoning module BehaviorTreeEditor (248)
+[2026.05.08-20.30.10:868][156]LogModuleManager: Shutting down and abandoning module FunctionalTesting (246)
+[2026.05.08-20.30.10:868][156]LogModuleManager: Shutting down and abandoning module CollisionAnalyzer (244)
+[2026.05.08-20.30.10:869][156]LogModuleManager: Shutting down and abandoning module WorkspaceMenuStructure (243)
+[2026.05.08-20.30.10:870][156]LogModuleManager: Shutting down and abandoning module UMG (240)
+[2026.05.08-20.30.10:870][156]LogModuleManager: Shutting down and abandoning module UMGEditor (239)
+[2026.05.08-20.30.10:871][156]LogModuleManager: Shutting down and abandoning module Sequencer (238)
+[2026.05.08-20.30.10:872][156]LogModuleManager: Shutting down and abandoning module MessageLog (235)
+[2026.05.08-20.30.10:872][156]LogModuleManager: Shutting down and abandoning module SlateReflector (230)
+[2026.05.08-20.30.10:874][156]LogModuleManager: Shutting down and abandoning module Slate (228)
+[2026.05.08-20.30.10:874][156]LogModuleManager: Shutting down and abandoning module SlateCore (226)
+[2026.05.08-20.30.10:876][156]LogModuleManager: Shutting down and abandoning module LandscapeEditorUtilities (224)
+[2026.05.08-20.30.10:876][156]LogModuleManager: Shutting down and abandoning module UnrealEd (222)
+[2026.05.08-20.30.10:877][156]LogModuleManager: Shutting down and abandoning module MRMesh (220)
+[2026.05.08-20.30.10:877][156]LogModuleManager: Shutting down and abandoning module Messaging (218)
+[2026.05.08-20.30.10:877][156]LogModuleManager: Shutting down and abandoning module SourceCodeAccess (216)
+[2026.05.08-20.30.10:877][156]LogModuleManager: Shutting down and abandoning module HeadMountedDisplay (214)
+[2026.05.08-20.30.10:877][156]LogModuleManager: Shutting down and abandoning module XAudio2 (212)
+[2026.05.08-20.30.10:877][156]LogModuleManager: Shutting down and abandoning module Networking (210)
+[2026.05.08-20.30.10:877][156]LogModuleManager: Shutting down and abandoning module Core (208)
+[2026.05.08-20.30.10:877][156]LogModuleManager: Shutting down and abandoning module MaterialEditor (206)
+[2026.05.08-20.30.10:877][156]LogModuleManager: Shutting down and abandoning module MovieSceneTools (204)
+[2026.05.08-20.30.10:878][156]LogModuleManager: Shutting down and abandoning module EditorStyle (203)
+[2026.05.08-20.30.10:879][156]LogModuleManager: Shutting down and abandoning module KismetCompiler (200)
+[2026.05.08-20.30.10:879][156]LogModuleManager: Shutting down and abandoning module MeshBuilder (198)
+[2026.05.08-20.30.10:879][156]LogModuleManager: Shutting down and abandoning module MeshUtilities (196)
+[2026.05.08-20.30.10:880][156]LogModuleManager: Shutting down and abandoning module MeshMergeUtilities (195)
+[2026.05.08-20.30.10:880][156]LogModuleManager: Shutting down and abandoning module MeshReductionInterface (194)
+[2026.05.08-20.30.10:880][156]LogModuleManager: Shutting down and abandoning module MeshBoneReduction (193)
+[2026.05.08-20.30.10:880][156]LogModuleManager: Shutting down and abandoning module SkeletalMeshReduction (191)
+[2026.05.08-20.30.10:880][156]LogModuleManager: Shutting down and abandoning module ProxyLODMeshReduction (189)
+[2026.05.08-20.30.10:881][156]LogModuleManager: Shutting down and abandoning module QuadricMeshReduction (187)
+[2026.05.08-20.30.10:881][156]LogModuleManager: Shutting down and abandoning module MaterialBaking (183)
+[2026.05.08-20.30.10:881][156]LogModuleManager: Shutting down and abandoning module NullInstallBundleManager (178)
+[2026.05.08-20.30.10:881][156]LogModuleManager: Shutting down and abandoning module PIEPreviewDeviceProfileSelector (176)
+[2026.05.08-20.30.10:882][156]LogModuleManager: Shutting down and abandoning module DerivedDataCache (174)
+[2026.05.08-20.30.10:882][156]LogModuleManager: Shutting down and abandoning module TargetPlatform (172)
+[2026.05.08-20.30.10:882][156]LogModuleManager: Shutting down and abandoning module VulkanShaderFormat (171)
+[2026.05.08-20.30.10:883][156]LogModuleManager: Shutting down and abandoning module ShaderFormatVectorVM (169)
+[2026.05.08-20.30.10:883][156]LogModuleManager: Shutting down and abandoning module ShaderFormatOpenGL (167)
+[2026.05.08-20.30.10:883][156]LogModuleManager: Shutting down and abandoning module ShaderFormatD3D (165)
+[2026.05.08-20.30.10:883][156]LogModuleManager: Shutting down and abandoning module MetalShaderFormat (163)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module TextureFormatOodle (161)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module TextureFormatUncompressed (159)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module TextureFormatPVR (157)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module TextureFormatETC2 (155)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module TextureFormatDXT (153)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module TextureFormatIntelISPCTexComp (151)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module TextureFormatASTC (149)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module ImageWrapper (148)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module AudioFormatOpus (145)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module AudioFormatOgg (143)
+[2026.05.08-20.30.10:884][156]LogModuleManager: Shutting down and abandoning module AudioFormatADPCM (141)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module WindowsServerTargetPlatform (139)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module WindowsClientTargetPlatform (137)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module WindowsTargetPlatform (135)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module WindowsNoEditorTargetPlatform (133)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module D3D11RHI (130)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module InputCore (128)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module Settings (126)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module PhysXCooking (124)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module Chaos (122)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module WindowsPlatformFeatures (120)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module GameplayMediaEncoder (119)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module AVEncoder (118)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module SteamVRInputDevice (114)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module SteamVRInput (112)
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module SteamVR (110)
+[2026.05.08-20.30.10:885][156]LogHMD: Freeing OpenVRDLLHandle.
+[2026.05.08-20.30.10:885][156]LogModuleManager: Shutting down and abandoning module OculusHMD (108)
+[2026.05.08-20.30.10:887][156]LogModuleManager: Shutting down and abandoning module AISupportModule (106)
+[2026.05.08-20.30.10:887][156]LogModuleManager: Shutting down and abandoning module OpenXRHandTracking (104)
+[2026.05.08-20.30.10:887][156]LogSlate: Slate User Destroyed.  User Index 0, Is Virtual User: 0
+[2026.05.08-20.30.10:887][156]LogModuleManager: Shutting down and abandoning module OpenXREyeTracker (102)
+[2026.05.08-20.30.10:887][156]LogModuleManager: Shutting down and abandoning module OpenXRAR (100)
+[2026.05.08-20.30.10:887][156]LogModuleManager: Shutting down and abandoning module AugmentedReality (99)
+[2026.05.08-20.30.10:888][156]LogModuleManager: Shutting down and abandoning module OpenXRHMD (96)
+[2026.05.08-20.30.10:888][156]LogModuleManager: Shutting down and abandoning module ChunkDownloader (94)
+[2026.05.08-20.30.10:889][156]LogModuleManager: Shutting down and abandoning module ExampleDeviceProfileSelector (92)
+[2026.05.08-20.30.10:889][156]LogModuleManager: Shutting down and abandoning module LauncherChunkInstaller (90)
+[2026.05.08-20.30.10:889][156]LogModuleManager: Shutting down and abandoning module OnlineBlueprintSupport (88)
+[2026.05.08-20.30.10:889][156]LogModuleManager: Shutting down and abandoning module OnlineSubsystem (84)
+[2026.05.08-20.30.10:893][156]LogModuleManager: Shutting down and abandoning module XMPP (79)
+[2026.05.08-20.30.10:893][156]LogModuleManager: Shutting down and abandoning module WebSockets (78)
+[2026.05.08-20.30.10:928][156]LogModuleManager: Shutting down and abandoning module HTTP (75)
+[2026.05.08-20.30.10:928][156]LogHttp: Display: cleaning up 0 outstanding Http requests.
+[2026.05.08-20.30.10:940][156]LogModuleManager: Shutting down and abandoning module SSL (74)
+[2026.05.08-20.30.10:941][156]LogModuleManager: Shutting down and abandoning module WmfMedia (70)
+[2026.05.08-20.30.10:944][156]LogModuleManager: Shutting down and abandoning module Media (69)
+[2026.05.08-20.30.10:946][156]LogModuleManager: Shutting down and abandoning module MediaInfo (68)
+[2026.05.08-20.30.10:946][156]LogModuleManager: Shutting down and abandoning module ExrReaderGpu (64)
+[2026.05.08-20.30.10:946][156]LogModuleManager: Shutting down and abandoning module MLSDK (62)
+[2026.05.08-20.30.10:946][156]LogModuleManager: Shutting down and abandoning module MagicLeap (60)
+[2026.05.08-20.30.10:946][156]LogModuleManager: Shutting down and abandoning module VariantManagerContent (58)
+[2026.05.08-20.30.10:946][156]LogModuleManager: Shutting down and abandoning module DatasmithContent (56)
+[2026.05.08-20.30.10:947][156]LogModuleManager: Shutting down and abandoning module NiagaraVertexFactories (54)
+[2026.05.08-20.30.10:947][156]LogModuleManager: Shutting down and abandoning module NiagaraShader (52)
+[2026.05.08-20.30.10:947][156]LogModuleManager: Shutting down and abandoning module ChaosCloth (50)
+[2026.05.08-20.30.10:948][156]LogModuleManager: Shutting down and abandoning module PixWinPlugin (48)
+[2026.05.08-20.30.10:948][156]LogModuleManager: Shutting down and abandoning module PlatformCryptoOpenSSL (46)
+[2026.05.08-20.30.10:948][156]LogModuleManager: Shutting down and abandoning module PlatformCryptoTypes (44)
+[2026.05.08-20.30.10:948][156]LogModuleManager: Shutting down and abandoning module PlatformCrypto (42)
+[2026.05.08-20.30.10:948][156]LogModuleManager: Shutting down and abandoning module OodleDataCompressionFormat (40)
+[2026.05.08-20.30.10:948][156]LogModuleManager: Shutting down and abandoning module PythonScriptPluginPreload (38)
+[2026.05.08-20.30.10:948][156]LogModuleManager: Shutting down and abandoning module XGEController (36)
+[2026.05.08-20.30.10:949][156]LogXGEController: Cleaning working directory: C:/Users/kapil/AppData/Local/Temp/UnrealXGEWorkingDir/
+[2026.05.08-20.30.10:949][156]LogModuleManager: Shutting down and abandoning module AnimationModifiers (34)
+[2026.05.08-20.30.10:950][156]LogModuleManager: Shutting down and abandoning module AudioEditor (32)
+[2026.05.08-20.30.10:950][156]LogModuleManager: Shutting down and abandoning module PropertyEditor (31)
+[2026.05.08-20.30.10:952][156]LogModuleManager: Shutting down and abandoning module TextureCompressor (28)
+[2026.05.08-20.30.10:952][156]LogModuleManager: Shutting down and abandoning module RenderCore (26)
+[2026.05.08-20.30.10:952][156]LogModuleManager: Shutting down and abandoning module Landscape (24)
+[2026.05.08-20.30.10:952][156]LogModuleManager: Shutting down and abandoning module SlateRHIRenderer (22)
+[2026.05.08-20.30.10:953][156]LogModuleManager: Shutting down and abandoning module AnimGraphRuntime (20)
+[2026.05.08-20.30.10:953][156]LogModuleManager: Shutting down and abandoning module Renderer (18)
+[2026.05.08-20.30.10:954][156]LogModuleManager: Shutting down and abandoning module Engine (16)
+[2026.05.08-20.30.10:954][156]LogModuleManager: Shutting down and abandoning module CoreUObject (14)
+[2026.05.08-20.30.10:954][156]LogModuleManager: Shutting down and abandoning module NetworkFile (12)
+[2026.05.08-20.30.10:954][156]LogModuleManager: Shutting down and abandoning module CookedIterativeFile (10)
+[2026.05.08-20.30.10:954][156]LogModuleManager: Shutting down and abandoning module StreamingFile (8)
+[2026.05.08-20.30.10:954][156]LogModuleManager: Shutting down and abandoning module SandboxFile (6)
+[2026.05.08-20.30.10:954][156]LogModuleManager: Shutting down and abandoning module PakFile (4)
+[2026.05.08-20.30.10:955][156]LogModuleManager: Shutting down and abandoning module RSA (3)
+[2026.05.08-20.30.10:955][156]LogContentStreaming: Display: There are 1 unreleased StreamingManagers
+[2026.05.08-20.30.10:979][156]LogD3D11RHI: Shutdown
+[2026.05.08-20.30.10:979][156]LogD3D11RHI: CleanupD3DDevice
+[2026.05.08-20.30.11:060][156]LogExit: Exiting.
+[2026.05.08-20.30.11:072][156]Log file closed, 05/08/26 13:30:11
