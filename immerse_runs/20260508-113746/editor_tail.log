@@ -1,120 +1,120 @@
-﻿[2026.05.08-18.39.35:255][  0]LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
-[2026.05.08-18.39.35:326][  0]LogOcInput: OculusInput pre-init called
-[2026.05.08-18.39.35:335][  0]LogUObjectArray: 22811 objects as part of root set at end of initial load.
-[2026.05.08-18.39.35:335][  0]LogUObjectAllocator: 6215680 out of 0 bytes used by permanent object pool.
-[2026.05.08-18.39.35:335][  0]LogUObjectArray: CloseDisregardForGC: 0/0 objects in disregard for GC pool
-[2026.05.08-18.39.35:448][  0]LogClass: Display: EnumProperty FAkExternalSourceInfo::CodecID is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
-[2026.05.08-18.39.35:448][  0]LogClass: Warning: ObjectProperty FAkExternalSourceInfo::ExternalSourceAsset is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
-[2026.05.08-18.39.35:449][  0]LogClass: Display: IntProperty FAkChannelMask::ChannelMask is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
-[2026.05.08-18.39.35:451][  0]LogClass: Display: 3 Uninitialized script struct members found including 1 object properties
-[2026.05.08-18.39.35:453][  0]LogAutomationTest: Warning: ObjectProperty FAkExternalSourceInfo::ExternalSourceAsset is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
-[2026.05.08-18.39.35:454][  0]LogEngine: Initializing Engine...
-[2026.05.08-18.39.35:506][  0]LogHMD: Failed to enumerate extensions. Please check that you have a valid OpenXR runtime installed.
-[2026.05.08-18.39.35:506][  0]LogHMD: Failed to initialize OpenVR with code 110
-[2026.05.08-18.39.35:507][  0]LogMagicLeap: Warning: VR disabled because ZI is not enabled.  To enable, in the editor, Edit -> Project Settings -> Plugins -> Magic Leap Plugin -> Enable Zero Iteration
-[2026.05.08-18.39.35:510][  0]LogStats: UGameplayTagsManager::InitializeManager -  0.001 s
-[2026.05.08-18.39.35:726][  0]LogInit: Initializing FReadOnlyCVARCache
-[2026.05.08-18.39.35:726][  0]LogAudio: Display: Initializing Audio Device Manager...
-[2026.05.08-18.39.35:730][  0]LogAudio: Display: Loading Default Audio Settings Objects...
-[2026.05.08-18.39.35:736][  0]LogAudio: Display: No default SoundConcurrencyObject specified (or failed to load).
-[2026.05.08-18.39.35:737][  0]LogAudio: Display: Audio Device Manager Initialized
-[2026.05.08-18.39.35:737][  0]LogAudio: Display: Creating Audio Device:                 Id: 1, Scope: Shared, Realtime: True
-[2026.05.08-18.39.35:738][  0]LogAudioMixer: Display: Audio Mixer Platform Settings:
-[2026.05.08-18.39.35:738][  0]LogAudioMixer: Display: 	Sample Rate:						  48000
-[2026.05.08-18.39.35:738][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size Requested: 1024
-[2026.05.08-18.39.35:738][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size To Use:	  1024
-[2026.05.08-18.39.35:738][  0]LogAudioMixer: Display: 	Number of buffers to queue:			  2
-[2026.05.08-18.39.35:738][  0]LogAudioMixer: Display: 	Max Channels (voices):				  32
-[2026.05.08-18.39.35:738][  0]LogAudioMixer: Display: 	Number of Async Source Workers:		  0
-[2026.05.08-18.39.35:738][  0]LogAudio: Display: AudioDevice MaxSources: 32
-[2026.05.08-18.39.35:740][  0]LogAudio: Display: Audio Spatialization Plugin: None (built-in).
-[2026.05.08-18.39.35:740][  0]LogAudio: Display: Audio Reverb Plugin: None (built-in).
-[2026.05.08-18.39.35:740][  0]LogAudio: Display: Audio Occlusion Plugin: None (built-in).
-[2026.05.08-18.39.35:740][  0]LogAudioMixer: Display: Initializing audio mixer.
-[2026.05.08-18.39.35:776][  0]LogAudioMixer: Display: 0: FrontLeft
-[2026.05.08-18.39.35:776][  0]LogAudioMixer: Display: 1: FrontRight
-[2026.05.08-18.39.35:795][  0]LogAudioMixer: Display: Using Audio Device Speakers (2- Realtek(R) Audio)
-[2026.05.08-18.39.35:797][  0]LogAudioMixer: Display: Initializing Sound Submixes...
-[2026.05.08-18.39.35:820][  0]LogAudioMixer: Display: Creating Master Submix 'MasterSubmixDefault'
-[2026.05.08-18.39.35:820][  0]LogAudioMixer: Display: Creating Master Submix 'MasterReverbSubmixDefault'
-[2026.05.08-18.39.35:823][  0]LogAudioMixer: Display: Creating Master Submix 'MasterEQSubmixDefault'
-[2026.05.08-18.39.35:823][  0]LogAudioMixer: FMixerPlatformXAudio2::StartAudioStream() called
-[2026.05.08-18.39.35:823][  0]LogAudioMixer: Display: Output buffers initialized: Frames=1024, Channels=2, Samples=2048
-[2026.05.08-18.39.35:824][  0]LogAudioMixer: Display: Starting AudioMixerPlatformInterface::RunInternal()
-[2026.05.08-18.39.35:824][  0]LogAudioMixer: Display: FMixerPlatformXAudio2::SubmitBuffer() called for the first time
-[2026.05.08-18.39.35:824][  0]LogInit: FAudioDevice initialized.
-[2026.05.08-18.39.35:826][  0]LogNetVersion: Set ProjectVersion to 1.0.0.0. Version Checksum will be recalculated on next use.
-[2026.05.08-18.39.35:862][  0]LogDerivedDataCache: Saved boot cache 0.04s 78MB C:/Users/kapil/AppData/Local/UnrealEngine/4.27/DerivedDataCache/Boot.ddc.
-[2026.05.08-18.39.35:864][  0]LogInit: Texture streaming: Enabled
-[2026.05.08-18.39.36:077][  0]LogAudio: Display: Audio Device (ID: 1) registered with world 'Untitled'.
-[2026.05.08-18.39.36:080][  0]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
-[2026.05.08-18.39.36:083][  0]LogInit: Display: Game Engine Initialized.
-[2026.05.08-18.39.36:084][  0]LogNiagaraEditor: GEditor isn't valid! Particle reset commands will not work for Niagara components!
-[2026.05.08-18.39.36:219][  0]LogInit: Display: Starting Game.
-[2026.05.08-18.39.36:219][  0]LogNet: Browse: /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap?Name=Player
-[2026.05.08-18.39.36:220][  0]LogLoad: LoadMap: /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap?Name=Player
-[2026.05.08-18.39.36:220][  0]LogWorld: BeginTearingDown for /Temp/Untitled_0
-[2026.05.08-18.39.36:223][  0]LogWorld: UWorld::CleanupWorld for Untitled, bSessionEnded=true, bCleanupResources=true
-[2026.05.08-18.39.36:226][  0]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
-[2026.05.08-18.39.36:236][  0]LogAudio: Display: Audio Device unregistered from world 'None'.
-[2026.05.08-18.39.36:243][  0]LogUObjectHash: Compacting FUObjectHashTables data took   0.56ms
-[2026.05.08-18.39.36:729][  0]LogAudio: Display: Audio Device (ID: 1) registered with world 'ThirdPersonExampleMap'.
-[2026.05.08-18.39.36:743][  0]LogAIModule: Creating AISystem for world ThirdPersonExampleMap
-[2026.05.08-18.39.36:750][  0]LogLoad: Game class is 'ThirdPersonGameMode_C'
-[2026.05.08-18.39.36:769][  0]LogWorld: Bringing World /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap up for play (max tick rate 0) at 2026.05.08-11.39.36
-[2026.05.08-18.39.36:770][  0]LogWorld: Bringing up level for play took: 0.019087
-[2026.05.08-18.39.36:780][  0]LogTemp: Display: [ImmerseStress] Ready. Defaults: event=SwordHits bus=7p1p4 shareset=Immerse_Audio_Renderer_(Custom)
-[2026.05.08-18.39.36:780][  0]LogTemp: Display: [ImmerseStress] IMMERSE_USER_ID env=kevin_tencenttest1_emb | IMMERSE_USERID=kevin_tencenttest1_emb | IMMERSE_USER=kevin_tencenttest1_emb
-[2026.05.08-18.39.36:780][  0]LogTemp: Display: [testTP] Auto-spawned ImmerseStressTestActor into ThirdPersonExampleMap (type=1)
-[2026.05.08-18.39.36:780][  0]LogLoad: Took 0.560087 seconds to LoadMap(/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap)
-[2026.05.08-18.39.36:817][  0]LogRenderer: Reallocating scene render targets to support 1536x864 Format 10 NumSamples 1 (Frame:1).
-[2026.05.08-18.39.36:817][  0]LogSlate: Took 0.005238 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' (155K)
-[2026.05.08-18.39.36:849][  0]LogInit: Display: Engine is initialized. Leaving FEngineLoop::Init()
-[2026.05.08-18.39.36:849][  0]LogLoad: (Engine Initialization) Total time: 13.68 seconds
-[2026.05.08-18.39.36:849][  0]LogLoad: (Engine Initialization) Total Blueprint compile time: 0.00 seconds
-[2026.05.08-18.39.36:866][  0]LogContentStreaming: Texture pool size now 1000 MB
-[2026.05.08-18.39.36:873][  0]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
-[2026.05.08-18.39.36:986][  0]LogRenderer: Reallocating scene render targets to support 128x128 Format 10 NumSamples 1 (Frame:1).
-[2026.05.08-18.39.37:008][  0]LogRenderer: Reallocating scene render targets to support 1536x864 Format 10 NumSamples 1 (Frame:2).
-[2026.05.08-18.39.37:022][  1]LogSlate: Took 0.000162 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' (155K)
-[2026.05.08-18.39.39:366][141]LogTemp: Display: [ImmerseStress] PLAN START  steps=8 (concurrency=4 Ã— immerse{off,on}) rate=60.0Hz life=250ms warmup=2.0s phase=15.0s cooldown=2.0s CSV=../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/run_20260508_113939.csv
-[2026.05.08-18.39.39:366][141]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
-[2026.05.08-18.39.39:366][141]LogTemp: Display: [ImmerseStress] >>> WARMUP step=0/8 immerse=off conc=8 (align Wwise profiler capture here)
-[2026.05.08-18.39.39:366][141]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=60.0Hz life=250ms cap=8 immerse=BYPASSED
-[2026.05.08-18.39.39:418][163]LogStats: Display: There is no thread with id: 15484. Please add thread metadata for this thread.
-[2026.05.08-18.39.41:358][ 25]LogTemp: Display: [ImmerseStress] >>> RUNNING step=0/8 immerse=off conc=8 (align Wwise profiler capture here)
-[2026.05.08-18.39.56:362][ 55]LogTemp: Display: [ImmerseStress] PHASE 0 done immerse=off conc=8 posted=457 stopped=458 dropped=443 frames=7030 avg=2.13ms p50=2.07 p95=2.60 max=5.32
-[2026.05.08-18.39.56:362][ 55]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=0/8 immerse=off conc=8 (align Wwise profiler capture here)
-[2026.05.08-18.39.56:362][ 55]LogTemp: Display: [ImmerseStress] Churn STOP   posted=519 stopped=519 dropped=500
-[2026.05.08-18.39.58:362][950]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
-[2026.05.08-18.39.58:362][950]LogTemp: Display: [ImmerseStress] >>> WARMUP step=1/8 immerse=ON conc=8 (align Wwise profiler capture here)
-[2026.05.08-18.39.58:362][950]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=60.0Hz life=250ms cap=8 immerse=enabled
-[2026.05.08-18.40.00:364][849]LogTemp: Display: [ImmerseStress] >>> RUNNING step=1/8 immerse=ON conc=8 (align Wwise profiler capture here)
-[2026.05.08-18.40.15:365][701]LogTemp: Display: [ImmerseStress] PHASE 1 done immerse=ON conc=8 posted=458 stopped=459 dropped=442 frames=6852 avg=2.19ms p50=2.13 p95=2.63 max=5.68
-[2026.05.08-18.40.15:365][701]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=1/8 immerse=ON conc=8 (align Wwise profiler capture here)
-[2026.05.08-18.40.15:365][701]LogTemp: Display: [ImmerseStress] Churn STOP   posted=1041 stopped=1041 dropped=998
-[2026.05.08-18.40.17:365][643]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
-[2026.05.08-18.40.17:365][643]LogTemp: Display: [ImmerseStress] >>> WARMUP step=2/8 immerse=off conc=32 (align Wwise profiler capture here)
-[2026.05.08-18.40.17:365][643]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=60.0Hz life=250ms cap=32 immerse=BYPASSED
-[2026.05.08-18.40.19:366][597]LogTemp: Display: [ImmerseStress] >>> RUNNING step=2/8 immerse=off conc=32 (align Wwise profiler capture here)
-[2026.05.08-18.40.34:368][710]LogTemp: Display: [ImmerseStress] PHASE 2 done immerse=off conc=32 posted=900 stopped=900 dropped=0 frames=7113 avg=2.11ms p50=2.05 p95=2.51 max=5.43
-[2026.05.08-18.40.34:368][710]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=2/8 immerse=off conc=32 (align Wwise profiler capture here)
-[2026.05.08-18.40.34:368][710]LogTemp: Display: [ImmerseStress] Churn STOP   posted=2061 stopped=2061 dropped=998
-[2026.05.08-18.40.36:369][650]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
-[2026.05.08-18.40.36:369][650]LogTemp: Display: [ImmerseStress] >>> WARMUP step=3/8 immerse=ON conc=32 (align Wwise profiler capture here)
-[2026.05.08-18.40.36:369][650]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=60.0Hz life=250ms cap=32 immerse=enabled
-[2026.05.08-18.40.38:371][545]LogTemp: Display: [ImmerseStress] >>> RUNNING step=3/8 immerse=ON conc=32 (align Wwise profiler capture here)
-[2026.05.08-18.40.53:372][ 91]LogTemp: Display: [ImmerseStress] PHASE 3 done immerse=ON conc=32 posted=900 stopped=900 dropped=0 frames=6546 avg=2.29ms p50=2.22 p95=2.76 max=5.92
-[2026.05.08-18.40.53:372][ 91]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=3/8 immerse=ON conc=32 (align Wwise profiler capture here)
-[2026.05.08-18.40.53:372][ 91]LogTemp: Display: [ImmerseStress] Churn STOP   posted=3081 stopped=3081 dropped=998
-[2026.05.08-18.40.55:372][989]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
-[2026.05.08-18.40.55:373][989]LogTemp: Display: [ImmerseStress] >>> WARMUP step=4/8 immerse=off conc=64 (align Wwise profiler capture here)
-[2026.05.08-18.40.55:373][989]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=60.0Hz life=250ms cap=64 immerse=BYPASSED
-[2026.05.08-18.40.57:375][914]LogTemp: Display: [ImmerseStress] >>> RUNNING step=4/8 immerse=off conc=64 (align Wwise profiler capture here)
-[2026.05.08-18.41.12:375][984]LogTemp: Display: [ImmerseStress] PHASE 4 done immerse=off conc=64 posted=900 stopped=900 dropped=0 frames=7070 avg=2.12ms p50=2.07 p95=2.50 max=4.28
-[2026.05.08-18.41.12:376][984]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=4/8 immerse=off conc=64 (align Wwise profiler capture here)
-[2026.05.08-18.41.12:376][984]LogTemp: Display: [ImmerseStress] Churn STOP   posted=4101 stopped=4101 dropped=998
-[2026.05.08-18.41.14:376][925]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
-[2026.05.08-18.41.14:377][925]LogTemp: Display: [ImmerseStress] >>> WARMUP step=5/8 immerse=ON conc=64 (align Wwise profiler capture here)
-[2026.05.08-18.41.14:377][925]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=60.0Hz life=250ms cap=64 immerse=enabled
-[2026.05.08-18.41.16:378][861]LogTemp: Display: [ImmerseStress] >>> RUNNING step=5/8 immerse=ON conc=64 (align Wwise profiler capture here)
+﻿[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:391][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] Toggle storm DONE: 500/500 state-flips in 0.004s (avg 0.0072ms/op, worst 0.021ms, throughput 139318 ops/s)
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] PLAN COMPLETE â€” 8 phases recorded. CSV: ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/run_20260508_113939.csv
+[2026.05.08-18.42.11:392][197]LogTemp: Display: [ImmerseStress] Requesting engine exit in 1.50s (reason=ImmerseStressComplete)
