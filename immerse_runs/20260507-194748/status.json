@@ -1,8 +1,8 @@
 ﻿{
     "machine":  "IMMERSEDEMOM5",
-    "updated_at":  "2026-05-08T02:47:58.7164967Z",
-    "phase":  "ue_located",
+    "updated_at":  "2026-05-08T02:48:01.5765790Z",
+    "error":  "Exception calling \"Replace\" with \"3\" argument(s): \"Value cannot be null.\r\nParameter name: input\"",
+    "phase":  "failed",
     "run_id":  "20260507-194748",
-    "engine_root":  "C:\\Program Files\\Epic Games\\UE_4.27",
     "user":  "kapil"
 }

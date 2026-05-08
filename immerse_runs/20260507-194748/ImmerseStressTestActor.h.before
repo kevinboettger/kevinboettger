@@ -1,0 +1,238 @@
+﻿// Stress harness for the Immerse Audio Renderer (Wwise mixer plug-in).
+//
+// Two ways to drive it:
+//
+// 1) AUTOMATED PLAN (recommended for unattended runs):
+//    Drop one actor in the level with bAutoRunOnBeginPlay = true (default).
+//    On BeginPlay it sweeps a concurrency matrix with Immerse OFF then Immerse ON,
+//    captures per-phase frame timing, and writes a CSV under Saved/ImmerseStress/.
+//    Console: `immerse.stress.runplan` to (re)start, `immerse.stress.abort` to stop.
+//
+// 2) MANUAL MODE: same actor, all `immerse.*` console commands still work.
+//    See bottom of this header for the full list.
+//
+// Toggle is `AK::SoundEngine::SetMixer(BusName, AK_INVALID_UNIQUE_ID)` to bypass and
+// `SetMixer(BusName, GetIDFromString(ImmerseShareSetName))` to re-enable.
+//
+// Defaults match the TencentRCTest Wwise project that ships with this repo:
+//   Event:    SwordHits
+//   Bus:      7p1p4   (child of Master Audio Bus, where the Immerse mixer lives)
+//   ShareSet: Immerse_Audio_Renderer_(Custom)   (short ID 816626457)
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "ImmerseStressTestActor.generated.h"
+
+class UAkComponent;
+struct IConsoleCommand;
+
+UENUM()
+enum class EImmerseStressPhase : uint8
+{
+	Idle,
+	Warmup,
+	Running,
+	Cooldown,
+	Complete,
+	Aborted
+};
+
+USTRUCT()
+struct FImmerseStressPhaseRecord
+{
+	GENERATED_BODY()
+
+	int32 PhaseIndex = 0;
+	bool bImmerseEnabled = false;
+	int32 Concurrency = 0;
+	float RateHz = 0.f;
+	int32 LifetimeMs = 0;
+	float DurationSeconds = 0.f;
+
+	int64 Posted = 0;
+	int64 Stopped = 0;
+	int64 Dropped = 0;
+
+	int32 FrameSamples = 0;
+	float AvgFrameMs = 0.f;
+	float P50FrameMs = 0.f;
+	float P95FrameMs = 0.f;
+	float MaxFrameMs = 0.f;
+};
+
+UCLASS(BlueprintType, Blueprintable)
+class AImmerseStressTestActor : public AActor
+{
+	GENERATED_BODY()
+
+public:
+	AImmerseStressTestActor();
+
+	//~ Begin AActor
+	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+	virtual void Tick(float DeltaSeconds) override;
+	//~ End AActor
+
+	// ---- Manual-mode tunables (same as the simple harness) ----
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Manual")
+	FString EventName = TEXT("SwordHits");
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Manual")
+	FString BusName = TEXT("7p1p4");
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Manual")
+	FString ImmerseShareSetName = TEXT("Immerse_Audio_Renderer_(Custom)");
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Manual", meta = (ClampMin = "0.1"))
+	float PostsPerSecond = 60.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Manual", meta = (ClampMin = "1"))
+	int32 EventLifetimeMs = 250;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Manual", meta = (ClampMin = "1"))
+	int32 MaxConcurrent = 64;
+
+	// ---- Automated plan tunables ----
+
+	/** If true, BeginPlay kicks off the full concurrency sweep automatically. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan")
+	bool bAutoRunOnBeginPlay = true;
+
+	/** Concurrency levels (max in-flight playing IDs) the plan iterates through. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan")
+	TArray<int32> ConcurrencyLevels = { 8, 32, 64, 128 };
+
+	/** Posts/sec used for every phase of the plan. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan", meta = (ClampMin = "0.1"))
+	float PlanRateHz = 60.f;
+
+	/** Lifetime per posted event during the plan. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan", meta = (ClampMin = "1"))
+	int32 PlanEventLifetimeMs = 250;
+
+	/** Seconds spent ramping voices up before measurement starts. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan", meta = (ClampMin = "0"))
+	float WarmupSeconds = 2.f;
+
+	/** Measured duration per phase. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan", meta = (ClampMin = "1"))
+	float PhaseDurationSeconds = 15.f;
+
+	/** Quiet seconds between phases (churn stopped, all voices drained). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan", meta = (ClampMin = "0"))
+	float CooldownSeconds = 2.f;
+
+	/** Issue `stat unit` / `stat audio` to the local viewport at plan start. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan")
+	bool bIssueStatCommands = true;
+
+	/** Write a CSV summary to Saved/ImmerseStress/run_<timestamp>.csv. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan")
+	bool bWriteCSV = true;
+
+	/** When the plan finishes, request engine exit so unattended launchers can detect completion. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan")
+	bool bQuitOnPlanComplete = true;
+
+	/** Extra seconds the engine stays alive after the plan finishes, so logs / CSV flush. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan", meta = (ClampMin = "0"))
+	float QuitGraceSeconds = 1.5f;
+
+	// ---- Public API ----
+
+	UFUNCTION(BlueprintCallable, Category = "Immerse Stress")
+	void StartChurn();
+
+	UFUNCTION(BlueprintCallable, Category = "Immerse Stress")
+	void StopChurn();
+
+	UFUNCTION(BlueprintCallable, Category = "Immerse Stress")
+	void BypassImmerse();
+
+	UFUNCTION(BlueprintCallable, Category = "Immerse Stress")
+	void EnableImmerse();
+
+	UFUNCTION(BlueprintCallable, Category = "Immerse Stress")
+	void ToggleImmerse();
+
+	UFUNCTION(BlueprintCallable, Category = "Immerse Stress")
+	void PrintStatus() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Immerse Stress")
+	void RunPlan();
+
+	UFUNCTION(BlueprintCallable, Category = "Immerse Stress")
+	void AbortPlan();
+
+private:
+	struct FInFlight
+	{
+		uint32 PlayingID = 0;
+		double StopAtSeconds = 0.0;
+	};
+
+	UPROPERTY()
+	UAkComponent* StressEmitter = nullptr;
+
+	TArray<IConsoleCommand*> RegisteredCommands;
+
+	// Manual-churn state.
+	bool bChurnActive = false;
+	bool bImmerseBypassed = false;
+	double Accumulator = 0.0;
+	int64 TotalPosted = 0;
+	int64 TotalStopped = 0;
+	int64 TotalDroppedOverCap = 0;
+	TArray<FInFlight> InFlight;
+
+	// Plan state.
+	EImmerseStressPhase Phase = EImmerseStressPhase::Idle;
+	int32 PlanStepIndex = 0;          // 0 .. (ConcurrencyLevels.Num() * 2) - 1
+	double PhaseStartSeconds = 0.0;
+	bool bPhaseImmerseEnabled = false;
+	int32 PhaseConcurrency = 0;
+	FString CSVFilePath;
+	TArray<FImmerseStressPhaseRecord> PhaseRecords;
+
+	// Per-phase counters / samples (reset at each Running phase entry).
+	int64 PhasePostedAtStart = 0;
+	int64 PhaseStoppedAtStart = 0;
+	int64 PhaseDroppedAtStart = 0;
+	TArray<float> PhaseFrameMsSamples;
+
+	static AImmerseStressTestActor* ActiveInstance;
+
+	void RegisterConsoleCommands();
+	void UnregisterConsoleCommands();
+
+	uint32 PostOne();
+	void StopPlayingID(uint32 PlayingID);
+	void StopAllTracked();
+
+	int32 PlanStepCount() const { return ConcurrencyLevels.Num() * 2; }
+	void TickPlan(float DeltaSeconds);
+	void EnterPhase(EImmerseStressPhase NewPhase);
+	void RecordPhaseAndAdvance();
+	void FinishPlan(bool bAborted);
+	void EnsureCSVHeader();
+	void AppendCSVRow(const FImmerseStressPhaseRecord& R);
+	static void ComputeFrameStats(TArray<float>& Samples,
+		float& OutAvg, float& OutP50, float& OutP95, float& OutMax);
+
+	void IssueViewportConsoleCommand(const TCHAR* Cmd);
+	void LogPhaseMarker(const TCHAR* Tag) const;
+};
+
+// ----------------------------------------------------------------------------
+// Console commands (registered while at least one of these actors is alive):
+//   immerse.stress.runplan          -- start the auto sweep
+//   immerse.stress.abort            -- abort the sweep
+//   immerse.bypass / .enable / .toggle    -- runtime mixer toggle
+//   immerse.stress.start / .stop    -- manual churn
+//   immerse.stress.event/.bus/.shareset/.rate/.life/.concurrency  -- manual tunables
+//   immerse.stress.status           -- print state + counters
+// ----------------------------------------------------------------------------
