@@ -35,39 +35,42 @@ function Invoke-Git {
     }
 }
 
-# Safe -replace wrapper. Logs the step name. If anything throws, logs the
-# exception with file/line info and rethrows so the outer catch can record
-# context. Also force-coerces both arguments to single strings via .ToString()
-# to defend against the PS5 "comma sometimes makes an array" foot-gun.
-function Safe-Replace {
-    param(
-        [Parameter(Mandatory=$true)][string]$Step,
-        [Parameter(Mandatory=$true)][string]$Input,
-        [Parameter(Mandatory=$true)][string]$Pattern,
-        [Parameter(Mandatory=$true)][string]$Replacement
-    )
-    try {
-        $p = [string]$Pattern
-        $r = [string]$Replacement
-        $result = [regex]::Replace($Input, $p, { param($m) $r -replace '\$1', $m.Groups[1].Value -replace '\$2', $m.Groups[2].Value })
-        return $result
-    } catch {
-        Warn "Safe-Replace[$Step] FAILED: $($_.Exception.Message)"
-        Warn "  pattern: $Pattern"
-        throw
-    }
+# Bulletproof read: returns the file's full text via .NET, never $null for an
+# existing file. Throws if the file is missing.
+function Read-AllText {
+    param([Parameter(Mandatory=$true)][string]$Path)
+    if (-not (Test-Path $Path)) { throw "File not found: $Path" }
+    return [System.IO.File]::ReadAllText($Path)
 }
 
-# Even simpler: regex-based replacer that handles $1..$9 referees by hand,
-# bypassing PowerShell's -replace operator entirely. Less surface area for
-# parser quirks.
+# Bulletproof write: refuses to overwrite an existing non-trivial file with
+# empty content. This guards against earlier bugs that nuked the actor cpp.
+function Write-AllText-Safe {
+    param(
+        [Parameter(Mandatory=$true)][string]$Path,
+        [Parameter(Mandatory=$true)][AllowNull()][AllowEmptyString()]$Content,
+        [int]$MinLengthGuard = 0
+    )
+    if ($null -eq $Content -or [string]::IsNullOrEmpty($Content)) {
+        throw "Refusing to write null/empty content to $Path"
+    }
+    if ((Test-Path $Path) -and $MinLengthGuard -gt 0 -and $Content.Length -lt $MinLengthGuard) {
+        throw "Refusing to write $Path: new length $($Content.Length) is below guard ($MinLengthGuard)"
+    }
+    [System.IO.File]::WriteAllText($Path, $Content, [System.Text.UTF8Encoding]::new($false))
+}
+
+# Direct .NET regex Replace, bypassing PowerShell's -replace operator entirely.
 function Regex-Replace {
     param(
         [Parameter(Mandatory=$true)][string]$Step,
-        [Parameter(Mandatory=$true)][string]$Input,
+        [Parameter(Mandatory=$true)][AllowEmptyString()][string]$Input,
         [Parameter(Mandatory=$true)][string]$Pattern,
-        [Parameter(Mandatory=$true)][string]$Replacement
+        [Parameter(Mandatory=$true)][AllowEmptyString()][string]$Replacement
     )
+    if ($null -eq $Input) {
+        throw "Regex-Replace[$Step]: input is null"
+    }
     $rx = [regex]::new($Pattern, [System.Text.RegularExpressions.RegexOptions]::Singleline)
     return $rx.Replace($Input, $Replacement)
 }
@@ -219,11 +222,11 @@ namespace ImmerseStress
 '@
 
     if (-not (Test-Path $hdr)) {
-        Set-Content -Path $hdr -Value $hdrContent -Encoding UTF8
+        [System.IO.File]::WriteAllText($hdr, $hdrContent, [System.Text.UTF8Encoding]::new($false))
         Info "Wrote $hdr"
     }
     if (-not (Test-Path $src)) {
-        Set-Content -Path $src -Value $srcContent -Encoding UTF8
+        [System.IO.File]::WriteAllText($src, $srcContent, [System.Text.UTF8Encoding]::new($false))
         Info "Wrote $src"
     }
     return ((Test-Path $hdr) -and (Test-Path $src))
@@ -245,10 +248,19 @@ function Patch-Sources {
     Info 'Patch step: class IConsoleCommand -> struct'
     $files = Get-ChildItem $sourceRoot -Recurse -Include *.h,*.cpp -ErrorAction SilentlyContinue
     foreach ($f in $files) {
-        $orig    = Get-Content $f.FullName -Raw
+        try {
+            $orig = Read-AllText -Path $f.FullName
+        } catch {
+            Warn "Skipping $($f.Name): $($_.Exception.Message)"
+            continue
+        }
+        if ([string]::IsNullOrEmpty($orig)) {
+            Warn "Skipping empty file: $($f.Name)"
+            continue
+        }
         $patched = Regex-Replace -Step "icc-$($f.Name)" -Input $orig -Pattern 'class(\s+)IConsoleCommand' -Replacement 'struct$1IConsoleCommand'
         if ($patched -ne $orig) {
-            Set-Content -Path $f.FullName -Value $patched -NoNewline -Encoding UTF8
+            Write-AllText-Safe -Path $f.FullName -Content $patched -MinLengthGuard ([Math]::Max(1, [int]($orig.Length / 2)))
             $changes += "$($f.Name): IConsoleCommand class -> struct"
         }
     }
@@ -259,22 +271,28 @@ function Patch-Sources {
         $changes += 'AkAudio: ImmerseStressMixerWrapper installed'
     }
 
-    if (Test-Path $keyCpp) {
-        $cpp = Get-Content $keyCpp -Raw
+    if (-not (Test-Path $keyCpp)) { return }
 
-        Info "Patch step: probe cpp markers (length=$($cpp.Length))"
-        $hasGate    = ($cpp -match 'ImmerseAKReadyRetries')
-        $hasIsInit  = ($cpp -match 'AK::SoundEngine::IsInitialized')
-        $hasTimer   = ($cpp -match 'AutoRunBeginPlayTimer')
-        $hasUidLog  = ($cpp -match 'IMMERSE_USER_ID env')
-        $hasWrapper = ($cpp -match 'IMMERSE_SETMIXER_WRAPPER_v2')
-        $hasNoop    = ($cpp -match 'NOOP_SETMIXER_v1')
-        $hasInc     = ($cpp -match '#include\s+"ImmerseStressMixerWrapper\.h"')
-        Info "  gate=$hasGate isInit=$hasIsInit timer=$hasTimer uidLog=$hasUidLog wrapper=$hasWrapper noop=$hasNoop include=$hasInc"
+    $cpp = Read-AllText -Path $keyCpp
+    if ([string]::IsNullOrEmpty($cpp)) {
+        Warn "ImmerseStressTestActor.cpp is empty on disk -- cannot patch. Restore from a previous run's cpp.before."
+        return
+    }
+    $originalLength = $cpp.Length
+    Info "Patch step: probe cpp markers (length=$originalLength)"
 
-        if (-not $hasGate) {
-            Info 'Patch step: insert FAkAudioDevice readiness gate at top of RunPlan'
-            $insertion = @'
+    $hasGate    = ($cpp.Contains('ImmerseAKReadyRetries'))
+    $hasIsInit  = ($cpp.Contains('AK::SoundEngine::IsInitialized'))
+    $hasTimer   = ($cpp.Contains('AutoRunBeginPlayTimer'))
+    $hasUidLog  = ($cpp.Contains('IMMERSE_USER_ID env'))
+    $hasWrapper = ($cpp.Contains('IMMERSE_SETMIXER_WRAPPER_v2'))
+    $hasNoop    = ($cpp.Contains('NOOP_SETMIXER_v1'))
+    $hasInc     = ($cpp.Contains('ImmerseStressMixerWrapper.h'))
+    Info "  gate=$hasGate isInit=$hasIsInit timer=$hasTimer uidLog=$hasUidLog wrapper=$hasWrapper noop=$hasNoop include=$hasInc"
+
+    if (-not $hasGate) {
+        Info 'Patch step: insert FAkAudioDevice readiness gate at top of RunPlan'
+        $insertion = @'
 
 	static int ImmerseAKReadyRetries = 0;
 	if (FAkAudioDevice::Get() == nullptr)
@@ -296,26 +314,22 @@ function Patch-Sources {
 	ImmerseAKReadyRetries = 0;
 
 '@
-            $patternRP = '(void\s+AImmerseStressTestActor::RunPlan\(\)\s*\{)'
-            $rxRP = [regex]::new($patternRP)
-            $newCpp = $rxRP.Replace($cpp, '$1' + $insertion, 1)
-            if ($newCpp -ne $cpp) {
-                $cpp = $newCpp
-                $changes += 'RunPlan: FAkAudioDevice gate'
-            }
-        }
-        elseif ($hasIsInit) {
-            Info 'Patch step: convert legacy IsInitialized() gate -> FAkAudioDevice::Get()'
-            $cpp = Regex-Replace -Step 'IsInit-1' -Input $cpp -Pattern 'AK::SoundEngine::IsInitialized\(\)' -Replacement '(FAkAudioDevice::Get() != nullptr)'
-            $cpp = Regex-Replace -Step 'IsInit-2' -Input $cpp -Pattern 'Wwise SoundEngine still not initialized' -Replacement 'FAkAudioDevice still null'
-            $cpp = Regex-Replace -Step 'IsInit-3' -Input $cpp -Pattern 'Wwise not ready' -Replacement 'AkAudioDevice not ready'
-            $changes += 'RunPlan gate: IsInitialized() -> FAkAudioDevice::Get()'
-        }
+        $rxRP = [regex]::new('(void\s+AImmerseStressTestActor::RunPlan\(\)\s*\{)')
+        $cpp = $rxRP.Replace($cpp, '$1' + $insertion, 1)
+        $changes += 'RunPlan: FAkAudioDevice gate'
+    }
+    elseif ($hasIsInit) {
+        Info 'Patch step: convert legacy IsInitialized() gate -> FAkAudioDevice::Get()'
+        $cpp = Regex-Replace -Step 'IsInit-1' -Input $cpp -Pattern 'AK::SoundEngine::IsInitialized\(\)' -Replacement '(FAkAudioDevice::Get() != nullptr)'
+        $cpp = Regex-Replace -Step 'IsInit-2' -Input $cpp -Pattern 'Wwise SoundEngine still not initialized' -Replacement 'FAkAudioDevice still null'
+        $cpp = Regex-Replace -Step 'IsInit-3' -Input $cpp -Pattern 'Wwise not ready' -Replacement 'AkAudioDevice not ready'
+        $changes += 'RunPlan gate: IsInitialized() -> FAkAudioDevice::Get()'
+    }
 
-        if (-not $hasTimer) {
-            Info 'Patch step: defer auto-run via 2.5s timer in BeginPlay'
-            $patternBP = '(if\s*\(\s*bAutoRunOnBeginPlay\s*\)\s*\{)[^{}]*?RunPlan\s*\(\s*\)\s*;[^{}]*?\}'
-            $replacementBP = @'
+    if (-not $hasTimer) {
+        Info 'Patch step: defer auto-run via 2.5s timer in BeginPlay'
+        $patternBP = '(if\s*\(\s*bAutoRunOnBeginPlay\s*\)\s*\{)[^{}]*?RunPlan\s*\(\s*\)\s*;[^{}]*?\}'
+        $replacementBP = @'
 $1
 		// AutoRunBeginPlayTimer
 		if (UWorld* WAuto = GetWorld())
@@ -329,17 +343,14 @@ $1
 		}
 	}
 '@
-            $rxBP = [regex]::new($patternBP, [System.Text.RegularExpressions.RegexOptions]::Singleline)
-            $newCpp = $rxBP.Replace($cpp, $replacementBP, 1)
-            if ($newCpp -ne $cpp) {
-                $cpp = $newCpp
-                $changes += 'BeginPlay AutoRun: deferred 2.5s'
-            }
-        }
+        $rxBP = [regex]::new($patternBP, [System.Text.RegularExpressions.RegexOptions]::Singleline)
+        $cpp = $rxBP.Replace($cpp, $replacementBP, 1)
+        $changes += 'BeginPlay AutoRun: deferred 2.5s'
+    }
 
-        if (-not $hasUidLog) {
-            Info 'Patch step: log IMMERSE_USER_ID env vars at BeginPlay'
-            $logBlock = @'
+    if (-not $hasUidLog) {
+        Info 'Patch step: log IMMERSE_USER_ID env vars at BeginPlay'
+        $logBlock = @'
 
 	UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] IMMERSE_USER_ID env=%s | IMMERSE_USERID=%s | IMMERSE_USER=%s"),
 		*FPlatformMisc::GetEnvironmentVariable(TEXT("IMMERSE_USER_ID")),
@@ -347,26 +358,20 @@ $1
 		*FPlatformMisc::GetEnvironmentVariable(TEXT("IMMERSE_USER")));
 
 '@
-            $patternReady = '(\[ImmerseStress\] Ready\. Defaults:[^;]+;\s*)'
-            $rxR = [regex]::new($patternReady)
-            $newCpp = $rxR.Replace($cpp, '$1' + $logBlock, 1)
-            if ($newCpp -ne $cpp) {
-                $cpp = $newCpp
-                $changes += 'BeginPlay: IMMERSE_USER_ID logging'
-            }
+        $rxR = [regex]::new('(\[ImmerseStress\] Ready\. Defaults:[^;]+;\s*)')
+        $cpp = $rxR.Replace($cpp, '$1' + $logBlock, 1)
+        $changes += 'BeginPlay: IMMERSE_USER_ID logging'
+    }
+
+    if (-not $hasWrapper -and $wrapperReady) {
+        Info 'Patch step: rewire BypassImmerse/EnableImmerse to wrapper'
+        if (-not $hasInc) {
+            $incReplace = '$1#include "ImmerseStressMixerWrapper.h"' + [Environment]::NewLine
+            $rxInc = [regex]::new('(#include\s+"AK/SoundEngine/Common/AkSoundEngine\.h"[^\n]*\n)')
+            $cpp = $rxInc.Replace($cpp, $incReplace, 1)
         }
 
-        if (-not $hasWrapper -and $wrapperReady) {
-            Info 'Patch step: rewire BypassImmerse/EnableImmerse to wrapper'
-            if (-not $hasInc) {
-                $incPattern = '(#include\s+"AK/SoundEngine/Common/AkSoundEngine\.h"[^\n]*\n)'
-                $incReplace = '$1#include "ImmerseStressMixerWrapper.h"' + [Environment]::NewLine
-                $rxInc = [regex]::new($incPattern)
-                $cpp = $rxInc.Replace($cpp, $incReplace, 1)
-            }
-
-            $bypassPattern = 'void\s+AImmerseStressTestActor::BypassImmerse\s*\(\s*\)\s*\{[^{}]*\}'
-            $bypassReplacement = @'
+        $bypassReplacement = @'
 void AImmerseStressTestActor::BypassImmerse()
 {
 	// IMMERSE_SETMIXER_WRAPPER_v2: route through AkAudio DLL boundary
@@ -376,11 +381,10 @@ void AImmerseStressTestActor::BypassImmerse()
 		*BusName, bImmerseBypassed ? TEXT("OK") : TEXT("FAILED"));
 }
 '@
-            $rxBypass = [regex]::new($bypassPattern, [System.Text.RegularExpressions.RegexOptions]::Singleline)
-            $cpp = $rxBypass.Replace($cpp, $bypassReplacement, 1)
+        $rxBypass = [regex]::new('void\s+AImmerseStressTestActor::BypassImmerse\s*\(\s*\)\s*\{[^{}]*\}', [System.Text.RegularExpressions.RegexOptions]::Singleline)
+        $cpp = $rxBypass.Replace($cpp, $bypassReplacement, 1)
 
-            $enablePattern = 'void\s+AImmerseStressTestActor::EnableImmerse\s*\(\s*\)\s*\{[^{}]*\}'
-            $enableReplacement = @'
+        $enableReplacement = @'
 void AImmerseStressTestActor::EnableImmerse()
 {
 	// IMMERSE_SETMIXER_WRAPPER_v2: route through AkAudio DLL boundary
@@ -390,14 +394,13 @@ void AImmerseStressTestActor::EnableImmerse()
 		*BusName, *ImmerseShareSetName, (Res == AK_Success) ? TEXT("OK") : TEXT("FAILED"));
 }
 '@
-            $rxEnable = [regex]::new($enablePattern, [System.Text.RegularExpressions.RegexOptions]::Singleline)
-            $cpp = $rxEnable.Replace($cpp, $enableReplacement, 1)
+        $rxEnable = [regex]::new('void\s+AImmerseStressTestActor::EnableImmerse\s*\(\s*\)\s*\{[^{}]*\}', [System.Text.RegularExpressions.RegexOptions]::Singleline)
+        $cpp = $rxEnable.Replace($cpp, $enableReplacement, 1)
 
-            $changes += 'BypassImmerse/EnableImmerse: wrapper-based'
-        }
-
-        Set-Content -Path $keyCpp -Value $cpp -NoNewline -Encoding UTF8
+        $changes += 'BypassImmerse/EnableImmerse: wrapper-based'
     }
+
+    Write-AllText-Safe -Path $keyCpp -Content $cpp -MinLengthGuard ([int]($originalLength / 2))
 
     if (Test-Path $keyHeader) { Push-File $keyHeader 'ImmerseStressTestActor.h.after' }
     if (Test-Path $keyCpp)    { Push-File $keyCpp    'ImmerseStressTestActor.cpp.after' }
