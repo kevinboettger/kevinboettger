@@ -233,6 +233,27 @@ $1
             }
         }
 
+        # Patch 6: NOOP_SETMIXER. The 0xAC null-deref in CAkAudioMgr::ReserveForWrite
+        # comes from a static-link mismatch -- our testTP.dll has its own copy of
+        # AK::SoundEngine that's never initialized; the initialized copy lives in
+        # UE4Editor-AkAudio.dll. Wwise UE 2019.2 doesn't expose a SetMixer wrapper
+        # through FAkAudioDevice, so we can't route the call through the AkAudio
+        # module's DLL boundary the way PostEvent etc. do.
+        # Stop-gap: short-circuit the SetMixer calls in BypassImmerse/EnableImmerse
+        # so the rest of the pipeline (event churn, frame sampling, CSV) runs to
+        # completion. The CSV's immerse on/off rows will both reflect whatever the
+        # Wwise project's default state is -- not a real A/B yet, but enough to
+        # confirm everything else works end to end.
+        if ($cpp -match 'AK::SoundEngine::SetMixer\(' -and $cpp -notmatch 'NOOP_SETMIXER_v1') {
+            $newCpp = $cpp -replace `
+                'const\s+AKRESULT\s+Res\s*=\s*AK::SoundEngine::SetMixer\([^;]*?\)\s*;', `
+                'const AKRESULT Res = AK_Success; /* NOOP_SETMIXER_v1: skipped to avoid 0xAC null deref from static-link mismatch with AkAudio module */'
+            if ($newCpp -ne $cpp) {
+                $cpp = $newCpp
+                $changes += 'BypassImmerse/EnableImmerse: SetMixer no-op (static-link mismatch workaround)'
+            }
+        }
+
         Set-Content -Path $keyCpp -Value $cpp -NoNewline -Encoding UTF8
     }
 
@@ -248,9 +269,6 @@ $1
 }
 
 function Get-WwisePluginBinDir {
-    # NOTE: each Join-Path is wrapped in parens because PS5 parses
-    # `@( Join-Path $a 'x', Join-Path $a 'y' )` as a single Join-Path call
-    # with an array as ChildPath. Parens force per-element evaluation.
     $candidates = @(
         (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc150\Profile\bin'),
         (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Profile\bin'),
@@ -268,7 +286,6 @@ function Stage-ImmersePlugin {
     }
     Info "Wwise plugin bin dir (target): $binDir"
 
-    # Dump listings of every <arch>\<config>\bin folder under Plugins\Wwise\ThirdParty.
     $tpRoot = Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty'
     if (Test-Path $tpRoot) {
         $allBinDirs = Get-ChildItem $tpRoot -Recurse -Directory -ErrorAction SilentlyContinue |
@@ -294,7 +311,6 @@ function Stage-ImmersePlugin {
 
     Warn "No Immerse*.dll in $binDir -- searching project ThirdParty subdirs..."
 
-    # Wrap each Join-Path in parens (see PS5 array-literal note above).
     $sourceCandidates = @(
         (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Profile\bin'),
         (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Release\bin'),
@@ -324,43 +340,6 @@ function Stage-ImmersePlugin {
             }
         }
         if ($copied -gt 0) { break }
-    }
-
-    if ($copied -eq 0) {
-        Warn 'No Immerse*.dll found in any project ThirdParty subdir; falling back to Audiokinetic install search.'
-        $searchRoots = @(
-            'C:\Program Files (x86)\Audiokinetic',
-            'C:\Program Files\Audiokinetic',
-            'D:\Program Files (x86)\Audiokinetic',
-            "$env:USERPROFILE\Documents\Audiokinetic"
-        ) | Where-Object { Test-Path $_ }
-
-        $found = @()
-        foreach ($r in $searchRoots) {
-            $found += Get-ChildItem $r -Filter 'Immerse*.dll' -Recurse -ErrorAction SilentlyContinue -Force
-        }
-
-        if ($found) {
-            ($found | Select-Object FullName, Length, @{N='LastWriteTime';E={$_.LastWriteTime.ToString('o')}} |
-                Format-Table -AutoSize | Out-String) |
-                Set-Content (Join-Path $script:RunDirAbs 'immerse_dll_search.txt') -Encoding UTF8
-            $best = $found | Where-Object { $_.FullName -match 'x64_vc150' -and $_.FullName -match 'Profile' } | Select-Object -First 1
-            if (-not $best) {
-                $best = $found | Where-Object { $_.FullName -match 'x64' } | Select-Object -First 1
-            }
-            if ($best) {
-                $srcDir = Split-Path $best.FullName -Parent
-                Info "Falling back to: $srcDir"
-                Get-ChildItem $srcDir -Filter 'Immerse*.dll' -ErrorAction SilentlyContinue | ForEach-Object {
-                    Copy-Item $_.FullName (Join-Path $binDir $_.Name) -Force
-                    $copied++
-                    Info "  staged $($_.Name)"
-                }
-            }
-        } else {
-            ('Searched: ' + ($searchRoots -join "`n  ")) |
-                Set-Content (Join-Path $script:RunDirAbs 'immerse_dll_search.txt') -Encoding UTF8
-        }
     }
 
     Info "Total Immerse DLLs staged: $copied"
