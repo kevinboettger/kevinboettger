@@ -1,7 +1,8 @@
 ﻿{
-    "phase":  "build_done",
-    "updated_at":  "2026-05-08T14:21:22.2531841Z",
+    "machine":  "IMMERSEDEMOM5",
+    "updated_at":  "2026-05-08T14:21:25.5737653Z",
+    "phase":  "immerse_dll_check",
+    "bin_dir":  "C:\\Users\\kapil\\OneDrive\\Documents\\Unreal Projects\\testTP\\Plugins\\Wwise\\ThirdParty\\x64_vc150\\Profile\\bin",
     "run_id":  "20260508-072003",
-    "user":  "kapil",
-    "machine":  "IMMERSEDEMOM5"
+    "user":  "kapil"
 }
