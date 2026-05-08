@@ -247,13 +247,14 @@ $1
     }
 }
 
-# Returns the bin dir Wwise actually loads runtime plug-ins from. Per the
-# editor.log this is x64_vc150/Profile/bin in this user's project.
 function Get-WwisePluginBinDir {
+    # NOTE: each Join-Path is wrapped in parens because PS5 parses
+    # `@( Join-Path $a 'x', Join-Path $a 'y' )` as a single Join-Path call
+    # with an array as ChildPath. Parens force per-element evaluation.
     $candidates = @(
-        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc150\Profile\bin',
-        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Profile\bin',
-        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc170\Profile\bin'
+        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc150\Profile\bin'),
+        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Profile\bin'),
+        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc170\Profile\bin')
     )
     foreach ($c in $candidates) { if (Test-Path $c) { return $c } }
     return $null
@@ -267,8 +268,7 @@ function Stage-ImmersePlugin {
     }
     Info "Wwise plugin bin dir (target): $binDir"
 
-    # Dump listings of every <arch>\<config>\bin folder under Plugins\Wwise\ThirdParty
-    # so I can see exactly what binaries each toolchain has.
+    # Dump listings of every <arch>\<config>\bin folder under Plugins\Wwise\ThirdParty.
     $tpRoot = Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty'
     if (Test-Path $tpRoot) {
         $allBinDirs = Get-ChildItem $tpRoot -Recurse -Directory -ErrorAction SilentlyContinue |
@@ -285,7 +285,6 @@ function Stage-ImmersePlugin {
         ($listingDump -join "`n") | Set-Content (Join-Path $script:RunDirAbs 'wwise_thirdparty_bin_listings.txt') -Encoding UTF8
     }
 
-    # If the target bin already has Immerse DLLs, we're good.
     $immerseAlready = Get-ChildItem $binDir -Filter 'Immerse*.dll' -ErrorAction SilentlyContinue
     if ($immerseAlready) {
         Info "Existing Immerse DLLs already in target bin:"
@@ -295,19 +294,15 @@ function Stage-ImmersePlugin {
 
     Warn "No Immerse*.dll in $binDir -- searching project ThirdParty subdirs..."
 
-    # User confirmed Immerse DLLs live under x64_vc160 in this project.
-    # Try Profile first, then Release/Debug as fallbacks. If vc160 has them,
-    # copy to the active bin (vc150/Profile) regardless of toolchain mismatch
-    # -- AK plug-in DLLs typically match by SDK ABI which is more stable than
-    # the host MSVC toolchain.
+    # Wrap each Join-Path in parens (see PS5 array-literal note above).
     $sourceCandidates = @(
-        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Profile\bin',
-        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Release\bin',
-        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Debug\bin',
-        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc170\Profile\bin',
-        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc170\Release\bin',
-        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc150\Release\bin',
-        Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc150\Debug\bin'
+        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Profile\bin'),
+        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Release\bin'),
+        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Debug\bin'),
+        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc170\Profile\bin'),
+        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc170\Release\bin'),
+        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc150\Release\bin'),
+        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc150\Debug\bin')
     )
 
     $copied = 0
@@ -370,7 +365,6 @@ function Stage-ImmersePlugin {
 
     Info "Total Immerse DLLs staged: $copied"
 
-    # Re-dump active bin contents post-copy.
     Get-ChildItem $binDir -File -ErrorAction SilentlyContinue |
         Select-Object Name, Length, @{N='LastWriteTime';E={$_.LastWriteTime.ToString('o')}} |
         Sort-Object Name | Format-Table -AutoSize | Out-String |
