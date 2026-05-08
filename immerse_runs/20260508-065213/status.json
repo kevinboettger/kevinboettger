@@ -1,10 +1,8 @@
 ﻿{
     "machine":  "IMMERSEDEMOM5",
-    "updated_at":  "2026-05-08T13:53:47.7170955Z",
-    "stage":  "build",
+    "updated_at":  "2026-05-08T13:53:50.5589945Z",
+    "error":  "Build failed (exit 6, sniffed_errors=True)",
     "phase":  "failed",
     "run_id":  "20260508-065213",
-    "exit_code":  6,
-    "sniffed_errors":  true,
     "user":  "kapil"
 }
