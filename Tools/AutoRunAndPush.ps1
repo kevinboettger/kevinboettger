@@ -56,25 +56,24 @@ function Write-AllText-Safe {
     [System.IO.File]::WriteAllText($Path, $Content, [System.Text.UTF8Encoding]::new($false))
 }
 
+# NOTE: parameter renamed from $Input -> $InputText. PS5 has an automatic
+# pipeline variable named $input, and declaring a parameter with the same
+# name (case-insensitive) silently shadows it with an empty enumerator,
+# which made Regex-Replace return an empty string and trip the safety guard.
 function Regex-Replace {
     param(
         [Parameter(Mandatory=$true)][string]$Step,
-        [Parameter(Mandatory=$true)][AllowEmptyString()][string]$Input,
+        [Parameter(Mandatory=$true)][AllowEmptyString()][string]$InputText,
         [Parameter(Mandatory=$true)][string]$Pattern,
         [Parameter(Mandatory=$true)][AllowEmptyString()][string]$Replacement
     )
-    if ($null -eq $Input) {
+    if ($null -eq $InputText) {
         throw "Regex-Replace[$Step]: input is null"
     }
     $rx = [regex]::new($Pattern, [System.Text.RegularExpressions.RegexOptions]::Singleline)
-    return $rx.Replace($Input, $Replacement)
+    return $rx.Replace($InputText, $Replacement)
 }
 
-# Recover from the poison-pill state where ImmerseStressTestActor.cpp got
-# truncated to 0 bytes by a previous launcher version that called
-# Set-Content with empty content. Looks for the latest cpp.before backup
-# in the results checkout (immerse_runs/<id>/ImmerseStressTestActor.cpp.before)
-# and copies it back into place. Returns $true on success.
 function Restore-CppFromBackup {
     param(
         [Parameter(Mandatory=$true)][string]$KeyCpp,
@@ -265,9 +264,6 @@ function Patch-Sources {
     if (Test-Path $keyHeader) { Push-File $keyHeader 'ImmerseStressTestActor.h.before' }
     $keyCpp    = Join-Path $sourceRoot 'Private\ImmerseStressTestActor.cpp'
 
-    # POISON-PILL CHECK: if the actor cpp got truncated to ~0 bytes by an
-    # earlier launcher version, restore from the latest backup we have in
-    # the results checkout BEFORE we run any patches.
     if (Test-Path $keyCpp) {
         $cppItem = Get-Item $keyCpp
         if ($cppItem.Length -lt 1000) {
@@ -294,7 +290,7 @@ function Patch-Sources {
         if ([string]::IsNullOrEmpty($orig)) {
             Warn "Skipping empty file: $($f.Name)"; continue
         }
-        $patched = Regex-Replace -Step "icc-$($f.Name)" -Input $orig -Pattern 'class(\s+)IConsoleCommand' -Replacement 'struct$1IConsoleCommand'
+        $patched = Regex-Replace -Step "icc-$($f.Name)" -InputText $orig -Pattern 'class(\s+)IConsoleCommand' -Replacement 'struct$1IConsoleCommand'
         if ($patched -ne $orig) {
             Write-AllText-Safe -Path $f.FullName -Content $patched -MinLengthGuard ([Math]::Max(1, [int]($orig.Length / 2)))
             $changes += "$($f.Name): IConsoleCommand class -> struct"
@@ -356,9 +352,9 @@ function Patch-Sources {
     }
     elseif ($hasIsInit) {
         Info 'Patch step: convert legacy IsInitialized() gate -> FAkAudioDevice::Get()'
-        $cpp = Regex-Replace -Step 'IsInit-1' -Input $cpp -Pattern 'AK::SoundEngine::IsInitialized\(\)' -Replacement '(FAkAudioDevice::Get() != nullptr)'
-        $cpp = Regex-Replace -Step 'IsInit-2' -Input $cpp -Pattern 'Wwise SoundEngine still not initialized' -Replacement 'FAkAudioDevice still null'
-        $cpp = Regex-Replace -Step 'IsInit-3' -Input $cpp -Pattern 'Wwise not ready' -Replacement 'AkAudioDevice not ready'
+        $cpp = Regex-Replace -Step 'IsInit-1' -InputText $cpp -Pattern 'AK::SoundEngine::IsInitialized\(\)' -Replacement '(FAkAudioDevice::Get() != nullptr)'
+        $cpp = Regex-Replace -Step 'IsInit-2' -InputText $cpp -Pattern 'Wwise SoundEngine still not initialized' -Replacement 'FAkAudioDevice still null'
+        $cpp = Regex-Replace -Step 'IsInit-3' -InputText $cpp -Pattern 'Wwise not ready' -Replacement 'AkAudioDevice not ready'
         $changes += 'RunPlan gate: IsInitialized() -> FAkAudioDevice::Get()'
     }
 
