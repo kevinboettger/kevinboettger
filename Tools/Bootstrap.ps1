@@ -11,8 +11,6 @@ if (-not $projectDir) {
 }
 if (-not $projectDir -or -not (Test-Path (Join-Path $projectDir 'testTP.uproject'))) {
     Write-Host 'ERROR: Could not auto-detect testTP project.' -ForegroundColor Red
-    Write-Host 'Set $env:TESTTP_PROJECT to its full path and re-run, e.g.:' -ForegroundColor Yellow
-    Write-Host '  $env:TESTTP_PROJECT="C:\path\to\testTP"; iex (irm "https://raw.githubusercontent.com/kevinboettger/kevinboettger/claude/test-immerse-audio-plugin-su44W/Tools/Bootstrap.ps1")' -ForegroundColor Yellow
     return
 }
 Write-Host "Project: $projectDir" -ForegroundColor Cyan
@@ -20,15 +18,22 @@ Write-Host "Project: $projectDir" -ForegroundColor Cyan
 $toolsDir = Join-Path $projectDir 'Tools'
 New-Item -ItemType Directory -Force -Path $toolsDir | Out-Null
 
+# Cache-bust raw.githubusercontent.com -- it can serve stale content for ~5 min.
+# Append a random query param + send no-cache headers.
+$buster = "?_=" + [DateTime]::UtcNow.Ticks
 $base = 'https://raw.githubusercontent.com/kevinboettger/kevinboettger/claude/test-immerse-audio-plugin-su44W/Tools'
 $files = @{
-    'AutoRunAndPush.ps1' = "$base/AutoRunAndPush.ps1"
-    'AutoRunAndPush.bat' = "$base/AutoRunAndPush.bat"
+    'AutoRunAndPush.ps1' = "$base/AutoRunAndPush.ps1$buster"
+    'AutoRunAndPush.bat' = "$base/AutoRunAndPush.bat$buster"
+}
+$headers = @{
+    'Cache-Control' = 'no-cache, no-store, max-age=0'
+    'Pragma'        = 'no-cache'
 }
 foreach ($name in $files.Keys) {
     $dest = Join-Path $toolsDir $name
     Write-Host "Downloading $name..." -ForegroundColor DarkGray
-    Invoke-WebRequest -Uri $files[$name] -OutFile $dest -UseBasicParsing
+    Invoke-WebRequest -Uri $files[$name] -OutFile $dest -UseBasicParsing -Headers $headers
 }
 
 $tokenFile = Join-Path $toolsDir '.github_token'
