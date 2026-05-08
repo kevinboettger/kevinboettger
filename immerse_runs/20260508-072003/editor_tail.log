@@ -1,18 +1,4 @@
-﻿[2026.05.08-14.21.49:149][  0]LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
-[2026.05.08-14.21.49:225][  0]LogOcInput: OculusInput pre-init called
-[2026.05.08-14.21.49:235][  0]LogUObjectArray: 22811 objects as part of root set at end of initial load.
-[2026.05.08-14.21.49:235][  0]LogUObjectAllocator: 6215680 out of 0 bytes used by permanent object pool.
-[2026.05.08-14.21.49:236][  0]LogUObjectArray: CloseDisregardForGC: 0/0 objects in disregard for GC pool
-[2026.05.08-14.21.49:387][  0]LogClass: Display: EnumProperty FAkExternalSourceInfo::CodecID is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
-[2026.05.08-14.21.49:388][  0]LogClass: Warning: ObjectProperty FAkExternalSourceInfo::ExternalSourceAsset is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
-[2026.05.08-14.21.49:388][  0]LogClass: Display: IntProperty FAkChannelMask::ChannelMask is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
-[2026.05.08-14.21.49:390][  0]LogClass: Display: 3 Uninitialized script struct members found including 1 object properties
-[2026.05.08-14.21.49:393][  0]LogAutomationTest: Warning: ObjectProperty FAkExternalSourceInfo::ExternalSourceAsset is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
-[2026.05.08-14.21.49:394][  0]LogEngine: Initializing Engine...
-[2026.05.08-14.21.49:462][  0]LogHMD: Failed to enumerate extensions. Please check that you have a valid OpenXR runtime installed.
-[2026.05.08-14.21.49:462][  0]LogHMD: Failed to initialize OpenVR with code 110
-[2026.05.08-14.21.49:462][  0]LogMagicLeap: Warning: VR disabled because ZI is not enabled.  To enable, in the editor, Edit -> Project Settings -> Plugins -> Magic Leap Plugin -> Enable Zero Iteration
-[2026.05.08-14.21.49:465][  0]LogStats: UGameplayTagsManager::InitializeManager -  0.001 s
+﻿[2026.05.08-14.21.49:465][  0]LogStats: UGameplayTagsManager::InitializeManager -  0.001 s
 [2026.05.08-14.21.49:827][  0]LogInit: Initializing FReadOnlyCVARCache
 [2026.05.08-14.21.49:827][  0]LogAudio: Display: Initializing Audio Device Manager...
 [2026.05.08-14.21.49:831][  0]LogAudio: Display: Loading Default Audio Settings Objects...
@@ -118,3 +104,17 @@
 [2026.05.08-14.23.28:626][812]LogTemp: Display: [ImmerseStress] >>> WARMUP step=5/8 immerse=ON conc=64 (align Wwise profiler capture here)
 [2026.05.08-14.23.28:626][812]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=60.0Hz life=250ms cap=64 immerse=enabled
 [2026.05.08-14.23.30:625][752]LogTemp: Display: [ImmerseStress] >>> RUNNING step=5/8 immerse=ON conc=64 (align Wwise profiler capture here)
+[2026.05.08-14.23.45:627][290]LogTemp: Display: [ImmerseStress] PHASE 5 done immerse=ON conc=64 posted=900 stopped=900 dropped=0 frames=6538 avg=2.29ms p50=2.23 p95=2.79 max=4.94
+[2026.05.08-14.23.45:628][290]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=5/8 immerse=ON conc=64 (align Wwise profiler capture here)
+[2026.05.08-14.23.45:628][290]LogTemp: Display: [ImmerseStress] Churn STOP   posted=5123 stopped=5123 dropped=997
+[2026.05.08-14.23.47:629][186]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.08-14.23.47:629][186]LogTemp: Display: [ImmerseStress] >>> WARMUP step=6/8 immerse=off conc=128 (align Wwise profiler capture here)
+[2026.05.08-14.23.47:629][186]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=60.0Hz life=250ms cap=128 immerse=BYPASSED
+[2026.05.08-14.23.49:629][ 95]LogTemp: Display: [ImmerseStress] >>> RUNNING step=6/8 immerse=off conc=128 (align Wwise profiler capture here)
+[2026.05.08-14.24.04:630][ 56]LogTemp: Display: [ImmerseStress] PHASE 6 done immerse=off conc=128 posted=900 stopped=900 dropped=0 frames=6961 avg=2.15ms p50=2.09 p95=2.56 max=5.40
+[2026.05.08-14.24.04:631][ 56]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=6/8 immerse=off conc=128 (align Wwise profiler capture here)
+[2026.05.08-14.24.04:631][ 56]LogTemp: Display: [ImmerseStress] Churn STOP   posted=6143 stopped=6143 dropped=997
+[2026.05.08-14.24.06:632][990]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.08-14.24.06:632][990]LogTemp: Display: [ImmerseStress] >>> WARMUP step=7/8 immerse=ON conc=128 (align Wwise profiler capture here)
+[2026.05.08-14.24.06:632][990]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=60.0Hz life=250ms cap=128 immerse=enabled
+[2026.05.08-14.24.08:633][919]LogTemp: Display: [ImmerseStress] >>> RUNNING step=7/8 immerse=ON conc=128 (align Wwise profiler capture here)
