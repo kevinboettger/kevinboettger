@@ -338,6 +338,19 @@ function Patch-Sources {
     $wrapperReady = Ensure-AkAudioMixerWrapper
     if ($wrapperReady) { $changes += 'AkAudio: ImmerseStressMixerWrapper installed' }
 
+    if (Test-Path $keyHeader) {
+        $h = Read-AllText -Path $keyHeader
+        if (-not [string]::IsNullOrEmpty($h) -and -not $h.Contains('LOAD_BOOST_v1')) {
+            Info 'Patch step: LOAD_BOOST_v1 (rate 60->300Hz, life 250->500ms, conc={32,64,128,256})'
+            $hOrigLen = $h.Length
+            $h = [regex]::Replace($h, 'float\s+PlanRateHz\s*=\s*[\d\.]+f?\s*;', 'float PlanRateHz = 300.f; // LOAD_BOOST_v1')
+            $h = [regex]::Replace($h, 'int32\s+PlanEventLifetimeMs\s*=\s*\d+\s*;', 'int32 PlanEventLifetimeMs = 500;')
+            $h = [regex]::Replace($h, 'TArray<int32>\s+ConcurrencyLevels\s*=\s*\{[^}]*\}\s*;', 'TArray<int32> ConcurrencyLevels = { 32, 64, 128, 256 };')
+            Write-AllText-Safe -Path $keyHeader -Content $h -MinLengthGuard ([int]($hOrigLen / 2))
+            $changes += 'Header: LOAD_BOOST_v1 (300Hz, 500ms, conc=32/64/128/256)'
+        }
+    }
+
     if (-not (Test-Path $keyCpp)) { return }
 
     $cpp = Read-AllText -Path $keyCpp
