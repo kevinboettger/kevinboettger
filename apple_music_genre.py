@@ -1,7 +1,8 @@
 """Read the genre of the currently playing Apple Music track on macOS.
 
-Uses AppleScript via `osascript` to query the Music.app process. Run with
-`--watch` to print whenever the track changes.
+Default: print the current track's genre once via AppleScript.
+With --watch: subscribe to Music.app's distributed notifications and
+print each track change in real time (event-driven, no polling).
 """
 
 from __future__ import annotations
@@ -9,7 +10,6 @@ from __future__ import annotations
 import argparse
 import subprocess
 import sys
-import time
 
 APPLESCRIPT = '''
 tell application "System Events"
@@ -26,6 +26,8 @@ tell application "Music"
 end tell
 '''
 
+NOTIFICATION_NAME = "com.apple.Music.playerInfo"
+
 
 class TrackInfo:
     def __init__(self, name: str, artist: str, album: str, genre: str, state: str):
@@ -34,10 +36,6 @@ class TrackInfo:
         self.album = album
         self.genre = genre
         self.state = state
-
-    @property
-    def key(self) -> tuple[str, str, str]:
-        return (self.name, self.artist, self.album)
 
     def __str__(self) -> str:
         genre = self.genre or "(no genre set)"
@@ -66,19 +64,59 @@ def get_current_track() -> TrackInfo | str:
     return TrackInfo(*parts[:5])
 
 
-def watch(interval: float) -> None:
-    last_key: tuple[str, str, str] | None = None
-    while True:
-        info = get_current_track()
-        if isinstance(info, TrackInfo):
-            if info.key != last_key and info.state == "playing":
-                print(info, flush=True)
-                last_key = info.key
-        else:
-            if last_key is not None:
-                print(info, flush=True)
-                last_key = None
-        time.sleep(interval)
+def watch() -> int:
+    if sys.platform != "darwin":
+        print("Apple Music is only available on macOS.", file=sys.stderr)
+        return 1
+    try:
+        from Foundation import (
+            NSDate,
+            NSDistributedNotificationCenter,
+            NSObject,
+            NSRunLoop,
+        )
+    except ImportError:
+        print(
+            "PyObjC is required for --watch mode. Install with:\n"
+            "    pip install pyobjc-core pyobjc-framework-Cocoa",
+            file=sys.stderr,
+        )
+        return 1
+
+    class Listener(NSObject):
+        def handlePlayerInfo_(self, notification):
+            info = notification.userInfo()
+            if info is None:
+                return
+            if info.get("Player State", "") != "Playing":
+                return
+            name = info.get("Name", "")
+            artist = info.get("Artist", "")
+            genre = info.get("Genre", "") or "(no genre set)"
+            print(f'"{name}" by {artist} — genre: {genre}', flush=True)
+
+    listener = Listener.alloc().init()
+    center = NSDistributedNotificationCenter.defaultCenter()
+    center.addObserver_selector_name_object_(
+        listener,
+        "handlePlayerInfo:",
+        NOTIFICATION_NAME,
+        None,
+    )
+
+    current = get_current_track()
+    if isinstance(current, TrackInfo) and current.state.lower() == "playing":
+        print(current, flush=True)
+
+    try:
+        loop = NSRunLoop.currentRunLoop()
+        while True:
+            loop.runUntilDate_(NSDate.dateWithTimeIntervalSinceNow_(1.0))
+    except KeyboardInterrupt:
+        pass
+    finally:
+        center.removeObserver_(listener)
+    return 0
 
 
 def main() -> int:
@@ -86,22 +124,12 @@ def main() -> int:
     parser.add_argument(
         "--watch",
         action="store_true",
-        help="Poll continuously and print whenever the track changes.",
-    )
-    parser.add_argument(
-        "--interval",
-        type=float,
-        default=2.0,
-        help="Polling interval in seconds for --watch (default: 2).",
+        help="Listen for track changes in real time (requires PyObjC).",
     )
     args = parser.parse_args()
 
     if args.watch:
-        try:
-            watch(args.interval)
-        except KeyboardInterrupt:
-            return 0
-        return 0
+        return watch()
 
     info = get_current_track()
     print(info)
