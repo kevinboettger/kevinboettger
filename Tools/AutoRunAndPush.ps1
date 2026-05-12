@@ -851,10 +851,44 @@ try {
         '-game','-RenderOffscreen','-unattended','-nopause','-NoSplash',
         "-abslog=$editorLog"
     )
+
+    # DEBUG_VIEW_v1: capture the Immerse plug-in's OutputDebugString stream via Sysinternals DbgView.
+    # Path comes from $env:IMMERSE_DBGVIEW or common fallback locations. If not found, we continue
+    # without the capture (verifier will note debug log missing). Logs to %TEMP% (no spaces),
+    # then we copy into the run dir at teardown.
+    $dbgView     = $null
+    $dbgLogTmp   = Join-Path $env:TEMP "immerse_dbgview_$RunId.log"
+    $dbgLogFinal = Join-Path $RunDirAbs 'immerse_debug.log'
+    $dbgPath = $env:IMMERSE_DBGVIEW
+    if (-not $dbgPath) {
+        foreach ($p in @(
+            "$env:USERPROFILE\Desktop\Dbgview64.exe",
+            "$env:USERPROFILE\Desktop\dbgview64.exe",
+            "$env:USERPROFILE\Desktop\Dbgview.exe",
+            "$env:USERPROFILE\Downloads\Dbgview64.exe",
+            "$env:USERPROFILE\Downloads\DebugView\Dbgview64.exe",
+            "C:\Tools\DebugView\Dbgview64.exe",
+            "C:\Tools\Dbgview64.exe"
+        )) { if (Test-Path $p) { $dbgPath = $p; break } }
+    }
+    if ($dbgPath -and (Test-Path $dbgPath)) {
+        if (Test-Path $dbgLogTmp) { Remove-Item $dbgLogTmp -Force -ErrorAction SilentlyContinue }
+        try {
+            $dbgArgs = "/accepteula /t /k /l `"$dbgLogTmp`""
+            $dbgView = Start-Process -FilePath $dbgPath -ArgumentList $dbgArgs -PassThru -WindowStyle Hidden
+            Info "DbgView PID: $($dbgView.Id), log: $dbgLogTmp"
+        } catch {
+            Warn "Failed to start DbgView: $($_.Exception.Message)"
+        }
+    } else {
+        Warn 'DbgView not found (set $env:IMMERSE_DBGVIEW or drop Dbgview64.exe on Desktop) -- debug stream not captured'
+    }
+
     $editorStart = Get-Date
     $proc = Start-Process -FilePath $editor -ArgumentList $editorArgs -PassThru -WindowStyle Hidden
     Info "Editor PID: $($proc.Id), log: $editorLog"
 
+    # WAAPI_ORCH_v1: spawn live EHM mirror via WAAPI to Wwise Authoring.
     # WAAPI_ORCH_v1: spawn live EHM mirror via WAAPI to Wwise Authoring.
     # Requires Wwise Authoring already running with TencentRCTest.wproj loaded and
     # remote-connected to the UE editor. If Wwise is not up the orchestrator
@@ -936,6 +970,16 @@ try {
         Info 'Stopped WAAPI orchestrator'
     }
 
+    # DEBUG_VIEW_v1: give DbgView a moment to flush, then stop and copy log into run dir
+    if ($dbgView -and -not $dbgView.HasExited) {
+        Start-Sleep -Milliseconds 1500
+        try { Stop-Process -Id $dbgView.Id -Force -ErrorAction SilentlyContinue } catch {}
+        Info 'Stopped DbgView'
+    }
+    if (Test-Path $dbgLogTmp) {
+        try { Copy-Item $dbgLogTmp $dbgLogFinal -Force } catch { Warn "Could not copy DbgView log: $($_.Exception.Message)" }
+    }
+
     Step 'Collecting CSV + final log'
     $resultsDir = Join-Path $ProjectDir 'Saved\ImmerseStress'
     $csv = $null
@@ -947,6 +991,24 @@ try {
     if ($csv) { Push-File $csv.FullName 'results.csv'; Info "CSV: $($csv.Name)" }
     if (Test-Path $editorLog) { Push-File $editorLog 'editor.log' }
     # waapi.log is written directly into $RunDirAbs by the orchestrator -- no Push-File needed
+
+    # DEBUG_VIEW_v1: run verifier to cross-reference WAAPI flips with runtime debug stream
+    $verifier         = Join-Path $ScriptDir 'Verify-ImmerseToggles.ps1'
+    $verificationPath = Join-Path $RunDirAbs 'verification.txt'
+    if ((Test-Path $verifier) -and (Test-Path $waapiLog) -and (Test-Path $dbgLogFinal)) {
+        Step 'Verifying EHM toggles (WAAPI vs runtime debug stream)'
+        try {
+            & powershell -NoProfile -ExecutionPolicy Bypass -File "$verifier" `
+                -WaapiLog "$waapiLog" -DebugLog "$dbgLogFinal" -OutPath "$verificationPath"
+            Info "Verification report: $verificationPath"
+        } catch {
+            Warn "Verifier error: $($_.Exception.Message)"
+        }
+    } elseif (-not (Test-Path $verifier)) {
+        Warn 'Verify-ImmerseToggles.ps1 missing -- skipping verifier'
+    } elseif (-not (Test-Path $dbgLogFinal)) {
+        Warn 'immerse_debug.log missing -- DbgView did not capture; skipping verifier'
+    }
 
     # CAPTURE_WAV_v2: collect any per-phase WAV captures
     if (Test-Path $resultsDir) {

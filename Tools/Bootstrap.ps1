@@ -23,9 +23,10 @@ New-Item -ItemType Directory -Force -Path $toolsDir | Out-Null
 $buster = "?_=" + [DateTime]::UtcNow.Ticks
 $base = 'https://raw.githubusercontent.com/kevinboettger/kevinboettger/claude/test-immerse-audio-plugin-su44W/Tools'
 $files = @{
-    'AutoRunAndPush.ps1'    = "$base/AutoRunAndPush.ps1$buster"
-    'AutoRunAndPush.bat'    = "$base/AutoRunAndPush.bat$buster"
-    'WaapiOrchestrator.ps1' = "$base/WaapiOrchestrator.ps1$buster"
+    'AutoRunAndPush.ps1'        = "$base/AutoRunAndPush.ps1$buster"
+    'AutoRunAndPush.bat'        = "$base/AutoRunAndPush.bat$buster"
+    'WaapiOrchestrator.ps1'     = "$base/WaapiOrchestrator.ps1$buster"
+    'Verify-ImmerseToggles.ps1' = "$base/Verify-ImmerseToggles.ps1$buster"
 }
 $headers = @{
     'Cache-Control' = 'no-cache, no-store, max-age=0'
