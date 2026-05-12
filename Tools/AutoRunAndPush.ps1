@@ -852,36 +852,27 @@ try {
         "-abslog=$editorLog"
     )
 
-    # DEBUG_VIEW_v1: capture the Immerse plug-in's OutputDebugString stream via Sysinternals DbgView.
-    # Path comes from $env:IMMERSE_DBGVIEW or common fallback locations. If not found, we continue
-    # without the capture (verifier will note debug log missing). Logs to %TEMP% (no spaces),
-    # then we copy into the run dir at teardown.
-    $dbgView     = $null
-    $dbgLogTmp   = Join-Path $env:TEMP "immerse_dbgview_$RunId.log"
-    $dbgLogFinal = Join-Path $RunDirAbs 'immerse_debug.log'
-    $dbgPath = $env:IMMERSE_DBGVIEW
-    if (-not $dbgPath) {
-        foreach ($p in @(
-            "$env:USERPROFILE\Desktop\Dbgview64.exe",
-            "$env:USERPROFILE\Desktop\dbgview64.exe",
-            "$env:USERPROFILE\Desktop\Dbgview.exe",
-            "$env:USERPROFILE\Downloads\Dbgview64.exe",
-            "$env:USERPROFILE\Downloads\DebugView\Dbgview64.exe",
-            "C:\Tools\DebugView\Dbgview64.exe",
-            "C:\Tools\Dbgview64.exe"
-        )) { if (Test-Path $p) { $dbgPath = $p; break } }
-    }
-    if ($dbgPath -and (Test-Path $dbgPath)) {
+    # DEBUG_VIEW_v1: capture the Immerse plug-in's OutputDebugString stream via an
+    # in-process listener (Tools/DebugStreamListener.ps1). The listener creates the
+    # DBWIN_BUFFER + DBWIN_DATA_READY / DBWIN_BUFFER_READY events itself, no admin
+    # required, no external dependency. Same-user producers (UE4Editor + Immerse
+    # plug-in DLL) write to the buffer and we drain it to immerse_debug.log.
+    $dbgListener  = $null
+    $dbgLogTmp    = Join-Path $env:TEMP "immerse_dbgmonitor_$RunId.log"
+    $dbgLogFinal  = Join-Path $RunDirAbs 'immerse_debug.log'
+    $dbgScript    = Join-Path $ScriptDir 'DebugStreamListener.ps1'
+    if (Test-Path $dbgScript) {
         if (Test-Path $dbgLogTmp) { Remove-Item $dbgLogTmp -Force -ErrorAction SilentlyContinue }
         try {
-            $dbgArgs = "/accepteula /t /k /l `"$dbgLogTmp`""
-            $dbgView = Start-Process -FilePath $dbgPath -ArgumentList $dbgArgs -PassThru -WindowStyle Hidden
-            Info "DbgView PID: $($dbgView.Id), log: $dbgLogTmp"
+            $dbgArgs = @('-NoProfile','-ExecutionPolicy','Bypass','-File',"`"$dbgScript`"",
+                         '-OutPath',"`"$dbgLogTmp`"",'-Seconds','1800')
+            $dbgListener = Start-Process -FilePath 'powershell.exe' -ArgumentList $dbgArgs -PassThru -WindowStyle Hidden
+            Info "DebugStreamListener PID: $($dbgListener.Id), log: $dbgLogTmp"
         } catch {
-            Warn "Failed to start DbgView: $($_.Exception.Message)"
+            Warn "Failed to start DebugStreamListener: $($_.Exception.Message)"
         }
     } else {
-        Warn 'DbgView not found (set $env:IMMERSE_DBGVIEW or drop Dbgview64.exe on Desktop) -- debug stream not captured'
+        Warn 'DebugStreamListener.ps1 missing -- debug stream not captured'
     }
 
     $editorStart = Get-Date
@@ -970,14 +961,14 @@ try {
         Info 'Stopped WAAPI orchestrator'
     }
 
-    # DEBUG_VIEW_v1: give DbgView a moment to flush, then stop and copy log into run dir
-    if ($dbgView -and -not $dbgView.HasExited) {
+    # DEBUG_VIEW_v1: give the listener a moment to drain in-flight messages, then stop and copy
+    if ($dbgListener -and -not $dbgListener.HasExited) {
         Start-Sleep -Milliseconds 1500
-        try { Stop-Process -Id $dbgView.Id -Force -ErrorAction SilentlyContinue } catch {}
-        Info 'Stopped DbgView'
+        try { Stop-Process -Id $dbgListener.Id -Force -ErrorAction SilentlyContinue } catch {}
+        Info 'Stopped DebugStreamListener'
     }
     if (Test-Path $dbgLogTmp) {
-        try { Copy-Item $dbgLogTmp $dbgLogFinal -Force } catch { Warn "Could not copy DbgView log: $($_.Exception.Message)" }
+        try { Copy-Item $dbgLogTmp $dbgLogFinal -Force } catch { Warn "Could not copy debug stream log: $($_.Exception.Message)" }
     }
 
     Step 'Collecting CSV + final log'
