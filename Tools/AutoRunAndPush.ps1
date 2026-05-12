@@ -806,7 +806,7 @@ try {
     Push-Status -Phase 'building'
     $buildBat = Join-Path $engineRoot 'Engine\Build\BatchFiles\Build.bat'
     $buildLog = Join-Path $env:TEMP "immerse_build_$RunId.log"
-    & $buildBat 'testTPEditor' 'Win64' 'Development' "-Project=$uproject" '-WaitMutex' *>&1 | Tee-Object -FilePath $buildLog | Out-Host
+    & $buildBat 'testTPEditor' 'Win64' 'Development' "-Project=$uproject" '-WaitMutex' '-MaxParallelActions=4' *>&1 | Tee-Object -FilePath $buildLog | Out-Host
     $buildExit = $LASTEXITCODE
     Push-File $buildLog 'build.log'
     $buildHasErrors = $false
