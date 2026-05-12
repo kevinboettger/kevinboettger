@@ -4,6 +4,7 @@ param(
     [Parameter(Mandatory=$true)][string]$DebugLog,
     [Parameter(Mandatory=$true)][string]$OutPath,
     [string]$ExpectedProfile = 'Profile_1',
+    [string]$ExpectedUserId  = '',
     [int]   $WindowMs = 3000
 )
 
@@ -51,8 +52,10 @@ foreach ($line in Get-Content $WaapiLog) {
 # Parse DbgView log lines.
 # Format: [EmbodyLOG] May_12_2026 05:54:34.797 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 0
 $monthN = @{ Jan=1; Feb=2; Mar=3; Apr=4; May=5; Jun=6; Jul=7; Aug=8; Sep=9; Oct=10; Nov=11; Dec=12 }
-$runtimeModes = New-Object 'System.Collections.Generic.List[object]'
+$runtimeModes    = New-Object 'System.Collections.Generic.List[object]'
 $profileMentions = New-Object 'System.Collections.Generic.List[string]'
+$userIdMentions  = New-Object 'System.Collections.Generic.List[string]'
+$setUserIdCount  = 0
 foreach ($line in Get-Content $DebugLog) {
     if ($line -match '\[EmbodyLOG\]\s+([A-Z][a-z]{2})\w*_(\d{1,2})_(\d{4})\s+(\d{1,2}):(\d{2}):(\d{2})\.(\d{1,3}).*Immerse_EnableImmerse\s+inMode:\s*(\d+)') {
         $mn = $monthN[$matches[1]]
@@ -63,6 +66,12 @@ foreach ($line in Get-Content $DebugLog) {
     }
     if ($line -match 'ProfileName set to\s*:\s*(\S+)') {
         $profileMentions.Add($matches[1])
+    }
+    if ($line -match 'Immerse_SetUserId\s+inUserId') {
+        $setUserIdCount++
+    }
+    if ($line -match 'generateWebAppUrl.*userId:\s*(\S+)') {
+        $userIdMentions.Add($matches[1])
     }
 }
 
@@ -119,5 +128,12 @@ foreach ($w in $waapiFlips) {
 Out ""
 $personalized = ($uniqueProfiles -contains $ExpectedProfile)
 Out ("Profile check: expected='" + $ExpectedProfile + "'  loaded=" + $personalized)
+
+$uniqueUids = $userIdMentions | Select-Object -Unique
+$userIdOk = $true
+if ($ExpectedUserId) { $userIdOk = ($uniqueUids -contains $ExpectedUserId) }
+Out ("User check: SetUserId_calls=" + $setUserIdCount + "  userIds_seen=[" + ($uniqueUids -join ', ') + "]  expected='" + $ExpectedUserId + "'  match=" + $userIdOk)
+$userLoadOk = ($setUserIdCount -gt 0) -and $personalized -and $userIdOk
+
 Out ""
-Out ("SUMMARY: " + $pass + " pass / " + $fail + " fail / total " + $waapiFlips.Count + "  profile_ok=" + $personalized)
+Out ("SUMMARY: " + $pass + " pass / " + $fail + " fail / total " + $waapiFlips.Count + "  profile_ok=" + $personalized + "  user_load_ok=" + $userLoadOk)

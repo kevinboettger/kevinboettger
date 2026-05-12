@@ -875,6 +875,97 @@ try {
         Warn 'DebugStreamListener.ps1 missing -- debug stream not captured'
     }
 
+    # WAAPI_AUTO_v1 (a): find/launch Wwise, wait for WAAPI, set @UserID on Immerse FX.
+    # Tries to remove the manual "open Wwise + load project + remote-connect" steps.
+    # If anything in this block fails the run continues -- the existing manual prompt
+    # is the fallback (printed in block (b) below).
+    $waapiUrl       = 'http://127.0.0.1:8090/waapi'
+    $waapiReady     = $false
+    $immerseEffectId = $null
+    $immerseUserId  = $env:IMMERSE_USER_ID
+
+    function Invoke-WaapiCall([string]$Url, [string]$Body) {
+        try {
+            $r = Invoke-RestMethod -Uri $Url -Method Post -Body $Body -ContentType 'application/json' -TimeoutSec 5
+            return @{ ok = $true; result = $r }
+        } catch {
+            $msg = $_.Exception.Message
+            if ($_.Exception.Response) {
+                try {
+                    $sr = New-Object System.IO.StreamReader($_.Exception.Response.GetResponseStream())
+                    $msg += ' body=' + $sr.ReadToEnd()
+                } catch {}
+            }
+            return @{ ok = $false; error = $msg }
+        }
+    }
+
+    $wwiseExe = $env:IMMERSE_WWISE_EXE
+    if (-not $wwiseExe -or -not (Test-Path $wwiseExe)) {
+        $cand = @()
+        foreach ($glob in @(
+            'C:\Program Files (x86)\Audiokinetic\Wwise*\Authoring\x64\Release\bin\Wwise.exe',
+            'C:\Program Files\Audiokinetic\Wwise*\Authoring\x64\Release\bin\Wwise.exe'
+        )) {
+            $cand += (Get-ChildItem -Path $glob -ErrorAction SilentlyContinue | ForEach-Object FullName)
+        }
+        foreach ($c in $cand) { if ($c -and (Test-Path $c)) { $wwiseExe = $c; break } }
+    }
+    $wproj = $env:IMMERSE_WPROJ
+    if (-not $wproj -or -not (Test-Path $wproj)) {
+        foreach ($p in @(
+            (Join-Path $env:USERPROFILE 'OneDrive\Documents\WwiseProjects\TencentRCTest\TencentRCTest.wproj'),
+            (Join-Path $env:USERPROFILE 'Documents\WwiseProjects\TencentRCTest\TencentRCTest.wproj')
+        )) { if (Test-Path $p) { $wproj = $p; break } }
+    }
+
+    $wwiseProc = Get-Process -Name Wwise -ErrorAction SilentlyContinue | Select-Object -First 1
+    if ($wwiseProc) {
+        Info "Wwise already running (PID $($wwiseProc.Id)) -- reusing"
+    } elseif ($wwiseExe -and $wproj) {
+        Info "Launching Wwise: $wwiseExe"
+        Info "  Project: $wproj"
+        try { Start-Process -FilePath $wwiseExe -ArgumentList "`"$wproj`"" | Out-Null } catch { Warn "Failed to launch Wwise: $($_.Exception.Message)" }
+    } else {
+        Warn "Could not locate Wwise.exe (set IMMERSE_WWISE_EXE) and/or .wproj (set IMMERSE_WPROJ) -- skipping auto-launch"
+    }
+
+    Step 'Waiting for WAAPI to come up'
+    $ws = Get-Date
+    while (((Get-Date) - $ws).TotalSeconds -lt 60) {
+        $r = Invoke-WaapiCall $waapiUrl '{"uri":"ak.wwise.core.getInfo","args":{},"options":{}}'
+        if ($r.ok) { $waapiReady = $true; break }
+        if ($r.error -match 'ak\.wwise\.locked') { Warn 'WAAPI reports modal lock in Wwise; close any open dialog' }
+        Start-Sleep -Seconds 2
+    }
+    if ($waapiReady) {
+        Info 'WAAPI ready'
+        $body = '{"uri":"ak.wwise.core.object.get","args":{"from":{"search":["Immerse_Audio_Renderer_(Custom)"]}},"options":{"return":["id","name","type","path"]}}'
+        $r = Invoke-WaapiCall $waapiUrl $body
+        if ($r.ok -and $r.result -and $r.result.return) {
+            foreach ($obj in $r.result.return) {
+                if ($obj.type -eq 'Effect' -and $obj.name -eq 'Immerse_Audio_Renderer_(Custom)') { $immerseEffectId = $obj.id; break }
+            }
+            if (-not $immerseEffectId) {
+                foreach ($obj in $r.result.return) { if ($obj.type -eq 'Effect') { $immerseEffectId = $obj.id; break } }
+            }
+        }
+        if ($immerseEffectId) {
+            Info "Immerse FX id: $immerseEffectId"
+            if ($immerseUserId) {
+                $body = '{"uri":"ak.wwise.core.object.setProperty","args":{"object":"' + $immerseEffectId + '","property":"UserID","value":"' + ($immerseUserId -replace '"','\"') + '"},"options":{}}'
+                $r = Invoke-WaapiCall $waapiUrl $body
+                if ($r.ok) { Info "Set @UserID = $immerseUserId" } else { Warn "Failed to set @UserID: $($r.error)" }
+            } else {
+                Warn 'IMMERSE_USER_ID not set -- leaving @UserID untouched'
+            }
+        } else {
+            Warn 'Could not resolve Immerse FX by name -- is the project loaded?'
+        }
+    } else {
+        Warn 'WAAPI not reachable within 60s -- orchestrator will retry and manual fallback will apply'
+    }
+
     $editorStart = Get-Date
     $proc = Start-Process -FilePath $editor -ArgumentList $editorArgs -PassThru -WindowStyle Hidden
     Info "Editor PID: $($proc.Id), log: $editorLog"
@@ -919,14 +1010,67 @@ try {
     } else {
         Info 'Actor is parked on REMOTE_HOLD_v1, ready for remote-connect'
     }
-    Write-Host ''
-    Write-Host '====================================================================' -ForegroundColor Yellow
-    Write-Host '  ACTION REQUIRED: open Wwise Authoring, click Project -> Connect,'  -ForegroundColor Yellow
-    Write-Host '  pick the UE4Editor process, wait for "Connected" in the status bar.' -ForegroundColor Yellow
-    Write-Host '  Then press Enter here to release the test plan.'                    -ForegroundColor Yellow
-    Write-Host '====================================================================' -ForegroundColor Yellow
-    [void](Read-Host 'Press Enter once remote-connect is established')
-    Set-Content -Path $goFlagPath -Value ((Get-Date).ToUniversalTime().ToString('o')) -Encoding UTF8 -NoNewline
+    # WAAPI_AUTO_v1 (b): try auto remote-connect. Fall back to manual prompt on timeout.
+    $autoConnected = $false
+    if ($waapiReady) {
+        Step 'Auto-connecting Wwise to UE editor'
+        $acStart = Get-Date
+        $lastReport = Get-Date
+        while (((Get-Date) - $acStart).TotalSeconds -lt 30 -and -not $proc.HasExited) {
+            $r = Invoke-WaapiCall $waapiUrl '{"uri":"ak.wwise.core.remote.getAvailableConsoles","args":{},"options":{}}'
+            if ($r.ok -and $r.result -and $r.result.consoles) {
+                $candidates = @($r.result.consoles | Where-Object {
+                    $_.appName -match 'UE4Editor|UnrealEditor|testTP|Editor'
+                })
+                if ($candidates.Count -gt 0) {
+                    $target = $candidates[0]
+                    Info "Found console: host=$($target.host) appName=$($target.appName)"
+                    $body = '{"uri":"ak.wwise.core.remote.connect","args":{"host":"' + $target.host + '","appName":"' + ($target.appName -replace '"','\"') + '"},"options":{}}'
+                    $cr = Invoke-WaapiCall $waapiUrl $body
+                    if ($cr.ok) {
+                        Info 'Wwise -> UE remote-connect successful'
+                        $autoConnected = $true
+                        break
+                    } else {
+                        Warn "remote.connect failed: $($cr.error)"
+                    }
+                } elseif (((Get-Date) - $lastReport).TotalSeconds -gt 5) {
+                    Info ("  ...still searching (" + $r.result.consoles.Count + ' consoles visible, none matched)')
+                    $lastReport = Get-Date
+                }
+            }
+            Start-Sleep -Seconds 1
+        }
+    }
+
+    if ($autoConnected) {
+        Step 'Waiting for user-load confirmation in debug stream'
+        $loadOk = $false
+        $lStart = Get-Date
+        while (((Get-Date) - $lStart).TotalSeconds -lt 30 -and -not $proc.HasExited) {
+            if (Test-Path $dbgLogTmp) {
+                $content = [string]::Join("`n", (Get-Content $dbgLogTmp -Tail 800 -ErrorAction SilentlyContinue))
+                $hasSetUserId = $content -match 'Immerse_SetUserId\s+inUserId'
+                $hasProfile   = $content -match 'updateUserHRTFData\s+ProfileName\s+set\s+to'
+                $uidMatch     = -not $immerseUserId -or ($content -match ('generateWebAppUrl.*userId:\s*' + [regex]::Escape($immerseUserId)))
+                if ($hasSetUserId -and $hasProfile -and $uidMatch) { $loadOk = $true; break }
+            }
+            Start-Sleep -Milliseconds 500
+        }
+        if ($loadOk) { Info 'User-load confirmed in debug stream' } else { Warn 'User-load confirmation not seen within 30s; proceeding anyway' }
+        Set-Content -Path $goFlagPath -Value ((Get-Date).ToUniversalTime().ToString('o')) -Encoding UTF8 -NoNewline
+        Info "Auto-dropped go.flag: $goFlagPath"
+    } else {
+        Warn 'Auto remote-connect failed or unavailable -- falling back to manual prompt'
+        Write-Host ''
+        Write-Host '====================================================================' -ForegroundColor Yellow
+        Write-Host '  ACTION REQUIRED: open Wwise Authoring, click Project -> Connect,'  -ForegroundColor Yellow
+        Write-Host '  pick the UE4Editor process, wait for "Connected" in the status bar.' -ForegroundColor Yellow
+        Write-Host '  Then press Enter here to release the test plan.'                    -ForegroundColor Yellow
+        Write-Host '====================================================================' -ForegroundColor Yellow
+        [void](Read-Host 'Press Enter once remote-connect is established')
+        Set-Content -Path $goFlagPath -Value ((Get-Date).ToUniversalTime().ToString('o')) -Encoding UTF8 -NoNewline
+    }
     Info "Wrote go.flag: $goFlagPath"
 
     $startedAt = Get-Date
@@ -989,8 +1133,10 @@ try {
     if ((Test-Path $verifier) -and (Test-Path $waapiLog) -and (Test-Path $dbgLogFinal)) {
         Step 'Verifying EHM toggles (WAAPI vs runtime debug stream)'
         try {
+            $verifierUserId = if ($immerseUserId) { $immerseUserId } else { '' }
             & powershell -NoProfile -ExecutionPolicy Bypass -File "$verifier" `
-                -WaapiLog "$waapiLog" -DebugLog "$dbgLogFinal" -OutPath "$verificationPath"
+                -WaapiLog "$waapiLog" -DebugLog "$dbgLogFinal" -OutPath "$verificationPath" `
+                -ExpectedUserId "$verifierUserId"
             Info "Verification report: $verificationPath"
         } catch {
             Warn "Verifier error: $($_.Exception.Message)"
