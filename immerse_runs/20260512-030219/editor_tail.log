@@ -1,26 +1,4 @@
-﻿[2026.05.12-10.04.20:717][  0]LogUObjectArray: 22811 objects as part of root set at end of initial load.
-[2026.05.12-10.04.20:717][  0]LogUObjectAllocator: 6215680 out of 0 bytes used by permanent object pool.
-[2026.05.12-10.04.20:717][  0]LogUObjectArray: CloseDisregardForGC: 0/0 objects in disregard for GC pool
-[2026.05.12-10.04.20:865][  0]LogClass: Display: EnumProperty FAkExternalSourceInfo::CodecID is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
-[2026.05.12-10.04.20:866][  0]LogClass: Warning: ObjectProperty FAkExternalSourceInfo::ExternalSourceAsset is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
-[2026.05.12-10.04.20:866][  0]LogClass: Display: IntProperty FAkChannelMask::ChannelMask is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
-[2026.05.12-10.04.20:867][  0]LogClass: Display: 3 Uninitialized script struct members found including 1 object properties
-[2026.05.12-10.04.20:869][  0]LogAutomationTest: Warning: ObjectProperty FAkExternalSourceInfo::ExternalSourceAsset is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
-[2026.05.12-10.04.20:871][  0]LogEngine: Initializing Engine...
-[2026.05.12-10.04.20:924][  0]LogHMD: Failed to enumerate extensions. Please check that you have a valid OpenXR runtime installed.
-[2026.05.12-10.04.20:925][  0]LogHMD: Failed to initialize OpenVR with code 110
-[2026.05.12-10.04.20:925][  0]LogMagicLeap: Warning: VR disabled because ZI is not enabled.  To enable, in the editor, Edit -> Project Settings -> Plugins -> Magic Leap Plugin -> Enable Zero Iteration
-[2026.05.12-10.04.20:929][  0]LogStats: UGameplayTagsManager::InitializeManager -  0.001 s
-[2026.05.12-10.04.21:160][  0]LogInit: Initializing FReadOnlyCVARCache
-[2026.05.12-10.04.21:160][  0]LogAudio: Display: Initializing Audio Device Manager...
-[2026.05.12-10.04.21:164][  0]LogAudio: Display: Loading Default Audio Settings Objects...
-[2026.05.12-10.04.21:171][  0]LogAudio: Display: No default SoundConcurrencyObject specified (or failed to load).
-[2026.05.12-10.04.21:172][  0]LogAudio: Display: Audio Device Manager Initialized
-[2026.05.12-10.04.21:172][  0]LogAudio: Display: Creating Audio Device:                 Id: 1, Scope: Shared, Realtime: True
-[2026.05.12-10.04.21:173][  0]LogAudioMixer: Display: Audio Mixer Platform Settings:
-[2026.05.12-10.04.21:173][  0]LogAudioMixer: Display: 	Sample Rate:						  48000
-[2026.05.12-10.04.21:173][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size Requested: 1024
-[2026.05.12-10.04.21:173][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size To Use:	  1024
+﻿[2026.05.12-10.04.21:173][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size To Use:	  1024
 [2026.05.12-10.04.21:173][  0]LogAudioMixer: Display: 	Number of buffers to queue:			  2
 [2026.05.12-10.04.21:173][  0]LogAudioMixer: Display: 	Max Channels (voices):				  32
 [2026.05.12-10.04.21:173][  0]LogAudioMixer: Display: 	Number of Async Source Workers:		  0
@@ -118,3 +96,25 @@
 [2026.05.12-10.05.23:812][239]LogTemp: Display: [ImmerseStress] CAPTURE_WAV_v2 START ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_3_on.wav
 [2026.05.12-10.05.23:816][241]LogAkAudio: Error: Cannot open file ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Wwise/../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_3_on.wav for write.
 [2026.05.12-10.05.23:816][241]LogAkAudio: Error: Cannot open file: ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_3_on.wav
+[2026.05.12-10.05.38:813][744]LogTemp: Display: [ImmerseStress] PHASE 3 done immerse=ON conc=64 posted=1920 stopped=1920 dropped=2580 frames=6505 avg=2.31ms p50=2.23 p95=2.83 max=5.35
+[2026.05.12-10.05.38:814][744]LogTemp: Display: [ImmerseStress] CAPTURE_WAV_v2 STOP
+[2026.05.12-10.05.38:814][744]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=3/8 immerse=ON conc=64 (align Wwise profiler capture here)
+[2026.05.12-10.05.38:814][744]LogTemp: Display: [ImmerseStress] Churn STOP   posted=6528 stopped=6528 dropped=13871
+[2026.05.12-10.05.40:813][626]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.12-10.05.40:813][626]LogTemp: Display: [ImmerseStress] >>> WARMUP step=4/8 immerse=off conc=128 (align Wwise profiler capture here)
+[2026.05.12-10.05.40:813][626]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=128 immerse=BYPASSED
+[2026.05.12-10.05.42:816][503]LogTemp: Display: [ImmerseStress] >>> RUNNING step=4/8 immerse=off conc=128 (align Wwise profiler capture here)
+[2026.05.12-10.05.42:816][503]LogTemp: Display: [ImmerseStress] CAPTURE_WAV_v2 START ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_4_off.wav
+[2026.05.12-10.05.42:819][505]LogAkAudio: Error: Cannot open file ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Wwise/../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_4_off.wav for write.
+[2026.05.12-10.05.42:819][505]LogAkAudio: Error: Cannot open file: ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_4_off.wav
+[2026.05.12-10.05.57:816][413]LogTemp: Display: [ImmerseStress] PHASE 4 done immerse=off conc=128 posted=3829 stopped=3831 dropped=671 frames=6910 avg=2.17ms p50=2.10 p95=2.61 max=6.00
+[2026.05.12-10.05.57:816][413]LogTemp: Display: [ImmerseStress] CAPTURE_WAV_v2 STOP
+[2026.05.12-10.05.57:816][413]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=4/8 immerse=off conc=128 (align Wwise profiler capture here)
+[2026.05.12-10.05.57:816][413]LogTemp: Display: [ImmerseStress] Churn STOP   posted=10869 stopped=10869 dropped=14630
+[2026.05.12-10.05.59:817][342]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.12-10.05.59:817][342]LogTemp: Display: [ImmerseStress] >>> WARMUP step=5/8 immerse=ON conc=128 (align Wwise profiler capture here)
+[2026.05.12-10.05.59:817][342]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=128 immerse=enabled
+[2026.05.12-10.06.01:817][231]LogTemp: Display: [ImmerseStress] >>> RUNNING step=5/8 immerse=ON conc=128 (align Wwise profiler capture here)
+[2026.05.12-10.06.01:818][231]LogTemp: Display: [ImmerseStress] CAPTURE_WAV_v2 START ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_5_on.wav
+[2026.05.12-10.06.01:820][233]LogAkAudio: Error: Cannot open file ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Wwise/../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_5_on.wav for write.
+[2026.05.12-10.06.01:820][233]LogAkAudio: Error: Cannot open file: ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_5_on.wav
