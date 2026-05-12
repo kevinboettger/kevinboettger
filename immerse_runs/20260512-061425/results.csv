@@ -1,0 +1,3 @@
+phase_idx,immerse,concurrency,rate_hz,life_ms,duration_s,posted,stopped,dropped,frames,avg_frame_ms,p50_frame_ms,p95_frame_ms,max_frame_ms
+0,off,32,300.00,500,5.00,320,320,1180,2129,2.349,2.295,2.894,5.715
+1,on,32,300.00,500,5.00,320,320,1180,2146,2.330,2.273,2.870,3.948
