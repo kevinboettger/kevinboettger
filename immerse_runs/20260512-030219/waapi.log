@@ -1,0 +1,7 @@
+﻿[2026-05-12T03:04:07.0921761-07:00] WaapiOrchestrator start
+[2026-05-12T03:04:07.1067360-07:00]   EditorLog: C:\Users\kapil\AppData\Local\Temp\immerse_editor_20260512-030219.log
+[2026-05-12T03:04:07.1087387-07:00]   WaapiUrl:  http://127.0.0.1:8090/waapi
+[2026-05-12T03:04:07.1097441-07:00]   ImmerseId: {FC04B7CE-5A63-44EA-ABCF-4DC30BD037D4}
+[2026-05-12T03:04:07.5403398-07:00] baseline: ehm=False uid=kevin_tencenttest1_emb profile=1 hpeq=0 bus=0
+[2026-05-12T03:04:24.9767119-07:00] actor: BypassImmerse OK  -> WAAPI EnableImmerse=false
+[2026-05-12T03:04:25.0123313-07:00]   set EnableImmerse=False FAILED: The remote server returned an error: (422) Unprocessable Entity. body=
