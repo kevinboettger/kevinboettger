@@ -1,8 +1,7 @@
 ﻿{
-    "machine":  "IMMERSEDEMOM5",
-    "user_id":  "kevin_tencenttest1_emb",
-    "updated_at":  "2026-05-12T13:15:16.4193533Z",
-    "phase":  "immerse_userid_set",
+    "phase":  "testing",
+    "updated_at":  "2026-05-12T13:15:19.5930452Z",
     "run_id":  "20260512-061425",
-    "user":  "kapil"
+    "user":  "kapil",
+    "machine":  "IMMERSEDEMOM5"
 }
