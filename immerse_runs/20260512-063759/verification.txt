@@ -1,0 +1,25 @@
+﻿===== ImmerseToggle Verification =====
+  WaapiLog: C:\Users\kapil\OneDrive\Documents\Unreal Projects\testTP\Tools\_results_repo\immerse_runs\20260512-063759\waapi.log
+  DebugLog: C:\Users\kapil\OneDrive\Documents\Unreal Projects\testTP\Tools\_results_repo\immerse_runs\20260512-063759\immerse_debug.log
+
+  WAAPI flips:           12
+  Runtime inMode lines:  2
+  Runtime transitions:   2 (deduped)
+  ProfileName mentions:  1  unique=[Profile_1]
+
+  FAIL  WAAPI 06:41:00.963 ->0  no runtime transition within 3000ms
+  FAIL  WAAPI 06:41:10.021 ->1  no runtime transition within 3000ms
+  FAIL  WAAPI 06:41:19.021 ->0  no runtime transition within 3000ms
+  FAIL  WAAPI 06:41:19.028 ->1  no runtime transition within 3000ms
+  FAIL  WAAPI 06:41:19.038 ->0  no runtime transition within 3000ms
+  FAIL  WAAPI 06:41:19.047 ->1  no runtime transition within 3000ms
+  FAIL  WAAPI 06:41:19.057 ->0  no runtime transition within 3000ms
+  FAIL  WAAPI 06:41:19.066 ->1  no runtime transition within 3000ms
+  FAIL  WAAPI 06:41:19.073 ->0  no runtime transition within 3000ms
+  FAIL  WAAPI 06:41:19.081 ->1  no runtime transition within 3000ms
+  FAIL  WAAPI 06:41:19.089 ->0  no runtime transition within 3000ms
+  FAIL  WAAPI 06:41:19.095 ->1  no runtime transition within 3000ms
+
+Profile check: expected='Profile_1'  loaded=True
+
+SUMMARY: 0 pass / 12 fail / total 12  profile_ok=True
