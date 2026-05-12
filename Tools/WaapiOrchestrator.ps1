@@ -41,7 +41,7 @@ function Invoke-Waapi([string]$Body) {
 
 function Set-WaapiProp([string]$Name, $Value) {
     $vJson = $Value | ConvertTo-Json -Compress
-    $body  = '{"uri":"ak.wwise.core.object.setProperty","args":{"object":"' + $ImmerseEffectId + '","property":"' + $Name + '","value":' + $vJson + '}}'
+    $body  = '{"uri":"ak.wwise.core.object.setProperty","args":{"object":"' + $ImmerseEffectId + '","property":"' + $Name + '","value":' + $vJson + '},"options":{}}'
     $r = Invoke-Waapi $body
     if (-not $r.ok) { L "  set $Name=$Value FAILED: $($r.error)"; return $false }
     return $true
