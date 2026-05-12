@@ -938,7 +938,7 @@ try {
     }
     if ($csv) { Push-File $csv.FullName 'results.csv'; Info "CSV: $($csv.Name)" }
     if (Test-Path $editorLog) { Push-File $editorLog 'editor.log' }
-    if ($waapiLog -and (Test-Path $waapiLog)) { Push-File $waapiLog 'waapi.log' }
+    # waapi.log is written directly into $RunDirAbs by the orchestrator -- no Push-File needed
 
     # CAPTURE_WAV_v2: collect any per-phase WAV captures
     if (Test-Path $resultsDir) {
