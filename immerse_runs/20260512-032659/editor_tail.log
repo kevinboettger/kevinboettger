@@ -1,30 +1,4 @@
-﻿[2026.05.12-10.27.48:539][  0]LogAudio: Display: Initializing Audio Device Manager...
-[2026.05.12-10.27.48:541][  0]LogAudio: Display: Loading Default Audio Settings Objects...
-[2026.05.12-10.27.48:542][  0]LogAudio: Display: No default SoundConcurrencyObject specified (or failed to load).
-[2026.05.12-10.27.48:542][  0]LogAudio: Display: Audio Device Manager Initialized
-[2026.05.12-10.27.48:542][  0]LogAudio: Display: Creating Audio Device:                 Id: 1, Scope: Shared, Realtime: True
-[2026.05.12-10.27.48:542][  0]LogAudioMixer: Display: Audio Mixer Platform Settings:
-[2026.05.12-10.27.48:542][  0]LogAudioMixer: Display: 	Sample Rate:						  48000
-[2026.05.12-10.27.48:542][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size Requested: 1024
-[2026.05.12-10.27.48:542][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size To Use:	  1024
-[2026.05.12-10.27.48:542][  0]LogAudioMixer: Display: 	Number of buffers to queue:			  2
-[2026.05.12-10.27.48:542][  0]LogAudioMixer: Display: 	Max Channels (voices):				  32
-[2026.05.12-10.27.48:542][  0]LogAudioMixer: Display: 	Number of Async Source Workers:		  0
-[2026.05.12-10.27.48:542][  0]LogAudio: Display: AudioDevice MaxSources: 32
-[2026.05.12-10.27.48:542][  0]LogAudio: Display: Audio Spatialization Plugin: None (built-in).
-[2026.05.12-10.27.48:542][  0]LogAudio: Display: Audio Reverb Plugin: None (built-in).
-[2026.05.12-10.27.48:542][  0]LogAudio: Display: Audio Occlusion Plugin: None (built-in).
-[2026.05.12-10.27.48:542][  0]LogAudioMixer: Display: Initializing audio mixer.
-[2026.05.12-10.27.48:550][  0]LogAudioMixer: Display: 0: FrontLeft
-[2026.05.12-10.27.48:550][  0]LogAudioMixer: Display: 1: FrontRight
-[2026.05.12-10.27.48:565][  0]LogAudioMixer: Display: Using Audio Device Speakers (2- Realtek(R) Audio)
-[2026.05.12-10.27.48:567][  0]LogAudioMixer: Display: Initializing Sound Submixes...
-[2026.05.12-10.27.48:568][  0]LogAudioMixer: Display: Creating Master Submix 'MasterSubmixDefault'
-[2026.05.12-10.27.48:568][  0]LogAudioMixer: Display: Creating Master Submix 'MasterReverbSubmixDefault'
-[2026.05.12-10.27.48:569][  0]LogAudioMixer: Display: Creating Master Submix 'MasterEQSubmixDefault'
-[2026.05.12-10.27.48:569][  0]LogAudioMixer: FMixerPlatformXAudio2::StartAudioStream() called
-[2026.05.12-10.27.48:569][  0]LogAudioMixer: Display: Output buffers initialized: Frames=1024, Channels=2, Samples=2048
-[2026.05.12-10.27.48:570][  0]LogAudioMixer: Display: Starting AudioMixerPlatformInterface::RunInternal()
+﻿[2026.05.12-10.27.48:570][  0]LogAudioMixer: Display: Starting AudioMixerPlatformInterface::RunInternal()
 [2026.05.12-10.27.48:570][  0]LogAudioMixer: Display: FMixerPlatformXAudio2::SubmitBuffer() called for the first time
 [2026.05.12-10.27.48:570][  0]LogInit: FAudioDevice initialized.
 [2026.05.12-10.27.48:571][  0]LogNetVersion: Set ProjectVersion to 1.0.0.0. Version Checksum will be recalculated on next use.
@@ -118,3 +92,29 @@
 [2026.05.12-10.29.28:034][789]LogTemp: Display: [ImmerseStress] CAPTURE_WAV_v2 START ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_4_off.wav
 [2026.05.12-10.29.28:037][791]LogAkAudio: Error: Cannot open file ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Wwise/../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_4_off.wav for write.
 [2026.05.12-10.29.28:037][791]LogAkAudio: Error: Cannot open file: ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_4_off.wav
+[2026.05.12-10.29.43:034][349]LogTemp: Display: [ImmerseStress] PHASE 4 done immerse=off conc=128 posted=3829 stopped=3830 dropped=671 frames=6560 avg=2.29ms p50=2.22 p95=2.80 max=5.47
+[2026.05.12-10.29.43:034][349]LogTemp: Display: [ImmerseStress] CAPTURE_WAV_v2 STOP
+[2026.05.12-10.29.43:034][349]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=4/8 immerse=off conc=128 (align Wwise profiler capture here)
+[2026.05.12-10.29.43:035][349]LogTemp: Display: [ImmerseStress] Churn STOP   posted=10869 stopped=10869 dropped=14630
+[2026.05.12-10.29.45:036][191]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.12-10.29.45:036][191]LogTemp: Display: [ImmerseStress] >>> WARMUP step=5/8 immerse=ON conc=128 (align Wwise profiler capture here)
+[2026.05.12-10.29.45:036][191]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=128 immerse=enabled
+[2026.05.12-10.29.47:037][999]LogTemp: Display: [ImmerseStress] >>> RUNNING step=5/8 immerse=ON conc=128 (align Wwise profiler capture here)
+[2026.05.12-10.29.47:037][999]LogTemp: Display: [ImmerseStress] CAPTURE_WAV_v2 START ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_5_on.wav
+[2026.05.12-10.29.47:041][  1]LogAkAudio: Error: Cannot open file ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Wwise/../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_5_on.wav for write.
+[2026.05.12-10.29.47:041][  1]LogAkAudio: Error: Cannot open file: ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_5_on.wav
+[2026.05.12-10.30.02:039][549]LogTemp: Display: [ImmerseStress] PHASE 5 done immerse=ON conc=128 posted=3830 stopped=3831 dropped=671 frames=6550 avg=2.29ms p50=2.22 p95=2.78 max=8.32
+[2026.05.12-10.30.02:039][549]LogTemp: Display: [ImmerseStress] CAPTURE_WAV_v2 STOP
+[2026.05.12-10.30.02:039][549]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=5/8 immerse=ON conc=128 (align Wwise profiler capture here)
+[2026.05.12-10.30.02:039][549]LogTemp: Display: [ImmerseStress] Churn STOP   posted=15211 stopped=15211 dropped=15389
+[2026.05.12-10.30.04:039][453]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.12-10.30.04:039][453]LogTemp: Display: [ImmerseStress] >>> WARMUP step=6/8 immerse=off conc=256 (align Wwise profiler capture here)
+[2026.05.12-10.30.04:039][453]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=256 immerse=BYPASSED
+[2026.05.12-10.30.06:040][350]LogTemp: Display: [ImmerseStress] >>> RUNNING step=6/8 immerse=off conc=256 (align Wwise profiler capture here)
+[2026.05.12-10.30.06:040][350]LogTemp: Display: [ImmerseStress] CAPTURE_WAV_v2 START ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_6_off.wav
+[2026.05.12-10.30.06:043][352]LogAkAudio: Error: Cannot open file ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Wwise/../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_6_off.wav for write.
+[2026.05.12-10.30.06:043][352]LogAkAudio: Error: Cannot open file: ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_6_off.wav
+[2026.05.12-10.30.21:043][911]LogTemp: Display: [ImmerseStress] PHASE 6 done immerse=off conc=256 posted=4501 stopped=4501 dropped=0 frames=6561 avg=2.29ms p50=2.21 p95=2.80 max=5.05
+[2026.05.12-10.30.21:046][911]LogTemp: Display: [ImmerseStress] CAPTURE_WAV_v2 STOP
+[2026.05.12-10.30.21:046][911]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=6/8 immerse=off conc=256 (align Wwise profiler capture here)
+[2026.05.12-10.30.21:046][911]LogTemp: Display: [ImmerseStress] Churn STOP   posted=20312 stopped=20312 dropped=15389
