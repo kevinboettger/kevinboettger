@@ -1,0 +1,17 @@
+﻿[2026-05-12T07:32:25.4699257-07:00] WaapiOrchestrator start
+[2026-05-12T07:32:25.4854555-07:00]   EditorLog: C:\Users\kapil\AppData\Local\Temp\immerse_editor_20260512-073053.log
+[2026-05-12T07:32:25.4874659-07:00]   WaapiUrl:  http://127.0.0.1:8090/waapi
+[2026-05-12T07:32:25.9674226-07:00]   Resolved Immerse Effect ID by name 'Immerse_Audio_Renderer_(Custom)' -> {3377B6B1-AC34-43F1-A76E-45A9BD6C0873}
+[2026-05-12T07:32:26.0015449-07:00] baseline: ehm=True uid=kevin_tencenttest1_emb profile=1 hpeq=0 bus=0
+[2026-05-12T07:32:50.0598981-07:00] actor: BypassImmerse OK -> WAAPI EnableImmerse=false [OK]
+[2026-05-12T07:32:58.9155412-07:00] actor: EnableImmerse OK  -> WAAPI EnableImmerse=true  [OK]
+[2026-05-12T07:33:07.9872909-07:00] actor: BypassImmerse OK -> WAAPI EnableImmerse=false [OK]
+[2026-05-12T07:33:07.9938234-07:00] actor: EnableImmerse OK  -> WAAPI EnableImmerse=true  [OK]
+[2026-05-12T07:33:07.9988571-07:00] actor: BypassImmerse OK -> WAAPI EnableImmerse=false [OK]
+[2026-05-12T07:33:08.0063988-07:00] actor: EnableImmerse OK  -> WAAPI EnableImmerse=true  [OK]
+[2026-05-12T07:33:08.0189525-07:00] actor: BypassImmerse OK -> WAAPI EnableImmerse=false [OK]
+[2026-05-12T07:33:08.0229689-07:00] actor: EnableImmerse OK  -> WAAPI EnableImmerse=true  [OK]
+[2026-05-12T07:33:08.0290026-07:00] actor: BypassImmerse OK -> WAAPI EnableImmerse=false [OK]
+[2026-05-12T07:33:08.0365422-07:00] actor: EnableImmerse OK  -> WAAPI EnableImmerse=true  [OK]
+[2026-05-12T07:33:08.0415676-07:00] actor: BypassImmerse OK -> WAAPI EnableImmerse=false [OK]
+[2026-05-12T07:33:08.0481208-07:00] actor: EnableImmerse OK  -> WAAPI EnableImmerse=true  [OK]
