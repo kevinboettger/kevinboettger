@@ -85,16 +85,16 @@ while (((Get-Date) - $startedAt).TotalSeconds -lt $TimeoutSec) {
                 while (-not $reader.EndOfStream) {
                     $line = $reader.ReadLine()
                     if (-not $line) { continue }
-                    if ($line -match '\[ImmerseStress\]\s+EnableImmerse\([^)]*\)\s+->\s+OK') {
+                    if ($line -match '\[ImmerseStress\]\s+EnableImmerse\(.*\)\s+->\s+OK') {
                         if ($lastEhm -ne $true) {
-                            L "actor: EnableImmerse OK  -> WAAPI EnableImmerse=true"
-                            [void](Set-WaapiProp 'EnableImmerse' $true)
+                            $ok = Set-WaapiProp 'EnableImmerse' $true
+                            L ("actor: EnableImmerse OK  -> WAAPI EnableImmerse=true  [" + ($(if($ok){'OK'}else{'FAIL'})) + "]")
                             $lastEhm = $true; $flips++
                         }
-                    } elseif ($line -match '\[ImmerseStress\]\s+BypassImmerse\([^)]*\)\s+->\s+OK') {
+                    } elseif ($line -match '\[ImmerseStress\]\s+BypassImmerse\(.*\)\s+->\s+OK') {
                         if ($lastEhm -ne $false) {
-                            L "actor: BypassImmerse OK  -> WAAPI EnableImmerse=false"
-                            [void](Set-WaapiProp 'EnableImmerse' $false)
+                            $ok = Set-WaapiProp 'EnableImmerse' $false
+                            L ("actor: BypassImmerse OK -> WAAPI EnableImmerse=false [" + ($(if($ok){'OK'}else{'FAIL'})) + "]")
                             $lastEhm = $false; $flips++
                         }
                     }
