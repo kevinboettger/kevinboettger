@@ -1,0 +1,200 @@
+// Stress harness for the Immerse Audio Renderer (Wwise mixer plug-in).
+//
+// Two ways to drive it:
+//
+// 1) AUTOMATED PLAN (recommended for unattended runs):
+//    Drop one actor in the level with bAutoRunOnBeginPlay = true (default).
+//    On BeginPlay it sweeps a concurrency matrix with Immerse OFF then Immerse ON,
+//    captures per-phase frame timing, and writes a CSV under Saved/ImmerseStress/.
+//    Console: `immerse.stress.runplan` to (re)start, `immerse.stress.abort` to stop.
+//
+// 2) MANUAL MODE: same actor, all `immerse.*` console commands still work.
+//    See bottom of this header for the full list.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "ImmerseStressTestActor.generated.h"
+
+class UAkComponent;
+struct IConsoleCommand;
+
+UENUM()
+enum class EImmerseStressPhase : uint8
+{
+	Idle,
+	Warmup,
+	Running,
+	Cooldown,
+	Complete,
+	Aborted
+};
+
+USTRUCT()
+struct FImmerseStressPhaseRecord
+{
+	GENERATED_BODY()
+
+	int32 PhaseIndex = 0;
+	bool bImmerseEnabled = false;
+	int32 Concurrency = 0;
+	float RateHz = 0.f;
+	int32 LifetimeMs = 0;
+	float DurationSeconds = 0.f;
+
+	int64 Posted = 0;
+	int64 Stopped = 0;
+	int64 Dropped = 0;
+
+	int32 FrameSamples = 0;
+	float AvgFrameMs = 0.f;
+	float P50FrameMs = 0.f;
+	float P95FrameMs = 0.f;
+	float MaxFrameMs = 0.f;
+};
+
+UCLASS(BlueprintType, Blueprintable)
+class AImmerseStressTestActor : public AActor
+{
+	GENERATED_BODY()
+
+public:
+	AImmerseStressTestActor();
+
+	//~ Begin AActor
+	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+	virtual void Tick(float DeltaSeconds) override;
+	//~ End AActor
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Manual")
+	FString EventName = TEXT("SwordHits");
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Manual")
+	FString BusName = TEXT("7p1p4");
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Manual")
+	FString ImmerseShareSetName = TEXT("Immerse_Audio_Renderer_(Custom)");
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Manual", meta = (ClampMin = "0.1"))
+	float PostsPerSecond = 60.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Manual", meta = (ClampMin = "1"))
+	int32 EventLifetimeMs = 250;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Manual", meta = (ClampMin = "1"))
+	int32 MaxConcurrent = 64;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan")
+	bool bAutoRunOnBeginPlay = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan")
+	TArray<int32> ConcurrencyLevels = { 32 }; // ITER_FAST_v1
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan", meta = (ClampMin = "0.1"))
+	float PlanRateHz = 300.f; // LOAD_BOOST_v1
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan", meta = (ClampMin = "1"))
+	int32 PlanEventLifetimeMs = 500;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan", meta = (ClampMin = "0"))
+	float WarmupSeconds = 2.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan", meta = (ClampMin = "1"))
+	float PhaseDurationSeconds = 5.f; // ITER_FAST_v1
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan", meta = (ClampMin = "0"))
+	float CooldownSeconds = 2.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan")
+	bool bIssueStatCommands = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan")
+	bool bWriteCSV = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan")
+	bool bQuitOnPlanComplete = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Immerse Stress|Plan", meta = (ClampMin = "0"))
+	float QuitGraceSeconds = 1.5f;
+
+	UFUNCTION(BlueprintCallable, Category = "Immerse Stress")
+	void StartChurn();
+
+	UFUNCTION(BlueprintCallable, Category = "Immerse Stress")
+	void StopChurn();
+
+	UFUNCTION(BlueprintCallable, Category = "Immerse Stress")
+	void BypassImmerse();
+
+	UFUNCTION(BlueprintCallable, Category = "Immerse Stress")
+	void EnableImmerse();
+
+	UFUNCTION(BlueprintCallable, Category = "Immerse Stress")
+	void ToggleImmerse();
+
+	UFUNCTION(BlueprintCallable, Category = "Immerse Stress")
+	void PrintStatus() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Immerse Stress")
+	void RunPlan();
+
+	UFUNCTION(BlueprintCallable, Category = "Immerse Stress")
+	void AbortPlan();
+
+private:
+	struct FInFlight
+	{
+		uint32 PlayingID = 0;
+		double StopAtSeconds = 0.0;
+	};
+
+	UPROPERTY()
+	UAkComponent* StressEmitter = nullptr;
+
+	TArray<IConsoleCommand*> RegisteredCommands;
+
+	bool bChurnActive = false;
+	bool bImmerseBypassed = false;
+	double Accumulator = 0.0;
+	int64 TotalPosted = 0;
+	int64 TotalStopped = 0;
+	int64 TotalDroppedOverCap = 0;
+	TArray<FInFlight> InFlight;
+
+	EImmerseStressPhase Phase = EImmerseStressPhase::Idle;
+	int32 PlanStepIndex = 0;
+	double PhaseStartSeconds = 0.0;
+	bool bPhaseImmerseEnabled = false;
+	int32 PhaseConcurrency = 0;
+	FString CSVFilePath;
+	TArray<FImmerseStressPhaseRecord> PhaseRecords;
+
+	int64 PhasePostedAtStart = 0;
+	int64 PhaseStoppedAtStart = 0;
+	int64 PhaseDroppedAtStart = 0;
+	TArray<float> PhaseFrameMsSamples;
+
+	static AImmerseStressTestActor* ActiveInstance;
+
+	void RegisterConsoleCommands();
+	void UnregisterConsoleCommands();
+
+	uint32 PostOne();
+	void StopPlayingID(uint32 PlayingID);
+	void StopAllTracked();
+
+	int32 PlanStepCount() const { return ConcurrencyLevels.Num() * 2; }
+	void TickPlan(float DeltaSeconds);
+	void EnterPhase(EImmerseStressPhase NewPhase);
+	void RecordPhaseAndAdvance();
+	void FinishPlan(bool bAborted);
+	void EnsureCSVHeader();
+	void AppendCSVRow(const FImmerseStressPhaseRecord& R);
+	static void ComputeFrameStats(TArray<float>& Samples,
+		float& OutAvg, float& OutP50, float& OutP95, float& OutMax);
+
+	void IssueViewportConsoleCommand(const TCHAR* Cmd);
+	void LogPhaseMarker(const TCHAR* Tag) const;
+};
