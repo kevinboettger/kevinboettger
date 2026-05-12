@@ -1,7 +1,8 @@
 ﻿{
-    "phase":  "vs_ready",
-    "updated_at":  "2026-05-12T10:42:40.8127571Z",
+    "machine":  "IMMERSEDEMOM5",
+    "updated_at":  "2026-05-12T10:42:43.7147400Z",
+    "phase":  "ue_located",
     "run_id":  "20260512-034233",
-    "user":  "kapil",
-    "machine":  "IMMERSEDEMOM5"
+    "engine_root":  "C:\\Program Files\\Epic Games\\UE_4.27",
+    "user":  "kapil"
 }
