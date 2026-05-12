@@ -421,6 +421,48 @@ function Patch-Sources {
         $changes += 'RunPlan: FAkAudioDevice gate'
     }
 
+    if (-not $cpp.Contains('REMOTE_HOLD_v1')) {
+        Info 'Patch step: REMOTE_HOLD_v1 (wait for go.flag if IMMERSE_REMOTE_HOLD env var set)'
+        $holdInsert = @'
+
+	// REMOTE_HOLD_v1: pause before the plan starts so the operator can attach the
+	// Wwise Authoring remote connection. Active only when IMMERSE_REMOTE_HOLD env
+	// var is set; otherwise this is a no-op fall-through to the existing gate.
+	{
+		const FString HoldEnv = FPlatformMisc::GetEnvironmentVariable(TEXT("IMMERSE_REMOTE_HOLD"));
+		if (!HoldEnv.IsEmpty())
+		{
+			static int RemoteHoldRetries = 0;
+			const FString FlagPath = FPaths::ProjectSavedDir() / TEXT("ImmerseStress") / TEXT("go.flag");
+			if (!IFileManager::Get().FileExists(*FlagPath))
+			{
+				++RemoteHoldRetries;
+				if (RemoteHoldRetries == 1 || (RemoteHoldRetries % 20) == 0)
+				{
+					UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] REMOTE_HOLD_v1: waiting for go.flag (%s) retry=%d"),
+						*FlagPath, RemoteHoldRetries);
+				}
+				if (UWorld* W = GetWorld())
+				{
+					FTimerHandle ThHold;
+					W->GetTimerManager().SetTimer(ThHold, FTimerDelegate::CreateUObject(this, &AImmerseStressTestActor::RunPlan), 0.5f, false);
+				}
+				return;
+			}
+			if (RemoteHoldRetries > 0)
+			{
+				UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] REMOTE_HOLD_v1: go.flag detected after %d retries"), RemoteHoldRetries);
+				RemoteHoldRetries = 0;
+			}
+		}
+	}
+
+'@
+        $rxRPHold = [regex]::new('(void\s+AImmerseStressTestActor::RunPlan\(\)\s*\{)')
+        $cpp = $rxRPHold.Replace($cpp, '$1' + $holdInsert, 1)
+        $changes += 'RunPlan: REMOTE_HOLD_v1 (waits for go.flag)'
+    }
+
     if (-not $hasTimer) {
         Info 'Patch step: defer auto-run via 2.5s timer in BeginPlay'
         $patternBP = '(if\s*\(\s*bAutoRunOnBeginPlay\s*\)\s*\{)[^{}]*?RunPlan\s*\(\s*\)\s*;[^{}]*?\}'
@@ -780,8 +822,16 @@ try {
     $env:IMMERSE_USER     = $ImmerseUserId
     $env:IMMERSE_EMBODY_USER_ID = $ImmerseUserId
     $env:IMMERSE_EMB_USER_ID = $ImmerseUserId
+    $env:IMMERSE_REMOTE_HOLD = '1'
     Info "IMMERSE_USER_ID = $ImmerseUserId"
+    Info 'IMMERSE_REMOTE_HOLD = 1 (actor will wait for go.flag before starting phases)'
     Push-Status -Phase 'immerse_userid_set' -Extra @{ user_id = $ImmerseUserId }
+
+    # REMOTE_HOLD_v1: ensure no stale go.flag from a previous run
+    $goFlagPath = Join-Path $ProjectDir 'Saved\ImmerseStress\go.flag'
+    $goFlagDir  = Split-Path -Parent $goFlagPath
+    if (-not (Test-Path $goFlagDir)) { New-Item -ItemType Directory -Force -Path $goFlagDir | Out-Null }
+    if (Test-Path $goFlagPath) { Remove-Item $goFlagPath -Force -ErrorAction SilentlyContinue }
 
     Step 'Launching headless editor for stress sweep'
     Push-Status -Phase 'testing'
@@ -816,6 +866,35 @@ try {
     } else {
         Warn 'WaapiOrchestrator.ps1 missing -- EHM mirror disabled'
     }
+
+    # REMOTE_HOLD_v1: wait for actor to log it is holding, then prompt operator
+    Step 'Waiting for UE editor to come up and pause on go.flag'
+    $holdReady = $false
+    $holdStart = Get-Date
+    while (-not $proc.HasExited -and ((Get-Date) - $holdStart).TotalSeconds -lt 180) {
+        if (Test-Path $editorLog) {
+            $tail = Get-Content $editorLog -Tail 200 -ErrorAction SilentlyContinue
+            if ($tail -and ($tail -match 'REMOTE_HOLD_v1: waiting for go\.flag')) {
+                $holdReady = $true
+                break
+            }
+        }
+        Start-Sleep -Seconds 2
+    }
+    if (-not $holdReady) {
+        Warn 'Did not see REMOTE_HOLD_v1 marker within 3 min; proceeding anyway'
+    } else {
+        Info 'Actor is parked on REMOTE_HOLD_v1, ready for remote-connect'
+    }
+    Write-Host ''
+    Write-Host '====================================================================' -ForegroundColor Yellow
+    Write-Host '  ACTION REQUIRED: open Wwise Authoring, click Project -> Connect,'  -ForegroundColor Yellow
+    Write-Host '  pick the UE4Editor process, wait for "Connected" in the status bar.' -ForegroundColor Yellow
+    Write-Host '  Then press Enter here to release the test plan.'                    -ForegroundColor Yellow
+    Write-Host '====================================================================' -ForegroundColor Yellow
+    [void](Read-Host 'Press Enter once remote-connect is established')
+    Set-Content -Path $goFlagPath -Value ((Get-Date).ToUniversalTime().ToString('o')) -Encoding UTF8 -NoNewline
+    Info "Wrote go.flag: $goFlagPath"
 
     $startedAt = Get-Date
     $lastTail  = Get-Date
