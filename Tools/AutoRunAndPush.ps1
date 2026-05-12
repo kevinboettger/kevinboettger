@@ -764,6 +764,26 @@ try {
     $proc = Start-Process -FilePath $editor -ArgumentList $editorArgs -PassThru -WindowStyle Hidden
     Info "Editor PID: $($proc.Id), log: $editorLog"
 
+    # WAAPI_ORCH_v1: spawn live EHM mirror via WAAPI to Wwise Authoring.
+    # Requires Wwise Authoring already running with TencentRCTest.wproj loaded and
+    # remote-connected to the UE editor. If Wwise is not up the orchestrator
+    # logs the failure and continues passively (test still runs).
+    $waapiLog   = Join-Path $RunDirAbs 'waapi.log'
+    $orchScript = Join-Path $ScriptDir 'WaapiOrchestrator.ps1'
+    $orchProc   = $null
+    if (Test-Path $orchScript) {
+        $orchArgs = @('-NoProfile','-ExecutionPolicy','Bypass','-File',"`"$orchScript`"",
+                      '-EditorLog',"`"$editorLog`"",'-LogPath',"`"$waapiLog`"")
+        try {
+            $orchProc = Start-Process -FilePath 'powershell.exe' -ArgumentList $orchArgs -PassThru -WindowStyle Hidden
+            Info "WAAPI orchestrator PID: $($orchProc.Id), log: $waapiLog"
+        } catch {
+            Warn "Failed to start WAAPI orchestrator: $($_.Exception.Message)"
+        }
+    } else {
+        Warn 'WaapiOrchestrator.ps1 missing -- EHM mirror disabled'
+    }
+
     $startedAt = Get-Date
     $lastTail  = Get-Date
     while (-not $proc.HasExited) {
@@ -790,6 +810,12 @@ try {
         }
     }
 
+    # WAAPI_ORCH_v1: stop orchestrator now that editor has exited
+    if ($orchProc -and -not $orchProc.HasExited) {
+        try { Stop-Process -Id $orchProc.Id -Force -ErrorAction SilentlyContinue } catch {}
+        Info 'Stopped WAAPI orchestrator'
+    }
+
     Step 'Collecting CSV + final log'
     $resultsDir = Join-Path $ProjectDir 'Saved\ImmerseStress'
     $csv = $null
@@ -800,6 +826,7 @@ try {
     }
     if ($csv) { Push-File $csv.FullName 'results.csv'; Info "CSV: $($csv.Name)" }
     if (Test-Path $editorLog) { Push-File $editorLog 'editor.log' }
+    if ($waapiLog -and (Test-Path $waapiLog)) { Push-File $waapiLog 'waapi.log' }
 
     # CAPTURE_WAV_v2: collect any per-phase WAV captures
     if (Test-Path $resultsDir) {
