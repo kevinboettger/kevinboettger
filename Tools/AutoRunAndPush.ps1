@@ -495,6 +495,39 @@ void AImmerseStressTestActor::EnableImmerse()
         $changes += 'BypassImmerse/EnableImmerse: wrapper-based'
     }
 
+    if (-not $cpp.Contains('EHM_ONLY_v1')) {
+        Info 'Patch step: EHM_ONLY_v1 (no SetMixer; orchestrator drives EHM via WAAPI)'
+        $bypassNoop = @'
+void AImmerseStressTestActor::BypassImmerse()
+{
+	// EHM_ONLY_v1: no SetMixer call; orchestrator flips EnableImmerse via WAAPI
+	bImmerseBypassed = true;
+	UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] BypassImmerse(bus=%s) -> OK"), *BusName);
+}
+'@
+        $rxBypassNoop = [regex]::new('void\s+AImmerseStressTestActor::BypassImmerse\s*\(\s*\)\s*\{[^{}]*\}', [System.Text.RegularExpressions.RegexOptions]::Singleline)
+        $cpp = $rxBypassNoop.Replace($cpp, $bypassNoop, 1)
+
+        $enableNoop = @'
+void AImmerseStressTestActor::EnableImmerse()
+{
+	// EHM_ONLY_v1: no SetMixer call; orchestrator flips EnableImmerse via WAAPI
+	bImmerseBypassed = false;
+	UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] EnableImmerse(bus=%s, shareset=%s) -> OK"), *BusName, *ImmerseShareSetName);
+}
+'@
+        $rxEnableNoop = [regex]::new('void\s+AImmerseStressTestActor::EnableImmerse\s*\(\s*\)\s*\{[^{}]*\}', [System.Text.RegularExpressions.RegexOptions]::Singleline)
+        $cpp = $rxEnableNoop.Replace($cpp, $enableNoop, 1)
+
+        $changes += 'BypassImmerse/EnableImmerse: EHM_ONLY_v1 (mixer stays on bus; EHM via WAAPI)'
+    }
+
+    if ($cpp.Contains('const int32 ToggleStormCount = 500;')) {
+        Info 'Patch step: TOGGLE_STORM_REDUCED_v1 (500 -> 10 toggles for faster iteration)'
+        $cpp = $cpp.Replace('const int32 ToggleStormCount = 500;', 'const int32 ToggleStormCount = 10; // TOGGLE_STORM_REDUCED_v1')
+        $changes += 'TOGGLE_STORM: count 500 -> 10'
+    }
+
     if (-not $cpp.Contains('TOGGLE_STORM_v1')) {
         Info 'Patch step: insert toggle storm (500 rapid Immerse on/off cycles) at start of FinishPlan'
         $stormInsert = @'
