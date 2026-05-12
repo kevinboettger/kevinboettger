@@ -2,10 +2,11 @@
 param(
     [Parameter(Mandatory=$true)][string]$EditorLog,
     [Parameter(Mandatory=$true)][string]$LogPath,
-    [string]$WaapiUrl        = 'http://127.0.0.1:8090/waapi',
-    [string]$ImmerseEffectId = '{FC04B7CE-5A63-44EA-ABCF-4DC30BD037D4}',
-    [int]   $TimeoutSec      = 1800,
-    [int]   $PollMs          = 200
+    [string]$WaapiUrl          = 'http://127.0.0.1:8090/waapi',
+    [string]$ImmerseEffectId   = '',
+    [string]$ImmerseEffectName = 'Immerse_Audio_Renderer_(Custom)',
+    [int]   $TimeoutSec        = 1800,
+    [int]   $PollMs            = 200
 )
 
 # WAAPI_ORCH_v1: live EHM mirror.
@@ -55,18 +56,42 @@ function Read-WaapiState() {
     return $r.result.return[0]
 }
 
+function Resolve-ImmerseEffectId([string]$Name) {
+    $needle = ($Name -replace '"','\"')
+    $body = '{"uri":"ak.wwise.core.object.get","args":{"from":{"search":["' + $needle + '"]}},"options":{"return":["id","name","type","path"]}}'
+    $r = Invoke-Waapi $body
+    if (-not $r.ok -or -not $r.result -or -not $r.result.return) { return $null }
+    foreach ($obj in $r.result.return) {
+        if ($obj.name -eq $Name -and $obj.type -eq 'Effect') { return $obj.id }
+    }
+    foreach ($obj in $r.result.return) {
+        if ($obj.type -eq 'Effect') { return $obj.id }
+    }
+    return $null
+}
+
 $logDir = Split-Path -Parent $LogPath
 if ($logDir -and -not (Test-Path $logDir)) { New-Item -ItemType Directory -Force -Path $logDir | Out-Null }
 L "WaapiOrchestrator start"
 L "  EditorLog: $EditorLog"
 L "  WaapiUrl:  $WaapiUrl"
-L "  ImmerseId: $ImmerseEffectId"
+
+if (-not $ImmerseEffectId) {
+    $ImmerseEffectId = Resolve-ImmerseEffectId $ImmerseEffectName
+    if (-not $ImmerseEffectId) {
+        L "ERROR: could not resolve Immerse Effect ID by name '$ImmerseEffectName'. Is Wwise Authoring running with the project loaded and WAAPI on $WaapiUrl? Falling back to baseline read with no ID will fail."
+    } else {
+        L "  Resolved Immerse Effect ID by name '$ImmerseEffectName' -> $ImmerseEffectId"
+    }
+} else {
+    L "  ImmerseId: $ImmerseEffectId (explicit)"
+}
 
 $base = Read-WaapiState
 if ($base) {
     L ("baseline: ehm=$($base.'@EnableImmerse') uid=$($base.'@UserID') profile=$($base.'@ConvolutionType') hpeq=$($base.'@HeadphoneEq') bus=$($base.'@BusContent')")
 } else {
-    L "ERROR: baseline read failed -- is Wwise Authoring running with TencentRCTest.wproj loaded and WAAPI on $WaapiUrl?"
+    L "ERROR: baseline read failed -- is Wwise Authoring running with the project loaded, the Immerse FX named '$ImmerseEffectName', and WAAPI on $WaapiUrl?"
 }
 
 $startedAt = Get-Date

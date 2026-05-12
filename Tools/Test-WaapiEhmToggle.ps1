@@ -1,9 +1,10 @@
 [CmdletBinding()]
 param(
-    [string]   $WaapiUrl        = 'http://127.0.0.1:8090/waapi',
-    [string]   $ImmerseEffectId = '{FC04B7CE-5A63-44EA-ABCF-4DC30BD037D4}',
-    [int[]]    $Sequence        = @(0,1,0,1),
-    [int]      $DelayMs         = 1500
+    [string]   $WaapiUrl          = 'http://127.0.0.1:8090/waapi',
+    [string]   $ImmerseEffectId   = '',
+    [string]   $ImmerseEffectName = 'Immerse_Audio_Renderer_(Custom)',
+    [int[]]    $Sequence          = @(0,1,0,1),
+    [int]      $DelayMs           = 1500
 )
 
 # WAAPI_PROBE_v1: standalone EHM toggle probe.
@@ -55,6 +56,20 @@ function Read-Ehm() {
     return $r.result.return[0].'@EnableImmerse'
 }
 
+function Resolve-ImmerseEffectId([string]$Name) {
+    $needle = ($Name -replace '"','\"')
+    $body = '{"uri":"ak.wwise.core.object.get","args":{"from":{"search":["' + $needle + '"]}},"options":{"return":["id","name","type","path"]}}'
+    $r = Invoke-Waapi $body
+    if (-not $r.ok -or -not $r.result -or -not $r.result.return) { return $null }
+    foreach ($obj in $r.result.return) {
+        if ($obj.name -eq $Name -and $obj.type -eq 'Effect') { return $obj.id }
+    }
+    foreach ($obj in $r.result.return) {
+        if ($obj.type -eq 'Effect') { return $obj.id }
+    }
+    return $null
+}
+
 function Set-Ehm([bool]$Enabled) {
     $vJson = $Enabled.ToString().ToLower()
     $body  = '{"uri":"ak.wwise.core.object.setProperty","args":{"object":"' + $ImmerseEffectId + '","property":"EnableImmerse","value":' + $vJson + '},"options":{}}'
@@ -64,13 +79,22 @@ function Set-Ehm([bool]$Enabled) {
 Write-Host ""
 Write-Host "WAAPI EHM toggle probe"
 Write-Host "  URL:       $WaapiUrl"
-Write-Host "  ImmerseId: $ImmerseEffectId"
+if (-not $ImmerseEffectId) {
+    $ImmerseEffectId = Resolve-ImmerseEffectId $ImmerseEffectName
+    if (-not $ImmerseEffectId) {
+        Write-Host "ERROR: could not resolve Immerse Effect by name '$ImmerseEffectName'. Is Wwise Authoring running with the project loaded?"
+        exit 1
+    }
+    Write-Host "  ImmerseId: $ImmerseEffectId  (resolved from name '$ImmerseEffectName')"
+} else {
+    Write-Host "  ImmerseId: $ImmerseEffectId  (explicit)"
+}
 Write-Host "  Sequence:  $($Sequence -join ',')  DelayMs=$DelayMs"
 Write-Host ""
 
 $baseline = Read-Ehm
 if ($null -eq $baseline) {
-    Write-Host "ERROR: could not read baseline from WAAPI. Is Wwise Authoring running with the project loaded and WAAPI listening on $WaapiUrl?"
+    Write-Host "ERROR: could not read @EnableImmerse on $ImmerseEffectId. Verify the FX is on the bus and project is loaded."
     exit 1
 }
 Write-Host "baseline @EnableImmerse = $baseline"
