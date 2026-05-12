@@ -1,0 +1,29 @@
+﻿[2026-05-12T05:22:34.1265287-07:00] WaapiOrchestrator start
+[2026-05-12T05:22:34.1420937-07:00]   EditorLog: C:\Users\kapil\AppData\Local\Temp\immerse_editor_20260512-052138.log
+[2026-05-12T05:22:34.1431029-07:00]   WaapiUrl:  http://127.0.0.1:8090/waapi
+[2026-05-12T05:22:34.1446115-07:00]   ImmerseId: {FC04B7CE-5A63-44EA-ABCF-4DC30BD037D4}
+[2026-05-12T05:22:34.5645505-07:00] ERROR: baseline read failed -- is Wwise Authoring running with TencentRCTest.wproj loaded and WAAPI on 
+[2026-05-12T05:23:09.6613238-07:00]   set EnableImmerse=False FAILED: The remote server returned an error: (500) Internal Server Error. body=
+[2026-05-12T05:23:09.6633222-07:00] actor: BypassImmerse OK -> WAAPI EnableImmerse=false [FAIL]
+[2026-05-12T05:23:18.6764966-07:00]   set EnableImmerse=True FAILED: The remote server returned an error: (500) Internal Server Error. body=
+[2026-05-12T05:23:18.6800098-07:00] actor: EnableImmerse OK  -> WAAPI EnableImmerse=true  [FAIL]
+[2026-05-12T05:23:27.5931695-07:00]   set EnableImmerse=False FAILED: The remote server returned an error: (500) Internal Server Error. body=
+[2026-05-12T05:23:27.5956814-07:00] actor: BypassImmerse OK -> WAAPI EnableImmerse=false [FAIL]
+[2026-05-12T05:23:27.9664581-07:00]   set EnableImmerse=True FAILED: The remote server returned an error: (500) Internal Server Error. body=
+[2026-05-12T05:23:27.9699813-07:00] actor: EnableImmerse OK  -> WAAPI EnableImmerse=true  [FAIL]
+[2026-05-12T05:23:28.3412656-07:00]   set EnableImmerse=False FAILED: The remote server returned an error: (500) Internal Server Error. body=
+[2026-05-12T05:23:28.3457786-07:00] actor: BypassImmerse OK -> WAAPI EnableImmerse=false [FAIL]
+[2026-05-12T05:23:28.7155440-07:00]   set EnableImmerse=True FAILED: The remote server returned an error: (500) Internal Server Error. body=
+[2026-05-12T05:23:28.7180540-07:00] actor: EnableImmerse OK  -> WAAPI EnableImmerse=true  [FAIL]
+[2026-05-12T05:23:29.0776111-07:00]   set EnableImmerse=False FAILED: The remote server returned an error: (500) Internal Server Error. body=
+[2026-05-12T05:23:29.0821441-07:00] actor: BypassImmerse OK -> WAAPI EnableImmerse=false [FAIL]
+[2026-05-12T05:23:29.4503646-07:00]   set EnableImmerse=True FAILED: The remote server returned an error: (500) Internal Server Error. body=
+[2026-05-12T05:23:29.4558719-07:00] actor: EnableImmerse OK  -> WAAPI EnableImmerse=true  [FAIL]
+[2026-05-12T05:23:29.8277296-07:00]   set EnableImmerse=False FAILED: The remote server returned an error: (500) Internal Server Error. body=
+[2026-05-12T05:23:29.8327498-07:00] actor: BypassImmerse OK -> WAAPI EnableImmerse=false [FAIL]
+[2026-05-12T05:23:30.2046957-07:00]   set EnableImmerse=True FAILED: The remote server returned an error: (500) Internal Server Error. body=
+[2026-05-12T05:23:30.2102403-07:00] actor: EnableImmerse OK  -> WAAPI EnableImmerse=true  [FAIL]
+[2026-05-12T05:23:30.5792041-07:00]   set EnableImmerse=False FAILED: The remote server returned an error: (500) Internal Server Error. body=
+[2026-05-12T05:23:30.5832167-07:00] actor: BypassImmerse OK -> WAAPI EnableImmerse=false [FAIL]
+[2026-05-12T05:23:30.9556431-07:00]   set EnableImmerse=True FAILED: The remote server returned an error: (500) Internal Server Error. body=
+[2026-05-12T05:23:30.9631779-07:00] actor: EnableImmerse OK  -> WAAPI EnableImmerse=true  [FAIL]
