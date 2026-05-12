@@ -371,6 +371,14 @@ function Patch-Sources {
             Write-AllText-Safe -Path $keyHeader -Content $h -MinLengthGuard ([int]($hOrigLen / 2))
             $changes += 'Header: LOAD_BOOST_v1 (300Hz, 500ms, conc=32/64/128/256)'
         }
+        if (-not [string]::IsNullOrEmpty($h) -and -not $h.Contains('ITER_FAST_v1')) {
+            Info 'Patch step: ITER_FAST_v1 (concurrency=1 level, phase=5s -- fast EHM toggle test)'
+            $hOrigLen2 = $h.Length
+            $h = [regex]::Replace($h, 'TArray<int32>\s+ConcurrencyLevels\s*=\s*\{[^}]*\}\s*;', 'TArray<int32> ConcurrencyLevels = { 32 }; // ITER_FAST_v1')
+            $h = [regex]::Replace($h, 'float\s+PhaseDurationSeconds\s*=\s*[\d\.]+f?\s*;', 'float PhaseDurationSeconds = 5.f; // ITER_FAST_v1')
+            Write-AllText-Safe -Path $keyHeader -Content $h -MinLengthGuard ([int]($hOrigLen2 / 2))
+            $changes += 'Header: ITER_FAST_v1 (conc={32}, phase=5s)'
+        }
     }
 
     if (-not (Test-Path $keyCpp)) { return }
