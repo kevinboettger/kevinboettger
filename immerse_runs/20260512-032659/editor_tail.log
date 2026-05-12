@@ -1,0 +1,120 @@
+﻿[2026.05.12-10.27.48:059][  0]LogFileCache: Scanning file cache for directory 'C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Collections/' took 0.00s
+[2026.05.12-10.27.48:059][  0]LogFileCache: Scanning file cache for directory 'C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Content/Developers/kapil/Collections/' took 0.00s
+[2026.05.12-10.27.48:059][  0]LogFileCache: Scanning file cache for directory 'C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Content/Collections/' took 0.00s
+[2026.05.12-10.27.48:059][  0]LogCollectionManager: Fixed up redirectors for 0 collections in 0.000002 seconds (updated 0 objects)
+[2026.05.12-10.27.48:124][  0]LogAkAudio: Wwise(R) SDK Version 2019.2.15 Build 7667. Copyright (c) 2006-2019 Audiokinetic Inc.
+[2026.05.12-10.27.48:125][  0]LogAkAudio: Wwise plug-in DLL path: C:/Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Plugins/Wwise/ThirdParty/x64_vc150/Profile/bin/
+[2026.05.12-10.27.48:125][  0]LogAkAudio: Wwise remote connection application name: testTP
+[2026.05.12-10.27.48:125][  0]LogAkAudio: Wwise successfully initialized.
+[2026.05.12-10.27.48:129][  0]LogAkAudio: Initialization complete.
+[2026.05.12-10.27.48:129][  0]LogInit: Audiokinetic Audio Device initialized.
+[2026.05.12-10.27.48:241][  0]SourceControl: Source control is disabled
+[2026.05.12-10.27.48:242][  0]SourceControl: Source control is disabled
+[2026.05.12-10.27.48:245][  0]SourceControl: Source control is disabled
+[2026.05.12-10.27.48:271][  0]LogUProjectInfo: Found projects:
+[2026.05.12-10.27.48:334][  0]LogOpenImageDenoise: OIDN starting up
+[2026.05.12-10.27.48:359][  0]LogAndroidPermission: UAndroidPermissionCallbackProxy::GetInstance
+[2026.05.12-10.27.48:368][  0]LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
+[2026.05.12-10.27.48:369][  0]LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
+[2026.05.12-10.27.48:422][  0]LogOcInput: OculusInput pre-init called
+[2026.05.12-10.27.48:427][  0]LogUObjectArray: 22811 objects as part of root set at end of initial load.
+[2026.05.12-10.27.48:428][  0]LogUObjectAllocator: 6215680 out of 0 bytes used by permanent object pool.
+[2026.05.12-10.27.48:428][  0]LogUObjectArray: CloseDisregardForGC: 0/0 objects in disregard for GC pool
+[2026.05.12-10.27.48:471][  0]LogClass: Display: EnumProperty FAkExternalSourceInfo::CodecID is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
+[2026.05.12-10.27.48:471][  0]LogClass: Warning: ObjectProperty FAkExternalSourceInfo::ExternalSourceAsset is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
+[2026.05.12-10.27.48:471][  0]LogClass: Display: IntProperty FAkChannelMask::ChannelMask is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
+[2026.05.12-10.27.48:471][  0]LogClass: Display: 3 Uninitialized script struct members found including 1 object properties
+[2026.05.12-10.27.48:472][  0]LogAutomationTest: Warning: ObjectProperty FAkExternalSourceInfo::ExternalSourceAsset is not initialized properly. Module:AkAudio File:Classes/AkGameplayTypes.h
+[2026.05.12-10.27.48:472][  0]LogEngine: Initializing Engine...
+[2026.05.12-10.27.48:474][  0]LogHMD: Failed to enumerate extensions. Please check that you have a valid OpenXR runtime installed.
+[2026.05.12-10.27.48:474][  0]LogHMD: Failed to initialize OpenVR with code 110
+[2026.05.12-10.27.48:474][  0]LogMagicLeap: Warning: VR disabled because ZI is not enabled.  To enable, in the editor, Edit -> Project Settings -> Plugins -> Magic Leap Plugin -> Enable Zero Iteration
+[2026.05.12-10.27.48:475][  0]LogStats: UGameplayTagsManager::InitializeManager -  0.000 s
+[2026.05.12-10.27.48:539][  0]LogInit: Initializing FReadOnlyCVARCache
+[2026.05.12-10.27.48:539][  0]LogAudio: Display: Initializing Audio Device Manager...
+[2026.05.12-10.27.48:541][  0]LogAudio: Display: Loading Default Audio Settings Objects...
+[2026.05.12-10.27.48:542][  0]LogAudio: Display: No default SoundConcurrencyObject specified (or failed to load).
+[2026.05.12-10.27.48:542][  0]LogAudio: Display: Audio Device Manager Initialized
+[2026.05.12-10.27.48:542][  0]LogAudio: Display: Creating Audio Device:                 Id: 1, Scope: Shared, Realtime: True
+[2026.05.12-10.27.48:542][  0]LogAudioMixer: Display: Audio Mixer Platform Settings:
+[2026.05.12-10.27.48:542][  0]LogAudioMixer: Display: 	Sample Rate:						  48000
+[2026.05.12-10.27.48:542][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size Requested: 1024
+[2026.05.12-10.27.48:542][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size To Use:	  1024
+[2026.05.12-10.27.48:542][  0]LogAudioMixer: Display: 	Number of buffers to queue:			  2
+[2026.05.12-10.27.48:542][  0]LogAudioMixer: Display: 	Max Channels (voices):				  32
+[2026.05.12-10.27.48:542][  0]LogAudioMixer: Display: 	Number of Async Source Workers:		  0
+[2026.05.12-10.27.48:542][  0]LogAudio: Display: AudioDevice MaxSources: 32
+[2026.05.12-10.27.48:542][  0]LogAudio: Display: Audio Spatialization Plugin: None (built-in).
+[2026.05.12-10.27.48:542][  0]LogAudio: Display: Audio Reverb Plugin: None (built-in).
+[2026.05.12-10.27.48:542][  0]LogAudio: Display: Audio Occlusion Plugin: None (built-in).
+[2026.05.12-10.27.48:542][  0]LogAudioMixer: Display: Initializing audio mixer.
+[2026.05.12-10.27.48:550][  0]LogAudioMixer: Display: 0: FrontLeft
+[2026.05.12-10.27.48:550][  0]LogAudioMixer: Display: 1: FrontRight
+[2026.05.12-10.27.48:565][  0]LogAudioMixer: Display: Using Audio Device Speakers (2- Realtek(R) Audio)
+[2026.05.12-10.27.48:567][  0]LogAudioMixer: Display: Initializing Sound Submixes...
+[2026.05.12-10.27.48:568][  0]LogAudioMixer: Display: Creating Master Submix 'MasterSubmixDefault'
+[2026.05.12-10.27.48:568][  0]LogAudioMixer: Display: Creating Master Submix 'MasterReverbSubmixDefault'
+[2026.05.12-10.27.48:569][  0]LogAudioMixer: Display: Creating Master Submix 'MasterEQSubmixDefault'
+[2026.05.12-10.27.48:569][  0]LogAudioMixer: FMixerPlatformXAudio2::StartAudioStream() called
+[2026.05.12-10.27.48:569][  0]LogAudioMixer: Display: Output buffers initialized: Frames=1024, Channels=2, Samples=2048
+[2026.05.12-10.27.48:570][  0]LogAudioMixer: Display: Starting AudioMixerPlatformInterface::RunInternal()
+[2026.05.12-10.27.48:570][  0]LogAudioMixer: Display: FMixerPlatformXAudio2::SubmitBuffer() called for the first time
+[2026.05.12-10.27.48:570][  0]LogInit: FAudioDevice initialized.
+[2026.05.12-10.27.48:571][  0]LogNetVersion: Set ProjectVersion to 1.0.0.0. Version Checksum will be recalculated on next use.
+[2026.05.12-10.27.48:611][  0]LogDerivedDataCache: Saved boot cache 0.04s 78MB C:/Users/kapil/AppData/Local/UnrealEngine/4.27/DerivedDataCache/Boot.ddc.
+[2026.05.12-10.27.48:611][  0]LogInit: Texture streaming: Enabled
+[2026.05.12-10.27.48:659][  0]LogAudio: Display: Audio Device (ID: 1) registered with world 'Untitled'.
+[2026.05.12-10.27.48:660][  0]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2026.05.12-10.27.48:660][  0]LogInit: Display: Game Engine Initialized.
+[2026.05.12-10.27.48:660][  0]LogNiagaraEditor: GEditor isn't valid! Particle reset commands will not work for Niagara components!
+[2026.05.12-10.27.48:737][  0]LogInit: Display: Starting Game.
+[2026.05.12-10.27.48:737][  0]LogNet: Browse: /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap?Name=Player
+[2026.05.12-10.27.48:737][  0]LogLoad: LoadMap: /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap?Name=Player
+[2026.05.12-10.27.48:737][  0]LogWorld: BeginTearingDown for /Temp/Untitled_0
+[2026.05.12-10.27.48:739][  0]LogWorld: UWorld::CleanupWorld for Untitled, bSessionEnded=true, bCleanupResources=true
+[2026.05.12-10.27.48:739][  0]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2026.05.12-10.27.48:745][  0]LogAudio: Display: Audio Device unregistered from world 'None'.
+[2026.05.12-10.27.48:747][  0]LogUObjectHash: Compacting FUObjectHashTables data took   0.48ms
+[2026.05.12-10.27.48:906][  0]LogAudio: Display: Audio Device (ID: 1) registered with world 'ThirdPersonExampleMap'.
+[2026.05.12-10.27.48:912][  0]LogAIModule: Creating AISystem for world ThirdPersonExampleMap
+[2026.05.12-10.27.48:914][  0]LogLoad: Game class is 'ThirdPersonGameMode_C'
+[2026.05.12-10.27.48:916][  0]LogWorld: Bringing World /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap up for play (max tick rate 0) at 2026.05.12-03.27.48
+[2026.05.12-10.27.48:916][  0]LogWorld: Bringing up level for play took: 0.002228
+[2026.05.12-10.27.48:918][  0]LogTemp: Display: [ImmerseStress] Ready. Defaults: event=SwordHits bus=7p1p4 shareset=Immerse_Audio_Renderer_(Custom)
+[2026.05.12-10.27.48:918][  0]LogTemp: Display: [ImmerseStress] IMMERSE_USER_ID env=kevin_tencenttest1_emb | IMMERSE_USERID=kevin_tencenttest1_emb | IMMERSE_USER=kevin_tencenttest1_emb
+[2026.05.12-10.27.48:918][  0]LogTemp: Display: [testTP] Auto-spawned ImmerseStressTestActor into ThirdPersonExampleMap (type=1)
+[2026.05.12-10.27.48:918][  0]LogLoad: Took 0.180644 seconds to LoadMap(/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap)
+[2026.05.12-10.27.48:940][  0]LogSlate: Took 0.000184 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' (155K)
+[2026.05.12-10.27.48:960][  0]LogRenderer: Reallocating scene render targets to support 1536x864 Format 10 NumSamples 1 (Frame:1).
+[2026.05.12-10.27.48:960][  0]LogInit: Display: Engine is initialized. Leaving FEngineLoop::Init()
+[2026.05.12-10.27.48:960][  0]LogLoad: (Engine Initialization) Total time: 4.24 seconds
+[2026.05.12-10.27.48:960][  0]LogLoad: (Engine Initialization) Total Blueprint compile time: 0.00 seconds
+[2026.05.12-10.27.48:983][  0]LogContentStreaming: Texture pool size now 1000 MB
+[2026.05.12-10.27.48:985][  0]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2026.05.12-10.27.49:069][  0]LogRenderer: Reallocating scene render targets to support 128x128 Format 10 NumSamples 1 (Frame:1).
+[2026.05.12-10.27.49:085][  0]LogRenderer: Reallocating scene render targets to support 1536x864 Format 10 NumSamples 1 (Frame:2).
+[2026.05.12-10.27.49:092][  1]LogSlate: Took 0.000130 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' (155K)
+[2026.05.12-10.27.51:482][175]LogTemp: Display: [ImmerseStress] REMOTE_HOLD_v1: waiting for go.flag (../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/go.flag) retry=1
+[2026.05.12-10.28.01:003][988]LogTemp: Display: [ImmerseStress] REMOTE_HOLD_v1: waiting for go.flag (../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/go.flag) retry=20
+[2026.05.12-10.28.10:023][374]LogTemp: Display: [ImmerseStress] REMOTE_HOLD_v1: go.flag detected after 37 retries
+[2026.05.12-10.28.10:023][374]LogTemp: Display: [ImmerseStress] PLAN START  steps=8 (concurrency=4 Ã— immerse{off,on}) rate=300.0Hz life=500ms warmup=2.0s phase=15.0s cooldown=2.0s CSV=../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/run_20260512_032810.csv
+[2026.05.12-10.28.10:023][374]LogTemp: Display: [ImmerseStress] BypassImmerse(bus=7p1p4) -> OK
+[2026.05.12-10.28.10:023][374]LogTemp: Display: [ImmerseStress] >>> WARMUP step=0/8 immerse=off conc=32 (align Wwise profiler capture here)
+[2026.05.12-10.28.10:023][374]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=32 immerse=BYPASSED
+[2026.05.12-10.28.10:085][399]LogStats: Display: There is no thread with id: 37728. Please add thread metadata for this thread.
+[2026.05.12-10.28.12:024][256]LogTemp: Display: [ImmerseStress] >>> RUNNING step=0/8 immerse=off conc=32 (align Wwise profiler capture here)
+[2026.05.12-10.28.12:024][256]LogTemp: Display: [ImmerseStress] CAPTURE_WAV_v2 START ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_0_off.wav
+[2026.05.12-10.28.12:027][258]LogAkAudio: Error: Cannot open file ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Wwise/../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_0_off.wav for write.
+[2026.05.12-10.28.12:027][258]LogAkAudio: Error: Cannot open file: ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_0_off.wav
+[2026.05.12-10.28.27:024][760]LogTemp: Display: [ImmerseStress] PHASE 0 done immerse=off conc=32 posted=960 stopped=960 dropped=3540 frames=6504 avg=2.31ms p50=2.22 p95=2.78 max=45.63
+[2026.05.12-10.28.27:024][760]LogTemp: Display: [ImmerseStress] CAPTURE_WAV_v2 STOP
+[2026.05.12-10.28.27:024][760]LogTemp: Display: [ImmerseStress] >>> COOLDOWN step=0/8 immerse=off conc=32 (align Wwise profiler capture here)
+[2026.05.12-10.28.27:024][760]LogTemp: Display: [ImmerseStress] Churn STOP   posted=1088 stopped=1088 dropped=4011
+[2026.05.12-10.28.29:025][661]LogTemp: Display: [ImmerseStress] EnableImmerse(bus=7p1p4, shareset=Immerse_Audio_Renderer_(Custom)) -> OK
+[2026.05.12-10.28.29:025][661]LogTemp: Display: [ImmerseStress] >>> WARMUP step=1/8 immerse=ON conc=32 (align Wwise profiler capture here)
+[2026.05.12-10.28.29:025][661]LogTemp: Display: [ImmerseStress] Churn START  event=SwordHits rate=300.0Hz life=500ms cap=32 immerse=enabled
+[2026.05.12-10.28.31:026][572]LogTemp: Display: [ImmerseStress] >>> RUNNING step=1/8 immerse=ON conc=32 (align Wwise profiler capture here)
+[2026.05.12-10.28.31:026][572]LogTemp: Display: [ImmerseStress] CAPTURE_WAV_v2 START ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_1_on.wav
+[2026.05.12-10.28.31:029][574]LogAkAudio: Error: Cannot open file ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/Wwise/../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_1_on.wav for write.
+[2026.05.12-10.28.31:029][574]LogAkAudio: Error: Cannot open file: ../../../../../../Users/kapil/OneDrive/Documents/Unreal Projects/testTP/Saved/ImmerseStress/phase_1_on.wav
+[2026.05.12-10.28.31:035][577]LogStats: Display: There is no thread with id: 26732. Please add thread metadata for this thread.
