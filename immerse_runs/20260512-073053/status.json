@@ -1,9 +1,8 @@
 ﻿{
     "machine":  "IMMERSEDEMOM5",
-    "markers":  null,
-    "updated_at":  "2026-05-12T14:33:19.5787271Z",
-    "elapsed_s":  30,
-    "phase":  "testing",
+    "updated_at":  "2026-05-12T14:33:25.0740517Z",
+    "csv_name":  "run_20260512_073249.csv",
+    "phase":  "completed",
     "run_id":  "20260512-073053",
     "user":  "kapil"
 }
