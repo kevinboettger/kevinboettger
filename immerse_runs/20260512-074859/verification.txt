@@ -1,0 +1,26 @@
+﻿===== ImmerseToggle Verification =====
+  WaapiLog: C:\Users\kapil\OneDrive\Documents\Unreal Projects\testTP\Tools\_results_repo\immerse_runs\20260512-074859\waapi.log
+  DebugLog: C:\Users\kapil\OneDrive\Documents\Unreal Projects\testTP\Tools\_results_repo\immerse_runs\20260512-074859\immerse_debug.log
+
+  WAAPI flips:           12
+  Runtime inMode lines:  26
+  Runtime transitions:   14 (deduped)
+  ProfileName mentions:  4  unique=[Profile_1]
+
+  PASS  WAAPI 07:50:06.720 ->0   runtime inMode=0  lag=1ms
+  PASS  WAAPI 07:50:15.535 ->1   runtime inMode=1  lag=18ms
+  PASS  WAAPI 07:50:24.544 ->0   runtime inMode=0  lag=4ms
+  PASS  WAAPI 07:50:24.553 ->1   runtime inMode=1  lag=18ms
+  PASS  WAAPI 07:50:24.559 ->0   runtime inMode=0  lag=14ms
+  PASS  WAAPI 07:50:24.564 ->1   runtime inMode=1  lag=11ms
+  PASS  WAAPI 07:50:24.568 ->0   runtime inMode=0  lag=9ms
+  PASS  WAAPI 07:50:24.573 ->1   runtime inMode=1  lag=26ms
+  PASS  WAAPI 07:50:24.581 ->0   runtime inMode=0  lag=19ms
+  PASS  WAAPI 07:50:24.588 ->1   runtime inMode=1  lag=14ms
+  PASS  WAAPI 07:50:24.593 ->0   runtime inMode=0  lag=10ms
+  PASS  WAAPI 07:50:24.598 ->1   runtime inMode=1  lag=7ms
+
+Profile check: expected='Profile_1'  loaded=True
+User check: SetUserId_calls=1  userIds_seen=[kevin_tencenttest1_emb]  expected='kevin_tencenttest1_emb'  match=True
+
+SUMMARY: 12 pass / 0 fail / total 12  profile_ok=True  user_load_ok=True
