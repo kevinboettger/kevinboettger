@@ -2,17 +2,21 @@ $ErrorActionPreference = 'Continue'
 $PSNativeCommandUseErrorActionPreference = $false
 try { $PSStyle.OutputRendering = 'PlainText' } catch { }
 
-$ScriptDir   = Split-Path -Parent $MyInvocation.MyCommand.Path
-$ProjectDir  = Split-Path -Parent $ScriptDir
-$RunId       = Get-Date -Format 'yyyyMMdd-HHmmss'
-$ResultsRoot = Join-Path $ScriptDir '_results_repo'
-$Owner       = 'kevinboettger'
-$Repo        = 'kevinboettger'
-$Branch      = 'claude/test-immerse-audio-plugin-su44W'
-$RunDirRel   = "immerse_runs/$RunId"
-$RunDirAbs   = $null
-$ImmerseUserId = 'kevin_tencenttest1_emb'
-$CanonRawBase = "https://raw.githubusercontent.com/$Owner/$Repo/$Branch/Tools/source_canon"
+# TIER1_WAAPI_v1: end-to-end functional test of the Immerse Audio Renderer
+# driven entirely through WAAPI. No UE source patching, no build step.
+# Assumes any UE C++ project with Wwise integration + an auto-playing event,
+# plus a reference Wwise project + an installed Immerse Authoring plug-in.
+
+$ScriptDir     = Split-Path -Parent $MyInvocation.MyCommand.Path
+$ProjectDir    = Split-Path -Parent $ScriptDir
+$RunId         = Get-Date -Format 'yyyyMMdd-HHmmss'
+$ResultsRoot   = Join-Path $ScriptDir '_results_repo'
+$Owner         = 'kevinboettger'
+$Repo          = 'kevinboettger'
+$Branch        = 'claude/test-immerse-tier1-waapi'
+$RunDirRel     = "immerse_runs/$RunId"
+$RunDirAbs     = $null
+$ImmerseUserId = if ($env:IMMERSE_USER_ID) { $env:IMMERSE_USER_ID } else { 'kevin_tencenttest1_emb' }
 
 function Step($m) { Write-Host "==== $m ====" -ForegroundColor Cyan }
 function Info($m) { Write-Host "    $m" -ForegroundColor DarkGray }
@@ -20,122 +24,27 @@ function Warn($m) { Write-Host "    $m" -ForegroundColor Yellow }
 
 function Invoke-Git {
     param([Parameter(ValueFromRemainingArguments=$true)][string[]]$GitArgs)
-    $tempErr = [System.IO.Path]::GetTempFileName()
-    try {
-        $stdout = & git @GitArgs 2>$tempErr
-        $code = $LASTEXITCODE
-        $stderr = ''
-        if (Test-Path $tempErr) { $stderr = Get-Content $tempErr -Raw -ErrorAction SilentlyContinue }
-        return [PSCustomObject]@{
-            ExitCode = $code
-            StdOut   = ($stdout -join "`n")
-            StdErr   = ($stderr -as [string])
-        }
-    } finally {
-        Remove-Item $tempErr -ErrorAction SilentlyContinue
-    }
-}
-
-function Read-AllText {
-    param([Parameter(Mandatory=$true)][string]$Path)
-    if (-not (Test-Path $Path)) { throw "File not found: $Path" }
-    return [System.IO.File]::ReadAllText($Path)
-}
-
-function Write-AllText-Safe {
-    param(
-        [Parameter(Mandatory=$true)][string]$Path,
-        [Parameter(Mandatory=$true)][AllowNull()][AllowEmptyString()]$Content,
-        [int]$MinLengthGuard = 0
-    )
-    if ($null -eq $Content -or [string]::IsNullOrEmpty($Content)) {
-        throw "Refusing to write null/empty content to $Path"
-    }
-    if ((Test-Path $Path) -and $MinLengthGuard -gt 0 -and $Content.Length -lt $MinLengthGuard) {
-        throw "Refusing to write ${Path}: new length $($Content.Length) is below guard ($MinLengthGuard)"
-    }
-    $dir = Split-Path $Path -Parent
-    if ($dir -and -not (Test-Path $dir)) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
-    [System.IO.File]::WriteAllText($Path, $Content, [System.Text.UTF8Encoding]::new($false))
-}
-
-function Regex-Replace {
-    param(
-        [Parameter(Mandatory=$true)][string]$Step,
-        [Parameter(Mandatory=$true)][AllowEmptyString()][string]$InputText,
-        [Parameter(Mandatory=$true)][string]$Pattern,
-        [Parameter(Mandatory=$true)][AllowEmptyString()][string]$Replacement
-    )
-    if ($null -eq $InputText) {
-        throw "Regex-Replace[$Step]: input is null"
-    }
-    $rx = [regex]::new($Pattern, [System.Text.RegularExpressions.RegexOptions]::Singleline)
-    return $rx.Replace($InputText, $Replacement)
-}
-
-function Ensure-CanonicalSource {
-    param(
-        [Parameter(Mandatory=$true)][string]$LocalPath,
-        [Parameter(Mandatory=$true)][string]$CanonName,
-        [int]$MinBytes = 50
-    )
-    $existing = $null
-    if (Test-Path $LocalPath) { $existing = (Get-Item $LocalPath).Length }
-    if ($null -ne $existing -and $existing -ge $MinBytes) { return $false }
-
-    $reason = if ($null -eq $existing) { 'missing' } else { "$existing bytes (< $MinBytes)" }
-    Warn "  $CanonName is $reason -- restoring from canonical..."
-
-    $url = "$CanonRawBase/$CanonName" + "?_=" + [DateTime]::UtcNow.Ticks
-    $headers = @{ 'Cache-Control' = 'no-cache, no-store, max-age=0'; 'Pragma' = 'no-cache' }
-    try {
-        $response = Invoke-WebRequest -Uri $url -UseBasicParsing -Headers $headers -ErrorAction Stop
-        $content = $response.Content
-        if ($null -eq $content -or $content.Length -lt $MinBytes) {
-            Warn "  canonical $CanonName came back too small ($($content.Length) bytes)"
-            return $false
-        }
-        Write-AllText-Safe -Path $LocalPath -Content $content
-        Info "  restored $CanonName -> $LocalPath ($($content.Length) bytes)"
-        return $true
-    } catch {
-        $msg = $_.Exception.Message
-        Warn "  failed to download canonical ${CanonName}: $msg"
-        return $false
-    }
-}
-
-function Restore-CppFromBackup {
-    param(
-        [Parameter(Mandatory=$true)][string]$KeyCpp,
-        [Parameter(Mandatory=$true)][string]$RepoRoot
-    )
-    $runsDir = Join-Path $RepoRoot 'immerse_runs'
-    if (-not (Test-Path $runsDir)) { return $false }
-    $backups = Get-ChildItem $runsDir -Recurse -Filter 'ImmerseStressTestActor.cpp.before' -ErrorAction SilentlyContinue |
-        Where-Object { $_.Length -gt 1000 } |
-        Sort-Object LastWriteTime -Descending
-    if (-not $backups -or $backups.Count -eq 0) { return $false }
-    $best = $backups | Select-Object -First 1
-    Info "  restoring cpp from $($best.FullName) ($($best.Length) bytes)"
-    Copy-Item $best.FullName $KeyCpp -Force
-    return $true
+    $psi = New-Object System.Diagnostics.ProcessStartInfo
+    $psi.FileName = 'git'
+    $psi.UseShellExecute = $false
+    $psi.RedirectStandardOutput = $true
+    $psi.RedirectStandardError  = $true
+    foreach ($a in $GitArgs) { $psi.ArgumentList.Add($a) }
+    $p = [System.Diagnostics.Process]::Start($psi)
+    $stdout = $p.StandardOutput.ReadToEnd()
+    $stderr = $p.StandardError.ReadToEnd()
+    $p.WaitForExit()
+    return @{ ExitCode = $p.ExitCode; StdOut = $stdout; StdErr = $stderr }
 }
 
 $tokenFile = Join-Path $ScriptDir '.github_token'
 if (-not (Test-Path $tokenFile)) {
-    Write-Host "MISSING: $tokenFile" -ForegroundColor Red
+    Write-Host "ERROR: missing GitHub token file: $tokenFile" -ForegroundColor Red
+    Write-Host '  Put a fine-grained PAT with contents:write into that file (one line).' -ForegroundColor Red
     Read-Host 'Press Enter to close'; exit 1
 }
-$Token     = (Get-Content $tokenFile -Raw).Trim()
+$Token     = (Get-Content -Raw $tokenFile).Trim()
 $RemoteUrl = "https://x-access-token:$Token@github.com/$Owner/$Repo.git"
-
-$verCheck = Invoke-Git --version
-if ($verCheck.ExitCode -ne 0) {
-    Write-Host "FATAL: git not on PATH." -ForegroundColor Red
-    Read-Host 'Press Enter to close'; exit 1
-}
-$env:GIT_TERMINAL_PROMPT = '0'
 
 function Init-ResultsRepo {
     if (Test-Path $ResultsRoot) {
@@ -148,9 +57,9 @@ function Init-ResultsRepo {
         Step "Cloning results checkout"
         $r = Invoke-Git clone --quiet --branch $Branch --single-branch $RemoteUrl $ResultsRoot
         if ($r.ExitCode -ne 0) {
-            Write-Host "git clone failed (exit $($r.ExitCode))" -ForegroundColor Red
-            if ($r.StdErr) { Write-Host "stderr:`n$($r.StdErr)" -ForegroundColor Red }
-            throw "git clone failed (exit $($r.ExitCode))"
+            Write-Host "ERROR: git clone failed (exit $($r.ExitCode))" -ForegroundColor Red
+            Write-Host $r.StdErr -ForegroundColor Red
+            throw 'clone failed'
         }
     } else {
         $null = Invoke-Git -C $ResultsRoot remote set-url origin $RemoteUrl
@@ -159,7 +68,7 @@ function Init-ResultsRepo {
         $null = Invoke-Git -C $ResultsRoot reset --hard "origin/$Branch"
     }
     $null = Invoke-Git -C $ResultsRoot config user.email 'immerse-bot@local'
-    $null = Invoke-Git -C $ResultsRoot config user.name 'ImmerseStressBot'
+    $null = Invoke-Git -C $ResultsRoot config user.name 'ImmerseTier1Bot'
 }
 
 function Push-To-Branch {
@@ -175,7 +84,7 @@ function Push-To-Branch {
             $push = Invoke-Git -C $ResultsRoot push origin $Branch
             if ($push.ExitCode -eq 0) { return $true }
             Warn "push retry $($i+1): $($push.StdErr)"
-            Start-Sleep -Seconds ([math]::Pow(2, $i + 1))
+            Start-Sleep -Seconds ([Math]::Pow(2, $i + 1))
         }
         Warn 'push retries exhausted'
         return $false
@@ -184,21 +93,20 @@ function Push-To-Branch {
 }
 
 function Push-Status {
-    param([string]$Phase, [hashtable]$Extra = @{})
+    param([string]$Phase, [hashtable]$Extra)
     if (-not $script:RunDirAbs) {
         $script:RunDirAbs = Join-Path $ResultsRoot $RunDirRel
         New-Item -ItemType Directory -Force -Path $script:RunDirAbs | Out-Null
     }
-    $obj = @{
-        run_id     = $RunId
-        phase      = $Phase
-        machine    = $env:COMPUTERNAME
-        user       = $env:USERNAME
-        updated_at = (Get-Date).ToUniversalTime().ToString('o')
+    $obj = [ordered]@{
+        run_id    = $RunId
+        phase     = $Phase
+        timestamp = (Get-Date).ToUniversalTime().ToString('o')
+        host      = $env:COMPUTERNAME
     }
-    foreach ($k in $Extra.Keys) { $obj[$k] = $Extra[$k] }
+    if ($Extra) { foreach ($k in $Extra.Keys) { $obj[$k] = $Extra[$k] } }
     ($obj | ConvertTo-Json -Depth 6) | Set-Content -Path (Join-Path $script:RunDirAbs 'status.json') -Encoding UTF8
-    [void](Push-To-Branch "[$RunId] $Phase")
+    Push-To-Branch -Msg "$RunId : $Phase" | Out-Null
     Info "pushed status: $Phase"
 }
 
@@ -208,561 +116,31 @@ function Push-File([string]$Local, [string]$Name) {
         $script:RunDirAbs = Join-Path $ResultsRoot $RunDirRel
         New-Item -ItemType Directory -Force -Path $script:RunDirAbs | Out-Null
     }
-    Copy-Item $Local -Destination (Join-Path $script:RunDirAbs $Name) -Force
+    Copy-Item -LiteralPath $Local -Destination (Join-Path $script:RunDirAbs $Name) -Force
 }
 
-function Ensure-AkAudioMixerWrapper {
-    $wwiseSrcRoot = Join-Path $ProjectDir 'Plugins\Wwise\Source\AkAudio'
-    $publicDir    = Join-Path $wwiseSrcRoot 'Public'
-    $privateDir   = Join-Path $wwiseSrcRoot 'Private'
-    if (-not (Test-Path $publicDir) -or -not (Test-Path $privateDir)) {
-        Warn "AkAudio module source dirs not present at $wwiseSrcRoot"
-        return $false
-    }
-
-    $hdr = Join-Path $publicDir  'ImmerseStressMixerWrapper.h'
-    $src = Join-Path $privateDir 'ImmerseStressMixerWrapper.cpp'
-
-    $hdrContent = @'
-// Auto-generated by Tools/AutoRunAndPush.ps1.
-#pragma once
-
-#include "AkInclude.h"
-
-class FString;
-
-namespace ImmerseStress
-{
-	AKAUDIO_API AKRESULT SetMixerOnBus(const FString& BusName, AkUniqueID MixerSharesetID);
-	AKAUDIO_API AKRESULT SetMixerOnBusByName(const FString& BusName, const FString& MixerSharesetName);
-
-	// CAPTURE_WAV_v2: per-phase WAV capture wrappers (route through AkAudio DLL)
-	AKAUDIO_API int StartCapture_v1(const TCHAR* AbsPath);
-	AKAUDIO_API int StopCapture_v1();
-}
-'@
-
-    $srcContent = @'
-// Auto-generated by Tools/AutoRunAndPush.ps1.
-#include "ImmerseStressMixerWrapper.h"
-#include "AK/SoundEngine/Common/AkSoundEngine.h"
-#include "Containers/UnrealString.h"
-
-namespace ImmerseStress
-{
-	AKRESULT SetMixerOnBus(const FString& BusName, AkUniqueID MixerSharesetID)
-	{
-		FTCHARToUTF8 BusUtf8(*BusName);
-		return AK::SoundEngine::SetMixer(BusUtf8.Get(), MixerSharesetID);
-	}
-
-	AKRESULT SetMixerOnBusByName(const FString& BusName, const FString& MixerSharesetName)
-	{
-		AkUniqueID id = AK_INVALID_UNIQUE_ID;
-		if (!MixerSharesetName.IsEmpty())
-		{
-			FTCHARToUTF8 NameUtf8(*MixerSharesetName);
-			id = AK::SoundEngine::GetIDFromString(NameUtf8.Get());
-		}
-		FTCHARToUTF8 BusUtf8(*BusName);
-		return AK::SoundEngine::SetMixer(BusUtf8.Get(), id);
-	}
-
-	// CAPTURE_WAV_v2: AkOSChar == wchar_t on Windows == TCHAR. Direct cast is safe.
-	int StartCapture_v1(const TCHAR* AbsPath)
-	{
-		if (!AbsPath) return -1;
-		return (int)AK::SoundEngine::StartOutputCapture(reinterpret_cast<const AkOSChar*>(AbsPath));
-	}
-
-	int StopCapture_v1()
-	{
-		return (int)AK::SoundEngine::StopOutputCapture();
-	}
-}
-'@
-
-    if (-not (Test-Path $hdr)) {
-        [System.IO.File]::WriteAllText($hdr, $hdrContent, [System.Text.UTF8Encoding]::new($false))
-        Info "Wrote $hdr"
-    } elseif (-not ((Get-Content $hdr -Raw).Contains('StartCapture_v1'))) {
-        [System.IO.File]::WriteAllText($hdr, $hdrContent, [System.Text.UTF8Encoding]::new($false))
-        Info "Updated $hdr (added CAPTURE_WAV_v2 declarations)"
-    }
-    if (-not (Test-Path $src)) {
-        [System.IO.File]::WriteAllText($src, $srcContent, [System.Text.UTF8Encoding]::new($false))
-        Info "Wrote $src"
-    } elseif (-not ((Get-Content $src -Raw).Contains('StartCapture_v1'))) {
-        [System.IO.File]::WriteAllText($src, $srcContent, [System.Text.UTF8Encoding]::new($false))
-        Info "Updated $src (added CAPTURE_WAV_v2 implementations)"
-    }
-    return ((Test-Path $hdr) -and (Test-Path $src))
-}
-
-function Patch-Sources {
-    $changes = @()
-    $sourceRoot = Join-Path $ProjectDir 'Source\testTP'
-    if (-not (Test-Path $sourceRoot)) {
-        Warn "no Source/testTP dir at $sourceRoot"
-        return
-    }
-
-    $keyHeader = Join-Path $sourceRoot 'Public\ImmerseStressTestActor.h'
-    $keyCpp    = Join-Path $sourceRoot 'Private\ImmerseStressTestActor.cpp'
-    $modH      = Join-Path $sourceRoot 'testTP.h'
-    $modCpp    = Join-Path $sourceRoot 'testTP.cpp'
-
-    Info 'Patch step: ensure all 4 source files are present + non-empty'
-    if (Ensure-CanonicalSource -LocalPath $modH      -CanonName 'testTP.h'                -MinBytes 30)   { $changes += 'restored testTP.h' }
-    if (Ensure-CanonicalSource -LocalPath $modCpp    -CanonName 'testTP.cpp'              -MinBytes 200)  { $changes += 'restored testTP.cpp' }
-    if (Ensure-CanonicalSource -LocalPath $keyHeader -CanonName 'ImmerseStressTestActor.h' -MinBytes 1000) { $changes += 'restored ImmerseStressTestActor.h' }
-
-    if (Test-Path $keyCpp) {
-        $cppItem = Get-Item $keyCpp
-        if ($cppItem.Length -lt 1000) {
-            Warn "  ImmerseStressTestActor.cpp is only $($cppItem.Length) bytes -- trying local backup..."
-            if (Restore-CppFromBackup -KeyCpp $keyCpp -RepoRoot $ResultsRoot) {
-                $changes += 'restored ImmerseStressTestActor.cpp from local cpp.before'
-            } elseif (Ensure-CanonicalSource -LocalPath $keyCpp -CanonName 'ImmerseStressTestActor.cpp' -MinBytes 5000) {
-                $changes += 'restored ImmerseStressTestActor.cpp from canonical'
-            } else {
-                Warn '  RESTORE FAILED for cpp; cannot proceed.'
-                Push-Status -Phase 'failed' -Extra @{ stage='restore_cpp'; error='no backup or canonical' }
-                return
-            }
-        }
-    } else {
-        if (Ensure-CanonicalSource -LocalPath $keyCpp -CanonName 'ImmerseStressTestActor.cpp' -MinBytes 5000) {
-            $changes += 'created ImmerseStressTestActor.cpp from canonical'
-        }
-    }
-
-    if (Test-Path $keyHeader) { Push-File $keyHeader 'ImmerseStressTestActor.h.before' }
-    if (Test-Path $keyCpp)    { Push-File $keyCpp    'ImmerseStressTestActor.cpp.before' }
-
-    Info 'Patch step: class IConsoleCommand -> struct'
-    $files = Get-ChildItem $sourceRoot -Recurse -Include *.h,*.cpp -ErrorAction SilentlyContinue
-    foreach ($f in $files) {
-        try { $orig = Read-AllText -Path $f.FullName } catch {
-            Warn "Skipping $($f.Name): $($_.Exception.Message)"; continue
-        }
-        if ([string]::IsNullOrEmpty($orig)) {
-            Warn "Skipping empty file: $($f.Name)"; continue
-        }
-        $patched = Regex-Replace -Step "icc-$($f.Name)" -InputText $orig -Pattern 'class(\s+)IConsoleCommand' -Replacement 'struct$1IConsoleCommand'
-        if ($patched -ne $orig) {
-            Write-AllText-Safe -Path $f.FullName -Content $patched -MinLengthGuard ([Math]::Max(1, [int]($orig.Length / 2)))
-            $changes += "$($f.Name): IConsoleCommand class -> struct"
-        }
-    }
-
-    Info 'Patch step: install AkAudio wrapper files'
-    $wrapperReady = Ensure-AkAudioMixerWrapper
-    if ($wrapperReady) { $changes += 'AkAudio: ImmerseStressMixerWrapper installed/updated' }
-
-    if (Test-Path $keyHeader) {
-        $h = Read-AllText -Path $keyHeader
-        if (-not [string]::IsNullOrEmpty($h) -and -not $h.Contains('LOAD_BOOST_v1')) {
-            Info 'Patch step: LOAD_BOOST_v1 (rate 60->300Hz, life 250->500ms, conc={32,64,128,256})'
-            $hOrigLen = $h.Length
-            $h = [regex]::Replace($h, 'float\s+PlanRateHz\s*=\s*[\d\.]+f?\s*;', 'float PlanRateHz = 300.f; // LOAD_BOOST_v1')
-            $h = [regex]::Replace($h, 'int32\s+PlanEventLifetimeMs\s*=\s*\d+\s*;', 'int32 PlanEventLifetimeMs = 500;')
-            $h = [regex]::Replace($h, 'TArray<int32>\s+ConcurrencyLevels\s*=\s*\{[^}]*\}\s*;', 'TArray<int32> ConcurrencyLevels = { 32, 64, 128, 256 };')
-            Write-AllText-Safe -Path $keyHeader -Content $h -MinLengthGuard ([int]($hOrigLen / 2))
-            $changes += 'Header: LOAD_BOOST_v1 (300Hz, 500ms, conc=32/64/128/256)'
-        }
-        if (-not [string]::IsNullOrEmpty($h) -and -not $h.Contains('ITER_FAST_v1')) {
-            Info 'Patch step: ITER_FAST_v1 (concurrency=1 level, phase=5s -- fast EHM toggle test)'
-            $hOrigLen2 = $h.Length
-            $h = [regex]::Replace($h, 'TArray<int32>\s+ConcurrencyLevels\s*=\s*\{[^}]*\}\s*;', 'TArray<int32> ConcurrencyLevels = { 32 }; // ITER_FAST_v1')
-            $h = [regex]::Replace($h, 'float\s+PhaseDurationSeconds\s*=\s*[\d\.]+f?\s*;', 'float PhaseDurationSeconds = 5.f; // ITER_FAST_v1')
-            Write-AllText-Safe -Path $keyHeader -Content $h -MinLengthGuard ([int]($hOrigLen2 / 2))
-            $changes += 'Header: ITER_FAST_v1 (conc={32}, phase=5s)'
-        }
-    }
-
-    if (-not (Test-Path $keyCpp)) { return }
-
-    $cpp = Read-AllText -Path $keyCpp
-    if ([string]::IsNullOrEmpty($cpp) -or $cpp.Length -lt 1000) {
-        Warn 'cpp content too small after restore -- aborting.'
-        return
-    }
-    $originalLength = $cpp.Length
-    Info "Patch step: probe cpp markers (length=$originalLength)"
-
-    $hasGate    = $cpp.Contains('ImmerseAKReadyRetries')
-    $hasIsInit  = $cpp.Contains('AK::SoundEngine::IsInitialized')
-    $hasTimer   = $cpp.Contains('AutoRunBeginPlayTimer')
-    $hasUidLog  = $cpp.Contains('IMMERSE_USER_ID env')
-    $hasWrapper = $cpp.Contains('IMMERSE_SETMIXER_WRAPPER_v2')
-    $hasNoop    = $cpp.Contains('NOOP_SETMIXER_v1')
-    $hasInc     = $cpp.Contains('ImmerseStressMixerWrapper.h')
-    Info "  gate=$hasGate isInit=$hasIsInit timer=$hasTimer uidLog=$hasUidLog wrapper=$hasWrapper noop=$hasNoop include=$hasInc"
-
-    if (-not $hasGate) {
-        Info 'Patch step: insert FAkAudioDevice readiness gate at top of RunPlan'
-        $insertion = @'
-
-	static int ImmerseAKReadyRetries = 0;
-	if (FAkAudioDevice::Get() == nullptr)
-	{
-		++ImmerseAKReadyRetries;
-		if (ImmerseAKReadyRetries > 40) {
-			UE_LOG(LogTemp, Error, TEXT("[ImmerseStress] FAkAudioDevice still null after ~20s, giving up on auto-run."));
-			ImmerseAKReadyRetries = 0;
-			return;
-		}
-		UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] AkAudioDevice not ready (retry %d), waiting 0.5s..."), ImmerseAKReadyRetries);
-		if (UWorld* W = GetWorld())
-		{
-			FTimerHandle Th;
-			W->GetTimerManager().SetTimer(Th, FTimerDelegate::CreateUObject(this, &AImmerseStressTestActor::RunPlan), 0.5f, false);
-		}
-		return;
-	}
-	ImmerseAKReadyRetries = 0;
-
-'@
-        $rxRP = [regex]::new('(void\s+AImmerseStressTestActor::RunPlan\(\)\s*\{)')
-        $cpp = $rxRP.Replace($cpp, '$1' + $insertion, 1)
-        $changes += 'RunPlan: FAkAudioDevice gate'
-    }
-
-    if (-not $cpp.Contains('REMOTE_HOLD_v1')) {
-        Info 'Patch step: REMOTE_HOLD_v1 (wait for go.flag if IMMERSE_REMOTE_HOLD env var set)'
-        $holdInsert = @'
-
-	// REMOTE_HOLD_v1: pause before the plan starts so the operator can attach the
-	// Wwise Authoring remote connection. Active only when IMMERSE_REMOTE_HOLD env
-	// var is set; otherwise this is a no-op fall-through to the existing gate.
-	{
-		const FString HoldEnv = FPlatformMisc::GetEnvironmentVariable(TEXT("IMMERSE_REMOTE_HOLD"));
-		if (!HoldEnv.IsEmpty())
-		{
-			static int RemoteHoldRetries = 0;
-			const FString FlagPath = FPaths::ProjectSavedDir() / TEXT("ImmerseStress") / TEXT("go.flag");
-			if (!IFileManager::Get().FileExists(*FlagPath))
-			{
-				++RemoteHoldRetries;
-				if (RemoteHoldRetries == 1 || (RemoteHoldRetries % 20) == 0)
-				{
-					UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] REMOTE_HOLD_v1: waiting for go.flag (%s) retry=%d"),
-						*FlagPath, RemoteHoldRetries);
-				}
-				if (UWorld* W = GetWorld())
-				{
-					FTimerHandle ThHold;
-					W->GetTimerManager().SetTimer(ThHold, FTimerDelegate::CreateUObject(this, &AImmerseStressTestActor::RunPlan), 0.5f, false);
-				}
-				return;
-			}
-			if (RemoteHoldRetries > 0)
-			{
-				UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] REMOTE_HOLD_v1: go.flag detected after %d retries"), RemoteHoldRetries);
-				RemoteHoldRetries = 0;
-			}
-		}
-	}
-
-'@
-        $rxRPHold = [regex]::new('(void\s+AImmerseStressTestActor::RunPlan\(\)\s*\{)')
-        $cpp = $rxRPHold.Replace($cpp, '$1' + $holdInsert, 1)
-        $changes += 'RunPlan: REMOTE_HOLD_v1 (waits for go.flag)'
-    }
-
-    if (-not $hasTimer) {
-        Info 'Patch step: defer auto-run via 2.5s timer in BeginPlay'
-        $patternBP = '(if\s*\(\s*bAutoRunOnBeginPlay\s*\)\s*\{)[^{}]*?RunPlan\s*\(\s*\)\s*;[^{}]*?\}'
-        $replacementBP = @'
-$1
-		// AutoRunBeginPlayTimer
-		if (UWorld* WAuto = GetWorld())
-		{
-			FTimerHandle ThAuto;
-			WAuto->GetTimerManager().SetTimer(ThAuto, FTimerDelegate::CreateUObject(this, &AImmerseStressTestActor::RunPlan), 2.5f, false);
-		}
-		else
-		{
-			RunPlan();
-		}
-	}
-'@
-        $rxBP = [regex]::new($patternBP, [System.Text.RegularExpressions.RegexOptions]::Singleline)
-        $cpp = $rxBP.Replace($cpp, $replacementBP, 1)
-        $changes += 'BeginPlay AutoRun: deferred 2.5s'
-    }
-
-    if (-not $hasUidLog) {
-        Info 'Patch step: log IMMERSE_USER_ID env vars at BeginPlay'
-        $logBlock = @'
-
-	UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] IMMERSE_USER_ID env=%s | IMMERSE_USERID=%s | IMMERSE_USER=%s"),
-		*FPlatformMisc::GetEnvironmentVariable(TEXT("IMMERSE_USER_ID")),
-		*FPlatformMisc::GetEnvironmentVariable(TEXT("IMMERSE_USERID")),
-		*FPlatformMisc::GetEnvironmentVariable(TEXT("IMMERSE_USER")));
-
-'@
-        $rxR = [regex]::new('(\[ImmerseStress\] Ready\. Defaults:[^;]+;\s*)')
-        $cpp = $rxR.Replace($cpp, '$1' + $logBlock, 1)
-        $changes += 'BeginPlay: IMMERSE_USER_ID logging'
-    }
-
-    if (-not $hasWrapper -and $wrapperReady) {
-        Info 'Patch step: rewire BypassImmerse/EnableImmerse to wrapper'
-        if (-not $hasInc) {
-            $incReplace = '$1#include "ImmerseStressMixerWrapper.h"' + [Environment]::NewLine
-            $rxInc = [regex]::new('(#include\s+"AK/SoundEngine/Common/AkSoundEngine\.h"[^\n]*\n)')
-            $cpp = $rxInc.Replace($cpp, $incReplace, 1)
-        }
-
-        $bypassReplacement = @'
-void AImmerseStressTestActor::BypassImmerse()
-{
-	// IMMERSE_SETMIXER_WRAPPER_v2: route through AkAudio DLL boundary
-	const AKRESULT Res = ImmerseStress::SetMixerOnBus(BusName, AK_INVALID_UNIQUE_ID);
-	bImmerseBypassed = (Res == AK_Success);
-	UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] BypassImmerse(bus=%s) -> %s"),
-		*BusName, bImmerseBypassed ? TEXT("OK") : TEXT("FAILED"));
-}
-'@
-        $rxBypass = [regex]::new('void\s+AImmerseStressTestActor::BypassImmerse\s*\(\s*\)\s*\{[^{}]*\}', [System.Text.RegularExpressions.RegexOptions]::Singleline)
-        $cpp = $rxBypass.Replace($cpp, $bypassReplacement, 1)
-
-        $enableReplacement = @'
-void AImmerseStressTestActor::EnableImmerse()
-{
-	// IMMERSE_SETMIXER_WRAPPER_v2: route through AkAudio DLL boundary
-	const AKRESULT Res = ImmerseStress::SetMixerOnBusByName(BusName, ImmerseShareSetName);
-	bImmerseBypassed = !(Res == AK_Success);
-	UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] EnableImmerse(bus=%s, shareset=%s) -> %s"),
-		*BusName, *ImmerseShareSetName, (Res == AK_Success) ? TEXT("OK") : TEXT("FAILED"));
-}
-'@
-        $rxEnable = [regex]::new('void\s+AImmerseStressTestActor::EnableImmerse\s*\(\s*\)\s*\{[^{}]*\}', [System.Text.RegularExpressions.RegexOptions]::Singleline)
-        $cpp = $rxEnable.Replace($cpp, $enableReplacement, 1)
-
-        $changes += 'BypassImmerse/EnableImmerse: wrapper-based'
-    }
-
-    if (-not $cpp.Contains('EHM_ONLY_v1')) {
-        Info 'Patch step: EHM_ONLY_v1 (no SetMixer; orchestrator drives EHM via WAAPI)'
-        $bypassNoop = @'
-void AImmerseStressTestActor::BypassImmerse()
-{
-	// EHM_ONLY_v1: no SetMixer call; orchestrator flips EnableImmerse via WAAPI
-	bImmerseBypassed = true;
-	UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] BypassImmerse(bus=%s) -> OK"), *BusName);
-}
-'@
-        $rxBypassNoop = [regex]::new('void\s+AImmerseStressTestActor::BypassImmerse\s*\(\s*\)\s*\{[^{}]*\}', [System.Text.RegularExpressions.RegexOptions]::Singleline)
-        $cpp = $rxBypassNoop.Replace($cpp, $bypassNoop, 1)
-
-        $enableNoop = @'
-void AImmerseStressTestActor::EnableImmerse()
-{
-	// EHM_ONLY_v1: no SetMixer call; orchestrator flips EnableImmerse via WAAPI
-	bImmerseBypassed = false;
-	UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] EnableImmerse(bus=%s, shareset=%s) -> OK"), *BusName, *ImmerseShareSetName);
-}
-'@
-        $rxEnableNoop = [regex]::new('void\s+AImmerseStressTestActor::EnableImmerse\s*\(\s*\)\s*\{[^{}]*\}', [System.Text.RegularExpressions.RegexOptions]::Singleline)
-        $cpp = $rxEnableNoop.Replace($cpp, $enableNoop, 1)
-
-        $changes += 'BypassImmerse/EnableImmerse: EHM_ONLY_v1 (mixer stays on bus; EHM via WAAPI)'
-    }
-
-    if ($cpp.Contains('const int32 ToggleStormCount = 500;')) {
-        Info 'Patch step: TOGGLE_STORM_REDUCED_v1 (500 -> 10 toggles for faster iteration)'
-        $cpp = $cpp.Replace('const int32 ToggleStormCount = 500;', 'const int32 ToggleStormCount = 10; // TOGGLE_STORM_REDUCED_v1')
-        $changes += 'TOGGLE_STORM: count 500 -> 10'
-    }
-
-    if (-not $cpp.Contains('TOGGLE_STORM_v1')) {
-        Info 'Patch step: insert toggle storm (500 rapid Immerse on/off cycles) at start of FinishPlan'
-        $stormInsert = @'
-
-	// TOGGLE_STORM_v1: stress AK::SoundEngine::SetMixer with rapid back-to-back toggles.
-	// Runs after the 8-phase A/B sweep finishes, before the engine exits.
-	{
-		const int32 ToggleStormCount = 500;
-		UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] >>> Toggle storm: %d iterations"), ToggleStormCount);
-		const double StormStart = FPlatformTime::Seconds();
-		int32 OkFlips = 0;
-		double WorstSetMixerMs = 0.0;
-		for (int32 i = 0; i < ToggleStormCount; ++i)
-		{
-			const bool bPrev = bImmerseBypassed;
-			const double T0 = FPlatformTime::Seconds();
-			if (i % 2 == 0) { BypassImmerse(); } else { EnableImmerse(); }
-			const double T1 = FPlatformTime::Seconds();
-			const double DtMs = (T1 - T0) * 1000.0;
-			if (DtMs > WorstSetMixerMs) { WorstSetMixerMs = DtMs; }
-			if (bImmerseBypassed != bPrev) { ++OkFlips; }
-		}
-		const double StormElapsed = FPlatformTime::Seconds() - StormStart;
-		UE_LOG(LogTemp, Display,
-			TEXT("[ImmerseStress] Toggle storm DONE: %d/%d state-flips in %.3fs (avg %.4fms/op, worst %.3fms, throughput %.0f ops/s)"),
-			OkFlips, ToggleStormCount, StormElapsed,
-			(StormElapsed * 1000.0) / ToggleStormCount,
-			WorstSetMixerMs,
-			(double)ToggleStormCount / FMath::Max(0.0001, StormElapsed));
-	}
-
-'@
-        $rxFP = [regex]::new('(void\s+AImmerseStressTestActor::FinishPlan\(bool\s+bAborted\)\s*\{)')
-        $newCpp = $rxFP.Replace($cpp, '$1' + $stormInsert, 1)
-        if ($newCpp -ne $cpp) {
-            $cpp = $newCpp
-            $changes += 'FinishPlan: TOGGLE_STORM_v1 (500 toggles after sweep)'
-        } else {
-            Warn 'TOGGLE_STORM_v1 insertion did not match FinishPlan signature'
-        }
-    }
-
-    if (-not $cpp.Contains('CAPTURE_WAV_v2')) {
-        Info 'Patch step: CAPTURE_WAV_v2 (per-phase WAV capture, anchored on LogPhaseMarker RUNNING/COOLDOWN)'
-        $startInject = @'
-
-
-		// CAPTURE_WAV_v2: bracket the RUNNING phase with WAV capture
-		{
-			FString CapDir = FPaths::ProjectSavedDir() / TEXT("ImmerseStress");
-			IFileManager::Get().MakeDirectory(*CapDir, true);
-			FString WavPath = CapDir / FString::Printf(TEXT("phase_%d_%s.wav"), PlanStepIndex, bPhaseImmerseEnabled ? TEXT("on") : TEXT("off"));
-			ImmerseStress::StartCapture_v1(*WavPath);
-			UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] CAPTURE_WAV_v2 START %s"), *WavPath);
-		}
-'@
-        $rxRun = [regex]::new('(LogPhaseMarker\(TEXT\("RUNNING"\)\);)')
-        $newCpp = $rxRun.Replace($cpp, '$1' + $startInject, 1)
-        if ($newCpp -ne $cpp) {
-            $cpp = $newCpp
-            $stopInject = @'
-// CAPTURE_WAV_v2: stop WAV capture at end of RUNNING phase
-		ImmerseStress::StopCapture_v1();
-		UE_LOG(LogTemp, Display, TEXT("[ImmerseStress] CAPTURE_WAV_v2 STOP"));
-
-'@
-            $rxCool = [regex]::new('(LogPhaseMarker\(TEXT\("COOLDOWN"\)\);)')
-            $cpp = $rxCool.Replace($cpp, $stopInject + "`t`t" + '$1', 1)
-            $changes += 'Actor: CAPTURE_WAV_v2 (StartCapture/StopCapture around RUNNING)'
-        } else {
-            Warn 'CAPTURE_WAV_v2: RUNNING marker not found -- skipped'
-        }
-    }
-
-    Write-AllText-Safe -Path $keyCpp -Content $cpp -MinLengthGuard ([int]($originalLength / 2))
-
-    if (Test-Path $keyHeader) { Push-File $keyHeader 'ImmerseStressTestActor.h.after' }
-    if (Test-Path $keyCpp)    { Push-File $keyCpp    'ImmerseStressTestActor.cpp.after' }
-
-    if ($changes.Count -gt 0) {
-        Info "source patches applied:"
-        foreach ($c in $changes) { Info "  - $c" }
-    } else {
-        Info 'no source patches needed'
-    }
-}
-
-function Get-WwisePluginBinDir {
-    $candidates = @(
-        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc150\Profile\bin'),
-        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Profile\bin'),
-        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc170\Profile\bin')
-    )
-    foreach ($c in $candidates) { if (Test-Path $c) { return $c } }
-    return $null
-}
-
-function Stage-ImmersePlugin {
-    $binDir = Get-WwisePluginBinDir
-    if (-not $binDir) { Warn 'No project-side Wwise plugin bin dir found.'; return $null }
-    Info "Wwise plugin bin dir (target): $binDir"
-
-    $immerseAlready = Get-ChildItem $binDir -Filter 'Immerse*.dll' -ErrorAction SilentlyContinue
-    if ($immerseAlready) {
-        Info "Existing Immerse DLLs already in target bin:"
-        foreach ($d in $immerseAlready) { Info "  $($d.Name)" }
-        return $binDir
-    }
-
-    Warn "No Immerse*.dll in $binDir -- searching project ThirdParty subdirs..."
-
-    $sourceCandidates = @(
-        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Profile\bin'),
-        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Release\bin'),
-        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc160\Debug\bin'),
-        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc170\Profile\bin'),
-        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc170\Release\bin'),
-        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc150\Release\bin'),
-        (Join-Path $ProjectDir 'Plugins\Wwise\ThirdParty\x64_vc150\Debug\bin')
-    )
-
-    $copied = 0
-    foreach ($srcDir in $sourceCandidates) {
-        if (-not (Test-Path $srcDir)) { continue }
-        if ($srcDir -ieq $binDir)     { continue }
-        $dlls = Get-ChildItem $srcDir -Filter 'Immerse*.dll' -ErrorAction SilentlyContinue
-        if (-not $dlls -or $dlls.Count -eq 0) { continue }
-
-        Info "Source dir with Immerse DLLs: $srcDir"
-        foreach ($d in $dlls) {
+function Invoke-Waapi {
+    param([string]$Url, [string]$Body)
+    try {
+        $r = Invoke-RestMethod -Uri $Url -Method Post -Body $Body -ContentType 'application/json' -TimeoutSec 5
+        return @{ ok = $true; result = $r }
+    } catch {
+        $msg = $_.Exception.Message
+        if ($_.Exception.Response) {
             try {
-                Copy-Item $d.FullName (Join-Path $binDir $d.Name) -Force
-                Info "  staged $($d.Name)"; $copied++
-            } catch { Warn "  failed to copy $($d.Name): $_" }
+                $sr = New-Object System.IO.StreamReader($_.Exception.Response.GetResponseStream())
+                $msg += ' body=' + $sr.ReadToEnd()
+            } catch {}
         }
-        if ($copied -gt 0) { break }
+        return @{ ok = $false; error = $msg }
     }
-    Info "Total Immerse DLLs staged: $copied"
-    return $binDir
 }
 
 try {
     Init-ResultsRepo
-    $RunDirAbs = Join-Path $ResultsRoot $RunDirRel
-    New-Item -ItemType Directory -Force -Path $RunDirAbs | Out-Null
-    Push-Status -Phase 'started' -Extra @{ project_dir = $ProjectDir; immerse_user_id = $ImmerseUserId }
+    Push-Status -Phase 'starting' -Extra @{ tier = 1; user_id = $ImmerseUserId }
 
-    Step 'Checking Visual Studio (Game Dev C++ workload)'
-    Push-Status -Phase 'vs_check'
-    $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
-    $vsPath = $null
-    if (Test-Path $vswhere) {
-        $vsPath = & $vswhere -latest -products * `
-            -requires Microsoft.VisualStudio.Workload.NativeGame `
-            -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 `
-            -property installationPath
-    }
-    if (-not $vsPath) {
-        Push-Status -Phase 'vs_installing'
-        Step 'Downloading + installing VS 2022 Community (20-40 min, ~10 GB)'
-        $bs = Join-Path $env:TEMP 'vs_community.exe'
-        Invoke-WebRequest 'https://aka.ms/vs/17/release/vs_community.exe' -OutFile $bs -UseBasicParsing
-        $vsArgs = @(
-            '--quiet','--wait','--norestart','--nocache',
-            '--add','Microsoft.VisualStudio.Workload.NativeGame',
-            '--add','Microsoft.VisualStudio.Workload.NativeDesktop',
-            '--add','Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
-            '--add','Microsoft.VisualStudio.Component.Windows10SDK.19041',
-            '--includeRecommended'
-        )
-        $p = Start-Process -FilePath $bs -ArgumentList $vsArgs -Wait -PassThru
-        if ($p.ExitCode -eq 3010) {
-            Push-Status -Phase 'vs_reboot_needed' -Extra @{ exit_code = 3010 }
-            Read-Host 'Press Enter'; exit 0
-        }
-        if ($p.ExitCode -ne 0) {
-            Push-Status -Phase 'failed' -Extra @{ stage='vs_install'; exit_code = $p.ExitCode }
-            throw "VS install failed: $($p.ExitCode)"
-        }
-    } else {
-        Info "Found VS at $vsPath"
-    }
-    Push-Status -Phase 'vs_ready'
-
-    Step 'Locating UE 4.27'
+    Step 'Locating UE engine'
     $engineRoot = $null
     foreach ($k in 'HKLM:\SOFTWARE\EpicGames\Unreal Engine\4.27','HKLM:\SOFTWARE\WOW6432Node\EpicGames\Unreal Engine\4.27') {
         if (Test-Path $k) { $engineRoot = (Get-ItemProperty $k).InstalledDirectory; if ($engineRoot) { break } }
@@ -777,128 +155,35 @@ try {
         throw 'UE 4.27 not found'
     }
     Info "Engine: $engineRoot"
-    Push-Status -Phase 'ue_located' -Extra @{ engine_root = $engineRoot }
 
-    Step 'Patching sources for known UE 4.27 issues'
-    try {
-        Patch-Sources
-    } catch {
-        Warn "Patch-Sources error: $($_.Exception.Message)"
-        Warn ($_.ScriptStackTrace -as [string])
-        throw
-    }
-    Push-Status -Phase 'sources_patched'
-
-    Step 'Regenerating project files'
     $uproject = (Get-ChildItem $ProjectDir -Filter '*.uproject' | Select-Object -First 1).FullName
-    $ubt = Join-Path $engineRoot 'Engine\Binaries\DotNET\UnrealBuildTool.exe'
-    $regenLog = Join-Path $env:TEMP "immerse_regen_$RunId.log"
-    & $ubt -projectfiles -project="$uproject" -game -engine -progress *>&1 | Tee-Object -FilePath $regenLog | Out-Host
-    $regenExit = $LASTEXITCODE
-    Push-File $regenLog 'regen.log'
-    if ($regenExit -ne 0) {
-        Push-Status -Phase 'failed' -Extra @{ stage='regen'; exit_code=$regenExit }
-        throw "Regen failed: $regenExit"
-    }
-    Push-Status -Phase 'regen_done'
+    if (-not $uproject) { throw "No .uproject found in $ProjectDir" }
+    Info "Uproject: $uproject"
 
-    Step 'Building testTPEditor / Win64 / Development'
-    Push-Status -Phase 'building'
-    $buildBat = Join-Path $engineRoot 'Engine\Build\BatchFiles\Build.bat'
-    $buildLog = Join-Path $env:TEMP "immerse_build_$RunId.log"
-    & $buildBat 'testTPEditor' 'Win64' 'Development' "-Project=$uproject" '-WaitMutex' '-MaxParallelActions=4' *>&1 | Tee-Object -FilePath $buildLog | Out-Host
-    $buildExit = $LASTEXITCODE
-    Push-File $buildLog 'build.log'
-    $buildHasErrors = $false
-    if (Test-Path $buildLog) {
-        $logTail = Get-Content $buildLog -Tail 200 -ErrorAction SilentlyContinue
-        if ($logTail -match 'error C\d+|: error : |Error executing|fatal error') { $buildHasErrors = $true }
-    }
-    if ($buildExit -ne 0 -or $buildHasErrors) {
-        Push-Status -Phase 'failed' -Extra @{ stage='build'; exit_code=$buildExit; sniffed_errors=$buildHasErrors }
-        throw "Build failed (exit $buildExit, sniffed_errors=$buildHasErrors)"
-    }
-    Push-Status -Phase 'build_done'
-
-    Step 'Verifying Immerse plugin DLL on Wwise plugin search path'
-    $stagedBinDir = Stage-ImmersePlugin
-    Push-Status -Phase 'immerse_dll_check' -Extra @{ bin_dir = $stagedBinDir }
-
-    Step 'Setting Immerse user ID env vars'
-    $env:IMMERSE_USER_ID  = $ImmerseUserId
-    $env:IMMERSE_USERID   = $ImmerseUserId
-    $env:IMMERSE_USER     = $ImmerseUserId
-    $env:IMMERSE_EMBODY_USER_ID = $ImmerseUserId
-    $env:IMMERSE_EMB_USER_ID = $ImmerseUserId
-    $env:IMMERSE_REMOTE_HOLD = '1'
-    Info "IMMERSE_USER_ID = $ImmerseUserId"
-    Info 'IMMERSE_REMOTE_HOLD = 1 (actor will wait for go.flag before starting phases)'
-    Push-Status -Phase 'immerse_userid_set' -Extra @{ user_id = $ImmerseUserId }
-
-    # REMOTE_HOLD_v1: ensure no stale go.flag from a previous run
-    $goFlagPath = Join-Path $ProjectDir 'Saved\ImmerseStress\go.flag'
-    $goFlagDir  = Split-Path -Parent $goFlagPath
-    if (-not (Test-Path $goFlagDir)) { New-Item -ItemType Directory -Force -Path $goFlagDir | Out-Null }
-    if (Test-Path $goFlagPath) { Remove-Item $goFlagPath -Force -ErrorAction SilentlyContinue }
-
-    Step 'Launching headless editor for stress sweep'
-    Push-Status -Phase 'testing'
     $editor    = Join-Path $engineRoot 'Engine\Binaries\Win64\UE4Editor.exe'
     $editorLog = Join-Path $env:TEMP "immerse_editor_$RunId.log"
-    $editorArgs = @(
-        "`"$uproject`"",
-        '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap',
-        '-game','-RenderOffscreen','-unattended','-nopause','-NoSplash',
-        "-abslog=$editorLog"
-    )
+    $RunDirAbs = Join-Path $ResultsRoot $RunDirRel
+    New-Item -ItemType Directory -Force -Path $RunDirAbs | Out-Null
 
-    # DEBUG_VIEW_v1: capture the Immerse plug-in's OutputDebugString stream via an
-    # in-process listener (Tools/DebugStreamListener.ps1). The listener creates the
-    # DBWIN_BUFFER + DBWIN_DATA_READY / DBWIN_BUFFER_READY events itself, no admin
-    # required, no external dependency. Same-user producers (UE4Editor + Immerse
-    # plug-in DLL) write to the buffer and we drain it to immerse_debug.log.
-    $dbgListener  = $null
-    $dbgLogTmp    = Join-Path $env:TEMP "immerse_dbgmonitor_$RunId.log"
-    $dbgLogFinal  = Join-Path $RunDirAbs 'immerse_debug.log'
-    $dbgScript    = Join-Path $ScriptDir 'DebugStreamListener.ps1'
+    # listener: capture all OutputDebugString from same-user processes
+    $dbgListener = $null
+    $dbgLogTmp   = Join-Path $env:TEMP "immerse_dbgmonitor_$RunId.log"
+    $dbgLogFinal = Join-Path $RunDirAbs 'immerse_debug.log'
+    $dbgScript   = Join-Path $ScriptDir 'DebugStreamListener.ps1'
     if (Test-Path $dbgScript) {
         if (Test-Path $dbgLogTmp) { Remove-Item $dbgLogTmp -Force -ErrorAction SilentlyContinue }
-        try {
-            $dbgArgs = @('-NoProfile','-ExecutionPolicy','Bypass','-File',"`"$dbgScript`"",
-                         '-OutPath',"`"$dbgLogTmp`"",'-Seconds','1800')
-            $dbgListener = Start-Process -FilePath 'powershell.exe' -ArgumentList $dbgArgs -PassThru -WindowStyle Hidden
-            Info "DebugStreamListener PID: $($dbgListener.Id), log: $dbgLogTmp"
-        } catch {
-            Warn "Failed to start DebugStreamListener: $($_.Exception.Message)"
-        }
+        $dbgArgs = @('-NoProfile','-ExecutionPolicy','Bypass','-File',"`"$dbgScript`"",
+                     '-OutPath',"`"$dbgLogTmp`"",'-Seconds','1800')
+        $dbgListener = Start-Process -FilePath 'powershell.exe' -ArgumentList $dbgArgs -PassThru -WindowStyle Hidden
+        Info "DebugStreamListener PID: $($dbgListener.Id), log: $dbgLogTmp"
     } else {
         Warn 'DebugStreamListener.ps1 missing -- debug stream not captured'
     }
 
-    # WAAPI_AUTO_v1 (a): find/launch Wwise, wait for WAAPI, set @UserID on Immerse FX.
-    # Tries to remove the manual "open Wwise + load project + remote-connect" steps.
-    # If anything in this block fails the run continues -- the existing manual prompt
-    # is the fallback (printed in block (b) below).
-    $waapiUrl       = 'http://127.0.0.1:8090/waapi'
-    $waapiReady     = $false
+    # Wwise launch + WAAPI ready + UserID set
+    $waapiUrl        = 'http://127.0.0.1:8090/waapi'
+    $waapiReady      = $false
     $immerseEffectId = $null
-    $immerseUserId  = $env:IMMERSE_USER_ID
-
-    function Invoke-WaapiCall([string]$Url, [string]$Body) {
-        try {
-            $r = Invoke-RestMethod -Uri $Url -Method Post -Body $Body -ContentType 'application/json' -TimeoutSec 5
-            return @{ ok = $true; result = $r }
-        } catch {
-            $msg = $_.Exception.Message
-            if ($_.Exception.Response) {
-                try {
-                    $sr = New-Object System.IO.StreamReader($_.Exception.Response.GetResponseStream())
-                    $msg += ' body=' + $sr.ReadToEnd()
-                } catch {}
-            }
-            return @{ ok = $false; error = $msg }
-        }
-    }
 
     $wwiseExe = $env:IMMERSE_WWISE_EXE
     if (-not $wwiseExe -or -not (Test-Path $wwiseExe)) {
@@ -906,9 +191,7 @@ try {
         foreach ($glob in @(
             'C:\Program Files (x86)\Audiokinetic\Wwise*\Authoring\x64\Release\bin\Wwise.exe',
             'C:\Program Files\Audiokinetic\Wwise*\Authoring\x64\Release\bin\Wwise.exe'
-        )) {
-            $cand += (Get-ChildItem -Path $glob -ErrorAction SilentlyContinue | ForEach-Object FullName)
-        }
+        )) { $cand += (Get-ChildItem -Path $glob -ErrorAction SilentlyContinue | ForEach-Object FullName) }
         foreach ($c in $cand) { if ($c -and (Test-Path $c)) { $wwiseExe = $c; break } }
     }
     $wproj = $env:IMMERSE_WPROJ
@@ -927,245 +210,142 @@ try {
         Info "  Project: $wproj"
         try { Start-Process -FilePath $wwiseExe -ArgumentList "`"$wproj`"" | Out-Null } catch { Warn "Failed to launch Wwise: $($_.Exception.Message)" }
     } else {
-        Warn "Could not locate Wwise.exe (set IMMERSE_WWISE_EXE) and/or .wproj (set IMMERSE_WPROJ) -- skipping auto-launch"
+        Warn "Could not locate Wwise.exe (set IMMERSE_WWISE_EXE) and/or .wproj (set IMMERSE_WPROJ)"
     }
 
     Step 'Waiting for WAAPI to come up'
     $ws = Get-Date
     while (((Get-Date) - $ws).TotalSeconds -lt 60) {
-        $r = Invoke-WaapiCall $waapiUrl '{"uri":"ak.wwise.core.getInfo","args":{},"options":{}}'
+        $r = Invoke-Waapi $waapiUrl '{"uri":"ak.wwise.core.getInfo","args":{},"options":{}}'
         if ($r.ok) { $waapiReady = $true; break }
         if ($r.error -match 'ak\.wwise\.locked') { Warn 'WAAPI reports modal lock in Wwise; close any open dialog' }
         Start-Sleep -Seconds 2
     }
-    if ($waapiReady) {
-        Info 'WAAPI ready'
-        $body = '{"uri":"ak.wwise.core.object.get","args":{"from":{"search":["Immerse_Audio_Renderer_(Custom)"]}},"options":{"return":["id","name","type","path"]}}'
-        $r = Invoke-WaapiCall $waapiUrl $body
-        if ($r.ok -and $r.result -and $r.result.return) {
-            foreach ($obj in $r.result.return) {
-                if ($obj.type -eq 'Effect' -and $obj.name -eq 'Immerse_Audio_Renderer_(Custom)') { $immerseEffectId = $obj.id; break }
-            }
-            if (-not $immerseEffectId) {
-                foreach ($obj in $r.result.return) { if ($obj.type -eq 'Effect') { $immerseEffectId = $obj.id; break } }
-            }
-        }
-        if ($immerseEffectId) {
-            Info "Immerse FX id: $immerseEffectId"
-            if ($immerseUserId) {
-                $body = '{"uri":"ak.wwise.core.object.setProperty","args":{"object":"' + $immerseEffectId + '","property":"UserID","value":"' + ($immerseUserId -replace '"','\"') + '"},"options":{}}'
-                $r = Invoke-WaapiCall $waapiUrl $body
-                if ($r.ok) { Info "Set @UserID = $immerseUserId" } else { Warn "Failed to set @UserID: $($r.error)" }
-            } else {
-                Warn 'IMMERSE_USER_ID not set -- leaving @UserID untouched'
-            }
-        } else {
-            Warn 'Could not resolve Immerse FX by name -- is the project loaded?'
-        }
-    } else {
-        Warn 'WAAPI not reachable within 60s -- orchestrator will retry and manual fallback will apply'
+    if (-not $waapiReady) {
+        Push-Status -Phase 'failed' -Extra @{ stage='waapi_wait'; error='WAAPI unreachable in 60s' }
+        throw 'WAAPI not reachable'
     }
+    Info 'WAAPI ready'
 
+    $body = '{"uri":"ak.wwise.core.object.get","args":{"from":{"search":["Immerse_Audio_Renderer_(Custom)"]}},"options":{"return":["id","name","type","path"]}}'
+    $r = Invoke-Waapi $waapiUrl $body
+    if ($r.ok -and $r.result -and $r.result.return) {
+        foreach ($obj in $r.result.return) {
+            if ($obj.type -eq 'Effect' -and $obj.name -eq 'Immerse_Audio_Renderer_(Custom)') { $immerseEffectId = $obj.id; break }
+        }
+        if (-not $immerseEffectId) {
+            foreach ($obj in $r.result.return) { if ($obj.type -eq 'Effect') { $immerseEffectId = $obj.id; break } }
+        }
+    }
+    if (-not $immerseEffectId) {
+        Push-Status -Phase 'failed' -Extra @{ stage='resolve_immerse'; error='Immerse FX not found by name' }
+        throw 'Could not resolve Immerse FX by name'
+    }
+    Info "Immerse FX id: $immerseEffectId"
+
+    if ($ImmerseUserId) {
+        $body = '{"uri":"ak.wwise.core.object.setProperty","args":{"object":"' + $immerseEffectId + '","property":"UserID","value":"' + ($ImmerseUserId -replace '"','\"') + '"},"options":{}}'
+        $r = Invoke-Waapi $waapiUrl $body
+        if ($r.ok) { Info "Set @UserID = $ImmerseUserId" } else { Warn "Failed to set @UserID: $($r.error)" }
+    }
+    Push-Status -Phase 'wwise_ready' -Extra @{ immerse_effect_id = $immerseEffectId }
+
+    # UE launch (headless, -game). No actor required; the level's auto-playing event drives audio.
+    $editorArgs = @(
+        "`"$uproject`"",
+        '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap',
+        '-game','-RenderOffscreen','-unattended','-nopause','-NoSplash',
+        "-abslog=$editorLog"
+    )
     $editorStart = Get-Date
     $proc = Start-Process -FilePath $editor -ArgumentList $editorArgs -PassThru -WindowStyle Hidden
     Info "Editor PID: $($proc.Id), log: $editorLog"
+    Push-Status -Phase 'ue_launched' -Extra @{ editor_pid = $proc.Id }
 
-    # WAAPI_ORCH_v1: spawn live EHM mirror via WAAPI to Wwise Authoring.
-    # WAAPI_ORCH_v1: spawn live EHM mirror via WAAPI to Wwise Authoring.
-    # Requires Wwise Authoring already running with TencentRCTest.wproj loaded and
-    # remote-connected to the UE editor. If Wwise is not up the orchestrator
-    # logs the failure and continues passively (test still runs).
-    $waapiLog   = Join-Path $RunDirAbs 'waapi.log'
-    $orchScript = Join-Path $ScriptDir 'WaapiOrchestrator.ps1'
-    $orchProc   = $null
-    if (Test-Path $orchScript) {
-        $orchArgs = @('-NoProfile','-ExecutionPolicy','Bypass','-File',"`"$orchScript`"",
-                      '-EditorLog',"`"$editorLog`"",'-LogPath',"`"$waapiLog`"")
-        try {
-            $orchProc = Start-Process -FilePath 'powershell.exe' -ArgumentList $orchArgs -PassThru -WindowStyle Hidden
-            Info "WAAPI orchestrator PID: $($orchProc.Id), log: $waapiLog"
-        } catch {
-            Warn "Failed to start WAAPI orchestrator: $($_.Exception.Message)"
-        }
-    } else {
-        Warn 'WaapiOrchestrator.ps1 missing -- EHM mirror disabled'
-    }
-
-    # REMOTE_HOLD_v1: wait for actor to log it is holding, then prompt operator
-    Step 'Waiting for UE editor to come up and pause on go.flag'
-    $holdReady = $false
-    $holdStart = Get-Date
-    while (-not $proc.HasExited -and ((Get-Date) - $holdStart).TotalSeconds -lt 180) {
-        if (Test-Path $editorLog) {
-            $tail = Get-Content $editorLog -Tail 200 -ErrorAction SilentlyContinue
-            if ($tail -and ($tail -match 'REMOTE_HOLD_v1: waiting for go\.flag')) {
-                $holdReady = $true
-                break
-            }
-        }
-        Start-Sleep -Seconds 2
-    }
-    if (-not $holdReady) {
-        Warn 'Did not see REMOTE_HOLD_v1 marker within 3 min; proceeding anyway'
-    } else {
-        Info 'Actor is parked on REMOTE_HOLD_v1, ready for remote-connect'
-    }
-    # WAAPI_AUTO_v1 (b): try auto remote-connect. Fall back to manual prompt on timeout.
+    # auto remote-connect
+    Step 'Auto-connecting Wwise to UE'
     $autoConnected = $false
-    if ($waapiReady) {
-        Step 'Auto-connecting Wwise to UE editor'
-        $acStart = Get-Date
-        $lastReport = Get-Date
-        while (((Get-Date) - $acStart).TotalSeconds -lt 30 -and -not $proc.HasExited) {
-            $r = Invoke-WaapiCall $waapiUrl '{"uri":"ak.wwise.core.remote.getAvailableConsoles","args":{},"options":{}}'
-            if ($r.ok -and $r.result -and $r.result.consoles) {
-                $candidates = @($r.result.consoles | Where-Object {
-                    $_.appName -match 'UE4Editor|UnrealEditor|testTP|Editor'
-                })
-                if ($candidates.Count -gt 0) {
-                    $target = $candidates[0]
-                    Info "Found console: host=$($target.host) appName=$($target.appName)"
-                    $body = '{"uri":"ak.wwise.core.remote.connect","args":{"host":"' + $target.host + '","appName":"' + ($target.appName -replace '"','\"') + '"},"options":{}}'
-                    $cr = Invoke-WaapiCall $waapiUrl $body
-                    if ($cr.ok) {
-                        Info 'Wwise -> UE remote-connect successful'
-                        $autoConnected = $true
-                        break
-                    } else {
-                        Warn "remote.connect failed: $($cr.error)"
-                    }
-                } elseif (((Get-Date) - $lastReport).TotalSeconds -gt 5) {
-                    Info ("  ...still searching (" + $r.result.consoles.Count + ' consoles visible, none matched)')
-                    $lastReport = Get-Date
-                }
+    $acStart = Get-Date
+    while (((Get-Date) - $acStart).TotalSeconds -lt 30 -and -not $proc.HasExited) {
+        $r = Invoke-Waapi $waapiUrl '{"uri":"ak.wwise.core.remote.getAvailableConsoles","args":{},"options":{}}'
+        if ($r.ok -and $r.result -and $r.result.consoles) {
+            $candidates = @($r.result.consoles | Where-Object { $_.appName -match 'UE4Editor|UnrealEditor|Editor' })
+            if ($candidates.Count -gt 0) {
+                $target = $candidates[0]
+                Info "Found console: host=$($target.host) appName=$($target.appName)"
+                $body = '{"uri":"ak.wwise.core.remote.connect","args":{"host":"' + $target.host + '","appName":"' + ($target.appName -replace '"','\"') + '"},"options":{}}'
+                $cr = Invoke-Waapi $waapiUrl $body
+                if ($cr.ok) { Info 'Wwise -> UE remote-connect successful'; $autoConnected = $true; break }
+                Warn "remote.connect failed: $($cr.error)"
             }
-            Start-Sleep -Seconds 1
         }
+        Start-Sleep -Seconds 1
+    }
+    if (-not $autoConnected) {
+        Warn 'Auto remote-connect timed out -- proceeding anyway (some tests may fail)'
     }
 
-    if ($autoConnected) {
-        Step 'Waiting for user-load confirmation in debug stream'
-        $loadOk = $false
-        $lStart = Get-Date
-        while (((Get-Date) - $lStart).TotalSeconds -lt 30 -and -not $proc.HasExited) {
-            if (Test-Path $dbgLogTmp) {
-                $content = [string]::Join("`n", (Get-Content $dbgLogTmp -Tail 800 -ErrorAction SilentlyContinue))
-                $hasSetUserId = $content -match 'Immerse_SetUserId\s+inUserId'
-                $hasProfile   = $content -match 'updateUserHRTFData\s+ProfileName\s+set\s+to'
-                $uidMatch     = -not $immerseUserId -or ($content -match ('generateWebAppUrl.*userId:\s*' + [regex]::Escape($immerseUserId)))
-                if ($hasSetUserId -and $hasProfile -and $uidMatch) { $loadOk = $true; break }
-            }
-            Start-Sleep -Milliseconds 500
+    # wait for user-load confirmation in listener log
+    Step 'Waiting for personalized user-load confirmation'
+    $loadOk = $false
+    $lStart = Get-Date
+    while (((Get-Date) - $lStart).TotalSeconds -lt 30 -and -not $proc.HasExited) {
+        if (Test-Path $dbgLogTmp) {
+            $content = [string]::Join("`n", (Get-Content $dbgLogTmp -Tail 800 -ErrorAction SilentlyContinue))
+            $hasSetUserId = $content -match 'Immerse_SetUserId\s+inUserId'
+            $hasProfile   = $content -match 'updateUserHRTFData\s+ProfileName\s+set\s+to'
+            $uidMatch     = -not $ImmerseUserId -or ($content -match ('generateWebAppUrl.*userId:\s*' + [regex]::Escape($ImmerseUserId)))
+            if ($hasSetUserId -and $hasProfile -and $uidMatch) { $loadOk = $true; break }
         }
-        if ($loadOk) { Info 'User-load confirmed in debug stream' } else { Warn 'User-load confirmation not seen within 30s; proceeding anyway' }
-        Set-Content -Path $goFlagPath -Value ((Get-Date).ToUniversalTime().ToString('o')) -Encoding UTF8 -NoNewline
-        Info "Auto-dropped go.flag: $goFlagPath"
+        Start-Sleep -Milliseconds 500
+    }
+    if ($loadOk) { Info 'User-load confirmed' } else { Warn 'User-load confirmation not seen (tests may not behave as expected)' }
+    Push-Status -Phase 'user_loaded' -Extra @{ user_load_ok = $loadOk; auto_connected = $autoConnected }
+
+    # run scenarios
+    Step 'Running Tier 1 scenarios'
+    $scenariosPath  = Join-Path $ScriptDir 'TestScenarios.json'
+    $runnerScript   = Join-Path $ScriptDir 'Run-Scenarios.ps1'
+    $resultsJson    = Join-Path $RunDirAbs 'scenario_results.json'
+    $summaryTxt     = Join-Path $RunDirAbs 'scenario_summary.txt'
+    $scenarioOk     = $false
+    if ((Test-Path $scenariosPath) -and (Test-Path $runnerScript)) {
+        & powershell -NoProfile -ExecutionPolicy Bypass -File "$runnerScript" `
+            -ScenariosPath "$scenariosPath" -ListenerLog "$dbgLogTmp" `
+            -WaapiUrl "$waapiUrl" -ImmerseEffectId "$immerseEffectId" `
+            -ResultsJson "$resultsJson" -SummaryPath "$summaryTxt"
+        $runnerExit = $LASTEXITCODE
+        if ($runnerExit -eq 0) { $scenarioOk = $true }
+        Info "Scenario runner exit: $runnerExit (0 = all pass)"
     } else {
-        Warn 'Auto remote-connect failed or unavailable -- falling back to manual prompt'
-        Write-Host ''
-        Write-Host '====================================================================' -ForegroundColor Yellow
-        Write-Host '  ACTION REQUIRED: open Wwise Authoring, click Project -> Connect,'  -ForegroundColor Yellow
-        Write-Host '  pick the UE4Editor process, wait for "Connected" in the status bar.' -ForegroundColor Yellow
-        Write-Host '  Then press Enter here to release the test plan.'                    -ForegroundColor Yellow
-        Write-Host '====================================================================' -ForegroundColor Yellow
-        [void](Read-Host 'Press Enter once remote-connect is established')
-        Set-Content -Path $goFlagPath -Value ((Get-Date).ToUniversalTime().ToString('o')) -Encoding UTF8 -NoNewline
-    }
-    Info "Wrote go.flag: $goFlagPath"
-
-    $startedAt = Get-Date
-    $lastTail  = Get-Date
-    while (-not $proc.HasExited) {
-        Start-Sleep -Seconds 10
-        if (((Get-Date) - $lastTail).TotalSeconds -ge 30) {
-            if (Test-Path $editorLog) {
-                $tail = Get-Content $editorLog -Tail 120 -ErrorAction SilentlyContinue
-                if ($tail) {
-                    ($tail -join "`n") | Set-Content -Path (Join-Path $RunDirAbs 'editor_tail.log') -Encoding UTF8
-                    $markers = $tail | Where-Object { $_ -match '\[ImmerseStress\]' }
-                    Push-Status -Phase 'testing' -Extra @{
-                        elapsed_s = [int]((Get-Date) - $startedAt).TotalSeconds
-                        markers   = if ($markers) { $markers[-1] } else { $null }
-                    }
-                }
-            }
-            $lastTail = Get-Date
-        }
-        if (((Get-Date) - $startedAt).TotalMinutes -ge 12) {
-            Write-Host 'TIMEOUT: killing editor after 12 min' -ForegroundColor Red
-            try { Stop-Process -Id $proc.Id -Force } catch { }
-            Push-Status -Phase 'failed' -Extra @{ stage='editor'; error='timeout_12min' }
-            break
-        }
+        Warn 'TestScenarios.json or Run-Scenarios.ps1 missing -- skipping scenarios'
     }
 
-    # WAAPI_ORCH_v1: stop orchestrator now that editor has exited
-    if ($orchProc -and -not $orchProc.HasExited) {
-        try { Stop-Process -Id $orchProc.Id -Force -ErrorAction SilentlyContinue } catch {}
-        Info 'Stopped WAAPI orchestrator'
-    }
-
-    # DEBUG_VIEW_v1: give the listener a moment to drain in-flight messages, then stop and copy
-    if ($dbgListener -and -not $dbgListener.HasExited) {
+    # teardown
+    Step 'Stopping UE editor'
+    if ($proc -and -not $proc.HasExited) {
+        try { Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue } catch {}
         Start-Sleep -Milliseconds 1500
+        Info 'Stopped UE editor'
+    }
+
+    if ($dbgListener -and -not $dbgListener.HasExited) {
+        Start-Sleep -Milliseconds 1000
         try { Stop-Process -Id $dbgListener.Id -Force -ErrorAction SilentlyContinue } catch {}
         Info 'Stopped DebugStreamListener'
     }
     if (Test-Path $dbgLogTmp) {
         try { Copy-Item $dbgLogTmp $dbgLogFinal -Force } catch { Warn "Could not copy debug stream log: $($_.Exception.Message)" }
     }
-
-    Step 'Collecting CSV + final log'
-    $resultsDir = Join-Path $ProjectDir 'Saved\ImmerseStress'
-    $csv = $null
-    if (Test-Path $resultsDir) {
-        $csv = Get-ChildItem $resultsDir -Filter 'run_*.csv' -ErrorAction SilentlyContinue |
-               Where-Object { $_.LastWriteTime -ge $editorStart } |
-               Sort-Object LastWriteTime -Descending | Select-Object -First 1
-    }
-    if ($csv) { Push-File $csv.FullName 'results.csv'; Info "CSV: $($csv.Name)" }
     if (Test-Path $editorLog) { Push-File $editorLog 'editor.log' }
-    # waapi.log is written directly into $RunDirAbs by the orchestrator -- no Push-File needed
 
-    # DEBUG_VIEW_v1: run verifier to cross-reference WAAPI flips with runtime debug stream
-    $verifier         = Join-Path $ScriptDir 'Verify-ImmerseToggles.ps1'
-    $verificationPath = Join-Path $RunDirAbs 'verification.txt'
-    if ((Test-Path $verifier) -and (Test-Path $waapiLog) -and (Test-Path $dbgLogFinal)) {
-        Step 'Verifying EHM toggles (WAAPI vs runtime debug stream)'
-        try {
-            $verifierUserId = if ($immerseUserId) { $immerseUserId } else { '' }
-            & powershell -NoProfile -ExecutionPolicy Bypass -File "$verifier" `
-                -WaapiLog "$waapiLog" -DebugLog "$dbgLogFinal" -OutPath "$verificationPath" `
-                -ExpectedUserId "$verifierUserId"
-            Info "Verification report: $verificationPath"
-        } catch {
-            Warn "Verifier error: $($_.Exception.Message)"
-        }
-    } elseif (-not (Test-Path $verifier)) {
-        Warn 'Verify-ImmerseToggles.ps1 missing -- skipping verifier'
-    } elseif (-not (Test-Path $dbgLogFinal)) {
-        Warn 'immerse_debug.log missing -- DbgView did not capture; skipping verifier'
+    Push-Status -Phase $(if ($scenarioOk) { 'completed' } else { 'completed_with_failures' }) -Extra @{
+        scenario_ok    = $scenarioOk
+        user_load_ok   = $loadOk
+        auto_connected = $autoConnected
     }
-
-    # CAPTURE_WAV_v2: collect any per-phase WAV captures
-    if (Test-Path $resultsDir) {
-        $wavs = Get-ChildItem $resultsDir -Filter 'phase_*.wav' -ErrorAction SilentlyContinue |
-                Where-Object { $_.LastWriteTime -ge $editorStart }
-        $wavCount = 0
-        foreach ($w in $wavs) {
-            Push-File $w.FullName $w.Name
-            $wavCount++
-        }
-        if ($wavCount -gt 0) { Info "Captured WAVs: $wavCount files" }
-    }
-
-    if ($csv) {
-        Push-Status -Phase 'completed' -Extra @{ csv_name = $csv.Name }
-        Step 'DONE'
-        Write-Host "Results: https://github.com/$Owner/$Repo/tree/$Branch/$RunDirRel" -ForegroundColor Green
-    } else {
-        Push-Status -Phase 'completed_no_csv' -Extra @{ note='editor exited but no CSV produced this run' }
-    }
+    Step 'DONE'
+    Write-Host "Results: https://github.com/$Owner/$Repo/tree/$Branch/$RunDirRel" -ForegroundColor Green
 } catch {
     Write-Host "ERROR: $_" -ForegroundColor Red
     try { Push-Status -Phase 'failed' -Extra @{ error = "$_" } } catch { }

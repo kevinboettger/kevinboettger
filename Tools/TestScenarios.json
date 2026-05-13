@@ -1,0 +1,48 @@
+{
+  "schema": "v1",
+  "description": "Tier 1 functional WAAPI test scenarios for the Immerse Audio Renderer. Each scenario sets one property on the Immerse Effect via ak.wwise.core.object.setProperty and asserts a matching log line appears in the listener's debug stream within the timeout. Scenarios run in declared order; later steps may depend on earlier ones (e.g. HeadphoneEq requires EHM on + ConvolutionType=personalized).",
+  "scenarios": [
+    {
+      "name": "EHM: baseline on",
+      "property": "EnableImmerse",
+      "value": true,
+      "expectLog": "Immerse_EnableImmerse\\s+inMode:\\s*1",
+      "timeoutMs": 3000
+    },
+    {
+      "name": "EHM: toggle off",
+      "property": "EnableImmerse",
+      "value": false,
+      "expectLog": "Immerse_EnableImmerse\\s+inMode:\\s*0",
+      "timeoutMs": 3000
+    },
+    {
+      "name": "EHM: toggle on",
+      "property": "EnableImmerse",
+      "value": true,
+      "expectLog": "Immerse_EnableImmerse\\s+inMode:\\s*1",
+      "timeoutMs": 3000
+    },
+    {
+      "name": "UserID: re-assert current user pushes through",
+      "property": "UserID",
+      "value": "kevin_tencenttest1_emb",
+      "expectLog": "generateWebAppUrl.*userId:\\s*kevin_tencenttest1_emb",
+      "timeoutMs": 5000
+    },
+    {
+      "name": "ConvolutionType: discovery (observe what value type + log signature)",
+      "comment": "First run: capture whatever the Immerse plug-in logs when ConvolutionType is touched. Use the captured output to (a) confirm the value type/encoding for personalized vs universal, (b) derive expectLog regex. Then replace this discovery scenario with two assertion scenarios (one for each mode).",
+      "property": "ConvolutionType",
+      "value": "TBD",
+      "captureSeconds": 3
+    },
+    {
+      "name": "HeadphoneEq: discovery (requires EHM on + personalized profile)",
+      "comment": "Requires EHM on (set above) AND ConvolutionType=personalized. Until ConvolutionType is wired up correctly above, this scenario may produce no log output. First run: capture what the plug-in logs when HeadphoneEq changes; derive expectLog regex from there.",
+      "property": "HeadphoneEq",
+      "value": "TBD",
+      "captureSeconds": 3
+    }
+  ]
+}

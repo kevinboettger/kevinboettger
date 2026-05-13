@@ -21,13 +21,13 @@ New-Item -ItemType Directory -Force -Path $toolsDir | Out-Null
 # Cache-bust raw.githubusercontent.com -- it can serve stale content for ~5 min.
 # Append a random query param + send no-cache headers.
 $buster = "?_=" + [DateTime]::UtcNow.Ticks
-$base = 'https://raw.githubusercontent.com/kevinboettger/kevinboettger/claude/test-immerse-audio-plugin-su44W/Tools'
+$base = 'https://raw.githubusercontent.com/kevinboettger/kevinboettger/claude/test-immerse-tier1-waapi/Tools'
 $files = @{
     'AutoRunAndPush.ps1'         = "$base/AutoRunAndPush.ps1$buster"
     'AutoRunAndPush.bat'         = "$base/AutoRunAndPush.bat$buster"
-    'WaapiOrchestrator.ps1'      = "$base/WaapiOrchestrator.ps1$buster"
     'DebugStreamListener.ps1'    = "$base/DebugStreamListener.ps1$buster"
-    'Verify-ImmerseToggles.ps1'  = "$base/Verify-ImmerseToggles.ps1$buster"
+    'Run-Scenarios.ps1'          = "$base/Run-Scenarios.ps1$buster"
+    'TestScenarios.json'         = "$base/TestScenarios.json$buster"
 }
 $headers = @{
     'Cache-Control' = 'no-cache, no-store, max-age=0'
