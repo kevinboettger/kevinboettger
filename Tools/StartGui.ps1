@@ -354,7 +354,7 @@ if ($needsPersonalizedPrereq) {
 #    run's captured log lines tell us the signature.
 $enumLogPatterns = @{
     'HeadphoneEq' = 'updateUMWHPEQSelection\(\)\s+-\s+updated\s+headsetId:\s*\{value\}'
-    # FieldOfView: pending log capture from a successful run.
+    'FieldOfView' = 'Immerse_SetSpeakerPlacement\s+inSpeakerPlacement:\s*\{value\}'
     # BusContent : pending log capture.
     # Tuning     : pending log capture.
 }
