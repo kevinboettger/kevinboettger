@@ -1,6 +1,6 @@
 {
   "schema": "v1",
-  "description": "Tier 1 functional WAAPI tests for the Immerse Audio Renderer. Each assertion is preceded by a setup that forces the opposite value so the assertion is a real transition (Wwise does not push when setProperty is called with the current value). Properties currently covered: EnableImmerse (bool master switch), ConvolutionType (0=stereo/1=personalized/2=universal), HeadphoneEq (0=none, 1-8=profiles), UserID (string). ConvolutionType and HeadphoneEq are in discovery mode until we observe what the plug-in logs when they change -- the captured lines from this run will tell us the log signatures to assert against in v3.",
+  "description": "Tier 1 functional WAAPI tests for the Immerse Audio Renderer. Each assertion is preceded by a setup that forces the opposite value so the assertion is a real transition (Wwise does not push when setProperty is called with the current value). Currently asserted: EnableImmerse (bool master switch) and ConvolutionType values 0 (stereo) and 1 (personalized). ConvolutionType=2 (universal) and HeadphoneEq are skipped pending dev-team clarification on their preconditions -- both return HTTP 500 from WAAPI in the current configuration. UserID change tests are intentionally absent pending manual verification that user-switching mid-remote-connect is safe.",
   "scenarios": [
     {
       "name": "EHM: setup -> force off (no-assert)",
@@ -31,67 +31,39 @@
     },
 
     {
-      "name": "ConvolutionType: setup -> 2 universal (no-assert)",
+      "name": "ConvolutionType: setup -> 0 stereo (force transition for next assert)",
       "property": "ConvolutionType",
-      "value": 2,
+      "value": 0,
       "captureSeconds": 1
     },
     {
-      "name": "ConvolutionType: discovery -> 0 stereo downmix",
-      "property": "ConvolutionType",
-      "value": 0,
-      "captureSeconds": 3
-    },
-    {
-      "name": "ConvolutionType: discovery -> 1 personalized",
+      "name": "ConvolutionType: assert -> 1 personalized (sees inMode: 1)",
       "property": "ConvolutionType",
       "value": 1,
-      "captureSeconds": 3
+      "expectLog": "Immerse_EnableImmerse\\s+inMode:\\s*1",
+      "timeoutMs": 3000
     },
     {
-      "name": "ConvolutionType: discovery -> 2 universal",
+      "name": "ConvolutionType: assert -> 0 stereo downmix (sees inMode: 2)",
       "property": "ConvolutionType",
-      "value": 2,
-      "captureSeconds": 3
+      "value": 0,
+      "expectLog": "Immerse_EnableImmerse\\s+inMode:\\s*2",
+      "timeoutMs": 3000
     },
 
     {
-      "name": "HeadphoneEq prereq: ConvolutionType -> 1 personalized",
+      "name": "ConvolutionType: 2 universal (SKIPPED - returns HTTP 500, dev-team check)",
       "property": "ConvolutionType",
-      "value": 1,
-      "captureSeconds": 1
+      "value": 2,
+      "skip": true,
+      "comment": "WAAPI returns 500 for value=2 regardless of preceding state. Likely a license/feature gate or precondition (e.g. non-personalized user account). Confirm with dev team whether universal mode is settable via setProperty in this build, or whether it requires a different API."
     },
     {
-      "name": "HeadphoneEq: setup -> 0 none (no-assert)",
-      "property": "HeadphoneEq",
-      "value": 0,
-      "captureSeconds": 1
-    },
-    {
-      "name": "HeadphoneEq: discovery -> 1",
+      "name": "HeadphoneEq: any value (SKIPPED - all return HTTP 500, dev-team check)",
       "property": "HeadphoneEq",
       "value": 1,
-      "captureSeconds": 3
-    },
-    {
-      "name": "HeadphoneEq: discovery -> 5",
-      "property": "HeadphoneEq",
-      "value": 5,
-      "captureSeconds": 3
-    },
-
-    {
-      "name": "UserID: setup -> dummy (no-assert)",
-      "property": "UserID",
-      "value": "dummy_setup_user_for_transition",
-      "captureSeconds": 1
-    },
-    {
-      "name": "UserID: assert switch back to expected",
-      "property": "UserID",
-      "value": "kevin_tencenttest1_emb",
-      "expectLog": "generateWebAppUrl.*userId:\\s*kevin_tencenttest1_emb",
-      "timeoutMs": 5000
+      "skip": true,
+      "comment": "Every HeadphoneEq setProperty call returns 500, including with EnableImmerse=true and ConvolutionType=1 (personalized) already set as preconditions. May require: (a) HPEQ profile data already downloaded for the user, (b) ConvolutionType to be in a steady state for some time, (c) a different WAAPI verb. Confirm with dev team."
     }
   ]
 }
