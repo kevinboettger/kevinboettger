@@ -1,6 +1,6 @@
 {
   "schema": "v1",
-  "description": "Tier 1 functional WAAPI tests for the Immerse Audio Renderer. Every assertion scenario is preceded by a 'setup' scenario that forces the property to the opposite value (so the assertion is guaranteed to be a real state transition). Wwise does not push when setProperty is called with the current value -- the test would silently FAIL because no log line is emitted by the plug-in.",
+  "description": "Tier 1 functional WAAPI tests for the Immerse Audio Renderer. Each assertion is preceded by a setup that forces the opposite value so the assertion is a real transition (Wwise does not push when setProperty is called with the current value). Properties currently covered: EnableImmerse (bool master switch), ConvolutionType (0=stereo/1=personalized/2=universal), HeadphoneEq (0=none, 1-8=profiles), UserID (string). ConvolutionType and HeadphoneEq are in discovery mode until we observe what the plug-in logs when they change -- the captured lines from this run will tell us the log signatures to assert against in v3.",
   "scenarios": [
     {
       "name": "EHM: setup -> force off (no-assert)",
@@ -23,14 +23,65 @@
       "timeoutMs": 3000
     },
     {
-      "name": "EHM: assert ON  (off -> on)",
+      "name": "EHM: assert ON  (off -> on, for downstream scenarios)",
       "property": "EnableImmerse",
       "value": true,
       "expectLog": "Immerse_EnableImmerse\\s+inMode:\\s*1",
       "timeoutMs": 3000
     },
+
     {
-      "name": "UserID: setup -> dummy (no-assert, forces state change)",
+      "name": "ConvolutionType: setup -> 2 universal (no-assert)",
+      "property": "ConvolutionType",
+      "value": 2,
+      "captureSeconds": 1
+    },
+    {
+      "name": "ConvolutionType: discovery -> 0 stereo downmix",
+      "property": "ConvolutionType",
+      "value": 0,
+      "captureSeconds": 3
+    },
+    {
+      "name": "ConvolutionType: discovery -> 1 personalized",
+      "property": "ConvolutionType",
+      "value": 1,
+      "captureSeconds": 3
+    },
+    {
+      "name": "ConvolutionType: discovery -> 2 universal",
+      "property": "ConvolutionType",
+      "value": 2,
+      "captureSeconds": 3
+    },
+
+    {
+      "name": "HeadphoneEq prereq: ConvolutionType -> 1 personalized",
+      "property": "ConvolutionType",
+      "value": 1,
+      "captureSeconds": 1
+    },
+    {
+      "name": "HeadphoneEq: setup -> 0 none (no-assert)",
+      "property": "HeadphoneEq",
+      "value": 0,
+      "captureSeconds": 1
+    },
+    {
+      "name": "HeadphoneEq: discovery -> 1",
+      "property": "HeadphoneEq",
+      "value": 1,
+      "captureSeconds": 3
+    },
+    {
+      "name": "HeadphoneEq: discovery -> 5",
+      "property": "HeadphoneEq",
+      "value": 5,
+      "captureSeconds": 3
+    },
+
+    {
+      "name": "UserID: setup -> dummy (no-assert)",
       "property": "UserID",
       "value": "dummy_setup_user_for_transition",
       "captureSeconds": 1
@@ -42,6 +93,5 @@
       "expectLog": "generateWebAppUrl.*userId:\\s*kevin_tencenttest1_emb",
       "timeoutMs": 5000
     }
-  ],
-  "discovery_notes": "ConvolutionType and HeadphoneEq were removed pending property-type discovery -- they expect numeric/enum values, not strings ('Value type does not match the property's type' from Wwise). Next step: query their live values + types via WAAPI ak.wwise.core.object.getPropertyAndReferenceNames or ak.wwise.core.object.get with options.return = ['@ConvolutionType', '@HeadphoneEq'] -- that returns the actual current value with its native type. Then re-add as proper assertion scenarios."
+  ]
 }
