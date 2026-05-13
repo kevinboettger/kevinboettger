@@ -1,0 +1,704 @@
+﻿{
+    "skip":  0,
+    "results":  [
+                    {
+                        "index":  1,
+                        "name":  "Setup for EHM: ConvolutionType = 0 (Universal)",
+                        "status":  "discovery",
+                        "property":  "ConvolutionType",
+                        "value":  0,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:13:35.1262589-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:35.1262589-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:35.1272594-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:35.127 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                                               "[2026-05-13T05:13:35.1272594-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:35.1272594-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:35.1272594-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:35.128 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                                               "[2026-05-13T05:13:35.1282607-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:35.128 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 ",
+                                               "[2026-05-13T05:13:35.1292611-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:35.129 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  2,
+                        "name":  "Setup for EHM: force EHM off",
+                        "status":  "discovery",
+                        "property":  "EnableImmerse",
+                        "value":  false,
+                        "captured_lines":  {
+
+                                           }
+                    },
+                    {
+                        "index":  3,
+                        "name":  "EHM: assert ON  (off -\u003e on, inMode:2)",
+                        "status":  "pass",
+                        "property":  "EnableImmerse",
+                        "value":  true,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*2",
+                        "matched_line":  "[2026-05-13T05:13:37.2743315-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:37.274 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                        "lag_ms":  124
+                    },
+                    {
+                        "index":  4,
+                        "name":  "EHM: assert OFF (on -\u003e off, inMode:0)",
+                        "status":  "pass",
+                        "property":  "EnableImmerse",
+                        "value":  false,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*0",
+                        "matched_line":  "[2026-05-13T05:13:37.3952149-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:37.395 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 0 ",
+                        "lag_ms":  116
+                    },
+                    {
+                        "index":  5,
+                        "name":  "EHM: assert ON  (off -\u003e on, inMode:2)",
+                        "status":  "pass",
+                        "property":  "EnableImmerse",
+                        "value":  true,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*2",
+                        "matched_line":  "[2026-05-13T05:13:37.5045228-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:37.505 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                        "lag_ms":  107
+                    },
+                    {
+                        "index":  6,
+                        "name":  "Setup ConvType: force EHM on",
+                        "status":  "discovery",
+                        "property":  "EnableImmerse",
+                        "value":  true,
+                        "captured_lines":  {
+
+                                           }
+                    },
+                    {
+                        "index":  7,
+                        "name":  "Setup ConvType: force to 0 (Universal)",
+                        "status":  "discovery",
+                        "property":  "ConvolutionType",
+                        "value":  0,
+                        "captured_lines":  {
+
+                                           }
+                    },
+                    {
+                        "index":  8,
+                        "name":  "ConvolutionType: assert Personalized (1) -\u003e inMode:1",
+                        "status":  "pass",
+                        "property":  "ConvolutionType",
+                        "value":  1,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*1",
+                        "matched_line":  "[2026-05-13T05:13:39.6644764-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:39.665 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 ",
+                        "lag_ms":  124
+                    },
+                    {
+                        "index":  9,
+                        "name":  "ConvolutionType: assert Universal (0) -\u003e inMode:2",
+                        "status":  "pass",
+                        "property":  "ConvolutionType",
+                        "value":  0,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*2",
+                        "matched_line":  "[2026-05-13T05:13:39.7953873-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:39.795 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                        "lag_ms":  120
+                    },
+                    {
+                        "index":  10,
+                        "name":  "Prereq: EnableImmerse = true",
+                        "status":  "discovery",
+                        "property":  "EnableImmerse",
+                        "value":  true,
+                        "captured_lines":  {
+
+                                           }
+                    },
+                    {
+                        "index":  11,
+                        "name":  "Prereq: ConvolutionType = 1 (Personalized)",
+                        "status":  "discovery",
+                        "property":  "ConvolutionType",
+                        "value":  1,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:13:40.9043782-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:40.9053771-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:40.9053771-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:40.905 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 ",
+                                               "[2026-05-13T05:13:40.9053771-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:40.9053771-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:40.9053771-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:40.906 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 ",
+                                               "[2026-05-13T05:13:40.9068835-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:40.907 line: 1316. getLocalSessionID for user: kevin_tencenttest1_emb 06756e30dc6941e7b44b3ad365984a2f ",
+                                               "[2026-05-13T05:13:40.9078927-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:40.908 line: 2576. ImmerseAPI: Too many status checks within the period allowed, returning early ",
+                                               "[2026-05-13T05:13:40.9078927-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:40.908 line: 3232. updateUMWHPEQSelection() - updated headsetId: 18446744073709551615 ",
+                                               "[2026-05-13T05:13:40.9088920-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:40.909 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 ",
+                                               "[2026-05-13T05:13:40.9103966-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:40.910 line: 1316. getLocalSessionID for user: kevin_tencenttest1_emb 06756e30dc6941e7b44b3ad365984a2f ",
+                                               "[2026-05-13T05:13:40.9114024-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:40.911 line: 2576. ImmerseAPI: Too many status checks within the period allowed, returning early ",
+                                               "[2026-05-13T05:13:40.9114024-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:40.911 line: 3232. updateUMWHPEQSelection() - updated headsetId: 18446744073709551615 ",
+                                               "[2026-05-13T05:13:40.9124085-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:40.912 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  12,
+                        "name":  "Setup HeadphoneEq: force to NONE (0)",
+                        "status":  "discovery",
+                        "property":  "HeadphoneEq",
+                        "value":  0,
+                        "captured_lines":  {
+
+                                           }
+                    },
+                    {
+                        "index":  13,
+                        "name":  "Headphone EQ: Universal Closed Back (102)",
+                        "status":  "discovery",
+                        "property":  "HeadphoneEq",
+                        "value":  102,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:13:42.9469087-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:42.9469087-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:42.9469087-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:42.947 line: 710. ___IMMERSEENGINE___ Immerse_EnableHPEQ inHeadset: 102 ",
+                                               "[2026-05-13T05:13:42.9479164-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:42.9479164-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:42.9479164-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:42.948 line: 1328. ImmerseManager::UpdateHpeqHeadset() - HPEQ enabled, headsetId 102 ",
+                                               "[2026-05-13T05:13:42.9489176-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:42.949 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  14,
+                        "name":  "Headphone EQ: Universal Open Back (104)",
+                        "status":  "discovery",
+                        "property":  "HeadphoneEq",
+                        "value":  104,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:13:44.9768073-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:44.9768073-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:44.9768073-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:44.977 line: 710. ___IMMERSEENGINE___ Immerse_EnableHPEQ inHeadset: 104 ",
+                                               "[2026-05-13T05:13:44.9778180-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:44.9778180-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:44.978 line: 1328. ImmerseManager::UpdateHpeqHeadset() - HPEQ enabled, headsetId 104 ",
+                                               "[2026-05-13T05:13:44.9778180-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:44.9788176-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:44.979 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  15,
+                        "name":  "Headphone EQ: Cloud Alpha (26)",
+                        "status":  "discovery",
+                        "property":  "HeadphoneEq",
+                        "value":  26,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:13:46.9959914-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:46.9969977-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:46.9969977-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:46.997 line: 710. ___IMMERSEENGINE___ Immerse_EnableHPEQ inHeadset: 26 ",
+                                               "[2026-05-13T05:13:46.9969977-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:46.9969977-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:46.9969977-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:46.997 line: 1328. ImmerseManager::UpdateHpeqHeadset() - HPEQ enabled, headsetId 26 ",
+                                               "[2026-05-13T05:13:46.9979974-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:46.998 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  16,
+                        "name":  "Headphone EQ: Arctis Nova Pro Wireless (16)",
+                        "status":  "discovery",
+                        "property":  "HeadphoneEq",
+                        "value":  16,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:13:49.0279543-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:49.0279543-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:49.0279543-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:49.028 line: 710. ___IMMERSEENGINE___ Immerse_EnableHPEQ inHeadset: 16 ",
+                                               "[2026-05-13T05:13:49.0289537-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:49.0289537-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:49.0289537-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:49.029 line: 1328. ImmerseManager::UpdateHpeqHeadset() - HPEQ enabled, headsetId 16 ",
+                                               "[2026-05-13T05:13:49.0299538-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:49.030 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  17,
+                        "name":  "Headphone EQ: G535 (38)",
+                        "status":  "discovery",
+                        "property":  "HeadphoneEq",
+                        "value":  38,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:13:51.0569536-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:51.0569536-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:51.0569536-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:51.057 line: 710. ___IMMERSEENGINE___ Immerse_EnableHPEQ inHeadset: 38 ",
+                                               "[2026-05-13T05:13:51.0579593-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:51.0579593-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:51.0579593-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:51.058 line: 1328. ImmerseManager::UpdateHpeqHeadset() - HPEQ enabled, headsetId 38 ",
+                                               "[2026-05-13T05:13:51.0589624-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:51.059 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  18,
+                        "name":  "Headphone EQ: Black Shark V2 Pro Wireless (23)",
+                        "status":  "discovery",
+                        "property":  "HeadphoneEq",
+                        "value":  23,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:13:53.0768317-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:53.0768317-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:53.0783396-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:53.078 line: 710. ___IMMERSEENGINE___ Immerse_EnableHPEQ inHeadset: 23 ",
+                                               "[2026-05-13T05:13:53.0783396-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:53.0783396-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:53.0783396-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:53.079 line: 1328. ImmerseManager::UpdateHpeqHeadset() - HPEQ enabled, headsetId 23 ",
+                                               "[2026-05-13T05:13:53.0798775-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:53.080 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  19,
+                        "name":  "Headphone EQ: A50 (21)",
+                        "status":  "discovery",
+                        "property":  "HeadphoneEq",
+                        "value":  21,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:13:55.1081172-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:55.1081172-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:55.1081172-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:55.108 line: 710. ___IMMERSEENGINE___ Immerse_EnableHPEQ inHeadset: 21 ",
+                                               "[2026-05-13T05:13:55.1091181-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:55.1091181-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:55.1091181-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:55.109 line: 1328. ImmerseManager::UpdateHpeqHeadset() - HPEQ enabled, headsetId 21 ",
+                                               "[2026-05-13T05:13:55.1106236-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:55.110 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  20,
+                        "name":  "Headphone EQ: MMX 300 (80)",
+                        "status":  "discovery",
+                        "property":  "HeadphoneEq",
+                        "value":  80,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:13:57.1377202-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:57.1377202-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:57.1377202-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:57.138 line: 710. ___IMMERSEENGINE___ Immerse_EnableHPEQ inHeadset: 80 ",
+                                               "[2026-05-13T05:13:57.1377202-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:57.1387206-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:57.138 line: 1328. ImmerseManager::UpdateHpeqHeadset() - HPEQ enabled, headsetId 80 ",
+                                               "[2026-05-13T05:13:57.1387206-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:57.1397236-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:57.140 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  21,
+                        "name":  "Headphone EQ: HS80 RGB Wireless (66)",
+                        "status":  "discovery",
+                        "property":  "HeadphoneEq",
+                        "value":  66,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:13:59.1588132-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:59.1588132-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:59.1598136-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:59.159 line: 710. ___IMMERSEENGINE___ Immerse_EnableHPEQ inHeadset: 66 ",
+                                               "[2026-05-13T05:13:59.1603170-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:59.1603170-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:59.160 line: 1328. ImmerseManager::UpdateHpeqHeadset() - HPEQ enabled, headsetId 66 ",
+                                               "[2026-05-13T05:13:59.1603170-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:13:59.1613216-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:13:59.161 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  22,
+                        "name":  "Setup Tuning: force to Extraction_01 (0)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  0,
+                        "captured_lines":  {
+
+                                           }
+                    },
+                    {
+                        "index":  23,
+                        "name":  "Tuning: Warfare_01 (1)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  1,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:02.1900694-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:02.1900694-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:02.1905745-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:02.1905745-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:02.1905745-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:02.191 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:1 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:02.1915797-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:02.192 line: 416. DecryptMultiSofaData() - v2 numSections=3 hrtfFlags=1 hrtfSectionOffset=971 hrtfSectionSize=1758624 numEntries=4 dataOffset=440678 dataLength=439639 bmapSize=518 fovdSize=361 ",
+                                               "[2026-05-13T05:14:02.2467516-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:02.247 line: 447. DecryptMultiSofaData() - decrypt result: Success ",
+                                               "[2026-05-13T05:14:02.2477567-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:02.247 line: 533. AssetManager - BMAP data (518 bytes): {\"buses\":[{\"label\":\"Extraction\",\"tunings\":[{\"id\":\"extraction_tuning_1\",\"label\":\"Extraction Tuning 1\",\"hrtf_index\":0}],\"id\":\"extraction\"},{\"label\":\"Warfare\",\"tunings\":[{\"id\":\"warfare_tuning_1\",\"label\":\"Warfare Tuning 1\",\"hrtf_index\":1}],\"id\":\"warfare\"},{\"label\":\"Campaign\",\"tunings\":[{\"id\":\"campaign_tuning_1\",\"label\":\"Campaign Tuning 1\",\"hrtf_index\":2}],\"id\":\"campaign\"},{\"label\":\"Voice Chat\",\"tunings\":[{\"id\":\"voice_chat_tuning_1\",\"label\":\"Voice Chat Tuning 1\",\"hrtf_index\":3}],\"id\":\"voice_chat\"}],\"schema_version\":1} ",
+                                               "[2026-05-13T05:14:02.2477567-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:02.248 line: 537. AssetManager - FOVD data (361 bytes): {\"schema_version\":1,\"fov_groups\":[\"l/r\"],\"fov_presets\":[{\"studio_speaker_angles_idx\":[0,1,6,7,8,9,10,11,12,13,14,15,16,17,18],\"label\":\"Narrow\",\"id\":\"narrow\"},{\"studio_speaker_angles_idx\":[2,3,6,7,8,9,10,11,12,13,14,15,16,17,18],\"label\":\"Default\",\"id\":\"default\"},{\"studio_speaker_angles_idx\":[4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],\"label\":\"Wide\",\"id\":\"wide\"}]} ",
+                                               "[2026-05-13T05:14:02.2542650-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:02.254 line: 376. AudioConfig::GetSHIndices() - invalid channelConfig: 6 ",
+                                               "[2026-05-13T05:14:02.3039031-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:02.304 line: 281. AudioConfig::InitializeDecoders: Successfully created shared ambisonic decoder kernel "
+                                           ]
+                    },
+                    {
+                        "index":  24,
+                        "name":  "Tuning: Campaign_01 (2)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  2,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:04.2279581-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:04.2289592-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:04.2289592-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:04.2289592-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:04.2304635-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:04.231 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:2 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:04.2314692-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:04.231 line: 416. DecryptMultiSofaData() - v2 numSections=3 hrtfFlags=1 hrtfSectionOffset=971 hrtfSectionSize=1758624 numEntries=4 dataOffset=880317 dataLength=439639 bmapSize=518 fovdSize=361 ",
+                                               "[2026-05-13T05:14:04.2871001-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:04.287 line: 447. DecryptMultiSofaData() - decrypt result: Success ",
+                                               "[2026-05-13T05:14:04.2881061-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:04.288 line: 533. AssetManager - BMAP data (518 bytes): {\"buses\":[{\"label\":\"Extraction\",\"tunings\":[{\"id\":\"extraction_tuning_1\",\"label\":\"Extraction Tuning 1\",\"hrtf_index\":0}],\"id\":\"extraction\"},{\"label\":\"Warfare\",\"tunings\":[{\"id\":\"warfare_tuning_1\",\"label\":\"Warfare Tuning 1\",\"hrtf_index\":1}],\"id\":\"warfare\"},{\"label\":\"Campaign\",\"tunings\":[{\"id\":\"campaign_tuning_1\",\"label\":\"Campaign Tuning 1\",\"hrtf_index\":2}],\"id\":\"campaign\"},{\"label\":\"Voice Chat\",\"tunings\":[{\"id\":\"voice_chat_tuning_1\",\"label\":\"Voice Chat Tuning 1\",\"hrtf_index\":3}],\"id\":\"voice_chat\"}],\"schema_version\":1} ",
+                                               "[2026-05-13T05:14:04.2881061-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:04.288 line: 537. AssetManager - FOVD data (361 bytes): {\"schema_version\":1,\"fov_groups\":[\"l/r\"],\"fov_presets\":[{\"studio_speaker_angles_idx\":[0,1,6,7,8,9,10,11,12,13,14,15,16,17,18],\"label\":\"Narrow\",\"id\":\"narrow\"},{\"studio_speaker_angles_idx\":[2,3,6,7,8,9,10,11,12,13,14,15,16,17,18],\"label\":\"Default\",\"id\":\"default\"},{\"studio_speaker_angles_idx\":[4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],\"label\":\"Wide\",\"id\":\"wide\"}]} ",
+                                               "[2026-05-13T05:14:04.2956168-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:04.295 line: 376. AudioConfig::GetSHIndices() - invalid channelConfig: 6 ",
+                                               "[2026-05-13T05:14:04.3432413-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:04.343 line: 281. AudioConfig::InitializeDecoders: Successfully created shared ambisonic decoder kernel "
+                                           ]
+                    },
+                    {
+                        "index":  25,
+                        "name":  "Tuning: VoiceChat_01 (3)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  3,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:06.2468884-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:06.2468884-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:06.2468884-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:06.2468884-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:06.2503955-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:06.251 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:3 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:06.2513984-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:06.251 line: 416. DecryptMultiSofaData() - v2 numSections=3 hrtfFlags=1 hrtfSectionOffset=971 hrtfSectionSize=1758624 numEntries=4 dataOffset=1319956 dataLength=439639 bmapSize=518 fovdSize=361 ",
+                                               "[2026-05-13T05:14:06.3070464-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:06.307 line: 447. DecryptMultiSofaData() - decrypt result: Success ",
+                                               "[2026-05-13T05:14:06.3080501-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:06.308 line: 533. AssetManager - BMAP data (518 bytes): {\"buses\":[{\"label\":\"Extraction\",\"tunings\":[{\"id\":\"extraction_tuning_1\",\"label\":\"Extraction Tuning 1\",\"hrtf_index\":0}],\"id\":\"extraction\"},{\"label\":\"Warfare\",\"tunings\":[{\"id\":\"warfare_tuning_1\",\"label\":\"Warfare Tuning 1\",\"hrtf_index\":1}],\"id\":\"warfare\"},{\"label\":\"Campaign\",\"tunings\":[{\"id\":\"campaign_tuning_1\",\"label\":\"Campaign Tuning 1\",\"hrtf_index\":2}],\"id\":\"campaign\"},{\"label\":\"Voice Chat\",\"tunings\":[{\"id\":\"voice_chat_tuning_1\",\"label\":\"Voice Chat Tuning 1\",\"hrtf_index\":3}],\"id\":\"voice_chat\"}],\"schema_version\":1} ",
+                                               "[2026-05-13T05:14:06.3080501-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:06.308 line: 537. AssetManager - FOVD data (361 bytes): {\"schema_version\":1,\"fov_groups\":[\"l/r\"],\"fov_presets\":[{\"studio_speaker_angles_idx\":[0,1,6,7,8,9,10,11,12,13,14,15,16,17,18],\"label\":\"Narrow\",\"id\":\"narrow\"},{\"studio_speaker_angles_idx\":[2,3,6,7,8,9,10,11,12,13,14,15,16,17,18],\"label\":\"Default\",\"id\":\"default\"},{\"studio_speaker_angles_idx\":[4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],\"label\":\"Wide\",\"id\":\"wide\"}]} ",
+                                               "[2026-05-13T05:14:06.3145619-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:06.315 line: 376. AudioConfig::GetSHIndices() - invalid channelConfig: 6 ",
+                                               "[2026-05-13T05:14:06.3651563-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:06.365 line: 281. AudioConfig::InitializeDecoders: Successfully created shared ambisonic decoder kernel "
+                                           ]
+                    },
+                    {
+                        "index":  26,
+                        "name":  "Tuning: SpatialContent_01 (4)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  4,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:08.2867150-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:08.2867150-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:08.2877219-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:08.2877219-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:08.3002793-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:08.301 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:4 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:08.3012848-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:08.301 line: 392. DecryptMultiSofaData() - v2 index out of range: 4 (numEntries=4). "
+                                           ]
+                    },
+                    {
+                        "index":  27,
+                        "name":  "Tuning: SpatialContent_02 (5)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  5,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:10.3167574-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:10.3167574-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:10.3167574-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:10.3177617-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:10.3202661-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:10.320 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:5 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:10.3212704-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:10.321 line: 392. DecryptMultiSofaData() - v2 index out of range: 5 (numEntries=4). "
+                                           ]
+                    },
+                    {
+                        "index":  28,
+                        "name":  "Tuning: SpatialContent_03 (6)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  6,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:12.3471349-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:12.3471349-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:12.3471349-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:12.3471349-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:12.3506536-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:12.351 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:6 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:12.3516533-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:12.351 line: 392. DecryptMultiSofaData() - v2 index out of range: 6 (numEntries=4). "
+                                           ]
+                    },
+                    {
+                        "index":  29,
+                        "name":  "Tuning: SpatialContent_04 (7)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  7,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:14.3677008-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:14.3677008-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:14.3677008-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:14.3687010-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:14.3802406-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:14.381 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:7 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:14.3812509-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:14.381 line: 392. DecryptMultiSofaData() - v2 index out of range: 7 (numEntries=4). "
+                                           ]
+                    },
+                    {
+                        "index":  30,
+                        "name":  "Tuning: VoiceChat_01 (8)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  8,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:16.3788864-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:16.3788864-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:16.3788864-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:16.3788864-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:16.3803918-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:16.380 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:8 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:16.3813982-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:16.381 line: 392. DecryptMultiSofaData() - v2 index out of range: 8 (numEntries=4). "
+                                           ]
+                    },
+                    {
+                        "index":  31,
+                        "name":  "Tuning: VoiceChat_02 (9)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  9,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:18.4071364-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:18.4071364-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:18.4071364-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:18.4081431-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:18.4106547-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:18.411 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:9 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:18.4116555-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:18.411 line: 392. DecryptMultiSofaData() - v2 index out of range: 9 (numEntries=4). "
+                                           ]
+                    },
+                    {
+                        "index":  32,
+                        "name":  "Tuning: VoiceChat_03 (10)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  10,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:20.4278918-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:20.4278918-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:20.4293970-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:20.4293970-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:20.4309450-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:20.431 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:10 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:20.4309450-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:20.431 line: 392. DecryptMultiSofaData() - v2 index out of range: 10 (numEntries=4). "
+                                           ]
+                    },
+                    {
+                        "index":  33,
+                        "name":  "Tuning: VoiceChat_04 (11)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  11,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:22.4577246-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:22.4587229-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:22.4587229-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:22.4587229-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:22.4602297-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:22.461 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:11 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:22.4612353-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:22.461 line: 392. DecryptMultiSofaData() - v2 index out of range: 11 (numEntries=4). "
+                                           ]
+                    },
+                    {
+                        "index":  34,
+                        "name":  "Tuning: CameraPosition_01 (12)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  12,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:24.4880093-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:24.4880093-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:24.4890089-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:24.4890089-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:24.4905134-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:24.491 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:12 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:24.4915196-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:24.491 line: 392. DecryptMultiSofaData() - v2 index out of range: 12 (numEntries=4). "
+                                           ]
+                    },
+                    {
+                        "index":  35,
+                        "name":  "Tuning: CameraPosition_02 (13)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  13,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:26.5078619-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:26.5088626-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:26.5088626-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:26.5088626-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:26.5103789-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:26.510 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:13 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:26.5113846-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:26.511 line: 392. DecryptMultiSofaData() - v2 index out of range: 13 (numEntries=4). "
+                                           ]
+                    },
+                    {
+                        "index":  36,
+                        "name":  "Tuning: CameraPosition_03 (14)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  14,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:28.5370696-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:28.5370696-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:28.5370696-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:28.5370696-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:28.5405803-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:28.540 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:14 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:28.5415847-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:28.541 line: 392. DecryptMultiSofaData() - v2 index out of range: 14 (numEntries=4). "
+                                           ]
+                    },
+                    {
+                        "index":  37,
+                        "name":  "Tuning: Tuning_16 (15)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  15,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:30.5671232-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:30.5681372-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:30.5681372-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:30.5681372-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:30.5706417-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:30.571 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:15 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:30.5716515-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:30.571 line: 392. DecryptMultiSofaData() - v2 index out of range: 15 (numEntries=4). "
+                                           ]
+                    },
+                    {
+                        "index":  38,
+                        "name":  "Tuning: Tuning_17 (16)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  16,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:32.6077207-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:32.6087220-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:32.6087220-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:32.6087220-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:32.6202842-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:32.621 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:16 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:32.6212966-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:32.621 line: 392. DecryptMultiSofaData() - v2 index out of range: 16 (numEntries=4). "
+                                           ]
+                    },
+                    {
+                        "index":  39,
+                        "name":  "Tuning: Tuning_18 (17)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  17,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:34.6371378-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:34.6371378-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:34.6371378-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:34.6381513-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:34.6406665-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:34.641 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:17 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:34.6416694-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:34.641 line: 392. DecryptMultiSofaData() - v2 index out of range: 17 (numEntries=4). "
+                                           ]
+                    },
+                    {
+                        "index":  40,
+                        "name":  "Tuning: Tuning_19 (18)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  18,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:36.6482206-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:36.6482206-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:36.6482206-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:36.6482206-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:36.6507365-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:36.651 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:18 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:36.6517394-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:36.651 line: 392. DecryptMultiSofaData() - v2 index out of range: 18 (numEntries=4). "
+                                           ]
+                    },
+                    {
+                        "index":  41,
+                        "name":  "Tuning: Tuning_20 (19)",
+                        "status":  "discovery",
+                        "property":  "Tuning",
+                        "value":  19,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:38.6878759-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:38.6878759-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:38.6888775-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:38.6888775-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:38.7004280-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:38.701 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:19 inSpeakerPlacement:0 ",
+                                               "[2026-05-13T05:14:38.7014373-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:38.701 line: 392. DecryptMultiSofaData() - v2 index out of range: 19 (numEntries=4). "
+                                           ]
+                    },
+                    {
+                        "index":  42,
+                        "name":  "Setup FieldOfView: force to Default (1)",
+                        "status":  "discovery",
+                        "property":  "FieldOfView",
+                        "value":  1,
+                        "captured_lines":  {
+
+                                           }
+                    },
+                    {
+                        "index":  43,
+                        "name":  "Field Of View: Narrow (2)",
+                        "status":  "discovery",
+                        "property":  "FieldOfView",
+                        "value":  2,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:41.7390490-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:41.7400499-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:41.7400499-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:41.7400499-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:41.740 line: 759. ___IMMERSEENGINE___ Immerse_SetSpeakerPlacement inSpeakerPlacement:2 ",
+                                               "[2026-05-13T05:14:41.7405569-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:41.7405569-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:41.741 line: 416. DecryptMultiSofaData() - v2 numSections=3 hrtfFlags=1 hrtfSectionOffset=971 hrtfSectionSize=1758624 numEntries=4 dataOffset=1319956 dataLength=439639 bmapSize=518 fovdSize=361 ",
+                                               "[2026-05-13T05:14:41.7942809-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:41.794 line: 447. DecryptMultiSofaData() - decrypt result: Success ",
+                                               "[2026-05-13T05:14:41.7942809-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:41.795 line: 533. AssetManager - BMAP data (518 bytes): {\"buses\":[{\"label\":\"Extraction\",\"tunings\":[{\"id\":\"extraction_tuning_1\",\"label\":\"Extraction Tuning 1\",\"hrtf_index\":0}],\"id\":\"extraction\"},{\"label\":\"Warfare\",\"tunings\":[{\"id\":\"warfare_tuning_1\",\"label\":\"Warfare Tuning 1\",\"hrtf_index\":1}],\"id\":\"warfare\"},{\"label\":\"Campaign\",\"tunings\":[{\"id\":\"campaign_tuning_1\",\"label\":\"Campaign Tuning 1\",\"hrtf_index\":2}],\"id\":\"campaign\"},{\"label\":\"Voice Chat\",\"tunings\":[{\"id\":\"voice_chat_tuning_1\",\"label\":\"Voice Chat Tuning 1\",\"hrtf_index\":3}],\"id\":\"voice_chat\"}],\"schema_version\":1} ",
+                                               "[2026-05-13T05:14:41.7952812-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:41.795 line: 537. AssetManager - FOVD data (361 bytes): {\"schema_version\":1,\"fov_groups\":[\"l/r\"],\"fov_presets\":[{\"studio_speaker_angles_idx\":[0,1,6,7,8,9,10,11,12,13,14,15,16,17,18],\"label\":\"Narrow\",\"id\":\"narrow\"},{\"studio_speaker_angles_idx\":[2,3,6,7,8,9,10,11,12,13,14,15,16,17,18],\"label\":\"Default\",\"id\":\"default\"},{\"studio_speaker_angles_idx\":[4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],\"label\":\"Wide\",\"id\":\"wide\"}]} ",
+                                               "[2026-05-13T05:14:41.8013225-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:41.801 line: 376. AudioConfig::GetSHIndices() - invalid channelConfig: 6 ",
+                                               "[2026-05-13T05:14:41.8469640-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:41.847 line: 281. AudioConfig::InitializeDecoders: Successfully created shared ambisonic decoder kernel "
+                                           ]
+                    },
+                    {
+                        "index":  44,
+                        "name":  "Field Of View: Wide (3)",
+                        "status":  "discovery",
+                        "property":  "FieldOfView",
+                        "value":  3,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:43.7688873-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:43.7698880-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:43.7698880-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:43.7698880-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:43.770 line: 759. ___IMMERSEENGINE___ Immerse_SetSpeakerPlacement inSpeakerPlacement:3 ",
+                                               "[2026-05-13T05:14:43.7703922-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:43.7703922-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:43.770 line: 416. DecryptMultiSofaData() - v2 numSections=3 hrtfFlags=1 hrtfSectionOffset=971 hrtfSectionSize=1758624 numEntries=4 dataOffset=1319956 dataLength=439639 bmapSize=518 fovdSize=361 ",
+                                               "[2026-05-13T05:14:43.8246253-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:43.824 line: 447. DecryptMultiSofaData() - decrypt result: Success ",
+                                               "[2026-05-13T05:14:43.8256265-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:43.825 line: 533. AssetManager - BMAP data (518 bytes): {\"buses\":[{\"label\":\"Extraction\",\"tunings\":[{\"id\":\"extraction_tuning_1\",\"label\":\"Extraction Tuning 1\",\"hrtf_index\":0}],\"id\":\"extraction\"},{\"label\":\"Warfare\",\"tunings\":[{\"id\":\"warfare_tuning_1\",\"label\":\"Warfare Tuning 1\",\"hrtf_index\":1}],\"id\":\"warfare\"},{\"label\":\"Campaign\",\"tunings\":[{\"id\":\"campaign_tuning_1\",\"label\":\"Campaign Tuning 1\",\"hrtf_index\":2}],\"id\":\"campaign\"},{\"label\":\"Voice Chat\",\"tunings\":[{\"id\":\"voice_chat_tuning_1\",\"label\":\"Voice Chat Tuning 1\",\"hrtf_index\":3}],\"id\":\"voice_chat\"}],\"schema_version\":1} ",
+                                               "[2026-05-13T05:14:43.8256265-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:43.826 line: 537. AssetManager - FOVD data (361 bytes): {\"schema_version\":1,\"fov_groups\":[\"l/r\"],\"fov_presets\":[{\"studio_speaker_angles_idx\":[0,1,6,7,8,9,10,11,12,13,14,15,16,17,18],\"label\":\"Narrow\",\"id\":\"narrow\"},{\"studio_speaker_angles_idx\":[2,3,6,7,8,9,10,11,12,13,14,15,16,17,18],\"label\":\"Default\",\"id\":\"default\"},{\"studio_speaker_angles_idx\":[4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],\"label\":\"Wide\",\"id\":\"wide\"}]} ",
+                                               "[2026-05-13T05:14:43.8316563-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:43.832 line: 376. AudioConfig::GetSHIndices() - invalid channelConfig: 6 ",
+                                               "[2026-05-13T05:14:43.8797846-07:00] [pid=10072] [EmbodyLOG] May_13_2026 05:14:43.879 line: 281. AudioConfig::InitializeDecoders: Successfully created shared ambisonic decoder kernel "
+                                           ]
+                    },
+                    {
+                        "index":  45,
+                        "name":  "Setup BusContent: force to Extraction (0)",
+                        "status":  "discovery",
+                        "property":  "BusContent",
+                        "value":  0,
+                        "captured_lines":  {
+
+                                           }
+                    },
+                    {
+                        "index":  46,
+                        "name":  "Bus Content: Warfare (1)",
+                        "status":  "discovery",
+                        "property":  "BusContent",
+                        "value":  1,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:46.7978298-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:46.7978298-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:46.7988312-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:46.7988312-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e "
+                                           ]
+                    },
+                    {
+                        "index":  47,
+                        "name":  "Bus Content: Campaign (2)",
+                        "status":  "discovery",
+                        "property":  "BusContent",
+                        "value":  2,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:48.8154898-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:48.8154898-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:48.8154898-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:48.8154898-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e "
+                                           ]
+                    },
+                    {
+                        "index":  48,
+                        "name":  "Bus Content: VoiceChat (3)",
+                        "status":  "discovery",
+                        "property":  "BusContent",
+                        "value":  3,
+                        "captured_lines":  [
+                                               "[2026-05-13T05:14:50.8469417-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:50.8469417-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:50.8469417-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T05:14:50.8479513-07:00] [pid=10072] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e "
+                                           ]
+                    }
+                ],
+    "pass":  48,
+    "fail":  0,
+    "schema":  "tier1-results-v1",
+    "total":  48,
+    "scenarios_per_cycle":  48,
+    "cycles":  1
+}

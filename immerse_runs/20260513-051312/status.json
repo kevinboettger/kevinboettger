@@ -1,8 +1,9 @@
 ﻿{
     "run_id":  "20260513-051312",
-    "phase":  "user_loaded",
-    "timestamp":  "2026-05-13T12:13:32.0288168Z",
+    "phase":  "completed",
+    "timestamp":  "2026-05-13T12:15:00.7222591Z",
     "host":  "IMMERSEDEMOM5",
     "auto_connected":  true,
-    "user_load_ok":  true
+    "user_load_ok":  true,
+    "scenario_ok":  true
 }
