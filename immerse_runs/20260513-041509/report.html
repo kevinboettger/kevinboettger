@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Immerse Test Report - 2026-05-13 04:16:10</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f5f7; color: #1f2328; }
+  header { background: linear-gradient(135deg, #1f6feb 0%, #0d47a1 100%); color: #fff; padding: 24px 32px; }
+  header h1 { margin: 0; font-size: 22px; font-weight: 600; }
+  header .ts { opacity: 0.85; font-size: 13px; margin-top: 4px; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 24px 32px; }
+  .summary-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .card { background: #fff; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); text-align: center; border-top: 4px solid #6e7681; }
+  .card.pass { border-top-color: #1f883d; }
+  .card.fail { border-top-color: #cf222e; }
+  .card.disc { border-top-color: #1f6feb; }
+  .card.skip { border-top-color: #6e7681; }
+  .card.total { border-top-color: #8250df; }
+  .card .num { font-size: 28px; font-weight: 600; margin: 0; }
+  .card .label { font-size: 12px; color: #6e7681; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .verdict { background: #fff; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .verdict.pass { border-left: 4px solid #1f883d; }
+  .verdict.fail { border-left: 4px solid #cf222e; }
+  .verdict .icon { font-size: 24px; }
+  .verdict.pass .icon::before { content: "OK"; background: #1f883d; color: white; padding: 2px 10px; border-radius: 4px; font-size: 14px; font-weight: 600; }
+  .verdict.fail .icon::before { content: "X";  background: #cf222e; color: white; padding: 2px 10px; border-radius: 4px; font-size: 14px; font-weight: 600; }
+  .verdict .text { font-size: 16px; }
+  section { background: #fff; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  section h2 { margin: 0 0 12px 0; font-size: 16px; font-weight: 600; color: #1f2328; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead th { text-align: left; padding: 8px 10px; background: #f6f8fa; border-bottom: 1px solid #d0d7de; font-weight: 600; color: #6e7681; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+  tbody td { padding: 10px; border-bottom: 1px solid #eaeef2; vertical-align: top; }
+  tbody tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; }
+  .badge.pass      { background: #dafbe1; color: #1f883d; }
+  .badge.fail      { background: #ffebe9; color: #cf222e; }
+  .badge.discovery { background: #ddf4ff; color: #0969da; }
+  .badge.skip      { background: #f0f0f0; color: #6e7681; }
+  .step { width: 50px; color: #6e7681; font-variant-numeric: tabular-nums; }
+  .name { font-weight: 500; }
+  .detail code { background: #f6f8fa; padding: 1px 6px; border-radius: 4px; font-size: 12px; color: #1f2328; }
+  .detail .meta { color: #6e7681; font-size: 12px; margin-top: 4px; }
+  .detail .err { color: #cf222e; font-size: 12px; margin-top: 6px; }
+  details { margin-top: 6px; }
+  details summary { cursor: pointer; color: #0969da; font-size: 12px; }
+  details pre { background: #f6f8fa; padding: 10px; border-radius: 6px; overflow-x: auto; font-size: 11px; line-height: 1.4; margin: 6px 0 0 0; }
+  .summary pre, pre.summary { white-space: pre-wrap; }
+  .meta-table th { background: transparent; color: #6e7681; font-weight: 500; padding: 4px 12px 4px 0; text-transform: none; letter-spacing: normal; font-size: 13px; border: 0; text-align: right; width: 1%; white-space: nowrap; }
+  .meta-table td { padding: 4px 0; border: 0; font-family: ui-monospace, "SF Mono", Consolas, monospace; font-size: 12px; }
+  footer { text-align: center; padding: 16px; color: #6e7681; font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Immerse Audio Renderer - Test Report</h1>
+  <div class="ts">2026-05-13 04:16:10</div>
+</header>
+<div class="container">
+  <div class="verdict pass">
+    <div class="icon"></div>
+    <div class="text">All 9 scenarios completed without failures.</div>
+  </div>
+  <div class="summary-cards">
+    <div class="card total"><div class="num">9</div><div class="label">Total</div></div>
+    <div class="card pass"><div class="num">9</div><div class="label">Pass</div></div>
+    <div class="card fail"><div class="num">0</div><div class="label">Fail</div></div>
+    <div class="card disc"><div class="num">4</div><div class="label">Discovery</div></div>
+    <div class="card skip"><div class="num">0</div><div class="label">Skip</div></div>
+  </div>
+  <section>
+    <h2>Configuration</h2>
+    <table class="meta-table">
+    <tr><th>UE project</th><td>C:\Users\kapil\OneDrive\Documents\Unreal Projects\testTP</td></tr>
+    <tr><th>Auto remote-connect</th><td>True</td></tr>
+    <tr><th>User-load confirmed</th><td>False</td></tr>
+    <tr><th>Wwise project</th><td>C:\Users\kapil\OneDrive\Documents\WwiseProjects\TencentRCTest\TencentRCTest.wproj</td></tr>
+    <tr><th>User ID</th><td>kevin_tencenttest1_emb</td></tr>
+    <tr><th>Timestamp</th><td>2026-05-13 04:16:10</td></tr>
+    <tr><th>Host</th><td>IMMERSEDEMOM5</td></tr>
+    <tr><th>Run ID</th><td>20260513-041509</td></tr>
+    <tr><th>Immerse Effect ID</th><td>{3377B6B1-AC34-43F1-A76E-45A9BD6C0873}</td></tr>
+
+    </table>
+  </section>
+  <section>
+    <h2>Scenarios</h2>
+    <table>
+      <thead><tr><th>#</th><th>Status</th><th>Scenario</th><th>Detail</th></tr></thead>
+      <tbody>
+    <tr class="row-discovery">
+      <td class="step">#1</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Setup: force ConvolutionType to Universal (0)</td>
+      <td class="detail"><code>ConvolutionType</code> = <code>0</code><details><summary>captured 4 lines</summary><pre>[2026-05-13T04:16:01.4678929-07:00] [pid=8316] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T04:16:01.4678929-07:00] [pid=8316] [EmbodyLOG] May_13_2026 04:16:01.468 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 
+[2026-05-13T04:16:01.4688949-07:00] [pid=8316] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T04:16:01.4698952-07:00] [pid=8316] [EmbodyLOG] May_13_2026 04:16:01.469 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 
+</pre></details></td>
+    </tr>
+    <tr class="row-discovery">
+      <td class="step">#2</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Setup: force EHM off</td>
+      <td class="detail"><code>EnableImmerse</code> = <code>False</code></td>
+    </tr>
+    <tr class="row-pass">
+      <td class="step">#3</td>
+      <td><span class="badge pass">PASS</span></td>
+      <td class="name">EHM: assert ON  (off -&gt; on, with ConvType=Universal -&gt; inMode:2)</td>
+      <td class="detail"><code>EnableImmerse</code> = <code>True</code><span class="meta"> lag=120ms</span><details><summary>matched line</summary><pre>[2026-05-13T04:16:03.5551433-07:00] [pid=8316] [EmbodyLOG] May_13_2026 04:16:03.556 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 </pre></details></td>
+    </tr>
+    <tr class="row-pass">
+      <td class="step">#4</td>
+      <td><span class="badge pass">PASS</span></td>
+      <td class="name">EHM: assert OFF (on -&gt; off -&gt; inMode:0)</td>
+      <td class="detail"><code>EnableImmerse</code> = <code>False</code><span class="meta"> lag=119ms</span><details><summary>matched line</summary><pre>[2026-05-13T04:16:03.6644724-07:00] [pid=8316] [EmbodyLOG] May_13_2026 04:16:03.665 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 0 </pre></details></td>
+    </tr>
+    <tr class="row-pass">
+      <td class="step">#5</td>
+      <td><span class="badge pass">PASS</span></td>
+      <td class="name">EHM: assert ON  (off -&gt; on -&gt; inMode:2)</td>
+      <td class="detail"><code>EnableImmerse</code> = <code>True</code><span class="meta"> lag=107ms</span><details><summary>matched line</summary><pre>[2026-05-13T04:16:03.7958606-07:00] [pid=8316] [EmbodyLOG] May_13_2026 04:16:03.796 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 </pre></details></td>
+    </tr>
+    <tr class="row-pass">
+      <td class="step">#6</td>
+      <td><span class="badge pass">PASS</span></td>
+      <td class="name">ConvolutionType: assert -&gt; Personalized (1) -&gt; inMode:1</td>
+      <td class="detail"><code>ConvolutionType</code> = <code>1</code><span class="meta"> lag=106ms</span><details><summary>matched line</summary><pre>[2026-05-13T04:16:03.8957875-07:00] [pid=8316] [EmbodyLOG] May_13_2026 04:16:03.895 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 </pre></details></td>
+    </tr>
+    <tr class="row-pass">
+      <td class="step">#7</td>
+      <td><span class="badge pass">PASS</span></td>
+      <td class="name">ConvolutionType: assert -&gt; Universal (0) -&gt; inMode:2</td>
+      <td class="detail"><code>ConvolutionType</code> = <code>0</code><span class="meta"> lag=122ms</span><details><summary>matched line</summary><pre>[2026-05-13T04:16:04.0201941-07:00] [pid=8316] [EmbodyLOG] May_13_2026 04:16:04.020 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 </pre></details></td>
+    </tr>
+    <tr class="row-discovery">
+      <td class="step">#8</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Setup: HeadphoneEq -&gt; NONE (0) so next value is a real transition</td>
+      <td class="detail"><code>HeadphoneEq</code> = <code>0</code></td>
+    </tr>
+    <tr class="row-discovery">
+      <td class="step">#9</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">HeadphoneEq: discovery -&gt; Universal Closed Back (102)</td>
+      <td class="detail"><code>HeadphoneEq</code> = <code>102</code><details><summary>captured 3 lines</summary><pre>[2026-05-13T04:16:05.1442010-07:00] [pid=8316] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T04:16:05.1452016-07:00] [pid=8316] [EmbodyLOG] May_13_2026 04:16:05.145 line: 710. ___IMMERSEENGINE___ Immerse_EnableHPEQ inHeadset: 102 
+[2026-05-13T04:16:05.1467081-07:00] [pid=8316] [EmbodyLOG] May_13_2026 04:16:05.146 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 
+</pre></details></td>
+    </tr>
+
+      </tbody>
+    </table>
+  </section>
+<section><h2>Console Summary</h2><pre class="summary">===== Tier 1 Scenario Run =====
+  Scenarios:   C:\Users\kapil\OneDrive\Documents\Unreal Projects\testTP\Tools\TestScenarios.json
+  ImmerseFX:   {3377B6B1-AC34-43F1-A76E-45A9BD6C0873}
+  ListenerLog: C:\Users\kapil\AppData\Local\Temp\immerse_dbgmonitor_20260513-041509.log
+
+Result: 9 pass / 0 fail / 0 skip / total 9
+</pre></section>
+</div>
+<footer>Generated 2026-05-13 04:16:10</footer>
+</body>
+</html>

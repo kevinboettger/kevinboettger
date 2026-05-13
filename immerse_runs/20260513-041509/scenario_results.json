@@ -1,0 +1,104 @@
+﻿{
+    "fail":  0,
+    "pass":  9,
+    "schema":  "tier1-results-v1",
+    "total":  9,
+    "skip":  0,
+    "results":  [
+                    {
+                        "index":  1,
+                        "name":  "Setup: force ConvolutionType to Universal (0)",
+                        "status":  "discovery",
+                        "property":  "ConvolutionType",
+                        "value":  0,
+                        "captured_lines":  [
+                                               "[2026-05-13T04:16:01.4678929-07:00] [pid=8316] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T04:16:01.4678929-07:00] [pid=8316] [EmbodyLOG] May_13_2026 04:16:01.468 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                                               "[2026-05-13T04:16:01.4688949-07:00] [pid=8316] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T04:16:01.4698952-07:00] [pid=8316] [EmbodyLOG] May_13_2026 04:16:01.469 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  2,
+                        "name":  "Setup: force EHM off",
+                        "status":  "discovery",
+                        "property":  "EnableImmerse",
+                        "value":  false,
+                        "captured_lines":  {
+
+                                           }
+                    },
+                    {
+                        "index":  3,
+                        "name":  "EHM: assert ON  (off -\u003e on, with ConvType=Universal -\u003e inMode:2)",
+                        "status":  "pass",
+                        "property":  "EnableImmerse",
+                        "value":  true,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*2",
+                        "matched_line":  "[2026-05-13T04:16:03.5551433-07:00] [pid=8316] [EmbodyLOG] May_13_2026 04:16:03.556 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                        "lag_ms":  120
+                    },
+                    {
+                        "index":  4,
+                        "name":  "EHM: assert OFF (on -\u003e off -\u003e inMode:0)",
+                        "status":  "pass",
+                        "property":  "EnableImmerse",
+                        "value":  false,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*0",
+                        "matched_line":  "[2026-05-13T04:16:03.6644724-07:00] [pid=8316] [EmbodyLOG] May_13_2026 04:16:03.665 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 0 ",
+                        "lag_ms":  119
+                    },
+                    {
+                        "index":  5,
+                        "name":  "EHM: assert ON  (off -\u003e on -\u003e inMode:2)",
+                        "status":  "pass",
+                        "property":  "EnableImmerse",
+                        "value":  true,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*2",
+                        "matched_line":  "[2026-05-13T04:16:03.7958606-07:00] [pid=8316] [EmbodyLOG] May_13_2026 04:16:03.796 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                        "lag_ms":  107
+                    },
+                    {
+                        "index":  6,
+                        "name":  "ConvolutionType: assert -\u003e Personalized (1) -\u003e inMode:1",
+                        "status":  "pass",
+                        "property":  "ConvolutionType",
+                        "value":  1,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*1",
+                        "matched_line":  "[2026-05-13T04:16:03.8957875-07:00] [pid=8316] [EmbodyLOG] May_13_2026 04:16:03.895 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 ",
+                        "lag_ms":  106
+                    },
+                    {
+                        "index":  7,
+                        "name":  "ConvolutionType: assert -\u003e Universal (0) -\u003e inMode:2",
+                        "status":  "pass",
+                        "property":  "ConvolutionType",
+                        "value":  0,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*2",
+                        "matched_line":  "[2026-05-13T04:16:04.0201941-07:00] [pid=8316] [EmbodyLOG] May_13_2026 04:16:04.020 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                        "lag_ms":  122
+                    },
+                    {
+                        "index":  8,
+                        "name":  "Setup: HeadphoneEq -\u003e NONE (0) so next value is a real transition",
+                        "status":  "discovery",
+                        "property":  "HeadphoneEq",
+                        "value":  0,
+                        "captured_lines":  {
+
+                                           }
+                    },
+                    {
+                        "index":  9,
+                        "name":  "HeadphoneEq: discovery -\u003e Universal Closed Back (102)",
+                        "status":  "discovery",
+                        "property":  "HeadphoneEq",
+                        "value":  102,
+                        "captured_lines":  [
+                                               "[2026-05-13T04:16:05.1442010-07:00] [pid=8316] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T04:16:05.1452016-07:00] [pid=8316] [EmbodyLOG] May_13_2026 04:16:05.145 line: 710. ___IMMERSEENGINE___ Immerse_EnableHPEQ inHeadset: 102 ",
+                                               "[2026-05-13T04:16:05.1467081-07:00] [pid=8316] [EmbodyLOG] May_13_2026 04:16:05.146 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    }
+                ]
+}
