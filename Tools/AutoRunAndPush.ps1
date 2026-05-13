@@ -66,7 +66,8 @@ function Init-ResultsRepo {
         }
     } else {
         $null = Invoke-Git -C $ResultsRoot remote set-url origin $RemoteUrl
-        $null = Invoke-Git -C $ResultsRoot fetch origin $Branch
+        $null = Invoke-Git -C $ResultsRoot remote set-branches origin '*'
+        $null = Invoke-Git -C $ResultsRoot fetch "origin" "+refs/heads/${Branch}:refs/remotes/origin/${Branch}"
         $null = Invoke-Git -C $ResultsRoot checkout -B $Branch "origin/$Branch"
         $null = Invoke-Git -C $ResultsRoot reset --hard "origin/$Branch"
     }
@@ -283,7 +284,15 @@ try {
     while (((Get-Date) - $acStart).TotalSeconds -lt 30 -and -not $proc.HasExited) {
         $r = Invoke-Waapi $waapiUrl '{"uri":"ak.wwise.core.remote.getAvailableConsoles","args":{},"options":{}}'
         if ($r.ok -and $r.result -and $r.result.consoles) {
-            $candidates = @($r.result.consoles | Where-Object { $_.appName -match 'UE4Editor|UnrealEditor|Editor' })
+            # Prefer Windows consoles on localhost; fall back to whatever is there.
+            # Avoid hardcoding the UE project name (e.g. 'testTP') so the same
+            # launcher works for any UE project name a user might rename to.
+            $cands = @($r.result.consoles)
+            $candidates = @($cands | Where-Object {
+                $_.platform -eq 'Windows' -and ($_.host -eq '127.0.0.1' -or $_.host -eq 'localhost')
+            })
+            if ($candidates.Count -eq 0) { $candidates = @($cands | Where-Object { $_.platform -eq 'Windows' }) }
+            if ($candidates.Count -eq 0) { $candidates = $cands }
             if ($candidates.Count -gt 0) {
                 $target = $candidates[0]
                 Info "Found console: host=$($target.host) appName=$($target.appName)"
