@@ -24,17 +24,20 @@ function Warn($m) { Write-Host "    $m" -ForegroundColor Yellow }
 
 function Invoke-Git {
     param([Parameter(ValueFromRemainingArguments=$true)][string[]]$GitArgs)
-    $psi = New-Object System.Diagnostics.ProcessStartInfo
-    $psi.FileName = 'git'
-    $psi.UseShellExecute = $false
-    $psi.RedirectStandardOutput = $true
-    $psi.RedirectStandardError  = $true
-    foreach ($a in $GitArgs) { $psi.ArgumentList.Add($a) }
-    $p = [System.Diagnostics.Process]::Start($psi)
-    $stdout = $p.StandardOutput.ReadToEnd()
-    $stderr = $p.StandardError.ReadToEnd()
-    $p.WaitForExit()
-    return @{ ExitCode = $p.ExitCode; StdOut = $stdout; StdErr = $stderr }
+    $tempErr = [System.IO.Path]::GetTempFileName()
+    try {
+        $stdout = & git @GitArgs 2>$tempErr
+        $code   = $LASTEXITCODE
+        $stderr = ''
+        if (Test-Path $tempErr) { $stderr = Get-Content $tempErr -Raw -ErrorAction SilentlyContinue }
+        return [PSCustomObject]@{
+            ExitCode = $code
+            StdOut   = ($stdout -join "`n")
+            StdErr   = ($stderr -as [string])
+        }
+    } finally {
+        Remove-Item $tempErr -ErrorAction SilentlyContinue
+    }
 }
 
 $tokenFile = Join-Path $ScriptDir '.github_token'
