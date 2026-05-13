@@ -1,48 +1,47 @@
 {
   "schema": "v1",
-  "description": "Tier 1 functional WAAPI test scenarios for the Immerse Audio Renderer. Each scenario sets one property on the Immerse Effect via ak.wwise.core.object.setProperty and asserts a matching log line appears in the listener's debug stream within the timeout. Scenarios run in declared order; later steps may depend on earlier ones (e.g. HeadphoneEq requires EHM on + ConvolutionType=personalized).",
+  "description": "Tier 1 functional WAAPI tests for the Immerse Audio Renderer. Every assertion scenario is preceded by a 'setup' scenario that forces the property to the opposite value (so the assertion is guaranteed to be a real state transition). Wwise does not push when setProperty is called with the current value -- the test would silently FAIL because no log line is emitted by the plug-in.",
   "scenarios": [
     {
-      "name": "EHM: baseline on",
+      "name": "EHM: setup -> force off (no-assert)",
+      "property": "EnableImmerse",
+      "value": false,
+      "captureSeconds": 1
+    },
+    {
+      "name": "EHM: assert ON  (off -> on)",
       "property": "EnableImmerse",
       "value": true,
       "expectLog": "Immerse_EnableImmerse\\s+inMode:\\s*1",
       "timeoutMs": 3000
     },
     {
-      "name": "EHM: toggle off",
+      "name": "EHM: assert OFF (on -> off)",
       "property": "EnableImmerse",
       "value": false,
       "expectLog": "Immerse_EnableImmerse\\s+inMode:\\s*0",
       "timeoutMs": 3000
     },
     {
-      "name": "EHM: toggle on",
+      "name": "EHM: assert ON  (off -> on)",
       "property": "EnableImmerse",
       "value": true,
       "expectLog": "Immerse_EnableImmerse\\s+inMode:\\s*1",
       "timeoutMs": 3000
     },
     {
-      "name": "UserID: re-assert current user pushes through",
+      "name": "UserID: setup -> dummy (no-assert, forces state change)",
+      "property": "UserID",
+      "value": "dummy_setup_user_for_transition",
+      "captureSeconds": 1
+    },
+    {
+      "name": "UserID: assert switch back to expected",
       "property": "UserID",
       "value": "kevin_tencenttest1_emb",
       "expectLog": "generateWebAppUrl.*userId:\\s*kevin_tencenttest1_emb",
       "timeoutMs": 5000
-    },
-    {
-      "name": "ConvolutionType: discovery (observe what value type + log signature)",
-      "comment": "First run: capture whatever the Immerse plug-in logs when ConvolutionType is touched. Use the captured output to (a) confirm the value type/encoding for personalized vs universal, (b) derive expectLog regex. Then replace this discovery scenario with two assertion scenarios (one for each mode).",
-      "property": "ConvolutionType",
-      "value": "TBD",
-      "captureSeconds": 3
-    },
-    {
-      "name": "HeadphoneEq: discovery (requires EHM on + personalized profile)",
-      "comment": "Requires EHM on (set above) AND ConvolutionType=personalized. Until ConvolutionType is wired up correctly above, this scenario may produce no log output. First run: capture what the plug-in logs when HeadphoneEq changes; derive expectLog regex from there.",
-      "property": "HeadphoneEq",
-      "value": "TBD",
-      "captureSeconds": 3
     }
-  ]
+  ],
+  "discovery_notes": "ConvolutionType and HeadphoneEq were removed pending property-type discovery -- they expect numeric/enum values, not strings ('Value type does not match the property's type' from Wwise). Next step: query their live values + types via WAAPI ak.wwise.core.object.getPropertyAndReferenceNames or ak.wwise.core.object.get with options.return = ['@ConvolutionType', '@HeadphoneEq'] -- that returns the actual current value with its native type. Then re-add as proper assertion scenarios."
 }
