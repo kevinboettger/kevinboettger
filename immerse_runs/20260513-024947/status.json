@@ -1,8 +1,7 @@
 ﻿{
     "run_id":  "20260513-024947",
-    "phase":  "starting",
-    "timestamp":  "2026-05-13T09:49:49.2701568Z",
+    "phase":  "wwise_ready",
+    "timestamp":  "2026-05-13T09:49:54.6549769Z",
     "host":  "IMMERSEDEMOM5",
-    "user_id":  "kevin_tencenttest1_emb",
-    "tier":  1
+    "immerse_effect_id":  "{3377B6B1-AC34-43F1-A76E-45A9BD6C0873}"
 }
