@@ -1,0 +1,365 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Immerse Test Report - 2026-05-13 06:30:43</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f5f7; color: #1f2328; }
+  header { background: linear-gradient(135deg, #1f6feb 0%, #0d47a1 100%); color: #fff; padding: 24px 32px; }
+  header h1 { margin: 0; font-size: 22px; font-weight: 600; }
+  header .ts { opacity: 0.85; font-size: 13px; margin-top: 4px; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 24px 32px; }
+  .summary-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .card { background: #fff; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); text-align: center; border-top: 4px solid #6e7681; }
+  .card.pass { border-top-color: #1f883d; }
+  .card.fail { border-top-color: #cf222e; }
+  .card.disc { border-top-color: #1f6feb; }
+  .card.skip { border-top-color: #6e7681; }
+  .card.total { border-top-color: #8250df; }
+  .card .num { font-size: 28px; font-weight: 600; margin: 0; }
+  .card .label { font-size: 12px; color: #6e7681; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .verdict { background: #fff; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .verdict.pass { border-left: 4px solid #1f883d; }
+  .verdict.fail { border-left: 4px solid #cf222e; }
+  .verdict .icon { font-size: 24px; }
+  .verdict.pass .icon::before { content: "OK"; background: #1f883d; color: white; padding: 2px 10px; border-radius: 4px; font-size: 14px; font-weight: 600; }
+  .verdict.fail .icon::before { content: "X";  background: #cf222e; color: white; padding: 2px 10px; border-radius: 4px; font-size: 14px; font-weight: 600; }
+  .verdict .text { font-size: 16px; }
+  section { background: #fff; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  section h2 { margin: 0 0 12px 0; font-size: 16px; font-weight: 600; color: #1f2328; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead th { text-align: left; padding: 8px 10px; background: #f6f8fa; border-bottom: 1px solid #d0d7de; font-weight: 600; color: #6e7681; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+  tbody td { padding: 10px; border-bottom: 1px solid #eaeef2; vertical-align: top; }
+  tbody tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; }
+  .badge.pass      { background: #dafbe1; color: #1f883d; }
+  .badge.fail      { background: #ffebe9; color: #cf222e; }
+  .badge.discovery { background: #ddf4ff; color: #0969da; }
+  .badge.skip      { background: #f0f0f0; color: #6e7681; }
+  .step { width: 50px; color: #6e7681; font-variant-numeric: tabular-nums; }
+  .name { font-weight: 500; }
+  .detail code { background: #f6f8fa; padding: 1px 6px; border-radius: 4px; font-size: 12px; color: #1f2328; }
+  .detail .meta { color: #6e7681; font-size: 12px; margin-top: 4px; }
+  .detail .err { color: #cf222e; font-size: 12px; margin-top: 6px; }
+  details { margin-top: 6px; }
+  details summary { cursor: pointer; color: #0969da; font-size: 12px; }
+  details pre { background: #f6f8fa; padding: 10px; border-radius: 6px; overflow-x: auto; font-size: 11px; line-height: 1.4; margin: 6px 0 0 0; }
+  .summary pre, pre.summary { white-space: pre-wrap; }
+  .meta-table th { background: transparent; color: #6e7681; font-weight: 500; padding: 4px 12px 4px 0; text-transform: none; letter-spacing: normal; font-size: 13px; border: 0; text-align: right; width: 1%; white-space: nowrap; }
+  .meta-table td { padding: 4px 0; border: 0; font-family: ui-monospace, "SF Mono", Consolas, monospace; font-size: 12px; }
+  footer { text-align: center; padding: 16px; color: #6e7681; font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Immerse Audio Renderer - Test Report</h1>
+  <div class="ts">2026-05-13 06:30:43</div>
+</header>
+<div class="container">
+  <div class="verdict fail">
+    <div class="icon"></div>
+    <div class="text">11 of 32 scenarios failed.</div>
+  </div>
+  <div class="summary-cards">
+    <div class="card total"><div class="num">32</div><div class="label">Total</div></div>
+    <div class="card pass"><div class="num">21</div><div class="label">Pass</div></div>
+    <div class="card fail"><div class="num">11</div><div class="label">Fail</div></div>
+    <div class="card disc"><div class="num">16</div><div class="label">Discovery</div></div>
+    <div class="card skip"><div class="num">0</div><div class="label">Skip</div></div>
+  </div>
+  <section>
+    <h2>Configuration</h2>
+    <table class="meta-table">
+    <tr><th>UE project</th><td>C:\Users\kapil\OneDrive\Documents\Unreal Projects\testTP</td></tr>
+    <tr><th>Auto remote-connect</th><td>True</td></tr>
+    <tr><th>User-load confirmed</th><td>True</td></tr>
+    <tr><th>Wwise project</th><td>C:\Users\kapil\OneDrive\Documents\WwiseProjects\TencentRCTest\TencentRCTest.wproj</td></tr>
+    <tr><th>User ID</th><td>kevin_tencenttest1_emb</td></tr>
+    <tr><th>Timestamp</th><td>2026-05-13 06:30:43</td></tr>
+    <tr><th>Host</th><td>IMMERSEDEMOM5</td></tr>
+    <tr><th>Run ID</th><td>20260513-062916</td></tr>
+    <tr><th>Immerse Effect ID</th><td>{3377B6B1-AC34-43F1-A76E-45A9BD6C0873}</td></tr>
+
+    </table>
+  </section>
+  <section>
+    <h2>Scenarios</h2>
+    <table>
+      <thead><tr><th>#</th><th>Status</th><th>Scenario</th><th>Detail</th></tr></thead>
+      <tbody>
+    <tr class="row-discovery">
+      <td class="step">#1</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Setup for EHM: ConvolutionType = 0 (Universal)</td>
+      <td class="detail"><code>ConvolutionType</code> = <code>0</code><details><summary>captured 8 lines</summary><pre>[2026-05-13T06:29:39.3318871-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:29:39.3318871-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:29:39.3328875-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:39.332 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 
+[2026-05-13T06:29:39.3328875-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:29:39.3328875-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:29:39.3338896-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:39.333 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 
+[2026-05-13T06:29:39.3343963-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:39.334 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 
+[2026-05-13T06:29:39.3354043-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:39.335 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 
+</pre></details></td>
+    </tr>
+    <tr class="row-discovery">
+      <td class="step">#2</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Setup for EHM: force EHM off</td>
+      <td class="detail"><code>EnableImmerse</code> = <code>False</code></td>
+    </tr>
+    <tr class="row-pass">
+      <td class="step">#3</td>
+      <td><span class="badge pass">PASS</span></td>
+      <td class="name">EHM: assert ON  (off -&gt; on, inMode:2)</td>
+      <td class="detail"><code>EnableImmerse</code> = <code>True</code><span class="meta"> lag=119ms</span><details><summary>matched line</summary><pre>[2026-05-13T06:29:41.4095364-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:41.409 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 </pre></details></td>
+    </tr>
+    <tr class="row-pass">
+      <td class="step">#4</td>
+      <td><span class="badge pass">PASS</span></td>
+      <td class="name">EHM: assert OFF (on -&gt; off, inMode:0)</td>
+      <td class="detail"><code>EnableImmerse</code> = <code>False</code><span class="meta"> lag=104ms</span><details><summary>matched line</summary><pre>[2026-05-13T06:29:41.5398550-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:41.540 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 0 </pre></details></td>
+    </tr>
+    <tr class="row-pass">
+      <td class="step">#5</td>
+      <td><span class="badge pass">PASS</span></td>
+      <td class="name">EHM: assert ON  (off -&gt; on, inMode:2)</td>
+      <td class="detail"><code>EnableImmerse</code> = <code>True</code><span class="meta"> lag=108ms</span><details><summary>matched line</summary><pre>[2026-05-13T06:29:41.6478012-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:41.648 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 </pre></details></td>
+    </tr>
+    <tr class="row-discovery">
+      <td class="step">#6</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Setup ConvType: force EHM on</td>
+      <td class="detail"><code>EnableImmerse</code> = <code>True</code></td>
+    </tr>
+    <tr class="row-discovery">
+      <td class="step">#7</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Setup ConvType: force to 0 (Universal)</td>
+      <td class="detail"><code>ConvolutionType</code> = <code>0</code></td>
+    </tr>
+    <tr class="row-pass">
+      <td class="step">#8</td>
+      <td><span class="badge pass">PASS</span></td>
+      <td class="name">ConvolutionType: assert Personalized (1) -&gt; inMode:1</td>
+      <td class="detail"><code>ConvolutionType</code> = <code>1</code><span class="meta"> lag=123ms</span><details><summary>matched line</summary><pre>[2026-05-13T06:29:43.7797583-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:43.780 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 </pre></details></td>
+    </tr>
+    <tr class="row-pass">
+      <td class="step">#9</td>
+      <td><span class="badge pass">PASS</span></td>
+      <td class="name">ConvolutionType: assert Universal (0) -&gt; inMode:2</td>
+      <td class="detail"><code>ConvolutionType</code> = <code>0</code><span class="meta"> lag=120ms</span><details><summary>matched line</summary><pre>[2026-05-13T06:29:43.9476222-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:43.947 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 </pre></details></td>
+    </tr>
+    <tr class="row-discovery">
+      <td class="step">#10</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Prereq: EnableImmerse = true</td>
+      <td class="detail"><code>EnableImmerse</code> = <code>True</code></td>
+    </tr>
+    <tr class="row-discovery">
+      <td class="step">#11</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Prereq: ConvolutionType = 1 (Personalized)</td>
+      <td class="detail"><code>ConvolutionType</code> = <code>1</code><details><summary>captured 14 lines</summary><pre>[2026-05-13T06:29:45.0494674-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:29:45.0494674-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:29:45.0494674-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:45.049 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 
+[2026-05-13T06:29:45.0494674-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:29:45.0494674-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:29:45.0494674-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:45.050 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 
+[2026-05-13T06:29:45.0509739-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:45.051 line: 1316. getLocalSessionID for user: kevin_tencenttest1_emb 06756e30dc6941e7b44b3ad365984a2f 
+[2026-05-13T06:29:45.0519825-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:45.052 line: 2576. ImmerseAPI: Too many status checks within the period allowed, returning early 
+[2026-05-13T06:29:45.0529837-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:45.053 line: 3232. updateUMWHPEQSelection() - updated headsetId: 18446744073709551615 
+[2026-05-13T06:29:45.0539837-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:45.054 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 
+[2026-05-13T06:29:45.0554938-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:45.055 line: 1316. getLocalSessionID for user: kevin_tencenttest1_emb 06756e30dc6941e7b44b3ad365984a2f 
+[2026-05-13T06:29:45.0565003-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:45.056 line: 2576. ImmerseAPI: Too many status checks within the period allowed, returning early 
+[2026-05-13T06:29:45.0565003-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:45.056 line: 3232. updateUMWHPEQSelection() - updated headsetId: 18446744073709551615 
+[2026-05-13T06:29:45.0574993-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:29:45.057 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 
+</pre></details></td>
+    </tr>
+    <tr class="row-discovery">
+      <td class="step">#12</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Setup HeadphoneEq: force to NONE (0)</td>
+      <td class="detail"><code>HeadphoneEq</code> = <code>0</code></td>
+    </tr>
+    <tr class="row-fail">
+      <td class="step">#13</td>
+      <td><span class="badge fail">FAIL</span></td>
+      <td class="name">Headphone EQ: Universal Closed Back (102)</td>
+      <td class="detail"><code>HeadphoneEq</code> = <code>102</code><div class="meta">expected: <code>updateUMWHPEQSelection\(\)\s+-\s+updated\s+headsetId:\s*\{value\}</code></div></td>
+    </tr>
+    <tr class="row-fail">
+      <td class="step">#14</td>
+      <td><span class="badge fail">FAIL</span></td>
+      <td class="name">Headphone EQ: Universal Open Back (104)</td>
+      <td class="detail"><code>HeadphoneEq</code> = <code>104</code><div class="meta">expected: <code>updateUMWHPEQSelection\(\)\s+-\s+updated\s+headsetId:\s*\{value\}</code></div></td>
+    </tr>
+    <tr class="row-fail">
+      <td class="step">#15</td>
+      <td><span class="badge fail">FAIL</span></td>
+      <td class="name">Headphone EQ: Cloud Alpha (26)</td>
+      <td class="detail"><code>HeadphoneEq</code> = <code>26</code><div class="meta">expected: <code>updateUMWHPEQSelection\(\)\s+-\s+updated\s+headsetId:\s*\{value\}</code></div></td>
+    </tr>
+    <tr class="row-fail">
+      <td class="step">#16</td>
+      <td><span class="badge fail">FAIL</span></td>
+      <td class="name">Headphone EQ: Arctis Nova Pro Wireless (16)</td>
+      <td class="detail"><code>HeadphoneEq</code> = <code>16</code><div class="meta">expected: <code>updateUMWHPEQSelection\(\)\s+-\s+updated\s+headsetId:\s*\{value\}</code></div></td>
+    </tr>
+    <tr class="row-fail">
+      <td class="step">#17</td>
+      <td><span class="badge fail">FAIL</span></td>
+      <td class="name">Headphone EQ: G535 (38)</td>
+      <td class="detail"><code>HeadphoneEq</code> = <code>38</code><div class="meta">expected: <code>updateUMWHPEQSelection\(\)\s+-\s+updated\s+headsetId:\s*\{value\}</code></div></td>
+    </tr>
+    <tr class="row-fail">
+      <td class="step">#18</td>
+      <td><span class="badge fail">FAIL</span></td>
+      <td class="name">Headphone EQ: Black Shark V2 Pro Wireless (23)</td>
+      <td class="detail"><code>HeadphoneEq</code> = <code>23</code><div class="meta">expected: <code>updateUMWHPEQSelection\(\)\s+-\s+updated\s+headsetId:\s*\{value\}</code></div></td>
+    </tr>
+    <tr class="row-fail">
+      <td class="step">#19</td>
+      <td><span class="badge fail">FAIL</span></td>
+      <td class="name">Headphone EQ: A50 (21)</td>
+      <td class="detail"><code>HeadphoneEq</code> = <code>21</code><div class="meta">expected: <code>updateUMWHPEQSelection\(\)\s+-\s+updated\s+headsetId:\s*\{value\}</code></div></td>
+    </tr>
+    <tr class="row-fail">
+      <td class="step">#20</td>
+      <td><span class="badge fail">FAIL</span></td>
+      <td class="name">Headphone EQ: MMX 300 (80)</td>
+      <td class="detail"><code>HeadphoneEq</code> = <code>80</code><div class="meta">expected: <code>updateUMWHPEQSelection\(\)\s+-\s+updated\s+headsetId:\s*\{value\}</code></div></td>
+    </tr>
+    <tr class="row-fail">
+      <td class="step">#21</td>
+      <td><span class="badge fail">FAIL</span></td>
+      <td class="name">Headphone EQ: HS80 RGB Wireless (66)</td>
+      <td class="detail"><code>HeadphoneEq</code> = <code>66</code><div class="meta">expected: <code>updateUMWHPEQSelection\(\)\s+-\s+updated\s+headsetId:\s*\{value\}</code></div></td>
+    </tr>
+    <tr class="row-discovery">
+      <td class="step">#22</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Setup Tuning: force to Extraction_01 (0)</td>
+      <td class="detail"><code>Tuning</code> = <code>0</code></td>
+    </tr>
+    <tr class="row-discovery">
+      <td class="step">#23</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Tuning: Warfare_01 (1)</td>
+      <td class="detail"><code>Tuning</code> = <code>1</code><details><summary>captured 11 lines</summary><pre>[2026-05-13T06:30:15.6935987-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:15.6945990-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:15.6945990-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:15.6945990-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:15.6951046-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:15.695 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:1 inSpeakerPlacement:0 
+[2026-05-13T06:30:15.6961114-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:15.696 line: 416. DecryptMultiSofaData() - v2 numSections=3 hrtfFlags=1 hrtfSectionOffset=971 hrtfSectionSize=1758624 numEntries=4 dataOffset=440678 dataLength=439639 bmapSize=518 fovdSize=361 
+[2026-05-13T06:30:15.7512284-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:15.751 line: 447. DecryptMultiSofaData() - decrypt result: Success 
+[2026-05-13T06:30:15.7522347-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:15.752 line: 533. AssetManager - BMAP data (518 bytes): {"buses":[{"label":"Extraction","tunings":[{"id":"extraction_tuning_1","label":"Extraction Tuning 1","hrtf_index":0}],"id":"extraction"},{"label":"Warfare","tunings":[{"id":"warfare_tuning_1","label":"Warfare Tuning 1","hrtf_index":1}],"id":"warfare"},{"label":"Campaign","tunings":[{"id":"campaign_tuning_1","label":"Campaign Tuning 1","hrtf_index":2}],"id":"campaign"},{"label":"Voice Chat","tunings":[{"id":"voice_chat_tuning_1","label":"Voice Chat Tuning 1","hrtf_index":3}],"id":"voice_chat"}],"schema_version":1} 
+[2026-05-13T06:30:15.7522347-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:15.752 line: 537. AssetManager - FOVD data (361 bytes): {"schema_version":1,"fov_groups":["l/r"],"fov_presets":[{"studio_speaker_angles_idx":[0,1,6,7,8,9,10,11,12,13,14,15,16,17,18],"label":"Narrow","id":"narrow"},{"studio_speaker_angles_idx":[2,3,6,7,8,9,10,11,12,13,14,15,16,17,18],"label":"Default","id":"default"},{"studio_speaker_angles_idx":[4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],"label":"Wide","id":"wide"}]} 
+[2026-05-13T06:30:15.7587483-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:15.759 line: 376. AudioConfig::GetSHIndices() - invalid channelConfig: 6 
+[2026-05-13T06:30:15.8113935-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:15.811 line: 281. AudioConfig::InitializeDecoders: Successfully created shared ambisonic decoder kernel 
+</pre></details></td>
+    </tr>
+    <tr class="row-discovery">
+      <td class="step">#24</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Tuning: Campaign_01 (2)</td>
+      <td class="detail"><code>Tuning</code> = <code>2</code><details><summary>captured 11 lines</summary><pre>[2026-05-13T06:30:17.7112805-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:17.7112805-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:17.7112805-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:17.7112805-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:17.7147957-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:17.715 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:2 inSpeakerPlacement:0 
+[2026-05-13T06:30:17.7158020-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:17.716 line: 416. DecryptMultiSofaData() - v2 numSections=3 hrtfFlags=1 hrtfSectionOffset=971 hrtfSectionSize=1758624 numEntries=4 dataOffset=880317 dataLength=439639 bmapSize=518 fovdSize=361 
+[2026-05-13T06:30:17.7676833-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:17.767 line: 447. DecryptMultiSofaData() - decrypt result: Success 
+[2026-05-13T06:30:17.7676833-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:17.768 line: 533. AssetManager - BMAP data (518 bytes): {"buses":[{"label":"Extraction","tunings":[{"id":"extraction_tuning_1","label":"Extraction Tuning 1","hrtf_index":0}],"id":"extraction"},{"label":"Warfare","tunings":[{"id":"warfare_tuning_1","label":"Warfare Tuning 1","hrtf_index":1}],"id":"warfare"},{"label":"Campaign","tunings":[{"id":"campaign_tuning_1","label":"Campaign Tuning 1","hrtf_index":2}],"id":"campaign"},{"label":"Voice Chat","tunings":[{"id":"voice_chat_tuning_1","label":"Voice Chat Tuning 1","hrtf_index":3}],"id":"voice_chat"}],"schema_version":1} 
+[2026-05-13T06:30:17.7686833-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:17.768 line: 537. AssetManager - FOVD data (361 bytes): {"schema_version":1,"fov_groups":["l/r"],"fov_presets":[{"studio_speaker_angles_idx":[0,1,6,7,8,9,10,11,12,13,14,15,16,17,18],"label":"Narrow","id":"narrow"},{"studio_speaker_angles_idx":[2,3,6,7,8,9,10,11,12,13,14,15,16,17,18],"label":"Default","id":"default"},{"studio_speaker_angles_idx":[4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],"label":"Wide","id":"wide"}]} 
+[2026-05-13T06:30:17.7757085-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:17.775 line: 376. AudioConfig::GetSHIndices() - invalid channelConfig: 6 
+[2026-05-13T06:30:17.8314224-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:17.831 line: 281. AudioConfig::InitializeDecoders: Successfully created shared ambisonic decoder kernel 
+</pre></details></td>
+    </tr>
+    <tr class="row-discovery">
+      <td class="step">#25</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Tuning: VoiceChat_01 (3)</td>
+      <td class="detail"><code>Tuning</code> = <code>3</code><details><summary>captured 11 lines</summary><pre>[2026-05-13T06:30:19.7525169-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:19.7525169-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:19.7525169-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:19.7525169-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:19.7550228-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:19.755 line: 767. ___IMMERSEENGINE___ Immerse_SetTuning inAudioProcessorId:2 inHrirTuning:3 inSpeakerPlacement:0 
+[2026-05-13T06:30:19.7560269-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:19.756 line: 416. DecryptMultiSofaData() - v2 numSections=3 hrtfFlags=1 hrtfSectionOffset=971 hrtfSectionSize=1758624 numEntries=4 dataOffset=1319956 dataLength=439639 bmapSize=518 fovdSize=361 
+[2026-05-13T06:30:19.8091502-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:19.809 line: 447. DecryptMultiSofaData() - decrypt result: Success 
+[2026-05-13T06:30:19.8091502-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:19.810 line: 533. AssetManager - BMAP data (518 bytes): {"buses":[{"label":"Extraction","tunings":[{"id":"extraction_tuning_1","label":"Extraction Tuning 1","hrtf_index":0}],"id":"extraction"},{"label":"Warfare","tunings":[{"id":"warfare_tuning_1","label":"Warfare Tuning 1","hrtf_index":1}],"id":"warfare"},{"label":"Campaign","tunings":[{"id":"campaign_tuning_1","label":"Campaign Tuning 1","hrtf_index":2}],"id":"campaign"},{"label":"Voice Chat","tunings":[{"id":"voice_chat_tuning_1","label":"Voice Chat Tuning 1","hrtf_index":3}],"id":"voice_chat"}],"schema_version":1} 
+[2026-05-13T06:30:19.8101511-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:19.810 line: 537. AssetManager - FOVD data (361 bytes): {"schema_version":1,"fov_groups":["l/r"],"fov_presets":[{"studio_speaker_angles_idx":[0,1,6,7,8,9,10,11,12,13,14,15,16,17,18],"label":"Narrow","id":"narrow"},{"studio_speaker_angles_idx":[2,3,6,7,8,9,10,11,12,13,14,15,16,17,18],"label":"Default","id":"default"},{"studio_speaker_angles_idx":[4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],"label":"Wide","id":"wide"}]} 
+[2026-05-13T06:30:19.8166660-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:19.816 line: 376. AudioConfig::GetSHIndices() - invalid channelConfig: 6 
+[2026-05-13T06:30:19.8622851-07:00] [pid=2224] [EmbodyLOG] May_13_2026 06:30:19.862 line: 281. AudioConfig::InitializeDecoders: Successfully created shared ambisonic decoder kernel 
+</pre></details></td>
+    </tr>
+    <tr class="row-discovery">
+      <td class="step">#26</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Setup FieldOfView: force to Default (1)</td>
+      <td class="detail"><code>FieldOfView</code> = <code>1</code></td>
+    </tr>
+    <tr class="row-fail">
+      <td class="step">#27</td>
+      <td><span class="badge fail">FAIL</span></td>
+      <td class="name">Field Of View: Narrow (2)</td>
+      <td class="detail"><code>FieldOfView</code> = <code>2</code><div class="meta">expected: <code>Immerse_SetSpeakerPlacement\s+inSpeakerPlacement:\s*\{value\}</code></div></td>
+    </tr>
+    <tr class="row-fail">
+      <td class="step">#28</td>
+      <td><span class="badge fail">FAIL</span></td>
+      <td class="name">Field Of View: Wide (3)</td>
+      <td class="detail"><code>FieldOfView</code> = <code>3</code><div class="meta">expected: <code>Immerse_SetSpeakerPlacement\s+inSpeakerPlacement:\s*\{value\}</code></div></td>
+    </tr>
+    <tr class="row-discovery">
+      <td class="step">#29</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Setup BusContent: force to Extraction (0)</td>
+      <td class="detail"><code>BusContent</code> = <code>0</code></td>
+    </tr>
+    <tr class="row-discovery">
+      <td class="step">#30</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Bus Content: Warfare (1)</td>
+      <td class="detail"><code>BusContent</code> = <code>1</code><details><summary>captured 4 lines</summary><pre>[2026-05-13T06:30:29.9024818-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:29.9024818-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:29.9024818-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:29.9024818-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+</pre></details></td>
+    </tr>
+    <tr class="row-discovery">
+      <td class="step">#31</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Bus Content: Campaign (2)</td>
+      <td class="detail"><code>BusContent</code> = <code>2</code><details><summary>captured 4 lines</summary><pre>[2026-05-13T06:30:31.9316608-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:31.9316608-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:31.9316608-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:31.9326745-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+</pre></details></td>
+    </tr>
+    <tr class="row-discovery">
+      <td class="step">#32</td>
+      <td><span class="badge discovery">DISC</span></td>
+      <td class="name">Bus Content: VoiceChat (3)</td>
+      <td class="detail"><code>BusContent</code> = <code>3</code><details><summary>captured 4 lines</summary><pre>[2026-05-13T06:30:33.9335909-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:33.9335909-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:33.9335909-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+[2026-05-13T06:30:33.9335909-07:00] [pid=2224] &lt;&lt;&lt;_____ ImmerseAudioRenderer _____&gt;&gt;&gt; 
+</pre></details></td>
+    </tr>
+
+      </tbody>
+    </table>
+  </section>
+<section><h2>Console Summary</h2><pre class="summary">===== Tier 1 Scenario Run =====
+  Scenarios:   C:\Users\kapil\OneDrive\Documents\Unreal Projects\testTP\Tools\TestScenarios.json
+  ImmerseFX:   {3377B6B1-AC34-43F1-A76E-45A9BD6C0873}
+  ListenerLog: C:\Users\kapil\AppData\Local\Temp\immerse_dbgmonitor_20260513-062916.log
+
+Result: 21 pass / 11 fail / 0 skip / total 32
+</pre></section>
+</div>
+<footer>Generated 2026-05-13 06:30:43</footer>
+</body>
+</html>
