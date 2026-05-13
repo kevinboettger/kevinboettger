@@ -376,6 +376,34 @@ try {
         try { Stop-Process -Id $dbgListener.Id -Force -ErrorAction SilentlyContinue } catch {}
         Info 'Stopped DebugStreamListener'
     }
+
+    # IMMERSE_CLOSE_WWISE=1 from the GUI: cleanly shut down Wwise Authoring at
+    # the end of the run. CloseMainWindow lets Wwise prompt to save unsaved
+    # changes (it shouldn't have any since our setProperty calls live-push but
+    # don't persist to the project file). If it doesn't respond within ~5s we
+    # fall back to a force kill.
+    if ($env:IMMERSE_CLOSE_WWISE -eq '1') {
+        $wwiseAtEnd = Get-Process -Name Wwise -ErrorAction SilentlyContinue
+        if ($wwiseAtEnd) {
+            Step 'Closing Wwise Authoring'
+            foreach ($w in $wwiseAtEnd) {
+                try { [void]$w.CloseMainWindow() } catch {}
+            }
+            $deadline = (Get-Date).AddSeconds(5)
+            while ((Get-Date) -lt $deadline) {
+                $stillUp = Get-Process -Name Wwise -ErrorAction SilentlyContinue
+                if (-not $stillUp) { break }
+                Start-Sleep -Milliseconds 300
+            }
+            $stillUp = Get-Process -Name Wwise -ErrorAction SilentlyContinue
+            if ($stillUp) {
+                foreach ($w in $stillUp) { try { Stop-Process -Id $w.Id -Force -ErrorAction SilentlyContinue } catch {} }
+                Info 'Force-killed Wwise (did not respond to CloseMainWindow in 5s)'
+            } else {
+                Info 'Wwise closed cleanly'
+            }
+        }
+    }
     if (Test-Path $dbgLogTmp) {
         try { Copy-Item $dbgLogTmp $dbgLogFinal -Force } catch { Warn "Could not copy debug stream log: $($_.Exception.Message)" }
     }

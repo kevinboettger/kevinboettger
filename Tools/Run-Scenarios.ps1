@@ -68,6 +68,8 @@ if (-not (Test-Path $ScenariosPath)) {
 }
 $scenariosObj = Get-Content -Raw $ScenariosPath | ConvertFrom-Json
 $scenarios = @($scenariosObj.scenarios)
+$cycles = if ($scenariosObj.cycles) { [int]$scenariosObj.cycles } else { 1 }
+if ($cycles -lt 1) { $cycles = 1 }
 if ($scenarios.Count -eq 0) {
     Out "ERROR: no scenarios defined in $ScenariosPath"
     exit 99
@@ -80,11 +82,18 @@ $summary.Add("===== Tier 1 Scenario Run =====")
 $summary.Add("  Scenarios:   $ScenariosPath")
 $summary.Add("  ImmerseFX:   $ImmerseEffectId")
 $summary.Add("  ListenerLog: $ListenerLog")
+if ($cycles -gt 1) {
+    $summary.Add("  Cycles:      $cycles ($($scenarios.Count) scenarios per cycle, $($scenarios.Count * $cycles) total)")
+}
 $summary.Add("")
 
-for ($idx = 0; $idx -lt $scenarios.Count; $idx++) {
+# Outer cycle loop. If cycles=1 the prefix is omitted from scenario names.
+for ($cycle = 1; $cycle -le $cycles; $cycle++) {
+    if ($cycles -gt 1) { Out ""; Out ("--- Cycle $cycle / $cycles ---") }
+    $cyclePrefix = if ($cycles -gt 1) { "[cycle $cycle/$cycles] " } else { "" }
+    for ($idx = 0; $idx -lt $scenarios.Count; $idx++) {
     $s = $scenarios[$idx]
-    $name        = $s.name
+    $name        = $cyclePrefix + $s.name
     $prop        = $s.property
     $value       = $s.value
     $expectLog   = $s.expectLog
@@ -199,16 +208,20 @@ for ($idx = 0; $idx -lt $scenarios.Count; $idx++) {
         Out "         >>> PAUSE: $msg"
         [void](Read-Host '         Press Enter to continue')
     }
+    }
 }
 
-$summary.Add("Result: $pass pass / $fail fail / $skip skip / total $($scenarios.Count)")
+$totalRun = $scenarios.Count * $cycles
+$summary.Add("Result: $pass pass / $fail fail / $skip skip / total $totalRun")
 
 @{
     schema  = 'tier1-results-v1'
     pass    = $pass
     fail    = $fail
     skip    = $skip
-    total   = $scenarios.Count
+    total   = $totalRun
+    cycles  = $cycles
+    scenarios_per_cycle = $scenarios.Count
     results = $results
 } | ConvertTo-Json -Depth 8 | Set-Content -Path $ResultsJson -Encoding UTF8
 

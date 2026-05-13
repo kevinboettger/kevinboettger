@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ==============================================================================
+
+   Copyright (c) 2024 Embody - All Rights Reserved
+
+   Unauthorized copying of this file via any medium is strictly prohibited
+   Proprietary and confidential
+
+  ==============================================================================
+-->
+<PluginModule>
+
+  <EffectPlugin Name="Immerse Audio Renderer" CompanyID="296" PluginID="100" EngineDllName="ImmerseAudioRenderer" SupportsIsSendModeEffect="true" >
+    <PluginInfo MenuPath="00-Immerse Audio">
+      <PlatformSupport>
+        <Platform Name="Any">
+          <CanBeInsertOnBusses>true</CanBeInsertOnBusses>
+          <CanBeInsertOnAudioObjects>false</CanBeInsertOnAudioObjects>
+          <CanBeRendered>false</CanBeRendered>
+        </Platform>
+      </PlatformSupport>
+    </PluginInfo>
+    <Properties>
+      <Property Name="UserID" Type="string" DisplayName="User ID">
+        <DefaultValue></DefaultValue>
+        <AudioEnginePropertyID>0</AudioEnginePropertyID>
+      </Property>
+			<Property Name="EnableImmerse" Type="bool" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" DisplayName="Enable Immerse">
+				<UserInterface/>
+				<DefaultValue>false</DefaultValue>
+				<AudioEnginePropertyID>1</AudioEnginePropertyID>
+			</Property>
+      <Property Name="ConvolutionType" Type="int32" DisplayName="Immerse Spatial Audio Profile" SupportRTPCType="Exclusive">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>2</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Universal">0</Value>
+              <Value DisplayName="Personalized">1</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="HeadphoneEq" Type="int32" DisplayName="Headphone EQ" SupportRTPCType="Exclusive">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>3</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="NONE">0</Value>
+              <Value DisplayName="Universal Closed Back">102</Value>
+              <Value DisplayName="Universal Open Back">104</Value>
+              <Value DisplayName="Cloud Alpha">26</Value>
+              <Value DisplayName="Arctis Nova Pro Wireless">16</Value>
+              <Value DisplayName="G535">38</Value>
+              <Value DisplayName="Black Shark V2 Pro Wireless">23</Value>
+              <Value DisplayName="A50">21</Value>
+              <Value DisplayName="MMX 300">80</Value>
+              <Value DisplayName="HS80 RGB Wireless">66</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="Tuning" Type="int32" DisplayName="Tuning" SupportRTPCType="Exclusive">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>4</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Extraction_01">0</Value>
+              <Value DisplayName="Warfare_01">1</Value>
+              <Value DisplayName="Campaign_01">2</Value>
+              <Value DisplayName="VoiceChat_01">3</Value>
+              <Value DisplayName="SpatialContent_01">4</Value>
+              <Value DisplayName="SpatialContent_02">5</Value>
+              <Value DisplayName="SpatialContent_03">6</Value>
+              <Value DisplayName="SpatialContent_04">7</Value>
+              <Value DisplayName="VoiceChat_01">8</Value>
+              <Value DisplayName="VoiceChat_02">9</Value>
+              <Value DisplayName="VoiceChat_03">10</Value>
+              <Value DisplayName="VoiceChat_04">11</Value>
+              <Value DisplayName="CameraPosition_01">12</Value>
+              <Value DisplayName="CameraPosition_02">13</Value>
+              <Value DisplayName="CameraPosition_03">14</Value>
+              <Value DisplayName="Tuning_16">15</Value>
+              <Value DisplayName="Tuning_17">16</Value>
+              <Value DisplayName="Tuning_18">17</Value>
+              <Value DisplayName="Tuning_19">18</Value>
+              <Value DisplayName="Tuning_20">19</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="FieldOfView" Type="int32" DisplayName="Field Of View" SupportRTPCType="Exclusive">
+        <DefaultValue>1</DefaultValue>
+        <AudioEnginePropertyID>5</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Default">1</Value>
+              <Value DisplayName="Narrow">2</Value>
+              <Value DisplayName="Wide">3</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="BusContent" Type="int32" DisplayName="Bus Content" SupportRTPCType="Exclusive">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>6</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="int32">
+              <Value DisplayName="Extraction">0</Value>
+              <Value DisplayName="Warfare">1</Value>
+              <Value DisplayName="Campaign">2</Value>
+              <Value DisplayName="VoiceChat">3</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="HeadTrackingEnabled" Type="bool" DisplayName="Head Tracking Enabled">
+        <DefaultValue>false</DefaultValue>
+        <AudioEnginePropertyID>7</AudioEnginePropertyID>
+      </Property>
+      <Property Name="HeadTrackingCameraId" Type="int32" DisplayName="Head Tracking Camera ID">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>8</AudioEnginePropertyID>
+      </Property>
+    </Properties>
+  </EffectPlugin>
+
+
+</PluginModule>
