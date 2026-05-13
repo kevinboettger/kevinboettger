@@ -76,12 +76,25 @@ function Parse-PluginProperties([string]$XmlPath) {
                 $values += @{ Display = "$($v.DisplayName)"; Value = "$($v.'#text')" }
             }
         }
+        # If the dev team ever annotates the XML with a visibility marker,
+        # respect it. Recognized forms:
+        #   <UserInterface Hidden="true"/>
+        #   <UserInterface Hide="true"/>
+        #   <UserInterface Visible="false"/>
+        $hiddenFromXml = $false
+        if ($p.UserInterface) {
+            $ui = $p.UserInterface
+            if ($ui.Hidden -eq 'true' -or $ui.Hide -eq 'true' -or $ui.Visible -eq 'false') {
+                $hiddenFromXml = $true
+            }
+        }
         $list += [pscustomobject]@{
-            Name        = "$($p.Name)"
-            Type        = "$($p.Type)"
-            DisplayName = if ($p.DisplayName) { "$($p.DisplayName)" } else { "$($p.Name)" }
-            Default     = "$($p.DefaultValue)"
-            Values      = $values
+            Name          = "$($p.Name)"
+            Type          = "$($p.Type)"
+            DisplayName   = if ($p.DisplayName) { "$($p.DisplayName)" } else { "$($p.Name)" }
+            Default       = "$($p.DefaultValue)"
+            Values        = $values
+            HiddenFromXml = $hiddenFromXml
         }
     }
     return $list
@@ -110,6 +123,16 @@ $knownTestable = @{
 }
 # These four require EHM ON + ConvolutionType = 1 (Personalized) to take effect.
 $personalizedDeps = @('HeadphoneEq','Tuning','FieldOfView','BusContent')
+
+# Properties to filter from the parameter selector. The XML doesn't carry an
+# explicit visibility marker today; until the dev team adds one (see
+# Parse-PluginProperties, which already honours <UserInterface Hidden="true"/>
+# style attributes), keep a small static list of properties that aren't in the
+# Immerse plug-in UI in Wwise (or that the harness handles elsewhere).
+#   UserID                 - has its own field at the top of the form already
+#   HeadTrackingEnabled    - not surfaced in the plug-in's authoring UI
+#   HeadTrackingCameraId   - not surfaced in the plug-in's authoring UI
+$hiddenProperties = @('UserID','HeadTrackingEnabled','HeadTrackingCameraId')
 
 # Build form ------------------------------------------------------------------
 
@@ -172,7 +195,6 @@ $txtUser     = Add-PathRow $form 185 'Immerse User ID:'                    $defU
 # Parameter selection panel ---------------------------------------------------
 
 $grp = New-Object System.Windows.Forms.GroupBox
-$grp.Text = 'Parameters to test (discovered from XML; checked = include in cycle)'
 $grp.Location = New-Object System.Drawing.Point(20, 225)
 $grp.Size = New-Object System.Drawing.Size(775, 305)
 $form.Controls.Add($grp)
@@ -187,9 +209,16 @@ $grp.Controls.Add($lstParams)
 # Defaults to pre-check (matches the proven 9-scenario baseline).
 $defaultChecked = @('EnableImmerse','ConvolutionType','HeadphoneEq','BusContent','FieldOfView')
 
+# Visible properties = parsed list minus XML-hidden ones minus our static
+# filter list (UserID + HeadTracking* not in plug-in UI today).
+$visibleProps = @($allProps | Where-Object { -not $_.HiddenFromXml -and ($_.Name -notin $hiddenProperties) })
+$hiddenCount  = $allProps.Count - $visibleProps.Count
+
+$grp.Text = "Parameters to test ($($visibleProps.Count) discovered$(if ($hiddenCount) { ", $hiddenCount hidden" }))"
+
 $paramIndex = @{}
 $idx = 0
-foreach ($p in $allProps) {
+foreach ($p in $visibleProps) {
     $prefix = if ($knownTestable[$p.Name]) { '[testable] ' } else { '[discovery] ' }
     $depMark = if ($p.Name -in $personalizedDeps) { ' (needs EHM on + Personalized)' } else { '' }
     $valueSummary = if ($p.Values.Count -gt 0) {
