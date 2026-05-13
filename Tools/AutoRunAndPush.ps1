@@ -67,7 +67,7 @@ function Init-ResultsRepo {
     } else {
         $null = Invoke-Git -C $ResultsRoot remote set-url origin $RemoteUrl
         $null = Invoke-Git -C $ResultsRoot fetch origin $Branch
-        $null = Invoke-Git -C $ResultsRoot checkout $Branch
+        $null = Invoke-Git -C $ResultsRoot checkout -B $Branch "origin/$Branch"
         $null = Invoke-Git -C $ResultsRoot reset --hard "origin/$Branch"
     }
     $null = Invoke-Git -C $ResultsRoot config user.email 'immerse-bot@local'
@@ -84,7 +84,7 @@ function Push-To-Branch {
         $commit = Invoke-Git -C $ResultsRoot commit -m $Msg
         if ($commit.ExitCode -ne 0) { Warn "commit failed: $($commit.StdErr)"; return $false }
         for ($i = 0; $i -lt 4; $i++) {
-            $push = Invoke-Git -C $ResultsRoot push origin $Branch
+            $push = Invoke-Git -C $ResultsRoot push origin "HEAD:refs/heads/$Branch"
             if ($push.ExitCode -eq 0) { return $true }
             Warn "push retry $($i+1): $($push.StdErr)"
             Start-Sleep -Seconds ([Math]::Pow(2, $i + 1))
