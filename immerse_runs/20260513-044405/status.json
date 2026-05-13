@@ -1,7 +1,8 @@
 ﻿{
     "run_id":  "20260513-044405",
-    "phase":  "ue_launched",
-    "timestamp":  "2026-05-13T11:44:14.6814344Z",
+    "phase":  "user_loaded",
+    "timestamp":  "2026-05-13T11:44:24.1359554Z",
     "host":  "IMMERSEDEMOM5",
-    "editor_pid":  23108
+    "auto_connected":  true,
+    "user_load_ok":  true
 }
