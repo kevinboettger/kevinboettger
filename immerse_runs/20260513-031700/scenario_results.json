@@ -1,0 +1,98 @@
+﻿{
+    "fail":  0,
+    "pass":  7,
+    "schema":  "tier1-results-v1",
+    "total":  9,
+    "skip":  2,
+    "results":  [
+                    {
+                        "index":  1,
+                        "name":  "EHM: setup -\u003e force off (no-assert)",
+                        "status":  "discovery",
+                        "property":  "EnableImmerse",
+                        "value":  false,
+                        "captured_lines":  {
+
+                                           }
+                    },
+                    {
+                        "index":  2,
+                        "name":  "EHM: assert ON  (off -\u003e on)",
+                        "status":  "pass",
+                        "property":  "EnableImmerse",
+                        "value":  true,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*1",
+                        "matched_line":  "[2026-05-13T03:17:25.4373768-07:00] [pid=12520] [EmbodyLOG] May_13_2026 03:17:25.437 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 ",
+                        "lag_ms":  128
+                    },
+                    {
+                        "index":  3,
+                        "name":  "EHM: assert OFF (on -\u003e off)",
+                        "status":  "pass",
+                        "property":  "EnableImmerse",
+                        "value":  false,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*0",
+                        "matched_line":  "[2026-05-13T03:17:25.5676963-07:00] [pid=12520] [EmbodyLOG] May_13_2026 03:17:25.567 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 0 ",
+                        "lag_ms":  119
+                    },
+                    {
+                        "index":  4,
+                        "name":  "EHM: assert ON  (off -\u003e on, for downstream scenarios)",
+                        "status":  "pass",
+                        "property":  "EnableImmerse",
+                        "value":  true,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*1",
+                        "matched_line":  "[2026-05-13T03:17:25.7000912-07:00] [pid=12520] [EmbodyLOG] May_13_2026 03:17:25.700 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 ",
+                        "lag_ms":  123
+                    },
+                    {
+                        "index":  5,
+                        "name":  "ConvolutionType: setup -\u003e 0 stereo (force transition for next assert)",
+                        "status":  "discovery",
+                        "property":  "ConvolutionType",
+                        "value":  0,
+                        "captured_lines":  [
+                                               "[2026-05-13T03:17:25.8286630-07:00] [pid=12520] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:17:25.8286630-07:00] [pid=12520] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:17:25.8286630-07:00] [pid=12520] [EmbodyLOG] May_13_2026 03:17:25.829 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                                               "[2026-05-13T03:17:25.8296644-07:00] [pid=12520] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:17:25.8296644-07:00] [pid=12520] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:17:25.8301684-07:00] [pid=12520] [EmbodyLOG] May_13_2026 03:17:25.830 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                                               "[2026-05-13T03:17:25.8301684-07:00] [pid=12520] [EmbodyLOG] May_13_2026 03:17:25.830 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 ",
+                                               "[2026-05-13T03:17:25.8321816-07:00] [pid=12520] [EmbodyLOG] May_13_2026 03:17:25.832 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  6,
+                        "name":  "ConvolutionType: assert -\u003e 1 personalized (sees inMode: 1)",
+                        "status":  "pass",
+                        "property":  "ConvolutionType",
+                        "value":  1,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*1",
+                        "matched_line":  "[2026-05-13T03:17:26.8552852-07:00] [pid=12520] [EmbodyLOG] May_13_2026 03:17:26.856 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 ",
+                        "lag_ms":  126
+                    },
+                    {
+                        "index":  7,
+                        "name":  "ConvolutionType: assert -\u003e 0 stereo downmix (sees inMode: 2)",
+                        "status":  "pass",
+                        "property":  "ConvolutionType",
+                        "value":  0,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*2",
+                        "matched_line":  "[2026-05-13T03:17:26.9940912-07:00] [pid=12520] [EmbodyLOG] May_13_2026 03:17:26.994 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                        "lag_ms":  122
+                    },
+                    {
+                        "index":  8,
+                        "name":  "ConvolutionType: 2 universal (SKIPPED - returns HTTP 500, dev-team check)",
+                        "status":  "skip",
+                        "note":  "WAAPI returns 500 for value=2 regardless of preceding state. Likely a license/feature gate or precondition (e.g. non-personalized user account). Confirm with dev team whether universal mode is settable via setProperty in this build, or whether it requires a different API."
+                    },
+                    {
+                        "index":  9,
+                        "name":  "HeadphoneEq: any value (SKIPPED - all return HTTP 500, dev-team check)",
+                        "status":  "skip",
+                        "note":  "Every HeadphoneEq setProperty call returns 500, including with EnableImmerse=true and ConvolutionType=1 (personalized) already set as preconditions. May require: (a) HPEQ profile data already downloaded for the user, (b) ConvolutionType to be in a steady state for some time, (c) a different WAAPI verb. Confirm with dev team."
+                    }
+                ]
+}
