@@ -1,0 +1,63 @@
+﻿{
+    "fail":  4,
+    "pass":  2,
+    "schema":  "tier1-results-v1",
+    "total":  6,
+    "skip":  0,
+    "results":  [
+                    {
+                        "index":  1,
+                        "name":  "EHM: baseline on",
+                        "status":  "fail",
+                        "property":  "EnableImmerse",
+                        "value":  true,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*1",
+                        "timeout_ms":  3000
+                    },
+                    {
+                        "index":  2,
+                        "name":  "EHM: toggle off",
+                        "status":  "pass",
+                        "property":  "EnableImmerse",
+                        "value":  false,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*0",
+                        "matched_line":  "[2026-05-13T02:50:44.9267972-07:00] [pid=27688] [EmbodyLOG] May_13_2026 02:50:44.927 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 0 ",
+                        "lag_ms":  114
+                    },
+                    {
+                        "index":  3,
+                        "name":  "EHM: toggle on",
+                        "status":  "pass",
+                        "property":  "EnableImmerse",
+                        "value":  true,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*1",
+                        "matched_line":  "[2026-05-13T02:50:45.0477364-07:00] [pid=27688] [EmbodyLOG] May_13_2026 02:50:45.047 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 ",
+                        "lag_ms":  110
+                    },
+                    {
+                        "index":  4,
+                        "name":  "UserID: re-assert current user pushes through",
+                        "status":  "fail",
+                        "property":  "UserID",
+                        "value":  "kevin_tencenttest1_emb",
+                        "expect_log":  "generateWebAppUrl.*userId:\\s*kevin_tencenttest1_emb",
+                        "timeout_ms":  5000
+                    },
+                    {
+                        "index":  5,
+                        "name":  "ConvolutionType: discovery (observe what value type + log signature)",
+                        "status":  "fail",
+                        "property":  "ConvolutionType",
+                        "value":  "TBD",
+                        "error":  "The remote server returned an error: (500) Internal Server Error. body="
+                    },
+                    {
+                        "index":  6,
+                        "name":  "HeadphoneEq: discovery (requires EHM on + personalized profile)",
+                        "status":  "fail",
+                        "property":  "HeadphoneEq",
+                        "value":  "TBD",
+                        "error":  "The remote server returned an error: (500) Internal Server Error. body="
+                    }
+                ]
+}
