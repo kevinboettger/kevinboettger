@@ -1,0 +1,102 @@
+﻿{
+    "fail":  2,
+    "pass":  7,
+    "schema":  "tier1-results-v1",
+    "total":  9,
+    "skip":  0,
+    "results":  [
+                    {
+                        "index":  1,
+                        "name":  "EHM: setup -\u003e force off (no-assert)",
+                        "status":  "discovery",
+                        "property":  "EnableImmerse",
+                        "value":  false,
+                        "captured_lines":  {
+
+                                           }
+                    },
+                    {
+                        "index":  2,
+                        "name":  "EHM: assert ON  (off -\u003e on)",
+                        "status":  "pass",
+                        "property":  "EnableImmerse",
+                        "value":  true,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*1",
+                        "matched_line":  "[2026-05-13T03:25:45.5587463-07:00] [pid=3452] [EmbodyLOG] May_13_2026 03:25:45.559 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 ",
+                        "lag_ms":  131
+                    },
+                    {
+                        "index":  3,
+                        "name":  "EHM: assert OFF (on -\u003e off)",
+                        "status":  "pass",
+                        "property":  "EnableImmerse",
+                        "value":  false,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*0",
+                        "matched_line":  "[2026-05-13T03:25:45.6898197-07:00] [pid=3452] [EmbodyLOG] May_13_2026 03:25:45.690 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 0 ",
+                        "lag_ms":  110
+                    },
+                    {
+                        "index":  4,
+                        "name":  "EHM: assert ON  (off -\u003e on, for downstream scenarios)",
+                        "status":  "pass",
+                        "property":  "EnableImmerse",
+                        "value":  true,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*1",
+                        "matched_line":  "[2026-05-13T03:25:45.7965642-07:00] [pid=3452] [EmbodyLOG] May_13_2026 03:25:45.796 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 ",
+                        "lag_ms":  121
+                    },
+                    {
+                        "index":  5,
+                        "name":  "ConvolutionType: setup -\u003e 0 stereo (force transition for next assert)",
+                        "status":  "discovery",
+                        "property":  "ConvolutionType",
+                        "value":  0,
+                        "captured_lines":  [
+                                               "[2026-05-13T03:25:45.9465427-07:00] [pid=3452] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:25:45.9465427-07:00] [pid=3452] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:25:45.9475521-07:00] [pid=3452] [EmbodyLOG] May_13_2026 03:25:45.947 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                                               "[2026-05-13T03:25:45.9475521-07:00] [pid=3452] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:25:45.9475521-07:00] [pid=3452] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:25:45.9475521-07:00] [pid=3452] [EmbodyLOG] May_13_2026 03:25:45.948 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                                               "[2026-05-13T03:25:45.9485570-07:00] [pid=3452] [EmbodyLOG] May_13_2026 03:25:45.948 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 ",
+                                               "[2026-05-13T03:25:45.9495525-07:00] [pid=3452] [EmbodyLOG] May_13_2026 03:25:45.949 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  6,
+                        "name":  "ConvolutionType: assert -\u003e 1 personalized (sees inMode: 1)",
+                        "status":  "pass",
+                        "property":  "ConvolutionType",
+                        "value":  1,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*1",
+                        "matched_line":  "[2026-05-13T03:25:46.9753047-07:00] [pid=3452] [EmbodyLOG] May_13_2026 03:25:46.976 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 ",
+                        "lag_ms":  117
+                    },
+                    {
+                        "index":  7,
+                        "name":  "ConvolutionType: assert -\u003e 0 stereo downmix (sees inMode: 2)",
+                        "status":  "pass",
+                        "property":  "ConvolutionType",
+                        "value":  0,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*2",
+                        "matched_line":  "[2026-05-13T03:25:47.1101073-07:00] [pid=3452] [EmbodyLOG] May_13_2026 03:25:47.110 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                        "lag_ms":  120
+                    },
+                    {
+                        "index":  8,
+                        "name":  "ConvolutionType: 2 universal (SKIPPED - returns HTTP 500, dev-team check)",
+                        "status":  "fail",
+                        "property":  "ConvolutionType",
+                        "value":  2,
+                        "error":  "The remote server returned an error: (500) Internal Server Error. body="
+                    },
+                    {
+                        "index":  9,
+                        "name":  "HeadphoneEq: any value (SKIPPED - all return HTTP 500, dev-team check)",
+                        "status":  "fail",
+                        "property":  "HeadphoneEq",
+                        "value":  1,
+                        "error":  "The remote server returned an error: (500) Internal Server Error. body="
+                    }
+                ]
+}
