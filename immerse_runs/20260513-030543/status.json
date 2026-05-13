@@ -1,7 +1,7 @@
 ﻿{
     "run_id":  "20260513-030543",
-    "phase":  "wwise_ready",
-    "timestamp":  "2026-05-13T10:05:50.2813242Z",
+    "phase":  "ue_launched",
+    "timestamp":  "2026-05-13T10:05:53.3355271Z",
     "host":  "IMMERSEDEMOM5",
-    "immerse_effect_id":  "{3377B6B1-AC34-43F1-A76E-45A9BD6C0873}"
+    "editor_pid":  4308
 }
