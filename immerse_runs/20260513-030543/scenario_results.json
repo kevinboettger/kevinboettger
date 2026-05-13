@@ -1,0 +1,192 @@
+﻿{
+    "fail":  4,
+    "pass":  10,
+    "schema":  "tier1-results-v1",
+    "total":  14,
+    "skip":  0,
+    "results":  [
+                    {
+                        "index":  1,
+                        "name":  "EHM: setup -\u003e force off (no-assert)",
+                        "status":  "discovery",
+                        "property":  "EnableImmerse",
+                        "value":  false,
+                        "captured_lines":  [
+                                               "[2026-05-13T03:06:08.7311723-07:00] [pid=4308] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:06:08.7311723-07:00] [pid=4308] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:06:08.7321779-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:08.732 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 0 ",
+                                               "[2026-05-13T03:06:08.7321779-07:00] [pid=4308] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:06:08.7321779-07:00] [pid=4308] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:06:08.7331794-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:08.733 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 0 ",
+                                               "[2026-05-13T03:06:08.7331794-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:08.733 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 ",
+                                               "[2026-05-13T03:06:08.7366845-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:08.737 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  2,
+                        "name":  "EHM: assert ON  (off -\u003e on)",
+                        "status":  "pass",
+                        "property":  "EnableImmerse",
+                        "value":  true,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*1",
+                        "matched_line":  "[2026-05-13T03:06:09.8611817-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:09.861 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 ",
+                        "lag_ms":  125
+                    },
+                    {
+                        "index":  3,
+                        "name":  "EHM: assert OFF (on -\u003e off)",
+                        "status":  "pass",
+                        "property":  "EnableImmerse",
+                        "value":  false,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*0",
+                        "matched_line":  "[2026-05-13T03:06:10.0076595-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:10.008 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 0 ",
+                        "lag_ms":  125
+                    },
+                    {
+                        "index":  4,
+                        "name":  "EHM: assert ON  (off -\u003e on, for downstream scenarios)",
+                        "status":  "pass",
+                        "property":  "EnableImmerse",
+                        "value":  true,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*1",
+                        "matched_line":  "[2026-05-13T03:06:10.1409918-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:10.141 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 ",
+                        "lag_ms":  137
+                    },
+                    {
+                        "index":  5,
+                        "name":  "ConvolutionType: setup -\u003e 2 universal (no-assert)",
+                        "status":  "fail",
+                        "property":  "ConvolutionType",
+                        "value":  2,
+                        "error":  "The remote server returned an error: (500) Internal Server Error. body="
+                    },
+                    {
+                        "index":  6,
+                        "name":  "ConvolutionType: discovery -\u003e 0 stereo downmix",
+                        "status":  "discovery",
+                        "property":  "ConvolutionType",
+                        "value":  0,
+                        "captured_lines":  [
+                                               "[2026-05-13T03:06:10.3099621-07:00] [pid=4308] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:06:10.3099621-07:00] [pid=4308] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:06:10.3099621-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:10.310 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                                               "[2026-05-13T03:06:10.3109685-07:00] [pid=4308] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:06:10.3109685-07:00] [pid=4308] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:06:10.3109685-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:10.311 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                                               "[2026-05-13T03:06:10.3119742-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:10.311 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 ",
+                                               "[2026-05-13T03:06:10.3129726-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:10.313 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  7,
+                        "name":  "ConvolutionType: discovery -\u003e 1 personalized",
+                        "status":  "discovery",
+                        "property":  "ConvolutionType",
+                        "value":  1,
+                        "captured_lines":  [
+                                               "[2026-05-13T03:06:13.3249358-07:00] [pid=4308] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:06:13.3249358-07:00] [pid=4308] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:06:13.3264395-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:13.326 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 ",
+                                               "[2026-05-13T03:06:13.3264395-07:00] [pid=4308] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:06:13.3264395-07:00] [pid=4308] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:06:13.3264395-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:13.327 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 ",
+                                               "[2026-05-13T03:06:13.3284477-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:13.328 line: 1316. getLocalSessionID for user: kevin_tencenttest1_emb 06756e30dc6941e7b44b3ad365984a2f ",
+                                               "[2026-05-13T03:06:13.3294483-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:13.329 line: 2576. ImmerseAPI: Too many status checks within the period allowed, returning early ",
+                                               "[2026-05-13T03:06:13.3294483-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:13.329 line: 3232. updateUMWHPEQSelection() - updated headsetId: 18446744073709551615 ",
+                                               "[2026-05-13T03:06:13.3299534-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:13.330 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 ",
+                                               "[2026-05-13T03:06:13.3319657-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:13.332 line: 1316. getLocalSessionID for user: kevin_tencenttest1_emb 06756e30dc6941e7b44b3ad365984a2f ",
+                                               "[2026-05-13T03:06:13.3329657-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:13.333 line: 2576. ImmerseAPI: Too many status checks within the period allowed, returning early ",
+                                               "[2026-05-13T03:06:13.3329657-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:13.333 line: 3232. updateUMWHPEQSelection() - updated headsetId: 18446744073709551615 ",
+                                               "[2026-05-13T03:06:13.3339662-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:13.334 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  8,
+                        "name":  "ConvolutionType: discovery -\u003e 2 universal",
+                        "status":  "fail",
+                        "property":  "ConvolutionType",
+                        "value":  2,
+                        "error":  "The remote server returned an error: (500) Internal Server Error. body="
+                    },
+                    {
+                        "index":  9,
+                        "name":  "HeadphoneEq prereq: ConvolutionType -\u003e 1 personalized",
+                        "status":  "discovery",
+                        "property":  "ConvolutionType",
+                        "value":  1,
+                        "captured_lines":  {
+
+                                           }
+                    },
+                    {
+                        "index":  10,
+                        "name":  "HeadphoneEq: setup -\u003e 0 none (no-assert)",
+                        "status":  "discovery",
+                        "property":  "HeadphoneEq",
+                        "value":  0,
+                        "captured_lines":  {
+
+                                           }
+                    },
+                    {
+                        "index":  11,
+                        "name":  "HeadphoneEq: discovery -\u003e 1",
+                        "status":  "fail",
+                        "property":  "HeadphoneEq",
+                        "value":  1,
+                        "error":  "The remote server returned an error: (500) Internal Server Error. body="
+                    },
+                    {
+                        "index":  12,
+                        "name":  "HeadphoneEq: discovery -\u003e 5",
+                        "status":  "fail",
+                        "property":  "HeadphoneEq",
+                        "value":  5,
+                        "error":  "The remote server returned an error: (500) Internal Server Error. body="
+                    },
+                    {
+                        "index":  13,
+                        "name":  "UserID: setup -\u003e dummy (no-assert)",
+                        "status":  "discovery",
+                        "property":  "UserID",
+                        "value":  "dummy_setup_user_for_transition",
+                        "captured_lines":  [
+                                               "[2026-05-13T03:06:18.4264019-07:00] [pid=4308] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:06:18.4264019-07:00] [pid=4308] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:06:18.4274105-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.427 line: 628. ___IMMERSEENGINE___ Immerse_ResetUser ",
+                                               "[2026-05-13T03:06:18.4284114-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.428 line: 649. ___IMMERSEENGINE___ Immerse_SetUserId inUserId:0000000C2744F230 ",
+                                               "[2026-05-13T03:06:18.4299162-07:00] [pid=4308] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:06:18.4309233-07:00] [pid=4308] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:06:18.6565969-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.656 line: 1004. API::CallEndpoint(): overwriting status code ",
+                                               "[2026-05-13T03:06:18.6576043-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.657 line: 225. AsyncTaskManager::WaitForTaskExecution() - synchronous network call success. ",
+                                               "[2026-05-13T03:06:18.6586059-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.658 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 ",
+                                               "[2026-05-13T03:06:18.6596053-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.659 line: 1135. migrateUserDataIfNeeeded(): Migrating user data ",
+                                               "[2026-05-13T03:06:18.6596053-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.659 line: 1045. eraseUserProperty(): failed to erase key - webAppUrl ",
+                                               "[2026-05-13T03:06:18.6601093-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.660 line: 1045. eraseUserProperty(): failed to erase key - lastURLRefreshTimestamp ",
+                                               "[2026-05-13T03:06:18.6601093-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.660 line: 1045. eraseUserProperty(): failed to erase key - lastStatusCheckRefreshTimestamp ",
+                                               "[2026-05-13T03:06:18.6601093-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.660 line: 1116. migrateUserDataToV1: migration failed, reverting to existing dat file ",
+                                               "[2026-05-13T03:06:18.6601093-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.660 line: 3460. generateWebAppUrl(): userId: dummy_setup_user_for_transition ",
+                                               "[2026-05-13T03:06:18.6621186-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.662 line: 1269. getLocalSessionIDFromDataStore(): userID not found in datastore, new user! ",
+                                               "[2026-05-13T03:06:18.6631200-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.663 line: 1314. getLocalSessionID result is null ",
+                                               "[2026-05-13T03:06:18.6631200-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.663 line: 1316. getLocalSessionID for user: dummy_setup_user_for_transition  ",
+                                               "[2026-05-13T03:06:18.6631200-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.663 line: 3468. generateWebAppUrl(): Query context user id = dummy_setup_user_for_transition ",
+                                               "[2026-05-13T03:06:18.6631200-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.663 line: 1377. constructWebAppUrl: https://u.embodyvr.io/i/VvngGY_rNnG-obpfi30_eLBfhRuFgyWWhqtuYW98IW41qv7NjemmbuW5QEAvfCOYRQ**?q=2h04:en ",
+                                               "[2026-05-13T03:06:18.6641206-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.664 line: 3483. generateWebAppUrl(): session url is : https://u.embodyvr.io/i/VvngGY_rNnG-obpfi30_eLBfhRuFgyWWhqtuYW98IW41qv7NjemmbuW5QEAvfCOYRQ**?q=2h04:en ",
+                                               "[2026-05-13T03:06:18.9865963-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.986 line: 2042. updateUserData onSetUserId: update user data on set user id ",
+                                               "[2026-05-13T03:06:18.9875994-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.988 line: 1284. getLocalSessionIDFromDataStore(): failed to retrieve session id! ",
+                                               "[2026-05-13T03:06:18.9875994-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.988 line: 1314. getLocalSessionID result is null ",
+                                               "[2026-05-13T03:06:18.9885990-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:18.988 line: 1316. getLocalSessionID for user: dummy_setup_user_for_transition  "
+                                           ]
+                    },
+                    {
+                        "index":  14,
+                        "name":  "UserID: assert switch back to expected",
+                        "status":  "pass",
+                        "property":  "UserID",
+                        "value":  "kevin_tencenttest1_emb",
+                        "expect_log":  "generateWebAppUrl.*userId:\\s*kevin_tencenttest1_emb",
+                        "matched_line":  "[2026-05-13T03:06:19.7786652-07:00] [pid=4308] [EmbodyLOG] May_13_2026 03:06:19.778 line: 3460. generateWebAppUrl(): userId: kevin_tencenttest1_emb ",
+                        "lag_ms":  342
+                    }
+                ]
+}
