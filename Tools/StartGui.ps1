@@ -348,15 +348,30 @@ if ($needsPersonalizedPrereq) {
     Add-Scenario @{ name = 'Prereq: ConvolutionType = 1 (Personalized)'; property = 'ConvolutionType'; value = 1; captureSeconds = 1 }
 }
 
-# 4. For each dependent enum property, cycle through its values (discovery
-#    until we know each one's log signature).
+# 4. For each dependent enum property, cycle through its values. Properties
+#    with a known log signature get an assertion regex (per-value via the
+#    {value} placeholder); the rest stay in discovery mode until the next
+#    run's captured log lines tell us the signature.
+$enumLogPatterns = @{
+    'HeadphoneEq' = 'updateUMWHPEQSelection\(\)\s+-\s+updated\s+headsetId:\s*\{value\}'
+    # FieldOfView: pending log capture from a successful run.
+    # BusContent : pending log capture.
+    # Tuning     : pending log capture.
+}
 function Add-EnumCycle($prop) {
     if ($prop.Values.Count -eq 0) { return }
-    # Force to the first enum value as setup.
     $first = $prop.Values[0]
     Add-Scenario @{ name = "Setup $($prop.Name): force to $($first.Display) ($($first.Value))"; property = $prop.Name; value = ([int]$first.Value); captureSeconds = 1 }
+    $pattern = $enumLogPatterns[$prop.Name]
     foreach ($v in ($prop.Values | Select-Object -Skip 1)) {
-        Add-Scenario @{ name = "$($prop.DisplayName): $($v.Display) ($($v.Value))"; property = $prop.Name; value = ([int]$v.Value); captureSeconds = 2 }
+        $scn = @{ name = "$($prop.DisplayName): $($v.Display) ($($v.Value))"; property = $prop.Name; value = ([int]$v.Value) }
+        if ($pattern) {
+            $scn.expectLog = $pattern -replace '\{value\}', "$($v.Value)"
+            $scn.timeoutMs = 3000
+        } else {
+            $scn.captureSeconds = 2
+        }
+        Add-Scenario $scn
     }
 }
 foreach ($p in $selectedProps) {
