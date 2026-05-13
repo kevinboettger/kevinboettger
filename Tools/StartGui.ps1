@@ -76,6 +76,16 @@ function Parse-PluginProperties([string]$XmlPath) {
                 $values += @{ Display = "$($v.DisplayName)"; Value = "$($v.'#text')" }
             }
         }
+        # Tuning's XML enum declares 20 entries but the plug-in UI only exposes
+        # 4 at a time (filtered by the current BusContent -- a relationship the
+        # XML doesn't encode). The first 4 entries (Extraction_01, Warfare_01,
+        # Campaign_01, VoiceChat_01) map 1:1 to the four BusContent values, so
+        # we treat those as the canonical "primary tuning per BusContent" and
+        # drop the rest. When the dev team adds a BusContent->Tuning mapping
+        # to the XML (or a separate metadata file) we can lift this trim.
+        if ($p.Name -eq 'Tuning' -and $values.Count -gt 4) {
+            $values = $values | Select-Object -First 4
+        }
         # If the dev team ever annotates the XML with a visibility marker,
         # respect it. Recognized forms:
         #   <UserInterface Hidden="true"/>
