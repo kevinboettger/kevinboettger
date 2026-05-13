@@ -168,6 +168,17 @@ try {
     $RunDirAbs = Join-Path $ResultsRoot $RunDirRel
     New-Item -ItemType Directory -Force -Path $RunDirAbs | Out-Null
 
+    # If this project still has the ImmerseStressTestActor compiled in from prior
+    # Tier 2 builds, the actor would auto-run its plan, post 300Hz audio events,
+    # and self-exit UE after ~20s. Setting IMMERSE_REMOTE_HOLD parks it (the
+    # REMOTE_HOLD_v1 patch in the actor checks for this env var + go.flag).
+    # We never drop go.flag, so the actor stays parked. WAAPI property changes
+    # still produce listener-log lines because the plug-in's parameter callback
+    # fires independently of any audio flow.
+    $env:IMMERSE_REMOTE_HOLD = '1'
+    $goFlagPath = Join-Path $ProjectDir 'Saved\ImmerseStress\go.flag'
+    if (Test-Path $goFlagPath) { Remove-Item $goFlagPath -Force -ErrorAction SilentlyContinue }
+
     # listener: capture all OutputDebugString from same-user processes
     $dbgListener = $null
     $dbgLogTmp   = Join-Path $env:TEMP "immerse_dbgmonitor_$RunId.log"
