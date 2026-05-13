@@ -23,7 +23,7 @@ New-Item -ItemType Directory -Force -Path $toolsDir | Out-Null
 # the Contents API serves the branch tip immediately.
 $apiBase = 'https://api.github.com/repos/kevinboettger/kevinboettger/contents/Tools'
 $ref     = 'claude/test-immerse-tier1-waapi'
-$files   = @('AutoRunAndPush.ps1','AutoRunAndPush.bat','DebugStreamListener.ps1','Run-Scenarios.ps1','TestScenarios.json')
+$files   = @('AutoRunAndPush.ps1','AutoRunAndPush.bat','DebugStreamListener.ps1','Run-Scenarios.ps1','TestScenarios.json','StartGui.ps1','StartGui.bat','Generate-HtmlReport.ps1')
 $headers = @{
     Accept       = 'application/vnd.github.v3.raw'
     'User-Agent' = 'immerse-tier1-bootstrap'
@@ -53,5 +53,5 @@ if (-not (Test-Path $tokenFile)) {
 }
 
 Write-Host ''
-Write-Host '=== Launching AutoRunAndPush ===' -ForegroundColor Cyan
-& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $toolsDir 'AutoRunAndPush.ps1')
+Write-Host '=== Launching GUI ===' -ForegroundColor Cyan
+& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $toolsDir 'StartGui.ps1')

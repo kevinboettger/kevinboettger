@@ -9,6 +9,17 @@ try { $PSStyle.OutputRendering = 'PlainText' } catch { }
 
 $ScriptDir     = Split-Path -Parent $MyInvocation.MyCommand.Path
 $ProjectDir    = Split-Path -Parent $ScriptDir
+# IMMERSE_UPROJECT can point at any .uproject (or a folder containing one) so
+# the GUI / portable installations can target an arbitrary UE project instead
+# of the one this script happens to live next to.
+if ($env:IMMERSE_UPROJECT -and (Test-Path $env:IMMERSE_UPROJECT)) {
+    $item = Get-Item $env:IMMERSE_UPROJECT
+    if ($item.PSIsContainer) {
+        $ProjectDir = $item.FullName
+    } elseif ($item.Extension -eq '.uproject') {
+        $ProjectDir = Split-Path -Parent $item.FullName
+    }
+}
 $RunId         = Get-Date -Format 'yyyyMMdd-HHmmss'
 $ResultsRoot   = Join-Path $ScriptDir '_results_repo'
 $Owner         = 'kevinboettger'
@@ -370,6 +381,29 @@ try {
     }
     if (Test-Path $editorLog) { Push-File $editorLog 'editor.log' }
 
+    # Generate HTML report from scenario_results.json so the GUI (or any
+    # operator) has a one-file view of the run. Export the run dir to a
+    # global var so the GUI can find report.html after the launcher returns.
+    $reportScript = Join-Path $ScriptDir 'Generate-HtmlReport.ps1'
+    $reportPath   = Join-Path $RunDirAbs 'report.html'
+    if ((Test-Path $reportScript) -and (Test-Path $resultsJson)) {
+        try {
+            $meta = @{
+                'Run ID'               = $RunId
+                'Timestamp'            = (Get-Date).ToString('yyyy-MM-dd HH:mm:ss')
+                'Host'                 = $env:COMPUTERNAME
+                'User ID'              = $ImmerseUserId
+                'UE project'           = $ProjectDir
+                'Wwise project'        = if ($wproj) { $wproj } else { '(reused running instance)' }
+                'Immerse Effect ID'    = $immerseEffectId
+                'Auto remote-connect'  = $autoConnected
+                'User-load confirmed'  = $loadOk
+            }
+            & $reportScript -ResultsJson $resultsJson -SummaryTxt $summaryTxt -OutPath $reportPath -Metadata $meta
+        } catch { Warn "Could not generate HTML report: $($_.Exception.Message)" }
+    }
+    $global:IMMERSE_LAST_RUN_DIR = $RunDirAbs
+
     Push-Status -Phase $(if ($scenarioOk) { 'completed' } else { 'completed_with_failures' }) -Extra @{
         scenario_ok    = $scenarioOk
         user_load_ok   = $loadOk
@@ -377,6 +411,7 @@ try {
     }
     Step 'DONE'
     Write-Host "Results: https://github.com/$Owner/$Repo/tree/$Branch/$RunDirRel" -ForegroundColor Green
+    if (Test-Path $reportPath) { Write-Host "HTML report: $reportPath" -ForegroundColor Green }
 } catch {
     Write-Host "ERROR: $_" -ForegroundColor Red
     try { Push-Status -Phase 'failed' -Extra @{ error = "$_" } } catch { }
