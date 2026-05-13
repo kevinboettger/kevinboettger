@@ -18,25 +18,20 @@ Write-Host "Project: $projectDir" -ForegroundColor Cyan
 $toolsDir = Join-Path $projectDir 'Tools'
 New-Item -ItemType Directory -Force -Path $toolsDir | Out-Null
 
-# Cache-bust raw.githubusercontent.com -- it can serve stale content for ~5 min.
-# Append a random query param + send no-cache headers.
-$buster = "?_=" + [DateTime]::UtcNow.Ticks
-$base = 'https://raw.githubusercontent.com/kevinboettger/kevinboettger/claude/test-immerse-tier1-waapi/Tools'
-$files = @{
-    'AutoRunAndPush.ps1'         = "$base/AutoRunAndPush.ps1$buster"
-    'AutoRunAndPush.bat'         = "$base/AutoRunAndPush.bat$buster"
-    'DebugStreamListener.ps1'    = "$base/DebugStreamListener.ps1$buster"
-    'Run-Scenarios.ps1'          = "$base/Run-Scenarios.ps1$buster"
-    'TestScenarios.json'         = "$base/TestScenarios.json$buster"
-}
+# Fetch via the GitHub Contents API instead of raw.githubusercontent.com.
+# raw.gh aggressively caches even with ?_= cache-busters and no-cache headers;
+# the Contents API serves the branch tip immediately.
+$apiBase = 'https://api.github.com/repos/kevinboettger/kevinboettger/contents/Tools'
+$ref     = 'claude/test-immerse-tier1-waapi'
+$files   = @('AutoRunAndPush.ps1','AutoRunAndPush.bat','DebugStreamListener.ps1','Run-Scenarios.ps1','TestScenarios.json')
 $headers = @{
-    'Cache-Control' = 'no-cache, no-store, max-age=0'
-    'Pragma'        = 'no-cache'
+    Accept       = 'application/vnd.github.v3.raw'
+    'User-Agent' = 'immerse-tier1-bootstrap'
 }
-foreach ($name in $files.Keys) {
+foreach ($name in $files) {
     $dest = Join-Path $toolsDir $name
     Write-Host "Downloading $name..." -ForegroundColor DarkGray
-    Invoke-WebRequest -Uri $files[$name] -OutFile $dest -UseBasicParsing -Headers $headers
+    Invoke-WebRequest -Uri "$apiBase/$name`?ref=$ref" -OutFile $dest -UseBasicParsing -Headers $headers
 }
 
 $tokenFile = Join-Path $toolsDir '.github_token'
