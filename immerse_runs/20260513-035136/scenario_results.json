@@ -1,0 +1,92 @@
+﻿{
+    "fail":  0,
+    "pass":  7,
+    "schema":  "tier1-results-v1",
+    "total":  7,
+    "skip":  0,
+    "results":  [
+                    {
+                        "index":  1,
+                        "name":  "Setup: force EHM off (no-assert)",
+                        "status":  "discovery",
+                        "property":  "EnableImmerse",
+                        "value":  false,
+                        "captured_lines":  {
+
+                                           }
+                    },
+                    {
+                        "index":  2,
+                        "name":  "Setup: force ConvolutionType to Universal (0)",
+                        "status":  "discovery",
+                        "property":  "ConvolutionType",
+                        "value":  0,
+                        "captured_lines":  [
+                                               "[2026-05-13T03:51:59.4550938-07:00] [pid=15828] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:51:59.4550938-07:00] [pid=15828] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:51:59.4565999-07:00] [pid=15828] [EmbodyLOG] May_13_2026 03:51:59.456 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                                               "[2026-05-13T03:51:59.4565999-07:00] [pid=15828] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:51:59.4565999-07:00] [pid=15828] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:51:59.4565999-07:00] [pid=15828] [EmbodyLOG] May_13_2026 03:51:59.457 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                                               "[2026-05-13T03:51:59.4576110-07:00] [pid=15828] [EmbodyLOG] May_13_2026 03:51:59.458 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 ",
+                                               "[2026-05-13T03:51:59.4586092-07:00] [pid=15828] [EmbodyLOG] May_13_2026 03:51:59.459 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  3,
+                        "name":  "Step 1a: EHM ON (with current ConvType=Universal -\u003e inMode:2)",
+                        "status":  "pass",
+                        "property":  "EnableImmerse",
+                        "value":  true,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*2",
+                        "matched_line":  "[2026-05-13T03:52:00.4649869-07:00] [pid=15828] [EmbodyLOG] May_13_2026 03:52:00.465 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                        "lag_ms":  9
+                    },
+                    {
+                        "index":  4,
+                        "name":  "Step 1b: ConvolutionType -\u003e Personalized (1) -\u003e inMode:1",
+                        "status":  "pass",
+                        "property":  "ConvolutionType",
+                        "value":  1,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*1",
+                        "matched_line":  "[2026-05-13T03:52:00.4840455-07:00] [pid=15828] [EmbodyLOG] May_13_2026 03:52:00.484 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 1 ",
+                        "lag_ms":  121
+                    },
+                    {
+                        "index":  5,
+                        "name":  "Setup: force HeadphoneEq to NONE (0)",
+                        "status":  "discovery",
+                        "property":  "HeadphoneEq",
+                        "value":  0,
+                        "captured_lines":  {
+
+                                           }
+                    },
+                    {
+                        "index":  6,
+                        "name":  "Step 2: HeadphoneEq -\u003e Universal Closed Back (102)",
+                        "status":  "discovery",
+                        "property":  "HeadphoneEq",
+                        "value":  102,
+                        "captured_lines":  [
+                                               "[2026-05-13T03:52:41.7366969-07:00] [pid=15828] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:52:41.7377103-07:00] [pid=15828] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:52:41.7377103-07:00] [pid=15828] [EmbodyLOG] May_13_2026 03:52:41.737 line: 710. ___IMMERSEENGINE___ Immerse_EnableHPEQ inHeadset: 102 ",
+                                               "[2026-05-13T03:52:41.7377103-07:00] [pid=15828] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:52:41.7377103-07:00] [pid=15828] \u003c\u003c\u003c_____ ImmerseAudioRenderer _____\u003e\u003e\u003e ",
+                                               "[2026-05-13T03:52:41.7397099-07:00] [pid=15828] [EmbodyLOG] May_13_2026 03:52:41.739 line: 1328. ImmerseManager::UpdateHpeqHeadset() - HPEQ enabled, headsetId 102 ",
+                                               "[2026-05-13T03:52:41.7402162-07:00] [pid=15828] [EmbodyLOG] May_13_2026 03:52:41.740 line: 1419. calculateLicenseDaysRemaining(): cached=358, elapsed=0, remaining=358 "
+                                           ]
+                    },
+                    {
+                        "index":  7,
+                        "name":  "Step 3: ConvolutionType -\u003e Universal (0) -\u003e inMode:2",
+                        "status":  "pass",
+                        "property":  "ConvolutionType",
+                        "value":  0,
+                        "expect_log":  "Immerse_EnableImmerse\\s+inMode:\\s*2",
+                        "matched_line":  "[2026-05-13T03:54:37.8379395-07:00] [pid=15828] [EmbodyLOG] May_13_2026 03:54:37.838 line: 673. ___IMMERSEENGINE___ Immerse_EnableImmerse inMode: 2 ",
+                        "lag_ms":  114
+                    }
+                ]
+}
