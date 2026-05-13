@@ -1,69 +1,59 @@
 {
   "schema": "v1",
-  "description": "Tier 1 functional WAAPI tests for the Immerse Audio Renderer. Each assertion is preceded by a setup that forces the opposite value so the assertion is a real transition (Wwise does not push when setProperty is called with the current value). Currently asserted: EnableImmerse (bool master switch) and ConvolutionType values 0 (stereo) and 1 (personalized). ConvolutionType=2 (universal) and HeadphoneEq are skipped pending dev-team clarification on their preconditions -- both return HTTP 500 from WAAPI in the current configuration. UserID change tests are intentionally absent pending manual verification that user-switching mid-remote-connect is safe.",
+  "description": "Interactive Tier 1 test plan. Sets the Immerse FX through three states (EHM-on-personalized, HeadphoneEq selected, EHM-on-universal) with operator-confirmed pauses between each. At every PAUSE: (a) open the Immerse plug-in UI in Wwise to visually verify the state, license info, etc., (b) CLOSE the plug-in UI before pressing Enter -- WAAPI rejects setProperty while the UI holds the object. Property values come from the Immerse plug-in XML: ConvolutionType {0=Universal, 1=Personalized}; HeadphoneEq enum includes 0=NONE, 102=Universal Closed Back, 26=Cloud Alpha, 104=Universal Open Back, etc.",
   "scenarios": [
     {
-      "name": "EHM: setup -> force off (no-assert)",
+      "name": "Setup: force EHM off (no-assert)",
       "property": "EnableImmerse",
       "value": false,
       "captureSeconds": 1
     },
     {
-      "name": "EHM: assert ON  (off -> on)",
-      "property": "EnableImmerse",
-      "value": true,
-      "expectLog": "Immerse_EnableImmerse\\s+inMode:\\s*1",
-      "timeoutMs": 3000
-    },
-    {
-      "name": "EHM: assert OFF (on -> off)",
-      "property": "EnableImmerse",
-      "value": false,
-      "expectLog": "Immerse_EnableImmerse\\s+inMode:\\s*0",
-      "timeoutMs": 3000
-    },
-    {
-      "name": "EHM: assert ON  (off -> on, for downstream scenarios)",
-      "property": "EnableImmerse",
-      "value": true,
-      "expectLog": "Immerse_EnableImmerse\\s+inMode:\\s*1",
-      "timeoutMs": 3000
-    },
-
-    {
-      "name": "ConvolutionType: setup -> 0 stereo (force transition for next assert)",
+      "name": "Setup: force ConvolutionType to Universal (0)",
       "property": "ConvolutionType",
       "value": 0,
       "captureSeconds": 1
     },
     {
-      "name": "ConvolutionType: assert -> 1 personalized (sees inMode: 1)",
-      "property": "ConvolutionType",
-      "value": 1,
-      "expectLog": "Immerse_EnableImmerse\\s+inMode:\\s*1",
-      "timeoutMs": 3000
-    },
-    {
-      "name": "ConvolutionType: assert -> 0 stereo downmix (sees inMode: 2)",
-      "property": "ConvolutionType",
-      "value": 0,
+      "name": "Step 1a: EHM ON (with current ConvType=Universal -> inMode:2)",
+      "property": "EnableImmerse",
+      "value": true,
       "expectLog": "Immerse_EnableImmerse\\s+inMode:\\s*2",
       "timeoutMs": 3000
     },
+    {
+      "name": "Step 1b: ConvolutionType -> Personalized (1) -> inMode:1",
+      "property": "ConvolutionType",
+      "value": 1,
+      "expectLog": "Immerse_EnableImmerse\\s+inMode:\\s*1",
+      "timeoutMs": 3000,
+      "pauseAfter": true,
+      "pauseMessage": "Step 1 complete: EHM ON + Personalized. Open the Immerse plug-in UI in Wwise to verify user is loaded correctly (license type, profile name, etc). Then CLOSE the plug-in UI and press Enter to continue to Step 2 (HeadphoneEq)."
+    },
 
     {
-      "name": "ConvolutionType: 2 universal (SKIPPED - returns HTTP 500, dev-team check)",
-      "property": "ConvolutionType",
-      "value": 2,
-      "skip": true,
-      "comment": "WAAPI returns 500 for value=2 regardless of preceding state. Likely a license/feature gate or precondition (e.g. non-personalized user account). Confirm with dev team whether universal mode is settable via setProperty in this build, or whether it requires a different API."
+      "name": "Setup: force HeadphoneEq to NONE (0)",
+      "property": "HeadphoneEq",
+      "value": 0,
+      "captureSeconds": 1
     },
     {
-      "name": "HeadphoneEq: any value (SKIPPED - all return HTTP 500, dev-team check)",
+      "name": "Step 2: HeadphoneEq -> Universal Closed Back (102)",
       "property": "HeadphoneEq",
-      "value": 1,
-      "skip": true,
-      "comment": "Every HeadphoneEq setProperty call returns 500, including with EnableImmerse=true and ConvolutionType=1 (personalized) already set as preconditions. May require: (a) HPEQ profile data already downloaded for the user, (b) ConvolutionType to be in a steady state for some time, (c) a different WAAPI verb. Confirm with dev team."
+      "value": 102,
+      "captureSeconds": 3,
+      "pauseAfter": true,
+      "pauseMessage": "Step 2 complete: HeadphoneEq set to 102 (Universal Closed Back). Open the Immerse plug-in UI to verify the HPEQ selection shows the chosen profile. Then CLOSE the UI and press Enter to continue to Step 3 (EHM Universal)."
+    },
+
+    {
+      "name": "Step 3: ConvolutionType -> Universal (0) -> inMode:2",
+      "property": "ConvolutionType",
+      "value": 0,
+      "expectLog": "Immerse_EnableImmerse\\s+inMode:\\s*2",
+      "timeoutMs": 3000,
+      "pauseAfter": true,
+      "pauseMessage": "Step 3 complete: EHM ON + Universal profile. Verify in the plug-in UI then CLOSE it and press Enter to finish the run (UE will be killed, results pushed)."
     }
   ]
 }

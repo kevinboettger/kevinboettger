@@ -8,7 +8,7 @@ param(
     [Parameter(Mandatory=$true)][string]$SummaryPath
 )
 
-# TIER1_SCENARIO_RUNNER_v1
+# TIER1_SCENARIO_RUNNER_v2
 # For each scenario in $ScenariosPath:
 #   1. Note current size of $ListenerLog.
 #   2. Call ak.wwise.core.object.setProperty on $ImmerseEffectId with the
@@ -18,6 +18,10 @@ param(
 #   4. If $expectLog is absent or value is the literal "TBD", treat the scenario
 #      as DISCOVERY: just snapshot what appeared in the listener log during the
 #      next $captureSeconds (default 3s) and report PASS with notes.
+#   5. If $pauseAfter is true, prompt the operator via Read-Host before moving
+#      to the next scenario (gives them time to inspect the Immerse plug-in
+#      UI in Wwise -- note the UI must be CLOSED before the next scenario or
+#      WAAPI rejects setProperty on the locked object).
 # Exit code = number of failures (0 = all pass).
 
 $ErrorActionPreference = 'Continue'
@@ -91,97 +95,109 @@ for ($idx = 0; $idx -lt $scenarios.Count; $idx++) {
 
     $stepIdx = "[{0,2}/{1}]" -f ($idx + 1), $scenarios.Count
 
-    if ($skipMode) {
-        Out "$stepIdx SKIP  $name"
-        $skip++
-        $results.Add([PSCustomObject]@{
-            index   = $idx + 1
-            name    = $name
-            status  = 'skip'
-            note    = if ($s.comment) { $s.comment } else { '' }
-        })
-        continue
-    }
-
-    if (-not $prop) {
-        Out "$stepIdx FAIL  $name -- missing 'property' field"
-        $fail++
-        $results.Add([PSCustomObject]@{ index = $idx + 1; name = $name; status = 'fail'; note = 'missing property field' })
-        continue
-    }
-
-    $offset = Get-LogSize
-    $valueJson = $value | ConvertTo-Json -Compress
-    $body = '{"uri":"ak.wwise.core.object.setProperty","args":{"object":"' + $ImmerseEffectId + '","property":"' + $prop + '","value":' + $valueJson + '},"options":{}}'
-    $issuedAt = Get-Date
-    $r = Invoke-Waapi $body
-    if (-not $r.ok) {
-        Out "$stepIdx FAIL  $name -- WAAPI setProperty failed: $($r.error)"
-        $fail++
-        $results.Add([PSCustomObject]@{
-            index = $idx + 1; name = $name; status = 'fail'
-            property = $prop; value = $value
-            error = $r.error
-        })
-        continue
-    }
-
-    if ($isDiscovery) {
-        Start-Sleep -Seconds $captureSec
-        $captured = Read-LogFrom $offset
-        $tailLines = ($captured -split "`r?`n") | Where-Object { $_ -and $_ -match '\[EmbodyLOG\]|___IMMERSEENGINE___|ImmerseAudio|Hpeq|Profile|Bus|Convolution' } | Select-Object -First 25
-        Out "$stepIdx DISC  $name -- captured $($tailLines.Count) Immerse-related lines in ${captureSec}s"
-        foreach ($l in $tailLines) { Out "         $l" }
-        $pass++
-        $results.Add([PSCustomObject]@{
-            index = $idx + 1; name = $name; status = 'discovery'
-            property = $prop; value = $value
-            captured_lines = $tailLines
-        })
-        continue
-    }
-
-    # assertion mode: poll for $expectLog within $timeoutMs
-    $deadline = (Get-Date).AddMilliseconds($timeoutMs)
-    $matched  = $false
-    $matchedLine = $null
-    $lagMs   = $null
-    while ((Get-Date) -lt $deadline) {
-        $chunk = Read-LogFrom $offset
-        if ($chunk) {
-            foreach ($line in ($chunk -split "`r?`n")) {
-                if ($line -match $expectLog) {
-                    $matched = $true
-                    $matchedLine = $line
-                    $lagMs = [int](((Get-Date) - $issuedAt).TotalMilliseconds)
-                    break
-                }
-            }
-            if ($matched) { break }
+    # Wrap per-scenario logic in a do/while($false) so each branch can 'break'
+    # out to the post-scenario pause check without skipping it via 'continue'.
+    do {
+        if ($skipMode) {
+            Out "$stepIdx SKIP  $name"
+            $skip++
+            $results.Add([PSCustomObject]@{
+                index   = $idx + 1
+                name    = $name
+                status  = 'skip'
+                note    = if ($s.comment) { $s.comment } else { '' }
+            })
+            break
         }
-        Start-Sleep -Milliseconds 100
-    }
 
-    if ($matched) {
-        Out ("$stepIdx PASS  {0,-50} lag=${lagMs}ms" -f $name)
-        $pass++
-        $results.Add([PSCustomObject]@{
-            index = $idx + 1; name = $name; status = 'pass'
-            property = $prop; value = $value
-            expect_log = $expectLog
-            matched_line = $matchedLine
-            lag_ms = $lagMs
-        })
-    } else {
-        Out ("$stepIdx FAIL  {0,-50} no match within ${timeoutMs}ms" -f $name)
-        Out "         expected: $expectLog"
-        $fail++
-        $results.Add([PSCustomObject]@{
-            index = $idx + 1; name = $name; status = 'fail'
-            property = $prop; value = $value
-            expect_log = $expectLog
-            timeout_ms = $timeoutMs
-        })
+        if (-not $prop) {
+            Out "$stepIdx FAIL  $name -- missing 'property' field"
+            $fail++
+            $results.Add([PSCustomObject]@{ index = $idx + 1; name = $name; status = 'fail'; note = 'missing property field' })
+            break
+        }
+
+        $offset = Get-LogSize
+        $valueJson = $value | ConvertTo-Json -Compress
+        $body = '{"uri":"ak.wwise.core.object.setProperty","args":{"object":"' + $ImmerseEffectId + '","property":"' + $prop + '","value":' + $valueJson + '},"options":{}}'
+        $issuedAt = Get-Date
+        $r = Invoke-Waapi $body
+        if (-not $r.ok) {
+            Out "$stepIdx FAIL  $name -- WAAPI setProperty failed: $($r.error)"
+            $fail++
+            $results.Add([PSCustomObject]@{
+                index = $idx + 1; name = $name; status = 'fail'
+                property = $prop; value = $value
+                error = $r.error
+            })
+            break
+        }
+
+        if ($isDiscovery) {
+            Start-Sleep -Seconds $captureSec
+            $captured = Read-LogFrom $offset
+            $tailLines = ($captured -split "`r?`n") | Where-Object { $_ -and $_ -match '\[EmbodyLOG\]|___IMMERSEENGINE___|ImmerseAudio|Hpeq|Profile|Bus|Convolution' } | Select-Object -First 25
+            Out "$stepIdx DISC  $name -- captured $($tailLines.Count) Immerse-related lines in ${captureSec}s"
+            foreach ($l in $tailLines) { Out "         $l" }
+            $pass++
+            $results.Add([PSCustomObject]@{
+                index = $idx + 1; name = $name; status = 'discovery'
+                property = $prop; value = $value
+                captured_lines = $tailLines
+            })
+            break
+        }
+
+        # assertion mode: poll for $expectLog within $timeoutMs
+        $deadline = (Get-Date).AddMilliseconds($timeoutMs)
+        $matched  = $false
+        $matchedLine = $null
+        $lagMs   = $null
+        while ((Get-Date) -lt $deadline) {
+            $chunk = Read-LogFrom $offset
+            if ($chunk) {
+                foreach ($line in ($chunk -split "`r?`n")) {
+                    if ($line -match $expectLog) {
+                        $matched = $true
+                        $matchedLine = $line
+                        $lagMs = [int](((Get-Date) - $issuedAt).TotalMilliseconds)
+                        break
+                    }
+                }
+                if ($matched) { break }
+            }
+            Start-Sleep -Milliseconds 100
+        }
+
+        if ($matched) {
+            Out ("$stepIdx PASS  {0,-50} lag=${lagMs}ms" -f $name)
+            $pass++
+            $results.Add([PSCustomObject]@{
+                index = $idx + 1; name = $name; status = 'pass'
+                property = $prop; value = $value
+                expect_log = $expectLog
+                matched_line = $matchedLine
+                lag_ms = $lagMs
+            })
+        } else {
+            Out ("$stepIdx FAIL  {0,-50} no match within ${timeoutMs}ms" -f $name)
+            Out "         expected: $expectLog"
+            $fail++
+            $results.Add([PSCustomObject]@{
+                index = $idx + 1; name = $name; status = 'fail'
+                property = $prop; value = $value
+                expect_log = $expectLog
+                timeout_ms = $timeoutMs
+            })
+        }
+    } while ($false)
+
+    if ($s.pauseAfter -eq $true) {
+        $defaultMsg = "Open the Immerse plug-in UI in Wwise to verify state, then CLOSE the UI (WAAPI cannot operate while it is open) and press Enter to continue."
+        $msg = if ($s.pauseMessage) { $s.pauseMessage } else { $defaultMsg }
+        Out ""
+        Out "         >>> PAUSE: $msg"
+        [void](Read-Host '         Press Enter to continue')
     }
 }
 
@@ -199,5 +215,3 @@ $summary.Add("Result: $pass pass / $fail fail / $skip skip / total $($scenarios.
 $summary -join "`n" | Set-Content -Path $SummaryPath -Encoding UTF8
 Out ''
 Out ($summary -join "`n")
-
-exit $fail

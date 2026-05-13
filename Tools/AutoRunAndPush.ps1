@@ -333,13 +333,21 @@ try {
     $summaryTxt     = Join-Path $RunDirAbs 'scenario_summary.txt'
     $scenarioOk     = $false
     if ((Test-Path $scenariosPath) -and (Test-Path $runnerScript)) {
-        & powershell -NoProfile -ExecutionPolicy Bypass -File "$runnerScript" `
+        # Inline invocation (not 'powershell -File') so Read-Host inside the
+        # runner attaches to this launcher's console (Step 5: pauseAfter).
+        & "$runnerScript" `
             -ScenariosPath "$scenariosPath" -ListenerLog "$dbgLogTmp" `
             -WaapiUrl "$waapiUrl" -ImmerseEffectId "$immerseEffectId" `
             -ResultsJson "$resultsJson" -SummaryPath "$summaryTxt"
-        $runnerExit = $LASTEXITCODE
-        if ($runnerExit -eq 0) { $scenarioOk = $true }
-        Info "Scenario runner exit: $runnerExit (0 = all pass)"
+        $failCount = -1
+        if (Test-Path $resultsJson) {
+            try {
+                $resultsObj = Get-Content -Raw $resultsJson | ConvertFrom-Json
+                $failCount = [int]$resultsObj.fail
+                $scenarioOk = ($failCount -eq 0)
+            } catch { Warn "Could not parse scenario results: $($_.Exception.Message)" }
+        }
+        Info "Scenario fails: $failCount (0 = all pass)"
     } else {
         Warn 'TestScenarios.json or Run-Scenarios.ps1 missing -- skipping scenarios'
     }
