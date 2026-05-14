@@ -365,8 +365,12 @@ if ($needsPersonalizedPrereq) {
 $enumLogPatterns = @{
     'HeadphoneEq' = 'Immerse_EnableHPEQ\s+inHeadset:\s*<value>\b'
     'FieldOfView' = 'Immerse_SetSpeakerPlacement\s+inSpeakerPlacement:\s*<value>\b'
-    # BusContent : pending log capture.
-    # Tuning     : pending log capture.
+    'Tuning'      = 'Immerse_SetTuning.+?inHrirTuning:\s*<value>\b'
+    # BusContent: no direct setter log line observed yet. The Immerse plug-in
+    # only re-emits the full BMAP data on bus-content change rather than a
+    # discrete 'Immerse_SetBusContent' line. Still in discovery mode until we
+    # confirm whether BC change also triggers Immerse_SetTuning (with the
+    # matching tuning index) or some other dedicated line.
 }
 function Add-EnumCycle($prop) {
     if ($prop.Values.Count -eq 0) { return }
