@@ -52,15 +52,32 @@ function Invoke-Git {
 }
 
 $tokenFile = Join-Path $ScriptDir '.github_token'
-if (-not (Test-Path $tokenFile)) {
-    Write-Host "ERROR: missing GitHub token file: $tokenFile" -ForegroundColor Red
-    Write-Host '  Put a fine-grained PAT with contents:write into that file (one line).' -ForegroundColor Red
-    Read-Host 'Press Enter to close'; exit 1
+$LocalMode = $false
+if ($env:IMMERSE_LOCAL_ONLY -eq '1') {
+    $LocalMode = $true
+    Write-Host "    IMMERSE_LOCAL_ONLY=1 -- skipping GitHub push (local-only mode)" -ForegroundColor DarkGray
+} elseif (-not (Test-Path $tokenFile)) {
+    $LocalMode = $true
+    Write-Host "    No .github_token found at $tokenFile -- running in local-only mode (results stay local)" -ForegroundColor DarkGray
 }
-$Token     = (Get-Content -Raw $tokenFile).Trim()
-$RemoteUrl = "https://x-access-token:$Token@github.com/$Owner/$Repo.git"
+if ($LocalMode) {
+    $Token     = ''
+    $RemoteUrl = ''
+} else {
+    $Token     = (Get-Content -Raw $tokenFile).Trim()
+    $RemoteUrl = "https://x-access-token:$Token@github.com/$Owner/$Repo.git"
+}
 
 function Init-ResultsRepo {
+    if ($LocalMode) {
+        # No GitHub clone -- just ensure the local results directory exists.
+        # If there's a stale clone from a previous push-mode run, leave it
+        # alone (its .git stays; new local runs just write into immerse_runs/).
+        if (-not (Test-Path $ResultsRoot)) {
+            New-Item -ItemType Directory -Force -Path $ResultsRoot | Out-Null
+        }
+        return
+    }
     if (Test-Path $ResultsRoot) {
         if (-not (Test-Path (Join-Path $ResultsRoot '.git'))) {
             Warn "Removing stale (non-repo) $ResultsRoot"
@@ -88,6 +105,7 @@ function Init-ResultsRepo {
 
 function Push-To-Branch {
     param([string]$Msg)
+    if ($LocalMode) { return $true }
     $null = Invoke-Git -C $ResultsRoot fetch origin $Branch
     $null = Invoke-Git -C $ResultsRoot reset --soft "origin/$Branch"
     $null = Invoke-Git -C $ResultsRoot add -A
@@ -122,7 +140,7 @@ function Push-Status {
     if ($Extra) { foreach ($k in $Extra.Keys) { $obj[$k] = $Extra[$k] } }
     ($obj | ConvertTo-Json -Depth 6) | Set-Content -Path (Join-Path $script:RunDirAbs 'status.json') -Encoding UTF8
     Push-To-Branch -Msg "$RunId : $Phase" | Out-Null
-    Info "pushed status: $Phase"
+    Info ($(if ($LocalMode) { "status: $Phase (local-only)" } else { "pushed status: $Phase" }))
 }
 
 function Push-File([string]$Local, [string]$Name) {
@@ -438,7 +456,11 @@ try {
         auto_connected = $autoConnected
     }
     Step 'DONE'
-    Write-Host "Results: https://github.com/$Owner/$Repo/tree/$Branch/$RunDirRel" -ForegroundColor Green
+    if ($LocalMode) {
+        Write-Host "Results (local-only): $RunDirAbs" -ForegroundColor Green
+    } else {
+        Write-Host "Results: https://github.com/$Owner/$Repo/tree/$Branch/$RunDirRel" -ForegroundColor Green
+    }
     if (Test-Path $reportPath) { Write-Host "HTML report: $reportPath" -ForegroundColor Green }
 } catch {
     Write-Host "ERROR: $_" -ForegroundColor Red

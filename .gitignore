@@ -19,3 +19,9 @@ recordings/
 # IDE
 .vscode/
 .idea/
+
+# Local-mode harness results (when no .github_token is present, the launcher
+# writes scenario_results.json / report.html / immerse_debug.log here instead
+# of pushing to the repo). Safe to delete at any time.
+Tools/_results_repo/
+Tools/.github_token
