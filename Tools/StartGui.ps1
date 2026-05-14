@@ -363,8 +363,8 @@ if ($needsPersonalizedPrereq) {
 #    {value} placeholder); the rest stay in discovery mode until the next
 #    run's captured log lines tell us the signature.
 $enumLogPatterns = @{
-    'HeadphoneEq' = 'updateUMWHPEQSelection\(\)\s+-\s+updated\s+headsetId:\s*\{value\}'
-    'FieldOfView' = 'Immerse_SetSpeakerPlacement\s+inSpeakerPlacement:\s*\{value\}'
+    'HeadphoneEq' = 'Immerse_EnableHPEQ\s+inHeadset:\s*<value>\b'
+    'FieldOfView' = 'Immerse_SetSpeakerPlacement\s+inSpeakerPlacement:\s*<value>\b'
     # BusContent : pending log capture.
     # Tuning     : pending log capture.
 }
@@ -376,7 +376,7 @@ function Add-EnumCycle($prop) {
     foreach ($v in ($prop.Values | Select-Object -Skip 1)) {
         $scn = @{ name = "$($prop.DisplayName): $($v.Display) ($($v.Value))"; property = $prop.Name; value = ([int]$v.Value) }
         if ($pattern) {
-            $scn.expectLog = $pattern -replace '\{value\}', "$($v.Value)"
+            $scn.expectLog = $pattern -replace '<value>', "$($v.Value)"
             $scn.timeoutMs = 3000
         } else {
             $scn.captureSeconds = 2
