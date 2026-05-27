@@ -9,12 +9,18 @@ dist/
 .mypy_cache/
 .ruff_cache/
 
-# Recorded stems
-recordings/
+# Generated audio
+outputs/
 *.wav
 
-# Cached model weights
+# Checkpoints / model weights
+checkpoints/
+*.pt
 .cache/
+
+# Training data + logs
+data/
+runs/
 
 # IDE
 .vscode/

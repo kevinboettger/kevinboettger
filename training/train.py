@@ -1,196 +1,164 @@
-"""Training loop for the 3-stem game-audio separator.
+"""Train the acoustic model.
 
-Pipeline: SynthMixDataset → HTDemucs → L1 stem loss with AMP + grad accum.
-Periodically computes SI-SDR per source on a held-out random seed.
+Examples:
+    # Smoke-test the loop with no data (synthetic tones):
+    voice-tts-train --synthetic 64 --steps 20 --batch-size 4
 
-Run after manifest.py:
-    python -m training.train
-
-Resume:
-    python -m training.train --resume training/checkpoints/latest.pt
-
-Warm-start encoder from stock htdemucs (recommended):
-    python -m training.train --warm-start
+    # Real training from an LJSpeech-style manifest:
+    voice-tts-train --manifest data/metadata.txt --data-root data/wavs
 """
+
 from __future__ import annotations
 
 import argparse
-import time
+from dataclasses import asdict
 from pathlib import Path
 
 import torch
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
 
-from .config import TrainConfig
-from .model import build_model, count_params, warm_start_from_pretrained
-from .synth_dataset import SynthMixDataset
+from training.config import TrainConfig
+from training.dataset import SyntheticDataset, TTSDataset, make_collate
+from voice_tts.config import AudioConfig, ModelConfig
+from voice_tts.models import build_model
+from voice_tts.text import Tokenizer
 
 
-def si_sdr(estimate: torch.Tensor, target: torch.Tensor, eps: float = 1e-8) -> torch.Tensor:
-    """SI-SDR per (batch, source), in dB. Inputs: (B, S, C, T) → (B, S)."""
-    est = estimate - estimate.mean(dim=-1, keepdim=True)
-    tgt = target - target.mean(dim=-1, keepdim=True)
-    dot = (est * tgt).sum(dim=-1, keepdim=True)
-    proj = dot / (tgt.pow(2).sum(dim=-1, keepdim=True) + eps) * tgt
-    noise = est - proj
-    num = proj.pow(2).sum(dim=-1).sum(dim=-1)
-    den = noise.pow(2).sum(dim=-1).sum(dim=-1) + eps
-    return 10.0 * torch.log10(num / den + eps)
+def compute_loss(model, batch, cfg: TrainConfig, pad_id: int):
+    out = model(batch.tokens, durations=batch.durations, max_mel_len=batch.mels.size(-1))
+
+    keep = (~out.mel_mask).unsqueeze(1).float()  # (B, 1, T_mel)
+    denom = keep.sum().clamp(min=1.0) * batch.mels.size(1)
+    mel_l1 = ((out.mel - batch.mels).abs() + (out.mel_pre - batch.mels).abs()) * keep
+    mel_loss = mel_l1.sum() / denom
+
+    tok_mask = (~batch.tokens.eq(pad_id)).float()
+    target_log = torch.log(batch.durations.clamp(min=1).float())
+    dur_loss = (F.mse_loss(out.log_duration, target_log, reduction="none") * tok_mask).sum()
+    dur_loss = dur_loss / tok_mask.sum().clamp(min=1.0)
+
+    return mel_loss + cfg.duration_loss_weight * dur_loss, mel_loss, dur_loss
 
 
-@torch.no_grad()
-def validate(model, loader, device, n_batches: int, sources: list[str]) -> dict[str, float]:
-    model.eval()
-    sdrs = []
-    for i, (mix, stems) in enumerate(loader):
-        if i >= n_batches:
-            break
-        mix = mix.to(device, non_blocking=True)
-        stems = stems.to(device, non_blocking=True)
-        est = model(mix)
-        sdrs.append(si_sdr(est, stems).cpu())
-    model.train()
-    if not sdrs:
-        return {}
-    mean = torch.cat(sdrs, dim=0).mean(dim=0)
-    return {f"sdr/{name}": float(mean[i]) for i, name in enumerate(sources)}
+def build_dataset(args, audio_cfg: AudioConfig):
+    if args.synthetic:
+        return SyntheticDataset(audio_cfg, size=args.synthetic)
+    if not args.manifest:
+        raise SystemExit("Provide --manifest <file> or --synthetic <N>.")
+    return TTSDataset(args.manifest, audio_cfg, data_root=args.data_root)
 
 
-def main() -> None:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--manifest", type=Path, default=Path("training/data/manifest.csv"))
-    ap.add_argument("--checkpoint-dir", type=Path, default=None)
-    ap.add_argument("--resume", type=Path, default=None)
-    ap.add_argument("--warm-start", action="store_true",
-                    help="Initialize from pretrained htdemucs (encoder transfers).")
-    ap.add_argument("--batch-size", type=int, default=None)
-    ap.add_argument("--grad-accum", type=int, default=None)
-    ap.add_argument("--max-steps", type=int, default=None)
-    ap.add_argument("--lr", type=float, default=None)
-    ap.add_argument("--segment-seconds", type=float, default=None)
-    ap.add_argument("--num-workers", type=int, default=None)
-    ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
-    args = ap.parse_args()
+def main(argv: list[str] | None = None) -> None:
+    parser = argparse.ArgumentParser(description="Train the voice_tts acoustic model.")
+    parser.add_argument("--manifest", default=None, help="LJSpeech-style 'path|transcript' manifest.")
+    parser.add_argument("--data-root", default=None, help="Root dir for relative audio paths.")
+    parser.add_argument("--synthetic", type=int, default=0, help="Use N synthetic samples (smoke test).")
+    parser.add_argument("--steps", type=int, default=None, help="Override max training steps.")
+    parser.add_argument("--batch-size", type=int, default=None)
+    parser.add_argument("--lr", type=float, default=None)
+    parser.add_argument("--checkpoint-dir", default="checkpoints")
+    parser.add_argument("--resume", default=None, help="Checkpoint to resume from.")
+    parser.add_argument("--log-dir", default=None, help="TensorBoard log dir (optional).")
+    parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
+    args = parser.parse_args(argv)
 
     cfg = TrainConfig()
-    if args.batch_size is not None: cfg.batch_size = args.batch_size
-    if args.grad_accum is not None: cfg.grad_accum = args.grad_accum
-    if args.max_steps is not None:  cfg.max_steps = args.max_steps
-    if args.lr is not None:         cfg.lr = args.lr
-    if args.segment_seconds is not None: cfg.segment_seconds = args.segment_seconds
-    if args.num_workers is not None: cfg.num_workers = args.num_workers
-    if args.checkpoint_dir is not None: cfg.checkpoint_dir = args.checkpoint_dir
-    cfg.checkpoint_dir.mkdir(parents=True, exist_ok=True)
+    if args.steps is not None:
+        cfg.max_steps = args.steps
+    if args.batch_size is not None:
+        cfg.batch_size = args.batch_size
+    if args.lr is not None:
+        cfg.learning_rate = args.lr
+    torch.manual_seed(cfg.seed)
+
+    audio_cfg = AudioConfig()
+    model_cfg = ModelConfig()
+    tokenizer = Tokenizer()
+
+    dataset = build_dataset(args, audio_cfg)
+    loader = DataLoader(
+        dataset,
+        batch_size=cfg.batch_size,
+        shuffle=True,
+        num_workers=cfg.num_workers,
+        collate_fn=make_collate(tokenizer.pad_id),
+        drop_last=True,
+    )
 
     device = torch.device(args.device)
-    print(f"Device:  {device}")
-    print(f"Sources: {list(cfg.categories)}")
-
-    train_ds = SynthMixDataset(cfg, args.manifest, seed=42)
-    val_ds   = SynthMixDataset(cfg, args.manifest, seed=20240501)
-    train_loader = DataLoader(
-        train_ds, batch_size=cfg.batch_size,
-        num_workers=cfg.num_workers, pin_memory=cfg.pin_memory,
-    )
-    val_loader = DataLoader(
-        val_ds, batch_size=cfg.batch_size,
-        num_workers=max(1, cfg.num_workers // 2), pin_memory=cfg.pin_memory,
-    )
-
-    model = build_model(cfg.categories, samplerate=cfg.sample_rate,
-                        segment_seconds=cfg.segment_seconds).to(device)
-    print(f"Model:   HTDemucs params={count_params(model):,}")
-
-    if args.warm_start and args.resume is None:
-        n = warm_start_from_pretrained(model)
-        print(f"Warm-start: copied {n} compatible tensors from pretrained htdemucs")
-
-    optimizer = torch.optim.AdamW(model.parameters(), lr=cfg.lr, betas=(0.9, 0.99))
-
-    use_fp16 = (cfg.amp_dtype == "fp16" and device.type == "cuda")
-    amp_dtype = torch.float16 if cfg.amp_dtype == "fp16" else torch.bfloat16
-    scaler = torch.cuda.amp.GradScaler(enabled=use_fp16)
+    model = build_model(tokenizer.vocab_size, tokenizer.pad_id, audio_cfg, model_cfg).to(device)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=cfg.learning_rate, weight_decay=cfg.weight_decay)
 
     step = 0
-    if args.resume is not None:
+    if args.resume:
         ckpt = torch.load(args.resume, map_location=device)
         model.load_state_dict(ckpt["model"])
         if "optimizer" in ckpt:
             optimizer.load_state_dict(ckpt["optimizer"])
-        step = int(ckpt.get("step", 0))
-        print(f"Resumed: {args.resume} @ step {step}")
+        step = ckpt.get("step", 0)
+        print(f"Resumed from {args.resume} at step {step}")
 
-    train_iter = iter(train_loader)
-    optimizer.zero_grad(set_to_none=True)
-    accum = 0
-    losses_window: list[float] = []
-    t_log = time.time()
-
-    while step < cfg.max_steps:
+    writer = None
+    if args.log_dir:
         try:
-            mix, stems = next(train_iter)
-        except StopIteration:
-            train_iter = iter(train_loader)
-            mix, stems = next(train_iter)
+            from torch.utils.tensorboard import SummaryWriter
 
-        mix = mix.to(device, non_blocking=True)
-        stems = stems.to(device, non_blocking=True)
+            writer = SummaryWriter(args.log_dir)
+        except ImportError:
+            print("tensorboard not installed; install voice-tts[train] for logging.")
 
-        with torch.autocast(device_type=device.type, dtype=amp_dtype,
-                            enabled=device.type == "cuda"):
-            est = model(mix)
-            loss = F.l1_loss(est, stems) / cfg.grad_accum
+    ckpt_dir = Path(args.checkpoint_dir)
+    ckpt_dir.mkdir(parents=True, exist_ok=True)
 
-        if use_fp16:
-            scaler.scale(loss).backward()
-        else:
+    def save(tag: str) -> None:
+        path = ckpt_dir / f"acoustic_{tag}.pt"
+        torch.save(
+            {
+                "model": model.state_dict(),
+                "optimizer": optimizer.state_dict(),
+                "step": step,
+                "audio_config": asdict(audio_cfg),
+                "model_config": asdict(model_cfg),
+            },
+            path,
+        )
+        print(f"Saved checkpoint to {path}")
+
+    model.train()
+    done = False
+    while not done:
+        for batch in loader:
+            batch.tokens = batch.tokens.to(device)
+            batch.durations = batch.durations.to(device)
+            batch.mels = batch.mels.to(device)
+
+            loss, mel_loss, dur_loss = compute_loss(model, batch, cfg, tokenizer.pad_id)
+            optimizer.zero_grad()
             loss.backward()
-
-        accum += 1
-        losses_window.append(float(loss.detach()) * cfg.grad_accum)
-
-        if accum >= cfg.grad_accum:
-            if use_fp16:
-                scaler.unscale_(optimizer)
             torch.nn.utils.clip_grad_norm_(model.parameters(), cfg.grad_clip)
-            if use_fp16:
-                scaler.step(optimizer)
-                scaler.update()
-            else:
-                optimizer.step()
-            optimizer.zero_grad(set_to_none=True)
-            accum = 0
+            optimizer.step()
             step += 1
 
             if step % cfg.log_every == 0:
-                avg = sum(losses_window) / len(losses_window)
-                losses_window.clear()
-                dt = time.time() - t_log
-                t_log = time.time()
-                rate = cfg.log_every / dt if dt > 0 else 0.0
-                print(f"step {step:>7d}  loss {avg:.4f}  ({rate:.2f} step/s)")
+                print(
+                    f"step {step:>7} | loss {loss.item():.4f} "
+                    f"| mel {mel_loss.item():.4f} | dur {dur_loss.item():.4f}"
+                )
+                if writer is not None:
+                    writer.add_scalar("loss/total", loss.item(), step)
+                    writer.add_scalar("loss/mel", mel_loss.item(), step)
+                    writer.add_scalar("loss/duration", dur_loss.item(), step)
 
-            if step % cfg.val_every == 0:
-                metrics = validate(model, val_loader, device, cfg.val_batches,
-                                   list(cfg.categories))
-                summary = "  ".join(f"{k}={v:+.2f}dB" for k, v in metrics.items())
-                print(f"  [val step {step}] {summary}")
+            if step % cfg.checkpoint_every == 0:
+                save(f"step{step}")
+            if step >= cfg.max_steps:
+                done = True
+                break
 
-            if step % cfg.checkpoint_every == 0 or step == cfg.max_steps:
-                ckpt_path = cfg.checkpoint_dir / f"step_{step:08d}.pt"
-                payload = {
-                    "model": model.state_dict(),
-                    "optimizer": optimizer.state_dict(),
-                    "step": step,
-                    "sources": list(cfg.categories),
-                    "sample_rate": cfg.sample_rate,
-                    "segment_seconds": cfg.segment_seconds,
-                }
-                torch.save(payload, ckpt_path)
-                latest = cfg.checkpoint_dir / "latest.pt"
-                torch.save({k: v for k, v in payload.items() if k != "optimizer"}, latest)
-                print(f"  saved {ckpt_path.name}")
+    save("final")
+    if writer is not None:
+        writer.close()
 
 
 if __name__ == "__main__":
