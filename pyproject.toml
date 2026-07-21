@@ -17,10 +17,14 @@ dependencies = [
 train = [
     "tensorboard>=2.13",
 ]
+analyze = [
+    "scikit-learn>=1.3",
+]
 
 [project.scripts]
 game-stems = "game_stems.main:main"
 game-stems-train = "training.train:main"
+game-stems-analyze = "analyzer.pipeline:main"
 
 [build-system]
 requires = ["setuptools>=68"]
@@ -28,4 +32,4 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["src", "."]
-include = ["game_stems*", "training*"]
+include = ["game_stems*", "training*", "analyzer*"]
